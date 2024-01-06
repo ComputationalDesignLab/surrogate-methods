@@ -1,0 +1,10 @@
+title: "AAE 590 Surrogate Methods"
+execute:
+  execute_notebooks: "off"
+author: "Leifur Leifsson (leifur[at]purdue.edu)"
+copyright: "2024"
+repository:
+  url: "https://github.com/ComputationalDesignLab/surrogate-methods"
+  path_to_book: "books"
+launch_buttons:
+  notebook_interface: "jupyterlab"
