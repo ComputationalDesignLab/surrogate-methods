@@ -1,4 +1,4 @@
-# Preface
+# Introduction
 Following is a collection of jupyter notebooks which provide python implementation for concepts and algorithms
 introduced in the course **AAE 590 Surrogate Methods** taught by Prof. Leifur Leifsson at Purdue University.
 It is important to note that this book is not a replacement for the lectures. It is intended to be used
