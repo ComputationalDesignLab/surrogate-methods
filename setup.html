@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Introduction &#8212; AAE 590 Surrogate Methods</title>
+    <title>Computing environment setup &#8212; AAE 590 Surrogate Methods</title>
   
   
   
@@ -62,10 +62,10 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'setup';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Computing environment setup" href="setup.html" />
+    <link rel="prev" title="Introduction" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -149,7 +149,7 @@ const thebe_selector_output = ".output, .cell_output"
 
   
 
-<a class="navbar-brand logo" href="#">
+<a class="navbar-brand logo" href="index.html">
   
   
   
@@ -163,14 +163,14 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1 current active">
-                <a class="reference internal" href="#">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
                     Introduction
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="setup.html">Computing environment setup</a></li>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Computing environment setup</a></li>
 </ul>
 
     </div>
@@ -225,7 +225,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/index.md" target="_blank"
+      <li><a href="_sources/setup.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -296,9 +296,7 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
+
 </div></div>
       
     </div>
@@ -309,21 +307,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Introduction</h1>
+    <h1>Computing environment setup</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#course-description">Course description</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#course-learning-outcomes">Course learning outcomes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -333,42 +321,116 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h1>
-<p>Following is a collection of jupyter notebooks which provide python implementation for concepts and algorithms
-introduced in the course <strong>AAE 590 Surrogate Methods</strong> taught by Prof. Leifur Leifsson at Purdue University.
-It is important to note that this book is not a replacement for the lectures. It is intended to be used
-as a reference for the course material and to provide a starting point for students to implement the algorithms
-introduced in the course.</p>
-<section id="course-description">
-<h2>Course description<a class="headerlink" href="#course-description" title="Permalink to this heading">#</a></h2>
-<p>This course introduces students to the use of surrogate methods for engineering modeling and design optimization. In
-particular, this course introduces the fundamentals of building, selecting, validating, searching, and refining a surrogate
-model. Students will learn the theory behind the surrogate methods as well as how to implement and apply them to
-simple and practical modeling and design optimization problems. Implementations of the methods will be done using
-Python programming and Jupyter Notebooks. Course work includes workbook assignments, homework assignments,
-and tests. The course is intended for graduate students as well as senior undergraduate students.</p>
-</section>
-<section id="course-learning-outcomes">
-<h2>Course learning outcomes<a class="headerlink" href="#course-learning-outcomes" title="Permalink to this heading">#</a></h2>
-<p>On completing this course, the student will:</p>
-<ul class="simple">
-<li><p>Have gained basic knowledge of surrogate methods and algorithms</p></li>
-<li><p>Have gained an understanding of the computational challenges of surrogate methods</p></li>
-<li><p>Be able to implement basic algorithms of surrogate methods in Python</p></li>
-<li><p>Be able to use surrogate algorithms to solve basic engineering modeling and design optimization problems</p></li>
-</ul>
-</section>
-<section id="prerequisites">
-<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Working knowledge of linear algebra, numerical methods, multivariate calculus, probability theory and
-statistics for engineers</p></li>
-<li><p>Basic Python and Jupyter notebook knowledge.</p></li>
-</ul>
-</section>
-<div class="toctree-wrapper compound">
-</div>
+  <section class="tex2jax_ignore mathjax_ignore" id="computing-environment-setup">
+<h1>Computing environment setup<a class="headerlink" href="#computing-environment-setup" title="Permalink to this heading">#</a></h1>
+<p>The goal of this setup is to create a computing environment on your computer for this class.
+Follow the steps below to setup anaconda, create an environment, and install some initial
+packages in the new environment. If you already have Anaconda or know any other method
+which suits your needs in a better manner, then you are free to use that. <strong>The end goal is to have
+a working computing environment for this class</strong> .</p>
+<blockquote>
+<div><p><strong><em>NOTE:</em></strong> This guide assumes that you are using Windows OS. If you are using another OS, then the
+steps will be very similar but there might be more usage of terminal commands.</p>
+</div></blockquote>
+<p><strong>Step 1</strong>: Downloading and Installing Anaconda.</p>
+<p>You can skip this step if you already have Anaconda (or miniconda) installed.</p>
+<ol class="arabic simple">
+<li><p>Download anaconda from <a class="reference external" href="https://www.anaconda.com/">https://www.anaconda.com/</a>.</p></li>
+<li><p>Open the installer and follow the instructions.</p></li>
+<li><p>For “Installation Type”, you can select “All Users” if you are installing it on your PC.</p></li>
+<li><p>In “Advanced Installation Options”, no need to change anything. Stick to default
+selection.</p></li>
+</ol>
+<p>Once installed, there are two ways to use Anaconda – <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Prompt</span></code> (a command line tool)
+or <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Navigator</span></code> (GUI platform). Use whatever you are most comfortable with. To open
+Anaconda Prompt or Navigator, simply search for it in the start menu. In this guide, Anaconda
+Prompt will be used to demonstrate the creation of a computing environment. You can setup a
+computing environment using Anaconda Navigator as well. Some useful tutorials for using the
+Navigator can be found <a class="reference external" href="https://docs.anaconda.com/navigator/tutorials/">here</a>. It is highly recommend
+going through these tutorials if you choose to use Navigator to setup the environment.</p>
+<p>Another alternative for creating a computing environment is to use miniconda which is a minimal
+installation of Anaconda containing only conda, Python and a few other useful packages such as
+pip. Instructions for installation of miniconda will not be covered in this guide and can be found <a class="reference external" href="https://docs.conda.io/projects/miniconda/en/latest/">here</a>. If you want to know more, there is also a
+comparison between Anaconda and miniconda given <a class="reference external" href="https://docs.conda.io/projects/conda/en/stable/user-guide/install/download.html#anaconda-or-miniconda">here</a>.
+In general, it is recommended to use Anaconda if you are new to conda or Python. If
+you have installed miniconda, it will also come with an Anaconda Prompt and a procedure like
+the one outlined in the below steps can be used to set up the computing environment.</p>
+<p><strong>Step 2</strong>: Creating a new environment.</p>
+<ol class="arabic">
+<li><p>Open the Anaconda Prompt. Make sure that you use the run as administrator option
+when opening Anaconda Prompt. You will see a black screen with a command prompt.
+You will also see <code class="docutils literal notranslate"><span class="pre">(base)</span></code> written before the command prompt. When you installed
+anaconda, it created a base environment in which it installed several packages. By default,
+the base environment is activated when Anaconda is launched.</p>
+<p><img alt="Entry screen" src="_images/entry.png" /></p>
+</li>
+<li><p>Type in <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">list</span></code> and press enter to run this command. You will see the list of packages
+installed in the base environment.</p>
+<p><img alt="Conda list" src="_images/conda_list.png" /></p>
+<p>It is recommended to create a new environment for each project to avoid package
+dependency issues. To check the existing environments, you can run: <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">list</span></code>.</p>
+<p><img alt="Conda env list" src="_images/conda_env_list.png" /></p>
+<p>It will show the list of environments and the active environment will have a “*” mark in
+front of it. If you just installed anaconda or never created an environment, then there will
+only be one environment called <code class="docutils literal notranslate"><span class="pre">base</span></code>.</p>
+</li>
+<li><p>To create a new env, run the command: <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-n</span> <span class="pre">ENVNAME</span> <span class="pre">python=3.9</span></code>. Replace
+ENVNAME with whatever name you want to give to the new environment. The
+<code class="docutils literal notranslate"><span class="pre">python=3.9</span></code> after the environment name tells conda what version of python to install.
+We will be using python version 3.9 for this class.</p>
+<p><img alt="Conda create" src="_images/conda_create.png" /></p>
+<p>Once the environment is successfully created, you will see the following in the command
+prompt on your screen.</p>
+<p><img alt="Conda create success" src="_images/conda_create_success.png" /></p>
+<p>You can run conda env list again and see that your newly created env is there. For the
+example shown below, the name of the environment was set to surrogate_methods.</p>
+<p><img alt="Conda create env list" src="_images/conda_create_env_list.png" /></p>
+</li>
+<li><p>To activate the newly created env, run <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">ENVNAME</span></code>. Replace ENVNAME with
+your chosen environment name. You will see that the <code class="docutils literal notranslate"><span class="pre">(base)</span></code> before the command
+prompt will change to the <code class="docutils literal notranslate"><span class="pre">ENVNAME</span></code>.</p>
+<p><img alt="Conda activate" src="_images/conda_activate.png" /></p>
+<p>If you run <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">list</span></code> now, then it will show the list of installed packages in the newly
+created environment. Note that the number of packages will be very less when compared
+to the <code class="docutils literal notranslate"><span class="pre">base</span></code> environment. You will have to install the packages as and when needed.</p>
+</li>
+</ol>
+<p><strong>Step 3</strong>: Installing Packages</p>
+<p>In this step, you will install some basic packages which you will need during the initial part of the
+class. You will install many other packages as the semester progresses.</p>
+<ol class="arabic">
+<li><p>Open Anaconda Prompt. Again, make sure that you use the run as administrator option
+when opening Anaconda Prompt. Activate the environment which you created in the last
+step.</p>
+<blockquote>
+<div><p><strong><em>NOTE:</em></strong> <code class="docutils literal notranslate"><span class="pre">pip</span></code> will be the main installer we will be using in this class. We will not be using
+conda to install any package. conda is just used as an environment manager.</p>
+</div></blockquote>
+<p>After activating the environment, you can run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">list</span></code> to see the packages installed using
+pip within the activated environment.</p>
+<p><img alt="Pip list" src="_images/pip_list.png" /></p>
+<blockquote>
+<div><p><strong><em>NOTE:</em></strong> It is okay if your list is not exactly same as above.</p>
+</div></blockquote>
+</li>
+<li><p>Install Numpy (if it is not pre-installed) by running: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">numpy</span></code>. If you want to install
+a specific version of a package, the version must be mentioned while running the pip command.
+This can be done by running <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">numpy==1.23.5</span></code>. There is no specific version for numpy in this class.
+After installing any package, always run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">list</span></code> and see if the package is listed there or not, also check the
+version if you explicitly mentioned version while installing.</p></li>
+<li><p>Install SciPy by running: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">scipy</span></code>.</p></li>
+<li><p>Install Matplotlib by running: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">matplotlib</span></code>.</p></li>
+<li><p>Install Jupyter Notebook by running: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">notebook</span></code>.</p>
+<blockquote>
+<div><p><strong><em>NOTE:</em></strong> This will install a lot of dependencies that are required for Jupyter Notebook.</p>
+</div></blockquote>
+<p>Jupyter Notebook is a computing platform that will be used extensively in this class.
+Now, your computing environment should be ready. In future, whenever you are asked to install
+a new package, you should install it using pip within this environment only.</p>
+</li>
+</ol>
+<p>Now, your computing environment should be ready. In future, whenever you are asked to install
+a new package, you should install it using pip within this environment only.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -401,14 +463,14 @@ statistics for engineers</p></li>
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
-    <a class="right-next"
-       href="setup.html"
-       title="next page">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Computing environment setup</p>
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction</p>
       </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -417,22 +479,7 @@ statistics for engineers</p></li>
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#course-description">Course description</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#course-learning-outcomes">Course learning outcomes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
+                <div class="bd-sidebar-secondary bd-toc"></div>
               
             
           </div>
