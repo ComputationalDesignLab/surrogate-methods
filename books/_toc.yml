@@ -2,3 +2,8 @@ format: jb-book
 root: index
 chapters:
   - file: setup
+  - file: review_nm/intro
+    sections:
+    - file: review_nm/error
+    - file: review_nm/num_diff
+    - file: review_nm/regression
