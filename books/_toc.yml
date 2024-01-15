@@ -6,4 +6,5 @@ chapters:
     sections:
     - file: review_nm/error
     - file: review_nm/num_diff
-    - file: review_nm/regression
+    - file: review_nm/uniform
+    - file: review_nm/norm
