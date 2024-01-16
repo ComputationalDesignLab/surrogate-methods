@@ -1,15 +1,15 @@
 # Computing environment setup
 
-The goal of this setup is to create a computing environment on your computer for this class.
+The goal of this section is to create a computing environment on your computer for this class.
 Follow the steps below to setup anaconda, create an environment, and install some initial
 packages in the new environment. If you already have Anaconda or know any other method
 which suits your needs in a better manner, then you are free to use that. **The end goal is to have
-a working computing environment for this class** .
+a working computing environment for this class**.
 
 > **_NOTE:_** This guide assumes that you are using Windows OS. If you are using another OS, then the
 steps will be very similar but there might be more usage of terminal commands.
 
-**Step 1**: Downloading and Installing Anaconda.
+## Step 1: Downloading and installing anaconda
 
 You can skip this step if you already have Anaconda (or miniconda) installed.
 
@@ -38,7 +38,7 @@ In general, it is recommended to use Anaconda if you are new to conda or Python.
 you have installed miniconda, it will also come with an Anaconda Prompt and a procedure like
 the one outlined in the below steps can be used to set up the computing environment.
 
-**Step 2**: Creating a new environment.
+## Step 2: Creating a new environment
 
 1. Open the Anaconda Prompt. Make sure that you use the run as administrator option
     when opening Anaconda Prompt. You will see a black screen with a command prompt.
@@ -89,7 +89,7 @@ the one outlined in the below steps can be used to set up the computing environm
     created environment. Note that the number of packages will be very less when compared
     to the ``base`` environment. You will have to install the packages as and when needed.
 
-**Step 3**: Installing Packages
+## Step 3: Installing packages
 
 In this step, you will install some basic packages which you will need during the initial part of the
 class. You will install many other packages as the semester progresses.
