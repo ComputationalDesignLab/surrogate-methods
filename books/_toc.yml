@@ -9,3 +9,4 @@ chapters:
     - file: review_nm/num_diff
     - file: review_nm/uniform
     - file: review_nm/norm
+  - file: prob_form
