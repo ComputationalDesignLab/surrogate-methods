@@ -1,0 +1,607 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Uniform Distribution &#8212; AAE 590 Surrogate Methods</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'review_nm/uniform';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Normal Distribution" href="norm.html" />
+    <link rel="prev" title="Numerical Differentiation" href="num_diff.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">AAE 590 Surrogate Methods</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources.html">Python and Jupyter notebook resources</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Review of Numerical Methods and Probability</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="error.html">Error estimation for iterative method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="num_diff.html">Numerical Differentiation</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Uniform Distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="norm.html">Normal Distribution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../prob_form.html">Problem Formulation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/review_nm/uniform.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Uniform Distribution</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="uniform-distribution">
+<h1>Uniform Distribution<a class="headerlink" href="#uniform-distribution" title="Permalink to this heading">#</a></h1>
+<p>A continuous random variable <span class="math notranslate nohighlight">\(X\)</span> is said to have a uniform distribution on the interval <span class="math notranslate nohighlight">\([A, B]\)</span> if the pdf of <span class="math notranslate nohighlight">\(X\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    f(x;A,B) = 
+    \begin{cases}
+        \frac{1}{B-A} &amp; A \leq X \leq B \\
+         0 &amp; \text{otherwise}
+    \end{cases}
+\end{split}\]</div>
+<p>This distribution essentially denotes that any value is equally likely between <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>. The statement that <span class="math notranslate nohighlight">\(X\)</span> has a uniform distribution on <span class="math notranslate nohighlight">\([A, B]\)</span> will be denoted by <span class="math notranslate nohighlight">\(X \sim\)</span> Unif <span class="math notranslate nohighlight">\([A, B]\)</span>. Now, we will look at an example for this distribution.</p>
+<p><strong>Example</strong>: Suppose the reaction temperature <span class="math notranslate nohighlight">\(X\)</span> (in <span class="math notranslate nohighlight">\(^{\circ}\)</span>C) in a chemical process has a uniform distribution with
+<span class="math notranslate nohighlight">\(A = -10\)</span> and <span class="math notranslate nohighlight">\(B = 20\)</span>. Thus, pdf of <span class="math notranslate nohighlight">\(X\)</span> will be:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    f(x;A,B) = 
+    \begin{cases}
+        \frac{1}{30} &amp; -10 \leq X \leq 20 \\
+         0 &amp; \text{otherwise}
+    \end{cases}
+\end{split}\]</div>
+<p>Now, let’s use <code class="docutils literal notranslate"><span class="pre">uniform</span></code> object within <code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code> module to answer various questions related to this example. By default, <code class="docutils literal notranslate"><span class="pre">uniform</span></code> object will be in standard form i.e. <span class="math notranslate nohighlight">\(A = 0\)</span> and <span class="math notranslate nohighlight">\(B = 1\)</span>. So, we need to mention <code class="docutils literal notranslate"><span class="pre">loc</span></code> (which is A) and <code class="docutils literal notranslate"><span class="pre">scale</span></code> (which is B - A). Reading the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.uniform.html#scipy.stats.uniform">documentation</a> for uniform distribution implemented in scipy will help.</p>
+<blockquote>
+<div><p><strong><em>NOTE:</em></strong> You need to install <a class="reference external" href="https://seaborn.pydata.org/">seaborn</a> before proceeding further. Activate the environment you created for this class in the anaconda prompt and install seaborn using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">seaborn</span></code>.</p>
+</div></blockquote>
+<p>Following block imports all the required packages:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">uniform</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Question</strong>: Compute mean, variance and standard deviation of this distribution.</p>
+<p><strong>Answer</strong>: Once <code class="docutils literal notranslate"><span class="pre">uniform</span></code> object is imported, you can access various function related to the distribution. To compute the quantities, function within <code class="docutils literal notranslate"><span class="pre">uniform</span></code> object is used as shown in following block.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining starting point and range of uniform distribution</span>
+<span class="c1"># loc = A</span>
+<span class="c1"># scale = B - A</span>
+<span class="n">A</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span>
+<span class="n">B</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">loc</span> <span class="o">=</span> <span class="n">A</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="n">B</span> <span class="o">-</span> <span class="n">A</span>
+
+<span class="c1"># Creating uniform distribution object with fixed location and scale parameters</span>
+<span class="n">rv</span> <span class="o">=</span> <span class="n">uniform</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">loc</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">)</span>
+
+<span class="c1"># Compute mean of the distribution</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean for this distribution: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+
+<span class="c1"># Compute variance of the distribution</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variance for this distribution: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">var</span><span class="p">()))</span>
+
+<span class="c1"># Compute std-dev of the distribution</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Standard deviation for this distribution: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">std</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean for this distribution: 5.0
+Variance for this distribution: 75.0
+Standard deviation for this distribution: 8.660254037844387
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Question</strong>: Compute <span class="math notranslate nohighlight">\(P(X &lt; 10)\)</span>.</p>
+<p><strong>Answer</strong>: Here, <span class="math notranslate nohighlight">\(P(X &lt; 10) = P(X \leq 10) = F(10)\)</span>. So, we have to compute cdf for uniform distribution at <span class="math notranslate nohighlight">\(10\)</span>. You can do this as shown in following block:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># P(X&lt;0)</span>
+<span class="n">rv</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6666666666666666
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Question</strong>: Compute <span class="math notranslate nohighlight">\(P(-5 &lt; X &lt; 5)\)</span>:</p>
+<p><strong>Answer</strong>: Here, <span class="math notranslate nohighlight">\(P(-5 &lt; X &lt; 5) = P(-5 \leq X \leq 5) = F(5) - F(-5)\)</span>. So, we have to compute cdf for uniform distribution at <span class="math notranslate nohighlight">\(5\)</span> and <span class="math notranslate nohighlight">\(-5\)</span>. You can do this calculating as shown in following block:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># P(-10 &lt; X &lt; 25)</span>
+<span class="n">rv</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">-</span> <span class="n">rv</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.33333333333333337
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Question</strong>: Plot cdf and pdf of the distribution.</p>
+<p><strong>Answer</strong>: We can use the <code class="docutils literal notranslate"><span class="pre">rv</span></code> object created in previous block and compute value of pdf and cdf at a bunch of x values. Then, use <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> to plot them. Code in the following block executes this task.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating array of x values at which pdf and cdf will be computed while plotting</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Plotting PDF</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">where</span><span class="o">=</span><span class="s1">&#39;post&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;PDF&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Plotting CDF</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">rv</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;CDF&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b20fea3ee81e9c01d33446dd33b6efd4d2135fb76c97107f206be408244ef302.png" src="../_images/b20fea3ee81e9c01d33446dd33b6efd4d2135fb76c97107f206be408244ef302.png" />
+<img alt="../_images/c2096813bde0f618ed780ab4fa57a43b6275f68767ee86c2d9ef86e67a4742a5.png" src="../_images/c2096813bde0f618ed780ab4fa57a43b6275f68767ee86c2d9ef86e67a4742a5.png" />
+</div>
+</div>
+<p>Now, we will look into <em>frequency interpretation</em> of probability. You can read more about it <a class="reference external" href="https://online.stat.psu.edu/stat500/lesson/2/2.3">here</a>. Below code plots the distribution of samples drawn from uniform distribution. Number of samples initially is set to 10 and with every iteration it increases by an order of magnitude.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Some settings</span>
+<span class="n">initial_samples</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="nb">iter</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">iter</span><span class="p">):</span>
+    <span class="c1"># Number of samples</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">initial_samples</span><span class="o">*</span><span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+    <span class="c1"># Generate samples from the distribution</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">rv</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">samples</span><span class="p">)</span>
+
+    <span class="c1"># Plotting using seaborn</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">stat</span><span class="o">=</span><span class="s2">&quot;density&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0b7ec3c7dbe95314e18df0602097a9db5c21206a88d115a1872a1b667c642ad3.png" src="../_images/0b7ec3c7dbe95314e18df0602097a9db5c21206a88d115a1872a1b667c642ad3.png" />
+<img alt="../_images/9f4163113890761be7b163ea863a2ab5d1b585ef0bb436fd0be966d6df7e83a1.png" src="../_images/9f4163113890761be7b163ea863a2ab5d1b585ef0bb436fd0be966d6df7e83a1.png" />
+<img alt="../_images/9911c4e2edc7ecf529c7bf9a96a129f41148b6fc5ea2380afe6d66a50aeccf70.png" src="../_images/9911c4e2edc7ecf529c7bf9a96a129f41148b6fc5ea2380afe6d66a50aeccf70.png" />
+<img alt="../_images/398fd3b0a1027281c69b5f8a572b9e296bbd0119405777b9869fdc0d74c7ab21.png" src="../_images/398fd3b0a1027281c69b5f8a572b9e296bbd0119405777b9869fdc0d74c7ab21.png" />
+<img alt="../_images/847b51f35d5250edc2411c1dacbb444d6985f5f3d179c1eb21396f987a273138.png" src="../_images/847b51f35d5250edc2411c1dacbb444d6985f5f3d179c1eb21396f987a273138.png" />
+<img alt="../_images/ffd5cbaa6a8d3ba10e2d320256937ec9e56f003c2a3d51bc0db3c76f3bb4460b.png" src="../_images/ffd5cbaa6a8d3ba10e2d320256937ec9e56f003c2a3d51bc0db3c76f3bb4460b.png" />
+</div>
+</div>
+<p>Note that all the samples are between <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, and as the number of samples increase the density value approaches <span class="math notranslate nohighlight">\(1/30\)</span> which is the theortical density value. You can play around with the value of <code class="docutils literal notranslate"><span class="pre">iter</span></code>, <code class="docutils literal notranslate"><span class="pre">initial_samples</span></code>, <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(B\)</span> and see how distribution changes.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./review_nm"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="num_diff.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Numerical Differentiation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="norm.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Normal Distribution</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Leifur Leifsson (leifur[at]purdue.edu)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

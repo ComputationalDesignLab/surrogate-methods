@@ -7,8 +7,9 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Index &#8212; AAE 590 Surrogate Methods</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Python and Jupyter notebook resources &#8212; AAE 590 Surrogate Methods</title>
   
   
   
@@ -61,9 +62,11 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
-    <link rel="index" title="Index" href="#" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'resources';</script>
+    <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Review of Numerical Methods and Probability" href="review_nm/intro.html" />
+    <link rel="prev" title="Computing environment setup" href="setup.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -167,9 +170,9 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="setup.html">Computing environment setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="resources.html">Python and Jupyter notebook resources</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Python and Jupyter notebook resources</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="review_nm/intro.html">Review of Numerical Methods and Probability</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="review_nm/error.html">Error estimation for iterative method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="review_nm/num_diff.html">Numerical Differentiation</a></li>
@@ -222,6 +225,54 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/resources.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
 <button onclick="toggleFullScreen()"
   class="btn btn-sm btn-fullscreen-button"
   title="Fullscreen mode"
@@ -266,7 +317,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1></h1>
+    <h1>Python and Jupyter notebook resources</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -280,13 +331,46 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
+  <section class="tex2jax_ignore mathjax_ignore" id="python-and-jupyter-notebook-resources">
+<h1>Python and Jupyter notebook resources<a class="headerlink" href="#python-and-jupyter-notebook-resources" title="Permalink to this heading">#</a></h1>
+<blockquote>
+<div><p><strong><em>NOTE:</em></strong> This section assumes that you have already installed python and jupyter notebook
+on your system. If not, please refer to the <a class="reference internal" href="setup.html"><span class="doc std std-doc">setup</span></a> section.</p>
+</div></blockquote>
+<p>All the assignments and homework in this course involve programming using
+python in jupyter notebooks. If you are already familiar with python and jupyter notebooks,
+you can skip this section. If not, then you can start with following resources:</p>
+<p>Resources for learning python:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=kqtD5dpn9C8">https://www.youtube.com/watch?v=kqtD5dpn9C8</a></p></li>
+<li><p><a class="reference external" href="https://www.w3schools.com/python/">https://www.w3schools.com/python/</a></p></li>
+</ul>
+<p>Resources for learning jupyter notebooks:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=2WL-XTl2QYI">https://www.youtube.com/watch?v=2WL-XTl2QYI</a></p></li>
+<li><p><a class="reference external" href="https://realpython.com/jupyter-notebook-introduction/">https://realpython.com/jupyter-notebook-introduction/</a></p></li>
+</ul>
+</section>
 
-<h1 id="index">Index</h1>
-
-<div class="genindex-jumpbox">
- 
-</div>
-
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
 
                 </article>
               
@@ -298,6 +382,24 @@ document.write(`
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="setup.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Computing environment setup</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="review_nm/intro.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Review of Numerical Methods and Probability</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               

@@ -65,6 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'setup';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Python and Jupyter notebook resources" href="resources.html" />
     <link rel="prev" title="Introduction" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -171,6 +172,15 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Computing environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">Python and Jupyter notebook resources</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="review_nm/intro.html">Review of Numerical Methods and Probability</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="review_nm/error.html">Error estimation for iterative method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="review_nm/num_diff.html">Numerical Differentiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="review_nm/uniform.html">Uniform Distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="review_nm/norm.html">Normal Distribution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="prob_form.html">Problem Formulation</a></li>
 </ul>
 
     </div>
@@ -296,7 +306,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -312,6 +324,16 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-downloading-and-installing-anaconda">Step 1: Downloading and installing anaconda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-creating-a-new-environment">Step 2: Creating a new environment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-installing-packages">Step 3: Installing packages</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -323,16 +345,17 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="computing-environment-setup">
 <h1>Computing environment setup<a class="headerlink" href="#computing-environment-setup" title="Permalink to this heading">#</a></h1>
-<p>The goal of this setup is to create a computing environment on your computer for this class.
+<p>The goal of this section is to create a computing environment on your computer for this class.
 Follow the steps below to setup anaconda, create an environment, and install some initial
 packages in the new environment. If you already have Anaconda or know any other method
 which suits your needs in a better manner, then you are free to use that. <strong>The end goal is to have
-a working computing environment for this class</strong> .</p>
+a working computing environment for this class</strong>.</p>
 <blockquote>
 <div><p><strong><em>NOTE:</em></strong> This guide assumes that you are using Windows OS. If you are using another OS, then the
 steps will be very similar but there might be more usage of terminal commands.</p>
 </div></blockquote>
-<p><strong>Step 1</strong>: Downloading and Installing Anaconda.</p>
+<section id="step-1-downloading-and-installing-anaconda">
+<h2>Step 1: Downloading and installing anaconda<a class="headerlink" href="#step-1-downloading-and-installing-anaconda" title="Permalink to this heading">#</a></h2>
 <p>You can skip this step if you already have Anaconda (or miniconda) installed.</p>
 <ol class="arabic simple">
 <li><p>Download anaconda from <a class="reference external" href="https://www.anaconda.com/">https://www.anaconda.com/</a>.</p></li>
@@ -355,7 +378,9 @@ comparison between Anaconda and miniconda given <a class="reference external" hr
 In general, it is recommended to use Anaconda if you are new to conda or Python. If
 you have installed miniconda, it will also come with an Anaconda Prompt and a procedure like
 the one outlined in the below steps can be used to set up the computing environment.</p>
-<p><strong>Step 2</strong>: Creating a new environment.</p>
+</section>
+<section id="step-2-creating-a-new-environment">
+<h2>Step 2: Creating a new environment<a class="headerlink" href="#step-2-creating-a-new-environment" title="Permalink to this heading">#</a></h2>
 <ol class="arabic">
 <li><p>Open the Anaconda Prompt. Make sure that you use the run as administrator option
 when opening Anaconda Prompt. You will see a black screen with a command prompt.
@@ -395,7 +420,9 @@ created environment. Note that the number of packages will be very less when com
 to the <code class="docutils literal notranslate"><span class="pre">base</span></code> environment. You will have to install the packages as and when needed.</p>
 </li>
 </ol>
-<p><strong>Step 3</strong>: Installing Packages</p>
+</section>
+<section id="step-3-installing-packages">
+<h2>Step 3: Installing packages<a class="headerlink" href="#step-3-installing-packages" title="Permalink to this heading">#</a></h2>
 <p>In this step, you will install some basic packages which you will need during the initial part of the
 class. You will install many other packages as the semester progresses.</p>
 <ol class="arabic">
@@ -431,6 +458,7 @@ a new package, you should install it using pip within this environment only.</p>
 </ol>
 <p>Now, your computing environment should be ready. In future, whenever you are asked to install
 a new package, you should install it using pip within this environment only.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -472,6 +500,15 @@ a new package, you should install it using pip within this environment only.</p>
         <p class="prev-next-title">Introduction</p>
       </div>
     </a>
+    <a class="right-next"
+       href="resources.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Python and Jupyter notebook resources</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -479,7 +516,22 @@ a new package, you should install it using pip within this environment only.</p>
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"></div>
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-downloading-and-installing-anaconda">Step 1: Downloading and installing anaconda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-creating-a-new-environment">Step 2: Creating a new environment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-installing-packages">Step 3: Installing packages</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
