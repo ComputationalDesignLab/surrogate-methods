@@ -408,7 +408,7 @@ Standard deviation for this distribution: 8.660254037844387
 <p><strong>Answer</strong>: Here, <span class="math notranslate nohighlight">\(P(X &lt; 10) = P(X \leq 10) = F(10)\)</span>. So, we have to compute cdf for uniform distribution at <span class="math notranslate nohighlight">\(10\)</span>. You can do this as shown in following block:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># P(X&lt;0)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># P(X&lt;10)</span>
 <span class="n">rv</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -423,7 +423,7 @@ Standard deviation for this distribution: 8.660254037844387
 <p><strong>Answer</strong>: Here, <span class="math notranslate nohighlight">\(P(-5 &lt; X &lt; 5) = P(-5 \leq X \leq 5) = F(5) - F(-5)\)</span>. So, we have to compute cdf for uniform distribution at <span class="math notranslate nohighlight">\(5\)</span> and <span class="math notranslate nohighlight">\(-5\)</span>. You can do this calculating as shown in following block:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># P(-10 &lt; X &lt; 25)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># P(-5 &lt; X &lt; 5)</span>
 <span class="n">rv</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">-</span> <span class="n">rv</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
