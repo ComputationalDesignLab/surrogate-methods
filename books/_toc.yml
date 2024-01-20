@@ -10,3 +10,6 @@ chapters:
     - file: review_nm/uniform
     - file: review_nm/norm
   - file: prob_form
+  - file: local_opt/intro
+    sections:
+    - file: local_opt/unconst
