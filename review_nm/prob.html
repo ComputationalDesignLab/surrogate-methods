@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Uniform Distribution &#8212; AAE 590 Surrogate Methods</title>
+    <title>Uniform and normal distributions &#8212; AAE 590 Surrogate Methods</title>
   
   
   
@@ -64,10 +64,9 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'review_nm/uniform';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'review_nm/prob';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Normal Distribution" href="norm.html" />
     <link rel="prev" title="Numerical Differentiation" href="num_diff.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -174,18 +173,10 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../resources.html">Python and Jupyter notebook resources</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Review of Numerical Methods and Probability</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="error.html">Error estimation for iterative method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="num_diff.html">Numerical Differentiation</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Uniform Distribution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="norm.html">Normal Distribution</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../prob_form.html">Problem Formulation</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../local_opt/intro.html">Local Optimization</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../local_opt/unconst.html">Unconstrained Optimization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../local_opt/const.html">Constrained Optimization</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Uniform and normal distributions</a></li>
 </ul>
 </li>
 </ul>
@@ -242,7 +233,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/review_nm/uniform.ipynb" target="_blank"
+      <li><a href="../_sources/review_nm/prob.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -313,7 +304,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -324,11 +317,20 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Uniform Distribution</h1>
+    <h1>Uniform and normal distributions</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uniform-distribution">Uniform Distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normal-distribution">Normal Distribution</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -338,8 +340,27 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="uniform-distribution">
-<h1>Uniform Distribution<a class="headerlink" href="#uniform-distribution" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="uniform-and-normal-distributions">
+<h1>Uniform and normal distributions<a class="headerlink" href="#uniform-and-normal-distributions" title="Permalink to this heading">#</a></h1>
+<p>This notebook supports material covered in the class for uniform and normal distribution. Uniform and Normal distributions are described here, along with how to use the distributions within <code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code> module and compute pdf, cdf, etc. Following topics are covered here:</p>
+<p>There are various code blocks in between the text which provide python implementation for described task. You can run the code block and see the results. You can also change the value of various parameters and see how it changes the result.</p>
+<p>Please go through the notebook entirely and reach out to the teaching team if you have any doubts.</p>
+<p>You need to install <strong>seaborn</strong>. Activate the environment you created for this class in the anaconda prompt and install seaborn using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">seaborn</span></code>.</p>
+<p><font color='red'><strong>Please run the below block of code before you run any other block</strong></font> - it imports all the packages needed for this notebook.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span> <span class="c1"># Imports normal distribution</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">uniform</span> <span class="c1"># Imports uniform distribution</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">multivariate_normal</span> <span class="c1"># Imports multivariate normal distribution</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="uniform-distribution">
+<h2>Uniform Distribution<a class="headerlink" href="#uniform-distribution" title="Permalink to this heading">#</a></h2>
 <p>A continuous random variable <span class="math notranslate nohighlight">\(X\)</span> is said to have a uniform distribution on the interval <span class="math notranslate nohighlight">\([A, B]\)</span> if the pdf of <span class="math notranslate nohighlight">\(X\)</span> is:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -360,23 +381,9 @@ document.write(`
          0 &amp; \text{otherwise}
     \end{cases}
 \end{split}\]</div>
-<p>Now, let’s use <code class="docutils literal notranslate"><span class="pre">uniform</span></code> object within <code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code> module to answer various questions related to this example. By default, <code class="docutils literal notranslate"><span class="pre">uniform</span></code> object will be in standard form i.e. <span class="math notranslate nohighlight">\(A = 0\)</span> and <span class="math notranslate nohighlight">\(B = 1\)</span>. So, we need to mention <code class="docutils literal notranslate"><span class="pre">loc</span></code> (which is A) and <code class="docutils literal notranslate"><span class="pre">scale</span></code> (which is B - A). Reading the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.uniform.html#scipy.stats.uniform">documentation</a> for uniform distribution implemented in scipy will help.</p>
-<blockquote>
-<div><p><strong><em>NOTE:</em></strong> You need to install <a class="reference external" href="https://seaborn.pydata.org/">seaborn</a> before proceeding further. Activate the environment you created for this class in the anaconda prompt and install seaborn using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">seaborn</span></code>.</p>
-</div></blockquote>
-<p>Following block imports all the required packages:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">uniform</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>Now, let’s use <code class="docutils literal notranslate"><span class="pre">uniform</span></code> object within <code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code> module to answer various questions related to this example. By default, <code class="docutils literal notranslate"><span class="pre">uniform</span></code> object will in standard form i.e. <span class="math notranslate nohighlight">\(A = 0\)</span> and <span class="math notranslate nohighlight">\(B = 1\)</span>. So, we need to mention <code class="docutils literal notranslate"><span class="pre">loc</span></code> (which is A) and <code class="docutils literal notranslate"><span class="pre">scale</span></code> (which is B - A). Reading the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.uniform.html#scipy.stats.uniform">documentation</a> for uniform distribution implemented in scipy will help.</p>
 <p><strong>Question</strong>: Compute mean, variance and standard deviation of this distribution.</p>
-<p><strong>Answer</strong>: Once <code class="docutils literal notranslate"><span class="pre">uniform</span></code> object is imported, you can access various function related to the distribution. To compute the quantities, function within <code class="docutils literal notranslate"><span class="pre">uniform</span></code> object is used as shown in following block.</p>
+<p><strong>Answer</strong>: Once <code class="docutils literal notranslate"><span class="pre">uniform</span></code> object is imported (which you did when you ran the first block in this notebook), you can access various function related to the distribution. To compute the quantities, function within <code class="docutils literal notranslate"><span class="pre">uniform</span></code> object is used as shown in following block.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining starting point and range of uniform distribution</span>
@@ -409,11 +416,11 @@ Standard deviation for this distribution: 8.660254037844387
 </div>
 </div>
 </div>
-<p><strong>Question</strong>: Compute <span class="math notranslate nohighlight">\(P(X &lt; 10)\)</span>.</p>
+<p><strong>Question</strong>: Compute $P(X &lt; 10).</p>
 <p><strong>Answer</strong>: Here, <span class="math notranslate nohighlight">\(P(X &lt; 10) = P(X \leq 10) = F(10)\)</span>. So, we have to compute cdf for uniform distribution at <span class="math notranslate nohighlight">\(10\)</span>. You can do this as shown in following block:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># P(X&lt;10)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># P(X&lt;0)</span>
 <span class="n">rv</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -428,7 +435,7 @@ Standard deviation for this distribution: 8.660254037844387
 <p><strong>Answer</strong>: Here, <span class="math notranslate nohighlight">\(P(-5 &lt; X &lt; 5) = P(-5 \leq X \leq 5) = F(5) - F(-5)\)</span>. So, we have to compute cdf for uniform distribution at <span class="math notranslate nohighlight">\(5\)</span> and <span class="math notranslate nohighlight">\(-5\)</span>. You can do this calculating as shown in following block:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># P(-5 &lt; X &lt; 5)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># P(-10 &lt; X &lt; 25)</span>
 <span class="n">rv</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">-</span> <span class="n">rv</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -469,7 +476,7 @@ Standard deviation for this distribution: 8.660254037844387
 <img alt="../_images/c2096813bde0f618ed780ab4fa57a43b6275f68767ee86c2d9ef86e67a4742a5.png" src="../_images/c2096813bde0f618ed780ab4fa57a43b6275f68767ee86c2d9ef86e67a4742a5.png" />
 </div>
 </div>
-<p>Now, we will look into <em>frequency interpretation</em> of probability. You can read more about it <a class="reference external" href="https://online.stat.psu.edu/stat500/lesson/2/2.3">here</a>. Below code plots the distribution of samples drawn from uniform distribution. Number of samples initially is set to 10 and with every iteration it increases by an order of magnitude.</p>
+<p>Now, we will look into <em>frequency interpretation</em> of probability. You can read more about it <a class="reference external" href="https://online.stat.psu.edu/stat500/lesson/2/2.3">here</a>. Below code plots the distribution of samples drawn from uniform distribution. Number of samples initially is set to 10 and with every iteration it increases by an order of magnitude. Run the below code block and see the plots.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Some settings</span>
@@ -501,6 +508,20 @@ Standard deviation for this distribution: 8.660254037844387
 </div>
 </div>
 <p>Note that all the samples are between <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, and as the number of samples increase the density value approaches <span class="math notranslate nohighlight">\(1/30\)</span> which is the theortical density value. You can play around with the value of <code class="docutils literal notranslate"><span class="pre">iter</span></code>, <code class="docutils literal notranslate"><span class="pre">initial_samples</span></code>, <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(B\)</span> and see how distribution changes.</p>
+</section>
+<section id="normal-distribution">
+<h2>Normal Distribution<a class="headerlink" href="#normal-distribution" title="Permalink to this heading">#</a></h2>
+<p>A continuous random variable <span class="math notranslate nohighlight">\(X\)</span> is said to have a normal distribution (or Gaussian distribution) with parameters <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span>, where <span class="math notranslate nohighlight">\(-\infty \leq \mu \leq \infty\)</span> and <span class="math notranslate nohighlight">\(\sigma &gt; 0\)</span>, if the pdf of <span class="math notranslate nohighlight">\(X\)</span> is</p>
+<div class="math notranslate nohighlight">
+\[
+    f(x;\mu,\sigma) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}} \text{, where } -\infty \leq x \leq \infty
+\]</div>
+<p>The statement that <span class="math notranslate nohighlight">\(X\)</span> is normally distributed with parameters <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span> is often abbreviated as <span class="math notranslate nohighlight">\(X \sim \mathcal{N}(\mu,\sigma)\)</span>. We will perform an exercise as we did with uniform distribution.</p>
+<p><strong>Example</strong>: Suppose the force acting on a column that helps to support a building is a normally distributed random variable <span class="math notranslate nohighlight">\(X\)</span> with mean value 9 N and standard deviation 1.5 N.</p>
+<p>Now, let’s use <code class="docutils literal notranslate"><span class="pre">norm</span></code> object within <code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code> module to answer various questions related to this example. Reading the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html#scipy.stats.norm">documentation</a> for normal distribution implemented in scipy will help.</p>
+<p><strong>Question</strong>: Compute mean, variance, and standard deviation.</p>
+<p><strong>Answer</strong>: This is very straight-forward since it is gaussian distribution, but just to demostrate, we will use <code class="docutils literal notranslate"><span class="pre">norm</span></code> object.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -542,15 +563,6 @@ Standard deviation for this distribution: 8.660254037844387
         <p class="prev-next-title">Numerical Differentiation</p>
       </div>
     </a>
-    <a class="right-next"
-       href="norm.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Normal Distribution</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -558,7 +570,21 @@ Standard deviation for this distribution: 8.660254037844387
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"></div>
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uniform-distribution">Uniform Distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normal-distribution">Normal Distribution</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
