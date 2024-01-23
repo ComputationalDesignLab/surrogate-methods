@@ -373,9 +373,11 @@ document.write(`
         \min_{x_1,x_2} \quad &amp; x_1^2 - \frac{x_1}{2} - x_2 - 2 \\
         \textrm{subject to} \quad &amp; x_1^2 -4x_1 + x_2 + 1  \leq 0 \\
         \quad &amp; \frac{x_1^2}{2} + x_2^2 - x_1 - 4 \leq 0 \\
+        \textrm{bounded by} \quad &amp; -3 \geq x_1 \geq 5 \\
+        \quad &amp; -3 \geq x_2 \geq 4 \\
     \end{aligned}
 \end{split}\]</div>
-<p><strong>Question</strong>: Plot the objective function contour and <span class="math notranslate nohighlight">\(g_i=0\)</span> curves.</p>
+<p><strong>Question</strong>: Plot the objective function contour and constraint boundaries.</p>
 <p><strong>Answer</strong>: Below block of code defines various functions. Read the comments to understand the code.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -531,6 +533,8 @@ document.write(`
 \[\begin{split}
     \begin{aligned}
         \min_{x_1,x_2} \quad &amp; f(x_1,x_2) + \lambda _1 \frac{[\max(g_1(x_1,x_2),0)]^2}{2} + \lambda _2 \frac{[\max(g_2(x_1,x_2),0)]^2}{2} \\
+        \textrm{bounded by} \quad &amp; -3 \geq x_1 \geq 5 \\
+        \quad &amp; -3 \geq x_2 \geq 4 \\
         \text{where} \quad &amp; f(x_1, x_2) = x_1^2 - \frac{x_1}{2} - x_2 - 2 \\
         \quad &amp; g_1(x_1, x_2) = x_1^2 -4x_1 + x_2 + 1 \\
         \quad &amp; g_2(x_1, x_2) = \frac{x_1^2}{2} + x_2^2 - x_1 - 4
@@ -632,7 +636,7 @@ document.write(`
 <span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">])</span>
 
 <span class="c1"># Solver</span>
-<span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;BFGS&quot;</span>
+<span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;L-BFGS-B&quot;</span>
 
 <span class="c1"># Defines which finite difference scheme to use. Possible values are:</span>
 <span class="c1"># &quot;2-point&quot; - forward/backward difference</span>
@@ -653,9 +657,11 @@ document.write(`
     <span class="s2">&quot;disp&quot;</span><span class="p">:</span> <span class="kc">True</span>
 <span class="p">}</span>
 
+<span class="n">bounds</span> <span class="o">=</span> <span class="p">((</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+
 <span class="c1"># Minimize the function</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">penalized_obj</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">jac</span><span class="o">=</span><span class="n">jac</span><span class="p">,</span> 
-                  <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+                  <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">)</span>
 
 <span class="c1"># Convergence plots</span>
 <span class="n">opt_plots</span><span class="p">(</span><span class="n">history</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
@@ -663,24 +669,98 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
-         Current function value: -3.527135
-         Iterations: 25
-         Function evaluations: 335
-         Gradient evaluations: 67
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =            2     M =           10
+
+At X0         0 variables are exactly at the bounds
+
+At iterate    0    f=  6.85500D+03    |proj g|=  7.00000D+00
+
+At iterate    1    f= -1.86931D+00    |proj g|=  1.96247D+00
+
+At iterate    2    f= -3.01019D+00    |proj g|=  1.00000D+00
+
+At iterate    3    f= -3.12991D+00    |proj g|=  9.50783D-01
+
+At iterate    4    f= -3.13199D+00    |proj g|=  9.84686D-01
+
+At iterate    5    f= -3.21668D+00    |proj g|=  1.48971D+00
+
+At iterate    6    f= -3.35361D+00    |proj g|=  4.16358D+00
+
+At iterate    7    f= -3.39142D+00    |proj g|=  4.40044D+00
+
+At iterate    8    f= -3.47010D+00    |proj g|=  2.76947D+00
+
+At iterate    9    f= -3.50464D+00    |proj g|=  1.09467D+00
+
+At iterate   10    f= -3.51375D+00    |proj g|=  1.12794D+00
+
+At iterate   11    f= -3.52039D+00    |proj g|=  1.04807D+00
+
+At iterate   12    f= -3.52312D+00    |proj g|=  9.74099D-01
+
+At iterate   13    f= -3.52554D+00    |proj g|=  8.84907D-01
+
+At iterate   14    f= -3.52650D+00    |proj g|=  1.19177D-01
+
+At iterate   15    f= -3.52655D+00    |proj g|=  1.23359D-01
+
+At iterate   16    f= -3.52672D+00    |proj g|=  2.15794D-01
+
+At iterate   17    f= -3.52688D+00    |proj g|=  2.59330D-01
+
+At iterate   18    f= -3.52703D+00    |proj g|=  2.70157D-01
+
+At iterate   19    f= -3.52704D+00    |proj g|=  2.63544D-01
+
+At iterate   20    f= -3.52713D+00    |proj g|=  2.75143D-02
+
+At iterate   21    f= -3.52714D+00    |proj g|=  3.10332D-05
+
+At iterate   22    f= -3.52714D+00    |proj g|=  3.67419D-09
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+    2     22    100     24     0     0   3.674D-09  -3.527D+00
+  F =  -3.5271354414899267     
+
+CONVERGENCE: NORM_OF_PROJECTED_GRADIENT_&lt;=_PGTOL            
 </pre></div>
 </div>
-<img alt="../_images/54b618ad648e1810de40997884d3733bf4d7ccdf61262f33d6535d775815dea8.png" src="../_images/54b618ad648e1810de40997884d3733bf4d7ccdf61262f33d6535d775815dea8.png" />
-<img alt="../_images/5919c8336f181c5c9d9496f9221016d44557cf8f5711e3052d4d0b429f5262d0.png" src="../_images/5919c8336f181c5c9d9496f9221016d44557cf8f5711e3052d4d0b429f5262d0.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Bad direction in the line search;
+   refresh the lbfgs memory and restart the iteration.
+</pre></div>
+</div>
+<img alt="../_images/8216ce25b51bf9f98aab910a23df4ce4d3ac9d10b7db884d406e9850fa8feb71.png" src="../_images/8216ce25b51bf9f98aab910a23df4ce4d3ac9d10b7db884d406e9850fa8feb71.png" />
+<img alt="../_images/9435f73742f4092c90ec0c4aec4f03959a6476c22787e55f158fc6a120f09d4b.png" src="../_images/9435f73742f4092c90ec0c4aec4f03959a6476c22787e55f158fc6a120f09d4b.png" />
 </div>
 </div>
-<p>By using the penalty method, you can reach the optimum while satisfying the constraints. Optimum point lies at the intersection of both the constraints (which makes both the constraints active). It is recommended to change optimization parameters (such as starting point, penalty multiplier, etc.) and see how the solution changes.</p>
+<p>By using the penalty method, you can reach the optimum while satisfying the constraints. Optimum point lies at the intersection of both the constraints (which makes both constraints active). It is recommended to change optimization parameters (such as starting point, penalty multiplier, etc.) and see how the solution changes.</p>
+<blockquote>
+<div><p><strong><em>NOTE:</em></strong> The optimization method used is <code class="docutils literal notranslate"><span class="pre">L-BGS-B</span></code> which is a modified version of <code class="docutils literal notranslate"><span class="pre">BFGS</span></code> for bounded optimization.</p>
+</div></blockquote>
 <p><strong>Question</strong>: Use SLSQP method for solving the original constrained optimization problem.</p>
 <p><strong>Answer</strong>: Below block of code defines various parameters for optimization using <strong>SLSQP</strong> method:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Starting point</span>
-<span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">])</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">])</span>
 
 <span class="c1"># Solver</span>
 <span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;SLSQP&quot;</span>
@@ -704,6 +784,9 @@ document.write(`
     <span class="s2">&quot;disp&quot;</span><span class="p">:</span> <span class="kc">True</span>
 <span class="p">}</span>
 
+<span class="c1"># Setting bounds</span>
+<span class="n">bounds</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)]</span>
+
 <span class="c1"># Setting constraints - optimizer needs a list of Nonlinear constraints objects</span>
 <span class="c1"># Read the documentation for more details.</span>
 <span class="n">constraints</span> <span class="o">=</span> <span class="p">[</span><span class="n">NonlinearConstraint</span><span class="p">(</span><span class="n">g1</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
@@ -712,7 +795,7 @@ document.write(`
 <span class="c1"># Minimize the function</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">jac</span><span class="o">=</span><span class="n">jac</span><span class="p">,</span> 
                   <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span> 
-                  <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+                  <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">)</span>
 
 <span class="c1"># Print value of x</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value of x1 at optimum: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
@@ -741,10 +824,8 @@ Value of g2 at optimum: [2.22692002e-07]
 <img alt="../_images/e7bfd3ef25716cbc9cc034d999c2af462612b904c39b0f76c46502fad5432e0b.png" src="../_images/e7bfd3ef25716cbc9cc034d999c2af462612b904c39b0f76c46502fad5432e0b.png" />
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">SLSQP</span></code> reaches the same optimum as penalty method but with much less number of iterations (and function evaluations). It is specifically designed for constrained optimization and uses Sequential Least SQuares Programming approach and uses gradient information of objective and constraints. It is recommended to use SQP based methods for constrained optimization. <code class="docutils literal notranslate"><span class="pre">SLSQP</span></code> method is very sensitive to the starting point. Try changing the starting point and see how the optimization path changes.</p>
-<blockquote>
-<div><p><strong><em>NOTE:</em></strong> Contour is only plotted for <span class="math notranslate nohighlight">\(x_1 \in [-3,5]\)</span> and <span class="math notranslate nohighlight">\(x_2 \in [-3,4]\)</span>. But <em>the optimization process is not bounded by this range</em>, it can go beyond this range. For example, try (4,4) as the starting point and you will see that the optimization process goes beyond the range of contour plot. Unlike <code class="docutils literal notranslate"><span class="pre">BFGS</span></code> or <code class="docutils literal notranslate"><span class="pre">Conjugate</span> <span class="pre">Gradient</span></code> method, <code class="docutils literal notranslate"><span class="pre">SLSQP</span></code> CAN handle bounds. You can use <code class="docutils literal notranslate"><span class="pre">bounds</span></code> argument in minimize function to define bounds. This is very useful when you want to limit the search space.</p>
-</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">SLSQP</span></code> reaches the same optimum as penalty method but with much less number of iterations (and function evaluations). It is specifically designed for constrained optimization and uses Quadratic Programming approach. It is recommended to use SQP based methods for constrained optimization.</p>
+<p><code class="docutils literal notranslate"><span class="pre">SLSQP</span></code> method is very sensitive to the starting point. Try changing the starting point and see how the optimization path changes. For example, try (4,-2) as the starting point and you will see that the optimization process goes to the boundary of contour plot and reverts back towards to optimum since the bounds are provided to optimizer.</p>
 </section>
 </section>
 
