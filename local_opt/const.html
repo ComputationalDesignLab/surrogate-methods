@@ -523,9 +523,21 @@ document.write(`
 <img alt="../_images/9569053f4792861499f7b02df61558e8ccbeeb0dced83795ae71bd9161745401.png" src="../_images/9569053f4792861499f7b02df61558e8ccbeeb0dced83795ae71bd9161745401.png" />
 </div>
 </div>
-<p>The black curves denote <span class="math notranslate nohighlight">\(g_i=0\)</span> and only the unmasked region ABCDA is <strong>feasible</strong>.</p>
-<p><strong>Question</strong>: Use SLSQP method for solving the optimization problem.</p>
-<p><strong>Answer</strong>: Below block of code defines various functions which are used during the optimization. Read comments in the function for more details.</p>
+<p>The black curves denote <span class="math notranslate nohighlight">\(g_i=0\)</span> and the region ABCDA is <strong>feasible</strong>, remaining design space (white masked region) is infeasible.</p>
+<section id="penalty-method">
+<h2>Penalty method:<a class="headerlink" href="#penalty-method" title="Permalink to this heading">#</a></h2>
+<p>The goal of penalty methods is to convert a constrained optimization problem into an unconstrained optimization problem by adding a penalty term to the objective function. This penalty term makes objective function larger when the constraints are violated, otherwise penalty is zero. There are many ways to implement penalty function but we will use <strong>quadratic penalty function</strong> here. Optimization problem statement will be transformed to:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{aligned}
+        \min_{x_1,x_2} \quad &amp; f(x_1,x_2) + \lambda _1 \frac{[\max(g_1(x_1,x_2),0)]^2}{2} + \lambda _2 \frac{[\max(g_2(x_1,x_2),0)]^2}{2} \\
+        \text{where} \quad &amp; f(x_1, x_2) = x_1^2 - \frac{x_1}{2} - x_2 - 2 \\
+        \quad &amp; g_1(x_1, x_2) = x_1^2 -4x_1 + x_2 + 1 \\
+        \quad &amp; g_2(x_1, x_2) = \frac{x_1^2}{2} + x_2^2 - x_1 - 4
+    \end{aligned}
+\end{split}\]</div>
+<p>So, the second and third term will be zero when the constraints are satisfied. Otherwise, the penalty term will be positive and will increase the objective function value. Now, the problem is unconstrained and we can use methods like <code class="docutils literal notranslate"><span class="pre">BFGS</span></code> or <code class="docutils literal notranslate"><span class="pre">Conjugate</span> <span class="pre">Gradient</span></code> to solve the above problem.</p>
+<p>Below block of code defines various functions which are used during the optimization. Read comments in the function for more details.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -587,94 +599,12 @@ document.write(`
 </div>
 </div>
 </div>
-<p>Below block of code defines various parameters for optimization using <strong>SLSQP</strong> method:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Starting point</span>
-<span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">])</span>
-
-<span class="c1"># Solver</span>
-<span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;SLSQP&quot;</span>
-
-<span class="c1"># Defines which finite difference scheme to use. Possible values are:</span>
-<span class="c1"># &quot;2-point&quot; - forward/backward difference</span>
-<span class="c1"># &quot;3-point&quot; - central difference</span>
-<span class="c1"># &quot;cs&quot; - complex step</span>
-<span class="n">jac</span> <span class="o">=</span> <span class="s2">&quot;3-point&quot;</span>
-
-<span class="c1"># Defining dict for storing history of optimization</span>
-<span class="n">history</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">history</span><span class="p">[</span><span class="s2">&quot;x1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x0</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
-<span class="n">history</span><span class="p">[</span><span class="s2">&quot;x2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x0</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
-<span class="n">history</span><span class="p">[</span><span class="s2">&quot;f&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">)]</span>
-<span class="n">history</span><span class="p">[</span><span class="s2">&quot;g1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">g1</span><span class="p">(</span><span class="n">x0</span><span class="p">)]</span>
-<span class="n">history</span><span class="p">[</span><span class="s2">&quot;g2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">g2</span><span class="p">(</span><span class="n">x0</span><span class="p">)]</span>
-
-<span class="c1"># Solver options</span>
-<span class="n">options</span> <span class="o">=</span><span class="p">{</span>
-    <span class="s2">&quot;disp&quot;</span><span class="p">:</span> <span class="kc">True</span>
-<span class="p">}</span>
-
-<span class="c1"># Setting constraints - optimizer needs a list of Nonlinear constraints objects</span>
-<span class="c1"># Read the documentation for more details.</span>
-<span class="n">constraints</span> <span class="o">=</span> <span class="p">[</span><span class="n">NonlinearConstraint</span><span class="p">(</span><span class="n">g1</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
-               <span class="n">NonlinearConstraint</span><span class="p">(</span><span class="n">g2</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
-
-<span class="c1"># Minimize the function</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">jac</span><span class="o">=</span><span class="n">jac</span><span class="p">,</span> 
-                  <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span> 
-                  <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
-
-<span class="c1"># Print value of x</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value of x1 at optimum: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value of x2 at optimum: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value of g1 at optimum: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">g1</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">)))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value of g2 at optimum: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">g2</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">)))</span>
-
-<span class="c1"># Convergence plots</span>
-<span class="n">opt_plots</span><span class="p">(</span><span class="n">history</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully    (Exit mode 0)
-            Current function value: -3.523406546437449
-            Iterations: 7
-            Function evaluations: 36
-            Gradient evaluations: 7
-Value of x1 at optimum: 1.0623763071639867
-Value of x2 at optimum: 2.120861810878845
-Value of g1 at optimum: [2.46287879e-10]
-Value of g2 at optimum: [2.22692002e-07]
-</pre></div>
-</div>
-<img alt="../_images/159efbcd30663348027219a6ea4211111e09c7e42516088190acd3737c6dd3e4.png" src="../_images/159efbcd30663348027219a6ea4211111e09c7e42516088190acd3737c6dd3e4.png" />
-<img alt="../_images/e7bfd3ef25716cbc9cc034d999c2af462612b904c39b0f76c46502fad5432e0b.png" src="../_images/e7bfd3ef25716cbc9cc034d999c2af462612b904c39b0f76c46502fad5432e0b.png" />
-</div>
-</div>
-<p>Optimum point lies at the intersection of both the constraints (which makes both the constraints active).</p>
-<blockquote>
-<div><p><strong><em>NOTE:</em></strong> Contour is only plotted for <span class="math notranslate nohighlight">\(x_1 \in [-3,5]\)</span> and <span class="math notranslate nohighlight">\(x_2 \in [-3,4]\)</span>. But <em>the optimization process is not bounded by this range</em>, it can go beyond this range. For example, try (4,4) as the starting point and you will see that the optimization process goes beyond the range of contour plot. Unlike <code class="docutils literal notranslate"><span class="pre">BFGS</span></code> or <code class="docutils literal notranslate"><span class="pre">Conjugate</span> <span class="pre">Gradient</span></code> method, <code class="docutils literal notranslate"><span class="pre">SLSQP</span></code> CAN handle bounds. You can use <code class="docutils literal notranslate"><span class="pre">bounds</span></code> argument in minimize function to define bounds. This is very useful when want to limit the search space.</p>
-</div></blockquote>
-<p>It is recommended to change optimization parameters and see how the solution changes. <code class="docutils literal notranslate"><span class="pre">SLSQP</span></code> method is very sensitive to the starting point. Try changing the starting point and see how the optimization path changes.</p>
-<section id="penalty-method">
-<h2>Penalty method:<a class="headerlink" href="#penalty-method" title="Permalink to this heading">#</a></h2>
-<p>The goal of using penalty method is to convert a constrained optimization problem into an unconstrained optimization problem by adding a penalty term to the objective function. This penalty term makes objective function larger when the constraints are violated, otherwise penalty is zero. There are many ways to implement penalty function but we will use <strong>quadratic penalty function</strong> here. Optimization problem statement will be transformed to:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-    \begin{aligned}
-        \min_{x_1,x_2} \quad &amp; f(x_1,x_2) + \lambda _1 \frac{[\max(g_1(x_1,x_2),0)]^2}{2} + \lambda _2 \frac{[\max(g_2(x_1,x_2),0)]^2}{2} \\
-        \text{where} \quad &amp; f(x_1, x_2) = x_1^2 - \frac{x_1}{2} - x_2 - 2 \\
-        \quad &amp; g_1(x_1, x_2) = x_1^2 -4x_1 + x_2 + 1 \\
-        \quad &amp; g_2(x_1, x_2) = \frac{x_1^2}{2} + x_2^2 - x_1 - 4
-    \end{aligned}
-\end{split}\]</div>
-<p>So, the second and third term will be zero when the constraints are satisfied. Otherwise, the penalty term will be positive and will increase the objective function value. Now, the problem is unconstrained and we can use methods like <code class="docutils literal notranslate"><span class="pre">BFGS</span></code> or <code class="docutils literal notranslate"><span class="pre">Conjugate</span> <span class="pre">Gradient</span></code> to solve the above problem. Below block of code defines a function which returns penalized objective function and is given to optimizer.</p>
+<p>Below block of code defines a function which returns penalized objective function value.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">penalized_obj</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Function for performing penalized objective.</span>
+<span class="sd">        Function for evaluating penalized objective.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="c1"># Compute objective and constraints</span>
@@ -741,10 +671,80 @@ Value of g2 at optimum: [2.22692002e-07]
 </pre></div>
 </div>
 <img alt="../_images/54b618ad648e1810de40997884d3733bf4d7ccdf61262f33d6535d775815dea8.png" src="../_images/54b618ad648e1810de40997884d3733bf4d7ccdf61262f33d6535d775815dea8.png" />
-<img alt="../_images/a57fc460b512e72ede0292f627092184eb5aab65e0eaae3cb97f42b80ba46504.png" src="../_images/a57fc460b512e72ede0292f627092184eb5aab65e0eaae3cb97f42b80ba46504.png" />
+<img alt="../_images/5919c8336f181c5c9d9496f9221016d44557cf8f5711e3052d4d0b429f5262d0.png" src="../_images/5919c8336f181c5c9d9496f9221016d44557cf8f5711e3052d4d0b429f5262d0.png" />
 </div>
 </div>
-<p>By using the penalty method, you can reach the same optimum. But note the number of function evaluations which is a lot more when compared to <em>SLSQP</em> method. You can change the penalty multiplier and see what happens.</p>
+<p>By using the penalty method, you can reach the optimum while satisfying the constraints. Optimum point lies at the intersection of both the constraints (which makes both the constraints active). It is recommended to change optimization parameters (such as starting point, penalty multiplier, etc.) and see how the solution changes.</p>
+<p><strong>Question</strong>: Use SLSQP method for solving the original constrained optimization problem.</p>
+<p><strong>Answer</strong>: Below block of code defines various parameters for optimization using <strong>SLSQP</strong> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Starting point</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">])</span>
+
+<span class="c1"># Solver</span>
+<span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;SLSQP&quot;</span>
+
+<span class="c1"># Defines which finite difference scheme to use. Possible values are:</span>
+<span class="c1"># &quot;2-point&quot; - forward/backward difference</span>
+<span class="c1"># &quot;3-point&quot; - central difference</span>
+<span class="c1"># &quot;cs&quot; - complex step</span>
+<span class="n">jac</span> <span class="o">=</span> <span class="s2">&quot;3-point&quot;</span>
+
+<span class="c1"># Defining dict for storing history of optimization</span>
+<span class="n">history</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">history</span><span class="p">[</span><span class="s2">&quot;x1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x0</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+<span class="n">history</span><span class="p">[</span><span class="s2">&quot;x2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x0</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">history</span><span class="p">[</span><span class="s2">&quot;f&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">)]</span>
+<span class="n">history</span><span class="p">[</span><span class="s2">&quot;g1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">g1</span><span class="p">(</span><span class="n">x0</span><span class="p">)]</span>
+<span class="n">history</span><span class="p">[</span><span class="s2">&quot;g2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">g2</span><span class="p">(</span><span class="n">x0</span><span class="p">)]</span>
+
+<span class="c1"># Solver options</span>
+<span class="n">options</span> <span class="o">=</span><span class="p">{</span>
+    <span class="s2">&quot;disp&quot;</span><span class="p">:</span> <span class="kc">True</span>
+<span class="p">}</span>
+
+<span class="c1"># Setting constraints - optimizer needs a list of Nonlinear constraints objects</span>
+<span class="c1"># Read the documentation for more details.</span>
+<span class="n">constraints</span> <span class="o">=</span> <span class="p">[</span><span class="n">NonlinearConstraint</span><span class="p">(</span><span class="n">g1</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+               <span class="n">NonlinearConstraint</span><span class="p">(</span><span class="n">g2</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+
+<span class="c1"># Minimize the function</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">jac</span><span class="o">=</span><span class="n">jac</span><span class="p">,</span> 
+                  <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span> 
+                  <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+
+<span class="c1"># Print value of x</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value of x1 at optimum: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value of x2 at optimum: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value of g1 at optimum: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">g1</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value of g2 at optimum: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">g2</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">)))</span>
+
+<span class="c1"># Convergence plots</span>
+<span class="n">opt_plots</span><span class="p">(</span><span class="n">history</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully    (Exit mode 0)
+            Current function value: -3.523406546437449
+            Iterations: 7
+            Function evaluations: 36
+            Gradient evaluations: 7
+Value of x1 at optimum: 1.0623763071639867
+Value of x2 at optimum: 2.120861810878845
+Value of g1 at optimum: [2.46287879e-10]
+Value of g2 at optimum: [2.22692002e-07]
+</pre></div>
+</div>
+<img alt="../_images/159efbcd30663348027219a6ea4211111e09c7e42516088190acd3737c6dd3e4.png" src="../_images/159efbcd30663348027219a6ea4211111e09c7e42516088190acd3737c6dd3e4.png" />
+<img alt="../_images/e7bfd3ef25716cbc9cc034d999c2af462612b904c39b0f76c46502fad5432e0b.png" src="../_images/e7bfd3ef25716cbc9cc034d999c2af462612b904c39b0f76c46502fad5432e0b.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">SLSQP</span></code> reaches the same optimum as penalty method but with much less number of iterations (and function evaluations). It is specifically designed for constrained optimization and uses Sequential Least SQuares Programming approach and uses gradient information of objective and constraints. It is recommended to use SQP based methods for constrained optimization. <code class="docutils literal notranslate"><span class="pre">SLSQP</span></code> method is very sensitive to the starting point. Try changing the starting point and see how the optimization path changes.</p>
+<blockquote>
+<div><p><strong><em>NOTE:</em></strong> Contour is only plotted for <span class="math notranslate nohighlight">\(x_1 \in [-3,5]\)</span> and <span class="math notranslate nohighlight">\(x_2 \in [-3,4]\)</span>. But <em>the optimization process is not bounded by this range</em>, it can go beyond this range. For example, try (4,4) as the starting point and you will see that the optimization process goes beyond the range of contour plot. Unlike <code class="docutils literal notranslate"><span class="pre">BFGS</span></code> or <code class="docutils literal notranslate"><span class="pre">Conjugate</span> <span class="pre">Gradient</span></code> method, <code class="docutils literal notranslate"><span class="pre">SLSQP</span></code> CAN handle bounds. You can use <code class="docutils literal notranslate"><span class="pre">bounds</span></code> argument in minimize function to define bounds. This is very useful when you want to limit the search space.</p>
+</div></blockquote>
 </section>
 </section>
 
