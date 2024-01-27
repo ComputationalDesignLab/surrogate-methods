@@ -14,3 +14,6 @@ chapters:
     sections:
     - file: local_opt/unconst
     - file: local_opt/const
+  - file: global_opt/intro
+    sections:
+    - file: global_opt/multi
