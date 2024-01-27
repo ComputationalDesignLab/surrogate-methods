@@ -186,6 +186,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="local_opt/const.html">Constrained Optimization</a></li>
 </ul>
 </li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="global_opt/intro.html">Global Optimization</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="global_opt/multi.html">Multi-start Gradient-based Optimization</a></li>
+</ul>
+</li>
 </ul>
 
     </div>
@@ -429,6 +433,12 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Jones Function&#39;)
+</pre></div>
+</div>
+<img alt="_images/1920321c219a200f88530718417210da05983ec2f48dad396b67e5fba1325896.png" src="_images/1920321c219a200f88530718417210da05983ec2f48dad396b67e5fba1325896.png" />
+</div>
 </div>
 <p><strong>Note</strong>: For the jones function, a logscaled filled contour is needed to better visualize the design space. But there are many negative function values in the region and it is not possibile to take log of negative values. So, only line contours are plotted.</p>
 <p>Before starting with global optimization, we will do simple unconstrained gradient based optimization with different starting points and note the results. Below block of code defines various required functions.</p>
@@ -597,6 +607,41 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: -9.031204
+         Iterations: 9
+         Function evaluations: 36
+         Gradient evaluations: 12
+Value of x1 at optimum: 2.4238786497394718
+Value of x2 at optimum: 1.9218850699097503
+</pre></div>
+</div>
+<img alt="_images/269e012f3a770f64594f1e59621b385b70bb5ce31f929a0f9e976b9148984dec.png" src="_images/269e012f3a770f64594f1e59621b385b70bb5ce31f929a0f9e976b9148984dec.png" />
+<img alt="_images/1859362e67c3150329772b38abc75367ad1c1b69bcb9d5ea49b79a8463cf5d88.png" src="_images/1859362e67c3150329772b38abc75367ad1c1b69bcb9d5ea49b79a8463cf5d88.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: -9.776964
+         Iterations: 7
+         Function evaluations: 48
+         Gradient evaluations: 16
+Value of x1 at optimum: -0.44947767686813583
+Value of x2 at optimum: 2.2927527005855954
+</pre></div>
+</div>
+<img alt="_images/67229ed15b5a863ae10574c862e9db92f2f8a77aacecd70c10bca9c3257604d1.png" src="_images/67229ed15b5a863ae10574c862e9db92f2f8a77aacecd70c10bca9c3257604d1.png" />
+<img alt="_images/91940c64d4cf3a2a61cdac0e9defae8ede10ecd8ce0af0817f3d49e2509c0c67.png" src="_images/91940c64d4cf3a2a61cdac0e9defae8ede10ecd8ce0af0817f3d49e2509c0c67.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: -13.532035
+         Iterations: 22
+         Function evaluations: 153
+         Gradient evaluations: 51
+Value of x1 at optimum: 2.6732085924175255
+Value of x2 at optimum: -0.6758850426022831
+</pre></div>
+</div>
+<img alt="_images/0c7933b549c84a31bd0b363a7cf92b1932bfd605c72f5b4f91fb965f6017a1df.png" src="_images/0c7933b549c84a31bd0b363a7cf92b1932bfd605c72f5b4f91fb965f6017a1df.png" />
+<img alt="_images/6431488fb437f34c570e9c86a71fdc7de3c904ebb88a433852636ccc7a7d9a1a.png" src="_images/6431488fb437f34c570e9c86a71fdc7de3c904ebb88a433852636ccc7a7d9a1a.png" />
+</div>
 </div>
 <p>You can notice that with different starting points, the optimum obtained is different. This confirms the multi-modal nature of design space and the need for global optimization algorithm.</p>
 <section id="multi-start-gradient-based-optimization">
@@ -651,6 +696,31 @@ document.write(`
     
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Result:&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is the best value found at x1 = </span><span class="si">{}</span><span class="s2"> and x2 = </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">best_obj</span><span class="p">,</span> <span class="n">best_point</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">best_point</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1:
+Starting point: [-0.44947767  2.2927527 ], Optimum found at: -9.776963671379727
+Iteration 2:
+Starting point: [ 2.6732083  -0.67588499], Optimum found at: -13.53203478165186
+Iteration 3:
+Starting point: [ 2.67320852 -0.67588494], Optimum found at: -13.532034781652612
+Iteration 4:
+Starting point: [-0.44947767  2.29275273], Optimum found at: -9.77696367137972
+Iteration 5:
+Starting point: [2.42387823 1.92188478], Optimum found at: -9.031204451296723
+Iteration 6:
+Starting point: [ 2.67320836 -0.67588491], Optimum found at: -13.532034781652165
+Iteration 7:
+Starting point: [-0.44947765  2.29275263], Optimum found at: -9.776963671379637
+Iteration 8:
+Starting point: [-0.44947757  2.29275279], Optimum found at: -9.776963671379535
+Iteration 9:
+Starting point: [2.42387923 1.92188489], Optimum found at: -9.031204451295679
+
+Result:
+-13.532034781652612 is the best value found at x1 = 2.673208518793241 and x2 = -0.6758849352700709.
 </pre></div>
 </div>
 </div>
@@ -769,6 +839,22 @@ document.write(`
 <span class="n">jones_func_global_opt_plots</span><span class="p">(</span><span class="n">history</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>differential_evolution step 1: f(x)= -13.1271
+differential_evolution step 2: f(x)= -13.1271
+differential_evolution step 3: f(x)= -13.1322
+differential_evolution step 4: f(x)= -13.4947
+differential_evolution step 5: f(x)= -13.5252
+differential_evolution step 6: f(x)= -13.5313
+differential_evolution step 7: f(x)= -13.5313
+Polishing solution with &#39;L-BFGS-B&#39;
+Value of x1 at optimum: 2.67320854788102
+Value of x2 at optimum: -0.6758849754241766
+Function value at optimum: -13.532034781652648
+</pre></div>
+</div>
+<img alt="_images/6af105d6cf3196c4d37c8885064379365bb57c5aa60afc23623943c7ce5c3b26.png" src="_images/6af105d6cf3196c4d37c8885064379365bb57c5aa60afc23623943c7ce5c3b26.png" />
 </div>
 </div>
 <p><em>First</em> plot shows the best solution in each iteration. <em>Second</em> plot shows the fractional value of population convergence. As soon as this value goes above 1.0, optimization is terminated. Also, when you run above block of code once again, you will notice that convergence history changes slightly which shows that there is some randomness in the algorithm. Most global optimization algorithm have some kind of randomness in their method, so it is always advised to run the optimization few times to ensure that you get more or less the same answer everytime.</p>
