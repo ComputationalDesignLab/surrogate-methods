@@ -1,0 +1,587 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Particle Swarm Optimization &#8212; AAE 590 Surrogate Methods</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'global_opt/pso';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Multi-start Gradient-based Optimization" href="multi.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">AAE 590 Surrogate Methods</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources.html">Python and Jupyter notebook resources</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../review_nm/intro.html">Review of Numerical Methods and Probability</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../review_nm/error.html">Error estimation for iterative method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../review_nm/num_diff.html">Numerical Differentiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../review_nm/uniform.html">Uniform Distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../review_nm/norm.html">Normal Distribution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../prob_form.html">Problem Formulation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../local_opt/intro.html">Local Optimization</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../local_opt/unconst.html">Unconstrained Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../local_opt/const.html">Constrained Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Global Optimization</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="multi.html">Multi-start Gradient-based Optimization</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Particle Swarm Optimization</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/global_opt/pso.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Particle Swarm Optimization</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="particle-swarm-optimization">
+<h1>Particle Swarm Optimization<a class="headerlink" href="#particle-swarm-optimization" title="Permalink to this heading">#</a></h1>
+<p>In this section, Particle Swarm Optimization (PSO) algorithm is demonstrated. PSO is a population-based stochastic optimization algorithm inspired by social behavior. The algorithm was originally proposed by Kennedy and Eberhart in 1995. The algorithm is based on a population of particles that move around in search space and update their position and velocity based on locally and globally best-found solutions, refer lecture notes for more details.</p>
+<blockquote>
+<div><p><strong><em>NOTE:</em></strong> You need to install <a class="reference external" href="https://pymoo.org/index.html">pymoo</a> which provides single- and multi-objective global optimization algorithms. Activate the environment you created for this class in anaconda prompt and install pymoo using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pymoo</span></code>.</p>
+</div></blockquote>
+<p>As described in previous section, <a class="reference internal" href="intro.html#intro-jones-function"><span class="std std-ref">Jones function</span></a> will be used to demonstrate the method. Following block imports all required packages:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">pymoo.core.problem</span> <span class="kn">import</span> <span class="n">Problem</span>
+<span class="kn">from</span> <span class="nn">pymoo.algorithms.soo.nonconvex.pso</span> <span class="kn">import</span> <span class="n">PSO</span>
+<span class="kn">from</span> <span class="nn">pymoo.operators.sampling.lhs</span> <span class="kn">import</span> <span class="n">LHS</span>
+<span class="kn">from</span> <span class="nn">pymoo.termination.default</span> <span class="kn">import</span> <span class="n">DefaultSingleObjectiveTermination</span>
+<span class="kn">from</span> <span class="nn">pymoo.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+<span class="kn">from</span> <span class="nn">pymoo.config</span> <span class="kn">import</span> <span class="n">Config</span>
+<span class="n">Config</span><span class="o">.</span><span class="n">warnings</span><span class="p">[</span><span class="s1">&#39;not_compiled&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Defining problem and performing optimization is sightly different from previous sections. Typically, <code class="docutils literal notranslate"><span class="pre">pymoo</span></code> requries three components to perform optimization: <code class="docutils literal notranslate"><span class="pre">problem</span></code> (defines the objective function and constraints), <code class="docutils literal notranslate"><span class="pre">algorithm</span></code> (defines the optimization algorithm), and <code class="docutils literal notranslate"><span class="pre">minimize</span></code> is the function that performs optimization.</p>
+<p>Below block defines the problem, it is recommended that you read pymoo’s <a class="reference external" href="https://pymoo.org/problems/index.html">problem</a> documentation to understand the arguments:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">JonesFunction</span><span class="p">(</span><span class="n">Problem</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_var</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_obj</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_constr</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">xl</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]),</span> <span class="n">xu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
+
+    <span class="k">def</span> <span class="nf">_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="n">x1</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">x2</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x1</span><span class="o">**</span><span class="mi">4</span> <span class="o">+</span> <span class="n">x2</span><span class="o">**</span><span class="mi">4</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">x1</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">3</span><span class="o">*</span><span class="n">x2</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x1</span><span class="o">*</span><span class="n">x2</span>
+
+<span class="n">problem</span> <span class="o">=</span> <span class="n">JonesFunction</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As you can see in previous code block, the <code class="docutils literal notranslate"><span class="pre">JonesProblem</span></code> is a class (not a function) which inherits from <code class="docutils literal notranslate"><span class="pre">Problem</span></code> class defined in <code class="docutils literal notranslate"><span class="pre">pymoo</span></code>. The class has two methods: <code class="docutils literal notranslate"><span class="pre">__init__</span></code> and <code class="docutils literal notranslate"><span class="pre">_evaluate</span></code>. The <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method defines the problem settings, and <code class="docutils literal notranslate"><span class="pre">_evaluate</span></code> method outlines how to evaluate the objective function and constraints, if any. The <code class="docutils literal notranslate"><span class="pre">_evaluate</span></code> method is called by <code class="docutils literal notranslate"><span class="pre">pymoo</span></code> during optimization.</p>
+<blockquote>
+<div><p><strong><em>NOTE:</em></strong> Bounds are an essential part of global optimization algorithms since entire design space within the bounds is searched. It is important that bounds are carefully selected. If the bounds are too large, the algorithm will take longer to converge. If the bounds are too small, the algorithm may not find global optimum.</p>
+</div></blockquote>
+<p>Below block defines the algorithm, it is recommended that you read pymoo’s <a class="reference external" href="https://pymoo.org/algorithms/soo/pso.html">PSO</a> documentation to understand the arguments:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pop_size</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">problem</span><span class="o">.</span><span class="n">n_var</span> <span class="c1"># Number of individuals in the population: 10 times number of variables</span>
+<span class="n">sampling</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">()</span> <span class="c1"># How the initial population is sampled</span>
+
+<span class="n">algorithm</span> <span class="o">=</span> <span class="n">PSO</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="n">pop_size</span><span class="p">,</span> <span class="n">sampling</span><span class="o">=</span><span class="n">sampling</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In previous code block, <code class="docutils literal notranslate"><span class="pre">PSO</span></code> class is initialized with user provided settings for the algorithm, refer documentation to see what all can be defined. The <code class="docutils literal notranslate"><span class="pre">sampling</span></code> is set to LHS which stands for Latin Hypercube Sampling and is used to generate initial population within the bounds. LHS and other methods will be covered in Design of Experiments lecture.</p>
+<p>Below block performs optimization using <code class="docutils literal notranslate"><span class="pre">minimize</span></code> function from <code class="docutils literal notranslate"><span class="pre">pymoo</span></code>, it is recommended that you read pymoo’s <a class="reference external" href="https://pymoo.org/interface/minimize.html">minimize</a> documentation to see the list of arguments that can be provided. A termination criteria is also provided which tells optimizer when to stop, refer pymoo’s <a class="reference external" href="https://pymoo.org/interface/termination.html">termination</a> documentation to see what all termination criteria can be provided.</p>
+<blockquote>
+<div><p><strong><em>NOTE</em></strong>: The <code class="docutils literal notranslate"><span class="pre">seed</span></code> option has been set so that results can be compared to other algorithms. If you change the seed value or remove that option, then you will get different results.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">termination</span> <span class="o">=</span> <span class="n">DefaultSingleObjectiveTermination</span><span class="p">(</span>
+    <span class="n">xtol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
+    <span class="n">cvtol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
+    <span class="n">ftol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
+    <span class="n">period</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">n_max_gen</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+    <span class="n">n_max_evals</span><span class="o">=</span><span class="mi">100000</span>
+<span class="p">)</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">JonesFunction</span><span class="p">(),</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">termination</span><span class="o">=</span><span class="n">termination</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save_history</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best solution found: </span><span class="se">\n</span><span class="s2">X = </span><span class="si">%s</span><span class="se">\n</span><span class="s2">F = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">F</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>======================================================================================================
+n_gen  |  n_eval  |    f     |    S    |    w    |    c1    |    c2    |     f_avg     |     f_min    
+======================================================================================================
+     1 |       20 |        - |       - |  0.9000 |  2.00000 |  2.00000 |  8.8544083363 | -1.112498E+01
+     2 |       40 |  0.05622 |       3 |  0.4355 |  2.00000 |  2.01555 | -3.339992E+00 | -1.132411E+01
+     3 |       60 |  0.02637 |       3 |  0.4166 |  1.99240 |  2.03040 | -7.795352E+00 | -1.318242E+01
+     4 |       80 |  0.01346 |       3 |  0.4084 |  1.98144 |  2.04199 | -9.152301E+00 | -1.343557E+01
+     5 |      100 | -2.9E-03 |       3 |  0.3982 |  1.97036 |  2.05077 | -1.023792E+01 | -1.343557E+01
+     6 |      120 | -1.8E-03 |       3 |  0.3989 |  1.96055 |  2.05833 | -1.068830E+01 | -1.343557E+01
+     7 |      140 |  0.00617 |       3 |  0.4039 |  1.95205 |  2.06728 | -1.208365E+01 | -1.343569E+01
+     8 |      160 |  0.00510 |       3 |  0.4032 |  1.94397 |  2.08393 | -1.225258E+01 | -1.350936E+01
+     9 |      180 | -1.1E-02 |       3 |  0.3930 |  1.93148 |  2.08958 | -1.236461E+01 | -1.352604E+01
+    10 |      200 | -1.1E-02 |       3 |  0.3934 |  1.92298 |  2.10300 | -1.250133E+01 | -1.352604E+01
+    11 |      220 | -8.1E-03 |       3 |  0.3950 |  1.91236 |  2.11429 | -1.261733E+01 | -1.352843E+01
+    12 |      240 | -7.4E-03 |       3 |  0.3954 |  1.90182 |  2.12608 | -1.268584E+01 | -1.352843E+01
+    13 |      260 | -7.2E-03 |       3 |  0.3955 |  1.89030 |  2.13154 | -1.297344E+01 | -1.352985E+01
+    14 |      280 | -7.1E-03 |       3 |  0.3956 |  1.88180 |  2.13836 | -1.297690E+01 | -1.353165E+01
+    15 |      300 | -7.1E-03 |       3 |  0.3956 |  1.87540 |  2.15360 | -1.298887E+01 | -1.353165E+01
+    16 |      320 | -6.9E-03 |       3 |  0.3957 |  1.86373 |  2.15672 | -1.300809E+01 | -1.353165E+01
+    17 |      340 | -6.8E-03 |       3 |  0.3958 |  1.85604 |  2.16135 | -1.301228E+01 | -1.353190E+01
+    18 |      360 | -3.2E-03 |       3 |  0.3980 |  1.85128 |  2.17463 | -1.318719E+01 | -1.353190E+01
+    19 |      380 | -3.2E-03 |       3 |  0.3980 |  1.84274 |  2.18474 | -1.322416E+01 | -1.353195E+01
+    20 |      400 | -2.9E-03 |       3 |  0.3982 |  1.83420 |  2.19644 | -1.324471E+01 | -1.353202E+01
+    21 |      420 | -3.9E-03 |       3 |  0.3975 |  1.82269 |  2.19840 | -1.330419E+01 | -1.353202E+01
+    22 |      440 | -3.9E-03 |       3 |  0.3976 |  1.81610 |  2.20496 | -1.330750E+01 | -1.353202E+01
+    23 |      460 | -3.6E-03 |       3 |  0.3977 |  1.80945 |  2.21051 | -1.331242E+01 | -1.353202E+01
+    24 |      480 | -9.5E-03 |       3 |  0.3941 |  1.80504 |  2.22283 | -1.352330E+01 | -1.353203E+01
+Best solution found: 
+X = [ 2.67344824 -0.67616884]
+F = [-13.53203347]
+</pre></div>
+</div>
+</div>
+</div>
+<p>PSO is able to get to the global optimum. You can change the termination criteria to see how the algorithm’s performance changes, e.g.: you can decrese the various <code class="docutils literal notranslate"><span class="pre">tol</span></code> to lower value and you will notice that it takes longer for the algorithm to stop. The <code class="docutils literal notranslate"><span class="pre">minimize</span></code> function also returns an object of <code class="docutils literal notranslate"><span class="pre">Result</span></code> class which contains all the information about optimization, refer pymoo’s <a class="reference external" href="https://pymoo.org/interface/result.html">result</a> documentation to see what all information is available.</p>
+<p>Below block uses <code class="docutils literal notranslate"><span class="pre">res</span></code> to visualize the location of particles as optimization progresses:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">niter</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">history</span><span class="p">)</span> <span class="c1"># Number of iterations</span>
+<span class="n">iterations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">niter</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span> <span class="c1"># Array of iterations</span>
+
+<span class="c1"># Plotting the particle evolution</span>
+<span class="k">for</span> <span class="n">itr</span> <span class="ow">in</span> <span class="n">iterations</span><span class="p">:</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="n">itr</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">)[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">res</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="n">itr</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Iteration </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">itr</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/54fa7219be0d66e7825441ef68a5fe08cbc4d06c465c6ac219c78aa2fb9cc36d.png" src="../_images/54fa7219be0d66e7825441ef68a5fe08cbc4d06c465c6ac219c78aa2fb9cc36d.png" />
+<img alt="../_images/6d7d346b9217a8b9f5492793d1731a47d3b5c4f67ad073a85c209d2f4ea32bea.png" src="../_images/6d7d346b9217a8b9f5492793d1731a47d3b5c4f67ad073a85c209d2f4ea32bea.png" />
+<img alt="../_images/df93d4a28fe45f335795e41eb3f83d0bc389ca0eee613296908185dd43186be3.png" src="../_images/df93d4a28fe45f335795e41eb3f83d0bc389ca0eee613296908185dd43186be3.png" />
+<img alt="../_images/4985132b0fe9b7511d986e4f92d90302e6cd9b12de3d208df8e3e59ac05a2d99.png" src="../_images/4985132b0fe9b7511d986e4f92d90302e6cd9b12de3d208df8e3e59ac05a2d99.png" />
+<img alt="../_images/59858a6fbef2771cec9ba773bfaa489e4fd7091f8d1e80581e764a74632860e9.png" src="../_images/59858a6fbef2771cec9ba773bfaa489e4fd7091f8d1e80581e764a74632860e9.png" />
+<img alt="../_images/ea40feb0a9845708cdf27ea999180617716d4e7731d8702d17cd61a8b533e95d.png" src="../_images/ea40feb0a9845708cdf27ea999180617716d4e7731d8702d17cd61a8b533e95d.png" />
+</div>
+</div>
+<p>As iterations increase, particles move towards the global optimum.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./global_opt"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="multi.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Multi-start Gradient-based Optimization</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Leifur Leifsson (leifur[at]purdue.edu)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

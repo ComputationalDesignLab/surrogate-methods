@@ -785,9 +785,9 @@ transverse load <span class="math notranslate nohighlight">\(P\)</span> of 100 k
     <span class="n">b</span> <span class="o">=</span> <span class="mf">0.125</span> <span class="c1"># in m</span>
     
     <span class="n">P</span> <span class="o">=</span> <span class="mf">1e5</span> <span class="c1"># in N</span>
-    <span class="n">l</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># in m</span>
-    <span class="n">axial_stress_yield</span> <span class="o">=</span> <span class="mf">200e6</span> <span class="c1"># in Pa</span>
-    <span class="n">shear_stress_yield</span> <span class="o">=</span> <span class="mf">116e6</span> <span class="c1"># in Pa</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="mf">0.75</span> <span class="c1"># in m</span>
+    <span class="n">axial_stress_yield</span> <span class="o">=</span> <span class="mf">150e6</span> <span class="c1"># in Pa</span>
+    <span class="n">shear_stress_yield</span> <span class="o">=</span> <span class="mf">100e6</span> <span class="c1"># in Pa</span>
     
     <span class="n">obj</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">b</span><span class="o">*</span><span class="n">tb</span> <span class="o">+</span> <span class="n">h</span><span class="o">*</span><span class="n">tw</span> <span class="c1"># Computing the objective</span>
     
@@ -851,7 +851,7 @@ transverse load <span class="math notranslate nohighlight">\(P\)</span> of 100 k
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4cf027ab6ace86bedbf11431ca981209c0459a54b5c89fa597498b0130fe9dce.png" src="_images/4cf027ab6ace86bedbf11431ca981209c0459a54b5c89fa597498b0130fe9dce.png" />
+<img alt="_images/afde63bf3d42aaf31794a9dd6ed39bafd884f8256e24eb29d6200d8fff7add6b.png" src="_images/afde63bf3d42aaf31794a9dd6ed39bafd884f8256e24eb29d6200d8fff7add6b.png" />
 </div>
 </div>
 <p>All the white shaded region is <strong>infeasible</strong>.</p>
@@ -1020,7 +1020,7 @@ transverse load <span class="math notranslate nohighlight">\(P\)</span> of 100 k
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Starting point</span>
-<span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2e-4</span><span class="p">,</span> <span class="mf">2e-4</span><span class="p">])</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.1e-4</span><span class="p">,</span> <span class="mf">2.1e-4</span><span class="p">])</span>
 
 <span class="c1"># Solver</span>
 <span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;SLSQP&quot;</span>
@@ -1070,18 +1070,18 @@ transverse load <span class="math notranslate nohighlight">\(P\)</span> of 100 k
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully    (Exit mode 0)
-            Current function value: 0.004858202328095406
-            Iterations: 13
-            Function evaluations: 71
-            Gradient evaluations: 13
-Value of tw (in m) at optimum: 0.005172413793103474
-Value of tb (in m) at optimum: 0.01426039551927815
-Value of g1 at optimum: -5.960464477539063e-08
-Value of g2 at optimum: -5.811452865600586e-07
+            Current function value: 0.004996352759165802
+            Iterations: 12
+            Function evaluations: 66
+            Gradient evaluations: 12
+Value of tw (in m) at optimum: 0.005999999999999992
+Value of tb (in m) at optimum: 0.013985411036663217
+Value of g1 at optimum: 2.384185791015625e-07
+Value of g2 at optimum: 1.341104507446289e-07
 </pre></div>
 </div>
-<img alt="_images/dca2004b6e6210d34e2b5f5ba31aa1971b64120a14a8f1dac6eededeff3da083.png" src="_images/dca2004b6e6210d34e2b5f5ba31aa1971b64120a14a8f1dac6eededeff3da083.png" />
-<img alt="_images/97e18dfced49d143c3406566df48f2df977020ace21b746ed76af61a460a7663.png" src="_images/97e18dfced49d143c3406566df48f2df977020ace21b746ed76af61a460a7663.png" />
+<img alt="_images/63548704912e2b5197eece597ca568006d95c59d7ab176348210a37950aebcc0.png" src="_images/63548704912e2b5197eece597ca568006d95c59d7ab176348210a37950aebcc0.png" />
+<img alt="_images/cc28c2ea57b83abe65de42c2f639d1dd496099756ee530217bdd70bf37f761b3.png" src="_images/cc28c2ea57b83abe65de42c2f639d1dd496099756ee530217bdd70bf37f761b3.png" />
 </div>
 </div>
 <p>You can see that optimum is at the intersection of both the constraints, making both of them active. You can verify if this solution is correct or not by analytically solving the KKT conditions. <strong>Note</strong>: Problem is quite senstitive to the starting point. You can change the starting point and see what happens. You can also change the way problem is formulated and see if it helps in alleviating the issue.</p>
