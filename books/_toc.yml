@@ -18,3 +18,4 @@ chapters:
     sections:
     - file: global_opt/multi
     - file: global_opt/pso
+    - file: global_opt/de
