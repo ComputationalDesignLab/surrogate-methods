@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Multi-start Gradient-based Optimization &#8212; AAE 590 Surrogate Methods</title>
+    <title>Multistart Gradient-based Optimization &#8212; AAE 590 Surrogate Methods</title>
   
   
   
@@ -187,7 +187,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Global Optimization</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Multi-start Gradient-based Optimization</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Multistart Gradient-based Optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pso.html">Particle Swarm Optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="de.html">Differential Evolution</a></li>
 </ul>
@@ -328,7 +328,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Multi-start Gradient-based Optimization</h1>
+    <h1>Multistart Gradient-based Optimization</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -342,9 +342,9 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="multi-start-gradient-based-optimization">
-<h1>Multi-start Gradient-based Optimization<a class="headerlink" href="#multi-start-gradient-based-optimization" title="Permalink to this heading">#</a></h1>
-<p>Multi-start gradient-based optimization is a simple method to find the global optimum of a function. It involves gradient-based optimization with different starting points and finally selecting the best optimum value. As described in previous section, <a class="reference internal" href="intro.html#intro-jones-function"><span class="std std-ref">Jones function</span></a> will be used to demonstrate the method.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="multistart-gradient-based-optimization">
+<h1>Multistart Gradient-based Optimization<a class="headerlink" href="#multistart-gradient-based-optimization" title="Permalink to this heading">#</a></h1>
+<p>Multistart gradient-based optimization is a simple method to find the global optimum of a function. It involves gradient-based optimization with different starting points and finally selecting the best optimum value. As described in previous section, <a class="reference internal" href="intro.html#intro-jones-function"><span class="std std-ref">Jones function</span></a> will be used to demonstrate the method.</p>
 <p>Below block of code imports all the required packages and defines various functions to be used in the optimization process:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -503,7 +503,7 @@ document.write(`
 <span class="n">nfun</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">ngrad</span> <span class="o">=</span> <span class="mi">0</span>
 
-<span class="c1"># Performing multi-start optimization</span>
+<span class="c1"># Performing multistart optimization</span>
 <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
     <span class="n">starting_point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">X</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">Y</span><span class="p">[</span><span class="n">index</span><span class="p">]])</span>
 
@@ -590,7 +590,7 @@ Number of gradient evaluations: 150
 <img alt="../_images/96de6bdcdcc124dfa157d9155a19a2d007c833b93a468330de2cbd68f5b34b4f.png" src="../_images/96de6bdcdcc124dfa157d9155a19a2d007c833b93a468330de2cbd68f5b34b4f.png" />
 </div>
 </div>
-<p>As can be seen from above plot, 9 starting points are placed in a grid pattern and optimization path is plotted for each starting point. Multi-start gradient-based optimization is able to obtain the global optimum of Jones function but note the function number of function evaluations required. It is dependent on number of starting points and number of iterations required to converge to the optimum value. Some other global optimization method might be able to obtain the global optimum with less number of function evaluations.</p>
+<p>As can be seen from above plot, 9 starting points are placed in a grid pattern and optimization path is plotted for each starting point. Multistart gradient-based optimization is able to obtain the global optimum of Jones function but note the function number of function evaluations required. It is dependent on number of starting points and number of iterations required to converge to the optimum value. Some other global optimization method might be able to obtain the global optimum with less number of function evaluations.</p>
 </section>
 
     <script type="text/x-thebe-config">
