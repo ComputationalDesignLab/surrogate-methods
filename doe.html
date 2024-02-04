@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Design of Experiments &#8212; AAE 590 Surrogate Methods</title>
+    <title>Sampling Plans &#8212; AAE 590 Surrogate Methods</title>
   
   
   
@@ -193,7 +193,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="global_opt/de.html">Differential Evolution</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Design of Experiments</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Sampling Plans</a></li>
 </ul>
 
     </div>
@@ -332,7 +332,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Design of Experiments</h1>
+    <h1>Sampling Plans</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -355,15 +355,15 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="design-of-experiments">
-<h1>Design of Experiments<a class="headerlink" href="#design-of-experiments" title="Permalink to this heading">#</a></h1>
-<p>This section provides implementation for the concepts covered in the class for design of experiments. Following topics are covered in this section:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="sampling-plans">
+<h1>Sampling Plans<a class="headerlink" href="#sampling-plans" title="Permalink to this heading">#</a></h1>
+<p>This section provides implementation for the concepts covered in the class for sampling plans. Following topics are covered in this section:</p>
 <ol class="arabic simple">
 <li><p>Full Factorial Sampling</p></li>
 <li><p>Latin Hypercube Sampling</p></li>
 </ol>
 <blockquote>
-<div><p><strong><em>NOTE:</em></strong> You need to install <a class="reference external" href="https://smt.readthedocs.io/en/latest/">smt</a> which is a python-based surrogate modeling toolbox. It provides various surrogate modeling techniques, along with different design of experiments. Activate the environment you created for this class in anaconda prompt and install smt using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">smt</span></code>.</p>
+<div><p><strong><em>NOTE:</em></strong> You need to install <a class="reference external" href="https://smt.readthedocs.io/en/latest/">smt</a> which is a python-based surrogate modeling toolbox. It provides various surrogate modeling techniques, along with different sampling plans. Activate the environment you created for this class in anaconda prompt and install smt using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">smt</span></code>.</p>
 </div></blockquote>
 <p>Below block of code imports required packages:</p>
 <div class="cell docutils container">
@@ -434,12 +434,12 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">centermaximin</span></code> or <code class="docutils literal notranslate"><span class="pre">cm</span></code> - combination of <code class="docutils literal notranslate"><span class="pre">c</span></code> and <code class="docutils literal notranslate"><span class="pre">maximin</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ese</span></code> - minimizing the <span class="math notranslate nohighlight">\(\phi_p\)</span> metric (described below) using enhanced stochastic evolution algorithm</p></li>
 </ol>
-<p>Goodness of a DOE can be measured using an extension of maximin distance criterion proposed by <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/037837589400035T">Morris et al. (1995)</a>. For a DOE, all the pairwise distance between samples are calculated and sorted to get a distance list (<span class="math notranslate nohighlight">\(d_1\)</span>, <span class="math notranslate nohighlight">\(d_2\)</span>, …, <span class="math notranslate nohighlight">\(d_s\)</span>) and  index list (<span class="math notranslate nohighlight">\(J_1\)</span>, <span class="math notranslate nohighlight">\(J_2\)</span>, …, <span class="math notranslate nohighlight">\(J_s\)</span>), where <span class="math notranslate nohighlight">\(d_i\)</span>’s are distinct distance values with <span class="math notranslate nohighlight">\(d_1 &lt; d_2 &lt; \dots &lt; d_s\)</span>, <span class="math notranslate nohighlight">\(J_i\)</span>’s are the number of pairs of samples with distance <span class="math notranslate nohighlight">\(d_i\)</span>. Then, maximin distance criterion by Morris et al. is calculated using the following formula:</p>
+<p>Goodness of a sampling plan can be measured using an extension of maximin distance criterion proposed by <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/037837589400035T">Morris et al. (1995)</a>. For a sampling plan, all the pairwise distance between samples are calculated and sorted to get a distance list (<span class="math notranslate nohighlight">\(d_1\)</span>, <span class="math notranslate nohighlight">\(d_2\)</span>, …, <span class="math notranslate nohighlight">\(d_s\)</span>) and  index list (<span class="math notranslate nohighlight">\(J_1\)</span>, <span class="math notranslate nohighlight">\(J_2\)</span>, …, <span class="math notranslate nohighlight">\(J_s\)</span>), where <span class="math notranslate nohighlight">\(d_i\)</span>’s are distinct distance values with <span class="math notranslate nohighlight">\(d_1 &lt; d_2 &lt; \dots &lt; d_s\)</span>, <span class="math notranslate nohighlight">\(J_i\)</span>’s are the number of pairs of samples with distance <span class="math notranslate nohighlight">\(d_i\)</span>. Then, maximin distance criterion by Morris et al. is calculated using the following formula:</p>
 <div class="math notranslate nohighlight">
 \[  
     \phi_p = \Bigg [ \sum_{i=1}^{s} J_i d_i^{-p} \Bigg ]^{1/p}
 \]</div>
-<p>where, <span class="math notranslate nohighlight">\(p\)</span> is a positive integer. Smaller the value of <span class="math notranslate nohighlight">\(\phi_p\)</span>, more space-filling the DOE.</p>
+<p>where, <span class="math notranslate nohighlight">\(p\)</span> is a positive integer. Smaller the value of <span class="math notranslate nohighlight">\(\phi_p\)</span>, more space-filling the sampling plan.</p>
 <p>Below block of code generates LH samples for <em>two</em> dimensional design space, plots it, and computes <span class="math notranslate nohighlight">\(\phi_p\)</span> value. Read comments for more details.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -469,7 +469,7 @@ document.write(`
 <img alt="_images/54f7b9a8a9ff12899cef7f13c266c1d1f58fbe417f60d51cee4cb98370da380c.png" src="_images/54f7b9a8a9ff12899cef7f13c266c1d1f58fbe417f60d51cee4cb98370da380c.png" />
 </div>
 </div>
-<p>Here, the samples are distributed in a more random fashion as compared to full-factorial samples. <span class="math notranslate nohighlight">\(\phi_p\)</span> for the DOE is 0.79. In the next block, criterion is set to <code class="docutils literal notranslate"><span class="pre">cm</span></code>:</p>
+<p>Here, the samples are distributed in a more random fashion as compared to full-factorial samples. <span class="math notranslate nohighlight">\(\phi_p\)</span> for the sampling plan is 0.79. In the next block, criterion is set to <code class="docutils literal notranslate"><span class="pre">cm</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">criterion</span> <span class="o">=</span> <span class="s2">&quot;cm&quot;</span> <span class="c1"># Sampling criterion</span>
