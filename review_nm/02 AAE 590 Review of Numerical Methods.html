@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Least-Squares Regresion &#8212; AAE 590 Surrogate Methods</title>
+    <title>Review of Numerical Methods &#8212; AAE 590 Surrogate Methods</title>
   
   
   
@@ -64,7 +64,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'review_nm/regression';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'review_nm/02 AAE 590 Review of Numerical Methods';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -232,7 +232,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/review_nm/regression.ipynb" target="_blank"
+      <li><a href="../_sources/review_nm/02 AAE 590 Review of Numerical Methods.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -303,7 +303,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -314,11 +316,21 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Least-Squares Regresion</h1>
+    <h1>Review of Numerical Methods</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#error-estimation-for-iterative-method">Error estimation for iterative method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-differentiation">Numerical Differentiation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#least-squares-regresion">Least-Squares Regresion</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -328,8 +340,308 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="least-squares-regresion">
-<h1>Least-Squares Regresion<a class="headerlink" href="#least-squares-regresion" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="review-of-numerical-methods">
+<h1>Review of Numerical Methods<a class="headerlink" href="#review-of-numerical-methods" title="Permalink to this heading">#</a></h1>
+<p>This workbook supports the material taught in the class for review of numerical methods. It contains following topics:</p>
+<ol class="arabic simple">
+<li><p><span class="xref myst">Error estimation for iterative method</span></p></li>
+<li><p><span class="xref myst">Numerical Differentiation</span></p></li>
+<li><p><span class="xref myst">Least Squares Regresion</span></p></li>
+</ol>
+<p>Please go through this notebook entirely and reach out to teaching team if you have any doubts.</p>
+<p><strong>Please run the below block of code before you run any other block</strong> - it imports all the packages needed for this notebook.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="error-estimation-for-iterative-method">
+<h2>Error estimation for iterative method<a class="headerlink" href="#error-estimation-for-iterative-method" title="Permalink to this heading">#</a></h2>
+<p>Determine the number of terms necessary to approximate <span class="math notranslate nohighlight">\(cos(x)\)</span> to 8 significant figures at <span class="math notranslate nohighlight">\(x = 0.3\pi\)</span> using the following Maclaurin series approximation.</p>
+<div class="math notranslate nohighlight">
+\[
+    cos(x) = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \frac{x^8}{8!} - ...
+\]</div>
+<p>Assume that you don’t know the true value.</p>
+<p><strong>Solution</strong>:</p>
+<p>To find whether an approximation is accurate upto <span class="math notranslate nohighlight">\(n\)</span> significant figures, following formula can be used:</p>
+<div class="math notranslate nohighlight">
+\[
+    \epsilon_s = (0.5 \times 10^{2-n})\%
+\]</div>
+<p>Note the percantage sign in the formula. To get 8 significant figures, error should be less than <span class="math notranslate nohighlight">\(\epsilon_s = (5e-7)\% \text{ or } 5e-9\)</span>. We can compute the approximate error (<span class="math notranslate nohighlight">\(\epsilon _a\)</span>) while we do the iterations and use <span class="math notranslate nohighlight">\(\epsilon_s\)</span> as a stopping criteria. The code in the next block implements this.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">maclaurin_cos</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function for computing maclaurin series approximation for cosine.</span>
+<span class="sd">        Input:</span>
+<span class="sd">        x - value at which cosine approximation is needed.</span>
+<span class="sd">        num - number of terms in the series (includes the leading 1).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+        <span class="n">power</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">i</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">value</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="n">i</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="n">power</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">power</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">value</span>
+
+<span class="k">def</span> <span class="nf">find_req_num_terms</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to find number of terms needed to achieve </span>
+<span class="sd">        accuracy upto certain significant numbers.</span>
+<span class="sd">        </span>
+<span class="sd">        Input:</span>
+<span class="sd">        func - python function which computes a series</span>
+<span class="sd">        x - value of x at which approximation is required</span>
+<span class="sd">        num - number of significant figures required</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1"># Tolerance for required significant figures</span>
+    <span class="n">tolerance</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="mi">2</span><span class="o">-</span><span class="n">num</span><span class="p">)</span>
+    
+    <span class="c1"># Performing 1st iteration</span>
+    <span class="n">terms</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">approx_value</span> <span class="o">=</span> <span class="n">maclaurin_cos</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">terms</span><span class="p">)</span>
+    
+    <span class="c1"># Initial value of error for starting the iteration</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of terms: 1&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Approx value: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">approx_value</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Approx errror: -</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">approx_error</span> <span class="o">=</span> <span class="mi">1</span>
+    
+    <span class="c1"># Performing iterations</span>
+    <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">approx_error</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">tolerance</span><span class="p">:</span>
+        <span class="c1"># Increment the number of terms</span>
+        <span class="n">terms</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+        <span class="n">approx_error</span> <span class="o">=</span> <span class="n">approx_value</span>
+        
+        <span class="c1"># Calculate the approx value</span>
+        <span class="n">approx_value</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">terms</span><span class="p">)</span>
+        
+        <span class="c1"># Calculate percentage approx error</span>
+        <span class="n">approx_error</span> <span class="o">=</span> <span class="p">(</span><span class="n">approx_value</span> <span class="o">-</span> <span class="n">approx_error</span><span class="p">)</span> <span class="o">/</span> <span class="n">approx_value</span>
+        <span class="n">approx_error</span> <span class="o">*=</span> <span class="mi">100</span>
+        
+        <span class="c1"># Printing</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of terms: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">terms</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Approx value: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">approx_value</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Approx errror: </span><span class="si">{}</span><span class="s2"> %</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">approx_error</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Once the function is defined, you can run that function to get the answer (as shown below).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">find_req_num_terms</span><span class="p">(</span><span class="n">maclaurin_cos</span><span class="p">,</span> <span class="mf">0.3</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of terms: 1
+Approx value: 1.0
+Approx errror: -
+
+Number of terms: 2
+Approx value: 0.5558678019509788
+Approx errror: 79.89888899666624 %
+
+Number of terms: 3
+Approx value: 0.5887433701749547
+Approx errror: 5.5840235133699 %
+
+Number of terms: 4
+Approx value: 0.5877699636164597
+Approx errror: 0.1656101227945979 %
+
+Number of terms: 5
+Approx value: 0.5877854036591176
+Approx errror: 0.002626816277120294 %
+
+Number of terms: 6
+Approx value: 0.5877852512720046
+Approx errror: 2.592564420399015e-05 %
+
+Number of terms: 7
+Approx value: 0.5877852522974596
+Approx errror: 1.7446081526780443e-07 %
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="numerical-differentiation">
+<h2>Numerical Differentiation<a class="headerlink" href="#numerical-differentiation" title="Permalink to this heading">#</a></h2>
+<p>Use forward, backward, and central difference approximation for estimating the first derivative of</p>
+<div class="math notranslate nohighlight">
+\[
+    f(x) = -0.1x^{4} - 0.15x^{3} - 0.5x^{2} - 0.25x + 1.25
+\]</div>
+<p>at <span class="math notranslate nohighlight">\(x = 0.5\)</span> using a step size <span class="math notranslate nohighlight">\(h = 0.5\)</span>.</p>
+<p><strong>Solution</strong>:</p>
+<p>Following block of code defines function for computing various approximation and true value of derivative.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">forward_diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">func</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function for computing forward difference.</span>
+<span class="sd">        Input:</span>
+<span class="sd">        x - input at which derivative is desired</span>
+<span class="sd">        h - step size</span>
+<span class="sd">        func - python function which should return function value based on x.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">slope</span> <span class="o">=</span> <span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">/</span> <span class="n">h</span>
+    <span class="k">return</span> <span class="n">slope</span>
+
+<span class="k">def</span> <span class="nf">backward_diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">func</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function for computing backward difference.</span>
+<span class="sd">        Input:</span>
+<span class="sd">        x - input at which derivative is desired</span>
+<span class="sd">        h - step size</span>
+<span class="sd">        func - python function which should return function value based on x.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">slope</span> <span class="o">=</span> <span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">h</span><span class="p">))</span> <span class="o">/</span> <span class="n">h</span>
+    <span class="k">return</span> <span class="n">slope</span>
+
+<span class="k">def</span> <span class="nf">central_diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">func</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function for computing central difference.</span>
+<span class="sd">        Input:</span>
+<span class="sd">        x - input at which derivative is desired</span>
+<span class="sd">        h - step size</span>
+<span class="sd">        func - python function which should return function value based on x.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">slope</span> <span class="o">=</span> <span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">h</span><span class="p">))</span> <span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="n">h</span>
+    <span class="k">return</span> <span class="n">slope</span>
+
+<span class="k">def</span> <span class="nf">true_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function which returns value of desired function at input x.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mf">0.1</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">4</span> <span class="o">-</span> <span class="mf">0.15</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">0.25</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mf">1.25</span>
+
+<span class="k">def</span> <span class="nf">true_derivative</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns true derivative of function at input x.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mf">0.4</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mf">0.45</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x</span> <span class="o">-</span> <span class="mf">0.25</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Following block of code computes true and approximate value of derivate, and the error in the estimation using the functions defined in previous block</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Few vairables</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+<span class="c1"># True value</span>
+<span class="n">true_value</span> <span class="o">=</span> <span class="n">true_derivative</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True value: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">true_value</span><span class="p">))</span>
+
+<span class="c1"># Forward difference</span>
+<span class="n">approx_value</span> <span class="o">=</span> <span class="n">forward_diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">true_function</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Forward difference:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Approx value: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">approx_value</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True error: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">true_value</span> <span class="o">-</span> <span class="n">approx_value</span><span class="p">)</span><span class="o">/</span><span class="n">true_value</span><span class="p">))</span>
+
+<span class="c1"># Backward difference</span>
+<span class="n">approx_value</span> <span class="o">=</span> <span class="n">backward_diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">true_function</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Backward difference:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Approx value: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">approx_value</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True error: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">true_value</span> <span class="o">-</span> <span class="n">approx_value</span><span class="p">)</span><span class="o">/</span><span class="n">true_value</span><span class="p">))</span>
+
+<span class="c1"># Central difference</span>
+<span class="n">approx_value</span> <span class="o">=</span> <span class="n">central_diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">true_function</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Central difference:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Approx value: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">approx_value</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True error: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">true_value</span> <span class="o">-</span> <span class="n">approx_value</span><span class="p">)</span><span class="o">/</span><span class="n">true_value</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">h</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="c1"># True value</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">true_value</span> <span class="o">=</span> <span class="n">true_derivative</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True value: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">true_value</span><span class="p">))</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="c1"># Forward difference</span>
+
+<span class="ne">NameError</span>: name &#39;true_derivative&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we will check the variation of error based on the step size</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">error_estimation</span><span class="p">(</span><span class="n">func</span><span class="p">,</span><span class="n">method</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">step_sizes</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to compute error in the estimation for various step sizes</span>
+<span class="sd">        Input:</span>
+<span class="sd">        func - function which returns value of desired function at input x</span>
+<span class="sd">        method - function which returns derivative estimation at x</span>
+<span class="sd">        x - value at which derivative is required</span>
+<span class="sd">        step_sizes - 1d numpy array containing step sizes for derivative estimation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1"># Initializing error array</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">step_sizes</span><span class="p">))</span>
+    
+    <span class="c1"># Computing error for the given step sizes</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">step_sizes</span><span class="p">):</span>
+        <span class="n">true_value</span> <span class="o">=</span> <span class="n">true_derivative</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">approx_value</span> <span class="o">=</span> <span class="n">method</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">step</span><span class="p">,</span><span class="n">func</span><span class="p">)</span>
+        <span class="n">error</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">((</span><span class="n">true_value</span> <span class="o">-</span> <span class="n">approx_value</span><span class="p">)</span><span class="o">/</span><span class="n">true_value</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">error</span>
+
+<span class="c1"># Value at which derivative is required</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+<span class="c1"># Calculating step sizes</span>
+<span class="n">initial_step</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">num_steps</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="n">step_sizes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_steps</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span><span class="p">):</span>
+    <span class="n">step_sizes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">initial_step</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">i</span><span class="p">)</span>
+
+<span class="n">error_forward_diff</span> <span class="o">=</span> <span class="n">error_estimation</span><span class="p">(</span><span class="n">true_function</span><span class="p">,</span><span class="n">forward_diff</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">step_sizes</span><span class="p">)</span>
+<span class="n">error_backward_diff</span> <span class="o">=</span> <span class="n">error_estimation</span><span class="p">(</span><span class="n">true_function</span><span class="p">,</span><span class="n">backward_diff</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">step_sizes</span><span class="p">)</span>
+<span class="n">error_central_diff</span> <span class="o">=</span> <span class="n">error_estimation</span><span class="p">(</span><span class="n">true_function</span><span class="p">,</span><span class="n">central_diff</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">step_sizes</span><span class="p">)</span>
+
+<span class="c1"># Plotting the error variation with step sizes for different methods</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">step_sizes</span><span class="p">,</span> <span class="n">error_forward_diff</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Forward&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">step_sizes</span><span class="p">,</span> <span class="n">error_backward_diff</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Backward&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">step_sizes</span><span class="p">,</span> <span class="n">error_central_diff</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Central&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Step size (h)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Absolute value of true error&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As seen in the plot above, error in all the methods starts to increase after a specific step size. A more robust estimate of derivate can be obtained by using <a class="reference external" href="https://blogs.mathworks.com/cleve/2013/10/14/complex-step-differentiation/">complex-step method</a>.</p>
+</section>
+<section id="least-squares-regresion">
+<h2>Least-Squares Regresion<a class="headerlink" href="#least-squares-regresion" title="Permalink to this heading">#</a></h2>
 <p>Data used in the problem is as follows:</p>
 <table class="table">
 <thead>
@@ -370,16 +682,9 @@ document.write(`
 <p>First, we will compute mean, variance, standard deviation, coefficient of variation for <span class="math notranslate nohighlight">\(y\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">])</span>
 
 <span class="n">mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
@@ -394,16 +699,8 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean: 5.277777777777778
-Variance: 15.50617283950617
-Standard deviation: 3.9377878103709665
-Coefficient of variation: 74.61071640702883 %
-</pre></div>
 </div>
-</div>
-</div>
-<p>Now, we will use the function defined in the previous block and fit a line and a second order polynomial to data.</p>
+<p>Following block defines a function to fit a straight line and second order polynomial to the data using least-squares method discussed in the class.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fit_line</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
@@ -479,6 +776,7 @@ Coefficient of variation: 74.61071640702883 %
 </div>
 </div>
 </div>
+<p>Now, we will use the function defined in the previous block and fit a line and a second order polynomial to data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fit the line</span>
@@ -516,27 +814,12 @@ Coefficient of variation: 74.61071640702883 %
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting straight line to data:
-Slope: -2.0138888888888884
-Intercept: 1.4583333333333333
-Standard error: 1.3066526967183247
-R square: 0.9143610668789809
-
-Fitting second order polynomial to data:
-a0: 1.4880952380952055
-a1: -0.45183982683981044
-a2: 0.19101731601731445
-Standard error: 0.344771292115866
-R square: 0.9948894656299115
-</pre></div>
 </div>
-<img alt="../_images/518a6f55c85d7c1cc0841b91bd508953a7f1167919e7c2d15f7c51ec01d3b17e.png" src="../_images/518a6f55c85d7c1cc0841b91bd508953a7f1167919e7c2d15f7c51ec01d3b17e.png" />
-</div>
-</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -576,7 +859,22 @@ R square: 0.9948894656299115
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"></div>
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#error-estimation-for-iterative-method">Error estimation for iterative method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-differentiation">Numerical Differentiation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#least-squares-regresion">Least-Squares Regresion</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
