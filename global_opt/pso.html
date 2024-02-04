@@ -192,6 +192,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="de.html">Differential Evolution</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../doe.html">Design of Experiments</a></li>
 </ul>
 
     </div>
@@ -365,7 +366,7 @@ document.write(`
 </div>
 </div>
 <p>Defining problem and performing optimization is sightly different from previous sections. Typically, <code class="docutils literal notranslate"><span class="pre">pymoo</span></code> requries three components to perform optimization: <code class="docutils literal notranslate"><span class="pre">problem</span></code> (defines the objective function and constraints), <code class="docutils literal notranslate"><span class="pre">algorithm</span></code> (defines the optimization algorithm), and <code class="docutils literal notranslate"><span class="pre">minimize</span></code> is the function that performs optimization.</p>
-<p>Below code block defines the problem, it is recommended that you read pymoo’s <a class="reference external" href="https://pymoo.org/problems/index.html">problem</a> documentation to understand the arguments:</p>
+<p>Below block defines the problem, it is recommended that you read pymoo’s <a class="reference external" href="https://pymoo.org/problems/index.html">problem</a> documentation to understand the arguments:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">JonesFunction</span><span class="p">(</span><span class="n">Problem</span><span class="p">):</span>
