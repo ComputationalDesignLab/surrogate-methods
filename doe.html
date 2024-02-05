@@ -458,6 +458,10 @@ document.write(`
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">num</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="n">num</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -466,7 +470,7 @@ document.write(`
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>phi_p value: 0.7900654411297857
 </pre></div>
 </div>
-<img alt="_images/54f7b9a8a9ff12899cef7f13c266c1d1f58fbe417f60d51cee4cb98370da380c.png" src="_images/54f7b9a8a9ff12899cef7f13c266c1d1f58fbe417f60d51cee4cb98370da380c.png" />
+<img alt="_images/312ff5a808cb0e04e88ec84bea96a1d5575b27ed306c0da23925404faf134c21.png" src="_images/312ff5a808cb0e04e88ec84bea96a1d5575b27ed306c0da23925404faf134c21.png" />
 </div>
 </div>
 <p>Here, the samples are distributed in a more random fashion as compared to full-factorial samples. <span class="math notranslate nohighlight">\(\phi_p\)</span> for the sampling plan is 0.79. In the next block, criterion is set to <code class="docutils literal notranslate"><span class="pre">cm</span></code>:</p>
@@ -486,6 +490,10 @@ document.write(`
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">num</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="n">num</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -494,7 +502,7 @@ document.write(`
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>phi_p value: 0.7094603158576284
 </pre></div>
 </div>
-<img alt="_images/995310c8dd3d4892bcc79c1a1e8a5d5585030fa02dcac466a1fe8af978e0385d.png" src="_images/995310c8dd3d4892bcc79c1a1e8a5d5585030fa02dcac466a1fe8af978e0385d.png" />
+<img alt="_images/fa24cc932d2b19f40051bc8bc04f21f72b0900f9d9132cdffbc875724083af3f.png" src="_images/fa24cc932d2b19f40051bc8bc04f21f72b0900f9d9132cdffbc875724083af3f.png" />
 </div>
 </div>
 <p>Now, the samples are spread out more since <code class="docutils literal notranslate"><span class="pre">cm</span></code> criterion is using heuristics to maximize the minimum distance between samples. Accordingly, the <span class="math notranslate nohighlight">\(\phi_p\)</span> value is reduced to 0.71. In the next block, criterion is set to <code class="docutils literal notranslate"><span class="pre">ese</span></code>:</p>
@@ -514,6 +522,10 @@ document.write(`
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">num</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="n">num</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -522,7 +534,7 @@ document.write(`
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>phi_p value: 0.3453512854915221
 </pre></div>
 </div>
-<img alt="_images/b7158976accf940a49ca96080d63f9beaa1e7960253d1017b4516dcc16f974bf.png" src="_images/b7158976accf940a49ca96080d63f9beaa1e7960253d1017b4516dcc16f974bf.png" />
+<img alt="_images/812a36085ca0a25837a9249e97f30c1cc17a8f097bbf8fa3cfe8876718cb135d.png" src="_images/812a36085ca0a25837a9249e97f30c1cc17a8f097bbf8fa3cfe8876718cb135d.png" />
 </div>
 </div>
 <p>Now, the samples are even more spread out as compared to <code class="docutils literal notranslate"><span class="pre">cm</span></code> criterion. The <span class="math notranslate nohighlight">\(\phi_p\)</span> value is reduced to 0.35 from 0.71 for <code class="docutils literal notranslate"><span class="pre">cm</span></code> criterion which is a significant improvement. You can read more about how <code class="docutils literal notranslate"><span class="pre">ese</span></code> is used to minimize <span class="math notranslate nohighlight">\(\phi_p\)</span> in this <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S0378375804001922">paper</a>.</p>
