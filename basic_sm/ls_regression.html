@@ -356,14 +356,14 @@ document.write(`
 <p>As discussed in the lecture, one of the ways to create a model of <span class="math notranslate nohighlight">\(y(x)\)</span> is by considering a linearly weighted combination of basis functions. Mathematically, this can be represented as:</p>
 <div class="math notranslate nohighlight">
 \[
-    y(x) \sim \hat{y}(x) = \mathbf{w}^T\Psi(x) = \sum w_i \Psi_i(x)
+    y(x) \sim \hat{y}(x) = \mathbf{w}^T\pmb{\psi} = \sum w_i \psi_i(x)
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(\Psi(x)\)</span> is the vector of basis functions and <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> is the vector of weights. The model is linear in terms of weights <span class="math notranslate nohighlight">\(w_i\)</span> but basis function <span class="math notranslate nohighlight">\(\Psi_i(x)\)</span> can be non-linear. For example, the basis functions vector <span class="math notranslate nohighlight">\(\Psi(x)\)</span> can be <span class="math notranslate nohighlight">\([1 \text{  } x \text{  } x^2 \text{  } \sin(x) \text{  } e^{x}]^T\)</span>. The weights <span class="math notranslate nohighlight">\(w_i\)</span> are determined by minimizing the sum of squared differences between the predictions and actual values. The weights obtained after minimization are given by (refer lecture notes for derivation):</p>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{\pmb{\psi}}\)</span> is the vector of basis functions and <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> is the vector of weights. The model is linear in terms of weights <span class="math notranslate nohighlight">\(w_i\)</span> but basis function <span class="math notranslate nohighlight">\(\psi_i(x)\)</span> can be non-linear. For example, the basis functions vector <span class="math notranslate nohighlight">\(\pmb{\psi}\)</span> can be <span class="math notranslate nohighlight">\([1 \text{  } x \text{  } x^2 \text{  } \sin(x) \text{  } e^{x}]^T\)</span>. The weights <span class="math notranslate nohighlight">\(w_i\)</span> are determined by minimizing the sum of squared differences between the predictions and actual values. The weights obtained after minimization are given by (refer lecture notes for derivation):</p>
 <div class="math notranslate nohighlight">
 \[
     \mathbf{w} = (\Psi^T\Psi)^{-1}\Psi^T\mathbf{y} = \Psi^{\dagger}\mathbf{y}
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is the vector of target values and <span class="math notranslate nohighlight">\(\Psi^{\dagger}\)</span> is the (Moore-Penrose) pseudo-inverse of <span class="math notranslate nohighlight">\(\Psi\)</span>. The pseudo-inverse will be regular inverse if <span class="math notranslate nohighlight">\(\Psi\)</span> is invertible.</p>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is the vector of target values and <span class="math notranslate nohighlight">\(\Psi^{\dagger}\)</span> is the (Moore-Penrose) pseudo-inverse of <span class="math notranslate nohighlight">\(\Psi\)</span> matrix. The pseudo-inverse will be regular inverse if <span class="math notranslate nohighlight">\(\Psi\)</span> is invertible.</p>
 <p>The choice of basis functions is crucial in determining the performance of the model. In this notebook, the entire process of creating a linear least squares regression model is demonstrated using simple basis functions. Later sections will include more complex basis functions.</p>
 <p>Below block of code imports required packages:</p>
 <div class="cell docutils container">
@@ -412,7 +412,7 @@ document.write(`
 <p>Assuming that we only have training data (and no knowledge of the true function), we will try to fit a linear model to the training data. Thus, the basis function vector will be:</p>
 <div class="math notranslate nohighlight">
 \[
-    \Psi(x) = [1 \quad x]^T
+    \pmb{\psi} = [1 \quad x]^T
 \]</div>
 <p>Below block of code defines couple of functions: one to fit a line to given data and another to predict the output for given input. Read comments in the code for more details.</p>
 <div class="cell docutils container">
@@ -518,7 +518,7 @@ document.write(`
 </div>
 </div>
 <p>We are able to obtain a line that minimizes the sum of squared differences. However, the line does not fit the data well. This is because the model is too simple for the given data. We need to use more complex basis functions to create a better model.</p>
-<p>Since we know what true function is composed of, we can set basis function vector as <span class="math notranslate nohighlight">\(\Psi(x) = [\sqrt x \quad \cos(x)]^T\)</span> and see if we can get correct weight vector. Below block of code updates fit and predict function to accomodate new basis function vector.</p>
+<p>Since we know what true function is composed of, we can set basis function vector as <span class="math notranslate nohighlight">\(\pmb{\psi} = [\sqrt x \quad \cos(x)]^T\)</span> and see if we can get correct weight vector. Below block of code updates fit and predict function to accomodate new basis function vector.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
@@ -610,7 +610,7 @@ document.write(`
 <img alt="../_images/a77ac997e9d150734765c7e4b7d466679c1ed6b32da7641857ba7404c9ab3494.png" src="../_images/a77ac997e9d150734765c7e4b7d466679c1ed6b32da7641857ba7404c9ab3494.png" />
 </div>
 </div>
-<p>The obtained weights are <span class="math notranslate nohighlight">\([0.5 \quad 1]\)</span> which exactly matchs the true function. As a result, the prediction is same as true function. This shows that if there is some prior knowledge about the true function, we can incorporate that into basis function to get more accurate results.</p>
+<p>The obtained weights are <span class="math notranslate nohighlight">\([1 \quad 0.5]\)</span> which exactly matchs the true function. As a result, the prediction is same as true function. This shows that if there is some prior knowledge about the true function, we can incorporate that into basis function to get more accurate results.</p>
 </section>
 
     <script type="text/x-thebe-config">

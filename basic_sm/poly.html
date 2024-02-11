@@ -421,10 +421,10 @@ f(x) = (6x - 2)^2sin(12x-4) + \epsilon
 </div>
 <section id="fitting-m-th-order-polynomial">
 <h2>Fitting <span class="math notranslate nohighlight">\(m^{th}\)</span> order polynomial<a class="headerlink" href="#fitting-m-th-order-polynomial" title="Permalink to this heading">#</a></h2>
-<p>A one variable 2nd order polynomial will be fit to above data. Later, techniques like cross-validation will be used to find order of the polynomial. Basis set consists of:</p>
+<p>A one variable 2nd order polynomial will be fit to above data. Later, techniques like cross-validation will be used to find order of the polynomial. Basis function vector will be:</p>
 <div class="math notranslate nohighlight">
 \[
-\{1\text{, } x\text{, } x^2\}
+\pmb{\psi} = [1\quad x \quad x^2]^T
 \]</div>
 <p>Below block of code defines two functions - <code class="docutils literal notranslate"><span class="pre">fit_polynomial</span></code> and <code class="docutils literal notranslate"><span class="pre">predict</span></code>. First function is used to get a least square estimate for fitting a <span class="math notranslate nohighlight">\(m^{th}\)</span> order polynomial to the given data. Second function is used for getting the prediction at given input <code class="docutils literal notranslate"><span class="pre">x</span></code> based on the parameter values. Please read comments in the code for more details.</p>
 <div class="cell docutils container">
@@ -718,10 +718,10 @@ f(x) = (6x - 2)^2sin(12x-4) + \epsilon
 \[
     f(x_1,x_2) = (1 - x_1)^2 + (1 - x_2)^2 + \frac{1}{2}(2x_2 - x_1^2)^2
 \]</div>
-<p>Since there are only two variables, following will be the basis set:</p>
+<p>Since there are only two variables, following will be the basis function vector:</p>
 <div class="math notranslate nohighlight">
 \[
-\text{Basis set: } \{ 1, x_1, x_2, x_1x_2, x_1^2, x_2^2 \}
+\pmb{\psi} =  [1 \quad x_1 \quad x_2 \quad x_1x_2 \quad x_1^2 \quad x_2^2 ]^T
 \]</div>
 <blockquote>
 <div><p><strong><em>NOTE</em></strong>: There is no cross-validation here since basis function vector is fixed.</p>
