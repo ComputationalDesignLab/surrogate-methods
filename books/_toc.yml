@@ -20,3 +20,8 @@ chapters:
     - file: global_opt/pso
     - file: global_opt/de
   - file: doe
+  - file: basic_sm/intro
+    sections:
+    - file: basic_sm/ls_regression
+    - file: basic_sm/poly
+    - file: basic_sm/rbf
