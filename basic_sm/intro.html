@@ -62,10 +62,12 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'basic_sm/intro';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Linear Least Squares Regression Model" href="ls_regression.html" />
+    <link rel="next" title="Linear Model" href="ls_regression.html" />
     <link rel="prev" title="Sampling Plans" href="../doe.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -194,7 +196,7 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../doe.html">Sampling Plans</a></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Basic Surrogate Models</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="ls_regression.html">Linear Least Squares Regression Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ls_regression.html">Linear Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="poly.html">Polynomial Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rbf.html">Radial Basis Function Model</a></li>
 </ul>
@@ -351,9 +353,25 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="basic-surrogate-models">
 <h1>Basic Surrogate Models<a class="headerlink" href="#basic-surrogate-models" title="Permalink to this heading">#</a></h1>
-<p>This section provides implementation for the concepts covered in the class for basic surrogate models. Following topics are covered:</p>
+<p>This section provides implementation for the concepts covered in the class for basic surrogate models. As discussed in the lecture, one of the ways to create a model of <span class="math notranslate nohighlight">\(y(x)\)</span> is by considering a linearly weighted combination of basis functions. Mathematically, this can be represented as:</p>
+<div class="math notranslate nohighlight">
+\[
+    y(x) \sim \hat{y}(x) = \mathbf{w}^T\pmb{\psi} = \sum w_i \psi_i(x)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{\pmb{\psi}}\)</span> is the vector of basis functions and <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> is the vector of weights. The model is linear in terms of weights <span class="math notranslate nohighlight">\(w_i\)</span> but basis function <span class="math notranslate nohighlight">\(\psi_i(x)\)</span> can be non-linear. For example, the basis functions vector <span class="math notranslate nohighlight">\(\pmb{\psi}\)</span> can be <span class="math notranslate nohighlight">\([1 \text{  } x \text{  } x^2 \text{  } \sin(x) \text{  } e^{x}]^T\)</span>. The weights <span class="math notranslate nohighlight">\(w_i\)</span> are determined by minimizing the sum of squared differences between the predictions and actual values. The weights obtained after minimization are given by (refer lecture notes for derivation):</p>
+<div class="math notranslate nohighlight">
+\[
+    \mathbf{w} = (\Psi^T\Psi)^{-1}\Psi^T\mathbf{y} = \Psi^{\dagger}\mathbf{y}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is the vector of target values and <span class="math notranslate nohighlight">\(\Psi^{\dagger}\)</span> is the (Moore-Penrose) pseudo-inverse of <span class="math notranslate nohighlight">\(\Psi\)</span> matrix. The pseudo-inverse will be regular inverse if <span class="math notranslate nohighlight">\(\Psi\)</span> is invertible. The performance of the model can be evaluated using the mean squared error (MSE) which is given by:</p>
+<div class="math notranslate nohighlight">
+\[
+    \text{RMSE} = \sqrt{ \frac{1}{N}\sum_{i=1}^{N} (y_i - \hat{y}_i)^2 }
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(N\)</span> is the number of data points, <span class="math notranslate nohighlight">\(y_i\)</span> and <span class="math notranslate nohighlight">\(\hat{y}_i\)</span> are the true and predicted values respectively.</p>
+<p>In this section, following models are covered:</p>
 <ol class="arabic simple">
-<li><p>Linear least squares regression model</p></li>
+<li><p>Linear model</p></li>
 <li><p>Polynomial model</p></li>
 <li><p>Radial basis function model</p></li>
 </ol>
@@ -405,7 +423,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Linear Least Squares Regression Model</p>
+        <p class="prev-next-title">Linear Model</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

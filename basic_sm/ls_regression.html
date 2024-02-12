@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Linear Least Squares Regression Model &#8212; AAE 590 Surrogate Methods</title>
+    <title>Linear Model &#8212; AAE 590 Surrogate Methods</title>
   
   
   
@@ -196,7 +196,7 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../doe.html">Sampling Plans</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Basic Surrogate Models</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Linear Least Squares Regression Model</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Linear Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="poly.html">Polynomial Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rbf.html">Radial Basis Function Model</a></li>
 </ul>
@@ -337,7 +337,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Linear Least Squares Regression Model</h1>
+    <h1>Linear Model</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -351,20 +351,13 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="linear-least-squares-regression-model">
-<h1>Linear Least Squares Regression Model<a class="headerlink" href="#linear-least-squares-regression-model" title="Permalink to this heading">#</a></h1>
-<p>As discussed in the lecture, one of the ways to create a model of <span class="math notranslate nohighlight">\(y(x)\)</span> is by considering a linearly weighted combination of basis functions. Mathematically, this can be represented as:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="linear-model">
+<h1>Linear Model<a class="headerlink" href="#linear-model" title="Permalink to this heading">#</a></h1>
+<p>In this section, the entire process of creating a linear least squares regression model is demonstrated using a linear model for which basis function vector will be:</p>
 <div class="math notranslate nohighlight">
 \[
-    y(x) \sim \hat{y}(x) = \mathbf{w}^T\pmb{\psi} = \sum w_i \psi_i(x)
+    \pmb{\psi} = [1 \quad x]^T
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(\mathbf{\pmb{\psi}}\)</span> is the vector of basis functions and <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> is the vector of weights. The model is linear in terms of weights <span class="math notranslate nohighlight">\(w_i\)</span> but basis function <span class="math notranslate nohighlight">\(\psi_i(x)\)</span> can be non-linear. For example, the basis functions vector <span class="math notranslate nohighlight">\(\pmb{\psi}\)</span> can be <span class="math notranslate nohighlight">\([1 \text{  } x \text{  } x^2 \text{  } \sin(x) \text{  } e^{x}]^T\)</span>. The weights <span class="math notranslate nohighlight">\(w_i\)</span> are determined by minimizing the sum of squared differences between the predictions and actual values. The weights obtained after minimization are given by (refer lecture notes for derivation):</p>
-<div class="math notranslate nohighlight">
-\[
-    \mathbf{w} = (\Psi^T\Psi)^{-1}\Psi^T\mathbf{y} = \Psi^{\dagger}\mathbf{y}
-\]</div>
-<p>where <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is the vector of target values and <span class="math notranslate nohighlight">\(\Psi^{\dagger}\)</span> is the (Moore-Penrose) pseudo-inverse of <span class="math notranslate nohighlight">\(\Psi\)</span> matrix. The pseudo-inverse will be regular inverse if <span class="math notranslate nohighlight">\(\Psi\)</span> is invertible.</p>
-<p>The choice of basis functions is crucial in determining the performance of the model. In this notebook, the entire process of creating a linear least squares regression model is demonstrated using simple basis functions. Later sections will include more complex basis functions.</p>
 <p>Below block of code imports required packages:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -374,46 +367,27 @@ document.write(`
 </div>
 </div>
 </div>
-<p>In this notebook, we are trying to create a model for following function:</p>
-<div class="math notranslate nohighlight">
-\[
-    y(x) = \sqrt x + 0.5\cos(x)
-\]</div>
-<p>The training dataset consists of 7 points equally spaced between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(2\pi\)</span>, and testing dataset consists of 100 points equally spaced between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(2\pi\)</span>. Below block of code generates the training and testing datasets, and plots them.</p>
+<p>Below block of code defines the training dataset and plots it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Training data</span>
-<span class="n">xtrain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
-<span class="n">ytrain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">xtrain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+<span class="n">ytrain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">])</span>
 
-<span class="c1"># Test data</span>
-<span class="n">xtest</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">ytest</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">xtest</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">xtest</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
-
-<span class="c1"># Plotting</span>
-<span class="n">fs</span> <span class="o">=</span> <span class="mi">12</span> <span class="c1"># Font size</span>
+<span class="c1"># Plotting the training data</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="mi">12</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Training data&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xtest</span><span class="p">,</span> <span class="n">ytest</span><span class="p">,</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True function&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f7ea03ebb20&gt;
-</pre></div>
-</div>
-<img alt="../_images/f336e017b037973c0adcb36087396904eebd5188715c646b57365771616748be.png" src="../_images/f336e017b037973c0adcb36087396904eebd5188715c646b57365771616748be.png" />
+<img alt="../_images/5eae5172cb90b2a44b7057ced935a70203b3d57c4bb57eb5c0a2e2a4695035e3.png" src="../_images/5eae5172cb90b2a44b7057ced935a70203b3d57c4bb57eb5c0a2e2a4695035e3.png" />
 </div>
 </div>
-<p>Assuming that we only have training data (and no knowledge of the true function), we will try to fit a linear model to the training data. Thus, the basis function vector will be:</p>
-<div class="math notranslate nohighlight">
-\[
-    \pmb{\psi} = [1 \quad x]^T
-\]</div>
 <p>Below block of code defines couple of functions: one to fit a line to given data and another to predict the output for given input. Read comments in the code for more details.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -487,103 +461,16 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Weight vector:  [0.51394843 0.36318493]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Weight vector:  [-2.01388889  1.45833333]
 </pre></div>
 </div>
 </div>
 </div>
-<p>Once the line is fitted to the training data, we can use the model to predict the output for the testing data. Below block of code uses the function defined above to predict the output for the testing data and plots the predictions.</p>
+<p>Once the line is fitted to the training data, we can use the model to predict output at testing points.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Predicting the output</span>
-<span class="n">ypred</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">xtest</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
-
-<span class="n">fs</span> <span class="o">=</span> <span class="mi">12</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Training data&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xtest</span><span class="p">,</span> <span class="n">ytest</span><span class="p">,</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True function&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xtest</span><span class="p">,</span> <span class="n">ypred</span><span class="p">,</span> <span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Predicted function&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f7ea0bf7970&gt;
-</pre></div>
-</div>
-<img alt="../_images/50a6980b6e77fd54938eef982efcb586f998f6464f43ac8ce0bbddbc8a0dc849.png" src="../_images/50a6980b6e77fd54938eef982efcb586f998f6464f43ac8ce0bbddbc8a0dc849.png" />
-</div>
-</div>
-<p>We are able to obtain a line that minimizes the sum of squared differences. However, the line does not fit the data well. This is because the model is too simple for the given data. We need to use more complex basis functions to create a better model.</p>
-<p>Since we know what true function is composed of, we can set basis function vector as <span class="math notranslate nohighlight">\(\pmb{\psi} = [\sqrt x \quad \cos(x)]^T\)</span> and see if we can get correct weight vector. Below block of code updates fit and predict function to accomodate new basis function vector.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Function to fit a straight line to the data (x,y)</span>
-
-<span class="sd">        Parameters:</span>
-<span class="sd">        ----------- </span>
-<span class="sd">        x : ndarray</span>
-<span class="sd">            x-coordinate of the data points</span>
-<span class="sd">        y : ndarray</span>
-<span class="sd">            y-coordinate of the data points</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">        --------</span>
-<span class="sd">        w : ndarray</span>
-<span class="sd">            weight vector</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="c1"># Constructing the basis function matrix</span>
-    <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
-
-    <span class="c1"># Computing psuedo-inverse of psi</span>
-    <span class="n">psi_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span>
-
-    <span class="c1"># Computing the weight vector</span>
-    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">psi_inv</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">w</span>
-
-<span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">w</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Function to predict the output for the given input x</span>
-
-<span class="sd">        Parameters:</span>
-<span class="sd">        -----------</span>
-<span class="sd">        x : ndarray</span>
-<span class="sd">            input data points</span>
-<span class="sd">        w : ndarray</span>
-<span class="sd">            weight vector</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">        --------</span>
-<span class="sd">        y : ndarray</span>
-<span class="sd">            predicted output</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="c1"># Constructing the basis function matrix</span>
-    <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
-
-    <span class="c1"># Computing the predicted output</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">y</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Below block of code uses the function defined above to fit the data and predict the output for the testing data:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fit the model</span>
-<span class="n">w</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Weight vector: &quot;</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Testing x</span>
+<span class="n">xtest</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 
 <span class="c1"># Predicting the output</span>
 <span class="n">ypred</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">xtest</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
@@ -591,7 +478,6 @@ document.write(`
 <span class="n">fs</span> <span class="o">=</span> <span class="mi">12</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Training data&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xtest</span><span class="p">,</span> <span class="n">ytest</span><span class="p">,</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True function&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xtest</span><span class="p">,</span> <span class="n">ypred</span><span class="p">,</span> <span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Predicted function&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
@@ -601,16 +487,13 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Weight vector:  [1.  0.5]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7ff4afc6af00&gt;
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f7e9e2e07c0&gt;
-</pre></div>
-</div>
-<img alt="../_images/a77ac997e9d150734765c7e4b7d466679c1ed6b32da7641857ba7404c9ab3494.png" src="../_images/a77ac997e9d150734765c7e4b7d466679c1ed6b32da7641857ba7404c9ab3494.png" />
+<img alt="../_images/dc682259ad105eeab7ac81569e572ee88b26582f8329ead4e36d2b107e6d9780.png" src="../_images/dc682259ad105eeab7ac81569e572ee88b26582f8329ead4e36d2b107e6d9780.png" />
 </div>
 </div>
-<p>The obtained weights are <span class="math notranslate nohighlight">\([1 \quad 0.5]\)</span> which exactly matchs the true function. As a result, the prediction is same as true function. This shows that if there is some prior knowledge about the true function, we can incorporate that into basis function to get more accurate results.</p>
+<p>We are able to obtain a line that minimizes the sum of squared differences. However, the line does not fit the data well. This is because the model is too simple for the given data. We need to use more complex basis functions to create a better model.</p>
 </section>
 
     <script type="text/x-thebe-config">
