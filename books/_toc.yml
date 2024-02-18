@@ -25,3 +25,4 @@ chapters:
     - file: basic_sm/ls_regression
     - file: basic_sm/poly
     - file: basic_sm/rbf
+  - file: krg
