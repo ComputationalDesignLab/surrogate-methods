@@ -26,3 +26,6 @@ chapters:
     - file: basic_sm/poly
     - file: basic_sm/rbf
   - file: krg
+  - file: seq_sampling/intro
+    sections:
+    - file: seq_sampling/exploitation
