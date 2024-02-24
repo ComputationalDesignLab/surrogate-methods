@@ -67,6 +67,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'krg';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Sequential Sampling" href="seq_sampling/intro.html" />
     <link rel="prev" title="Radial Basis Function Model" href="basic_sm/rbf.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -201,6 +202,14 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Gaussian Process based Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="seq_sampling/intro.html">Sequential Sampling</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="seq_sampling/exploitation.html">Exploitation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seq_sampling/exploration.html">Exploration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seq_sampling/lcb.html">Lower Confidence Bound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seq_sampling/pf.html">Probability of Improvement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seq_sampling/ego.html">Expected Improvement</a></li>
+</ul>
+</li>
 </ul>
 
     </div>
@@ -518,7 +527,7 @@ y(x) = (6x - 2)^2sin(12x-4) \\
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating array of training sample sizes</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
 
 <span class="c1"># Initializing nrmse list</span>
 <span class="n">nrmse</span> <span class="o">=</span> <span class="p">[]</span>
@@ -554,7 +563,7 @@ y(x) = (6x - 2)^2sin(12x-4) \\
     <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
     <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
     
-    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">yplot_pred</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">yplot</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">yplot_pred</span><span class="p">,</span> <span class="n">yplot</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
     <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Prediction&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
     <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;True values&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
     <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
@@ -564,13 +573,14 @@ y(x) = (6x - 2)^2sin(12x-4) \\
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/90b2ef056c6b6f815870bb8f7d8a34656e73a6bc6abde10e8d107b7fbc2859c2.png" src="_images/90b2ef056c6b6f815870bb8f7d8a34656e73a6bc6abde10e8d107b7fbc2859c2.png" />
-<img alt="_images/3c497afb7f031e434f8c2ffaced364e7c1117657d711a723d4bd7a5c64de35ba.png" src="_images/3c497afb7f031e434f8c2ffaced364e7c1117657d711a723d4bd7a5c64de35ba.png" />
-<img alt="_images/9bf9728b88a2816222df5075dfca54c63e5f4988dc4c175f8f8f89e1a7724d47.png" src="_images/9bf9728b88a2816222df5075dfca54c63e5f4988dc4c175f8f8f89e1a7724d47.png" />
-<img alt="_images/32af72d4356c7b8ca3c64e28cb0efb1746da7f22f4936def5ca3bb8ca1efdc36.png" src="_images/32af72d4356c7b8ca3c64e28cb0efb1746da7f22f4936def5ca3bb8ca1efdc36.png" />
-<img alt="_images/451956270a39765c7b1843dc3347c26fd86b88fc317054cee798672a4ba1502b.png" src="_images/451956270a39765c7b1843dc3347c26fd86b88fc317054cee798672a4ba1502b.png" />
-<img alt="_images/b393bbcb063c7917cd9f1ad40598f3c8ce22a7b6285927931d6cdba6be40a793.png" src="_images/b393bbcb063c7917cd9f1ad40598f3c8ce22a7b6285927931d6cdba6be40a793.png" />
-<img alt="_images/2fe4aa6b7da866b9f5831fe52d3ab24b2754cf5a17cecd2e8302082f062cb4f9.png" src="_images/2fe4aa6b7da866b9f5831fe52d3ab24b2754cf5a17cecd2e8302082f062cb4f9.png" />
+<img alt="_images/7e833504759246af99885753bcb25178b78453884fc5bc0b9c6068775dc2d46e.png" src="_images/7e833504759246af99885753bcb25178b78453884fc5bc0b9c6068775dc2d46e.png" />
+<img alt="_images/42ea4177e05d98e0bfddbeb291f335f02694e5eb620e5c2b35fb0b25640e5e5b.png" src="_images/42ea4177e05d98e0bfddbeb291f335f02694e5eb620e5c2b35fb0b25640e5e5b.png" />
+<img alt="_images/5826d89316f86dadd54506b41d1f9fa84a43394a4601be5a7622ada82690f2af.png" src="_images/5826d89316f86dadd54506b41d1f9fa84a43394a4601be5a7622ada82690f2af.png" />
+<img alt="_images/0b10175243b2e2efe5bacd193f99c4de87d0b61082e4f58d39e46f3553260293.png" src="_images/0b10175243b2e2efe5bacd193f99c4de87d0b61082e4f58d39e46f3553260293.png" />
+<img alt="_images/9169dcfde7303a8d825230afa3bf4533757820e65423ea251f40e8ee8b5e27d6.png" src="_images/9169dcfde7303a8d825230afa3bf4533757820e65423ea251f40e8ee8b5e27d6.png" />
+<img alt="_images/2399c837159549ad89f7468cd801fd828e0768985d6c1aeb53b0bedf2e21175b.png" src="_images/2399c837159549ad89f7468cd801fd828e0768985d6c1aeb53b0bedf2e21175b.png" />
+<img alt="_images/bdbf87c447dc116b28f3828612b3ddd73982433bc6d07e0803056e45cebdf0dc.png" src="_images/bdbf87c447dc116b28f3828612b3ddd73982433bc6d07e0803056e45cebdf0dc.png" />
+<img alt="_images/22a44c33d5c76a03e6cde2a3a25374f759190a4b547e644387f59a82015eb497.png" src="_images/22a44c33d5c76a03e6cde2a3a25374f759190a4b547e644387f59a82015eb497.png" />
 </div>
 </div>
 <p>As the number of samples increase, the model prediction becomes better. Also, the value of length scale will change with number of samples. So, it is important to change the refit when model for different data. Below block of code plots the normalized rmse (computed using plotting data) as a function of number of samples. The nrmse decreases as the number of samples increase since prediction improves.</p>
@@ -591,7 +601,7 @@ y(x) = (6x - 2)^2sin(12x-4) \\
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Normalized RMSE&#39;)
 </pre></div>
 </div>
-<img alt="_images/73a9ff9504012448b91dda4bdaba7a8117f4952c5e5b560b162013484f50baba.png" src="_images/73a9ff9504012448b91dda4bdaba7a8117f4952c5e5b560b162013484f50baba.png" />
+<img alt="_images/17af3fbdd892c524a0d7a32e737f49aa83dfd595dced45b9054c49a161307d18.png" src="_images/17af3fbdd892c524a0d7a32e737f49aa83dfd595dced45b9054c49a161307d18.png" />
 </div>
 </div>
 </section>
@@ -634,6 +644,15 @@ y(x) = (6x - 2)^2sin(12x-4) \\
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Radial Basis Function Model</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="seq_sampling/intro.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Sequential Sampling</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
