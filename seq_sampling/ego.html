@@ -525,56 +525,60 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1
-Maximum EI: 9.303703373895766
-Best observed value: 38.00557730564974
+Maximum EI: 7.987087326181626
+Best observed value: -5.917796596335452
 
 Iteration 2
-Maximum EI: 7.532773294944217
-Best observed value: 35.46231396563202
+Maximum EI: 2.265360619429096
+Best observed value: -5.917796596335452
 
 Iteration 3
-Maximum EI: 1.0496278039531113
-Best observed value: 15.89703081190896
+Maximum EI: 11.745641166366296
+Best observed value: -5.917796596335452
 
 Iteration 4
-Maximum EI: 0.35108865200468387
-Best observed value: 15.89703081190896
+Maximum EI: 10.738012145118145
+Best observed value: -5.917796596335452
 
 Iteration 5
-Maximum EI: 0.5631846628710244
-Best observed value: -7.4917004842217985
+Maximum EI: 9.39191947660995
+Best observed value: -5.917796596335452
 
 Iteration 6
-Maximum EI: 0.2245699091369644
-Best observed value: -7.4917004842217985
+Maximum EI: 11.976971229680087
+Best observed value: -5.917796596335452
 
 Iteration 7
-Maximum EI: 1.9079028939210216
-Best observed value: -15.728521918143578
+Maximum EI: 11.956804668350165
+Best observed value: -5.917796596335452
 
 Iteration 8
-Maximum EI: 0.30317109866386094
-Best observed value: -15.728521918143578
+Maximum EI: 6.7466957046956955
+Best observed value: -5.917796596335452
 
 Iteration 9
-Maximum EI: 0.20912624970079283
-Best observed value: -15.728521918143578
+Maximum EI: 2.997755181066047
+Best observed value: -12.004046433390794
 
 Iteration 10
-Maximum EI: 0.018235744676767474
-Best observed value: -15.967003338115218
+Maximum EI: 0.8671558870607066
+Best observed value: -12.004046433390794
 
 Iteration 11
-Maximum EI: 0.1673636801084038
-Best observed value: -16.623652969959274
+Maximum EI: 1.1886834695615547
+Best observed value: -15.912669622487835
 
 Iteration 12
-Maximum EI: 0.0003808585969099689
-Best observed value: -16.623652969959274
+Maximum EI: 0.1524057242812117
+Best observed value: -16.60095616388888
+
+Iteration 13
+Maximum EI: 1.2387261607967536e-06
+Best observed value: -16.60095616388888
 
 Best obtained point:
-x*: [-3.6827673  13.75551305]
-f*: -16.623652969959274
+x*: [-3.63974552 13.68564136]
+f*: -16.60095616388888
 </pre></div>
 </div>
 </div>
@@ -606,15 +610,15 @@ f*: -16.623652969959274
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
 
-<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Lower Confidence Bound&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Expected Improvement&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0.98, &#39;Lower Confidence Bound&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0.98, &#39;Expected Improvement&#39;)
 </pre></div>
 </div>
-<img alt="../_images/031a4e3802ae39ca763c034d3ca619e783bf25354f8cc30c62e025abece96958.png" src="../_images/031a4e3802ae39ca763c034d3ca619e783bf25354f8cc30c62e025abece96958.png" />
+<img alt="../_images/6dd1c630ce020113f573254d46653a634e9e56f931990124ac7a55d3c4448927.png" src="../_images/6dd1c630ce020113f573254d46653a634e9e56f931990124ac7a55d3c4448927.png" />
 </div>
 </div>
 <p>The figure on left shows the history of best observed <span class="math notranslate nohighlight">\(y\)</span> value and corresponding <span class="math notranslate nohighlight">\(x\)</span> values, and figure on right shows the convergence of EI. At the start, EI is high since the amount of possible improvement over the current best point is high. As the iterations progress, the best observed value reaches the global minimum and the EI decreases. Also, note that process stopped before reaching maximum number of infills since the convergence criteria was met.</p>
@@ -653,7 +657,7 @@ f*: -16.623652969959274
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Modified Branin function&#39;)
 </pre></div>
 </div>
-<img alt="../_images/6a6fe8003a0ccbb431688eac23ee348990d4e7b51921be3f470768842e0c39d5.png" src="../_images/6a6fe8003a0ccbb431688eac23ee348990d4e7b51921be3f470768842e0c39d5.png" />
+<img alt="../_images/4de86dd5b3510ea1d6f321d0e694145ff192a47c427f007dc702a6a2e69c7320.png" src="../_images/4de86dd5b3510ea1d6f321d0e694145ff192a47c427f007dc702a6a2e69c7320.png" />
 </div>
 </div>
 <p>From the above plots, it can be seen that expected improvement finds the minimum of modified branin function while balancing exploration and exploitation.</p>
@@ -671,15 +675,15 @@ f*: -16.623652969959274
 <tbody>
 <tr class="row-even"><td><p><span class="math notranslate nohighlight">\(x_1^*\)</span></p></td>
 <td><p>-3.689</p></td>
-<td><p>-3.682</p></td>
+<td><p>-3.640</p></td>
 </tr>
 <tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(x_2^*\)</span></p></td>
 <td><p>13.630</p></td>
-<td><p>13.756</p></td>
+<td><p>13.686</p></td>
 </tr>
 <tr class="row-even"><td><p><span class="math notranslate nohighlight">\(f(x_1^*, x_2^*)\)</span></p></td>
 <td><p>-16.644</p></td>
-<td><p>-16.623</p></td>
+<td><p>-16.601</p></td>
 </tr>
 </tbody>
 </table>
