@@ -29,3 +29,6 @@ chapters:
   - file: seq_sampling/intro
     sections:
     - file: seq_sampling/exploitation
+    - file: seq_sampling/exploration
+    - file: seq_sampling/lcb
+    - file: seq_sampling/pf
