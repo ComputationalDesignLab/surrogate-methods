@@ -490,86 +490,84 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1
-Max uncertainty: [35.47147032]
+Max uncertainty: [52.08588798]
 
 Iteration 2
-Max uncertainty: [59.34356344]
+Max uncertainty: [45.53215807]
 
 Iteration 3
-Max uncertainty: [59.5328366]
+Max uncertainty: [30.72084573]
 
 Iteration 4
-Max uncertainty: [62.42536105]
+Max uncertainty: [14.6800245]
 
 Iteration 5
-Max uncertainty: [40.38917239]
+Max uncertainty: [17.08799898]
 
 Iteration 6
-Max uncertainty: [27.68151028]
+Max uncertainty: [31.69173505]
 
 Iteration 7
-Max uncertainty: [25.25794802]
+Max uncertainty: [21.04614891]
 
 Iteration 8
-Max uncertainty: [13.34780555]
+Max uncertainty: [13.00604339]
 
 Iteration 9
-Max uncertainty: [9.50758857]
+Max uncertainty: [13.53456583]
 
 Iteration 10
-Max uncertainty: [8.55926412]
+Max uncertainty: [10.43646605]
 
 Iteration 11
-Max uncertainty: [7.65741204]
+Max uncertainty: [10.5189825]
 
 Iteration 12
-Max uncertainty: [5.92205412]
+Max uncertainty: [5.10221521]
 
 Iteration 13
-Max uncertainty: [4.49843875]
+Max uncertainty: [5.52623177]
 
 Iteration 14
-Max uncertainty: [4.21061352]
+Max uncertainty: [3.01610385]
 
 Iteration 15
-Max uncertainty: [3.13623215]
+Max uncertainty: [1.80056823]
 
 Iteration 16
-Max uncertainty: [1.63454965]
+Max uncertainty: [1.57017336]
 
 Iteration 17
-Max uncertainty: [1.21952133]
+Max uncertainty: [1.01639773]
 
 Iteration 18
-Max uncertainty: [1.56124783]
+Max uncertainty: [0.69150424]
 
 Iteration 19
-Max uncertainty: [0.5672563]
+Max uncertainty: [0.46976802]
 
 Iteration 20
-Max uncertainty: [0.27317523]
+Max uncertainty: [0.47770608]
 
 Iteration 21
-Max uncertainty: [0.32116716]
+Max uncertainty: [0.74770261]
 
 Iteration 22
-Max uncertainty: [0.21594319]
+Max uncertainty: [0.29302394]
 
 Iteration 23
-Max uncertainty: [0.16123597]
+Max uncertainty: [0.17964402]
 
 Iteration 24
-Max uncertainty: [0.14278555]
+Max uncertainty: [0.20584341]
 
 Iteration 25
-Max uncertainty: [0.1175027]
-
-Iteration 26
-Max uncertainty: [0.07713815]
+Max uncertainty: [0.09935171]
 </pre></div>
 </div>
 </div>
 </div>
+<p>Below code plots the convergence of the exploration process.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">####################################### Plotting convergence history</span>
@@ -583,8 +581,20 @@ Max uncertainty: [0.07713815]
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Exploitation&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">itr</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-
-<span class="c1">####################################### Plotting initial samples and infills</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Exploitation&#39;)
+</pre></div>
+</div>
+<img alt="../_images/ecafe8e21a15ccc839365289a2a7d39efc639f40a71ab2b7154de5de2ad9fb57.png" src="../_images/ecafe8e21a15ccc839365289a2a7d39efc639f40a71ab2b7154de5de2ad9fb57.png" />
+</div>
+</div>
+<p>Note that process terminated before reaching maximum number of iterations since the <span class="math notranslate nohighlight">\(\sigma_{max}\)</span> is below given tolerance. Below block of code plots the infill points.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">####################################### Plotting initial samples and infills</span>
 
 <span class="c1"># Reshaping into grid</span>
 <span class="n">reshape_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">num_plot</span><span class="p">))</span>
@@ -614,11 +624,10 @@ Max uncertainty: [0.07713815]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Modified Branin function&#39;)
 </pre></div>
 </div>
-<img alt="../_images/381c5d8072a14d5f8f9e8a6016cae5d46e0943e2a664ff904205b3404b5eb96b.png" src="../_images/381c5d8072a14d5f8f9e8a6016cae5d46e0943e2a664ff904205b3404b5eb96b.png" />
-<img alt="../_images/c6e16d633caba26cffb45c89a4aae7ee009b4b0eac64ec0be6d5d12a0dc46510.png" src="../_images/c6e16d633caba26cffb45c89a4aae7ee009b4b0eac64ec0be6d5d12a0dc46510.png" />
+<img alt="../_images/ca9e8879d4237ed007a2fa0ff23d3246dba0bb065bc7ce9d4258e77a5d796eb3.png" src="../_images/ca9e8879d4237ed007a2fa0ff23d3246dba0bb065bc7ce9d4258e77a5d796eb3.png" />
 </div>
 </div>
-<p>Note that process terminated before reaching maximum number of iterations since the <span class="math notranslate nohighlight">\(\sigma_{max}\)</span> is below given tolerance. Also, the infills are added all over the region and not close to minimum value. Here, the exploration process alone is not efficient in finding the minimum value.</p>
+<p>The infills are added all over the region and not close to minimum value. The exploration process is usually used to build a globally accurate model and not to find a minimum value. But is useful to escape a local minimum when combined with exploitation.</p>
 <blockquote>
 <div><p><strong><em>NOTE</em></strong>: Due to randomness in differential evolution, results may vary slightly between runs. So, it is recommend to run the code multiple times to see average behavior.</p>
 </div></blockquote>

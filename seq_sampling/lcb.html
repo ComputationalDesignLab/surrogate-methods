@@ -473,8 +473,6 @@ document.write(`
     <span class="c1"># Creating surrogate model</span>
     <span class="n">sm</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="n">sm</span><span class="o">.</span><span class="n">optimal_theta</span><span class="p">)</span>
-
     <span class="c1"># Find the minimum of surrogate model</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">Surrogate</span><span class="p">(</span><span class="n">sm</span><span class="p">),</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     
@@ -482,18 +480,11 @@ document.write(`
     <span class="n">y_infill</span> <span class="o">=</span> <span class="n">modified_branin</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
     
     <span class="k">if</span> <span class="n">itr</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">prev</span> <span class="o">=</span> <span class="n">y_infill</span>
+        <span class="n">delta_f</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">F</span> <span class="o">-</span> <span class="n">y_infill</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">F</span><span class="p">)]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">y_infill</span> <span class="o">-</span> <span class="n">prev</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">y_infill</span><span class="p">)</span>
-        <span class="n">prev</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">F</span>
-        
-        <span class="k">if</span> <span class="n">itr</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">delta_f</span> <span class="o">=</span> <span class="p">[</span><span class="n">error</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">delta_f</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">y_infill</span> <span class="o">-</span> <span class="n">prev</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">y_infill</span><span class="p">))</span>
+        <span class="n">delta_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">delta_f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">F</span> <span class="o">-</span> <span class="n">y_infill</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">F</span><span class="p">))</span>
     
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Change in f: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">error</span><span class="p">))</span>
-
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Change in f: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">delta_f</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;f*: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y_infill</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x*: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">X</span><span class="p">))</span>
     
@@ -502,121 +493,93 @@ document.write(`
     <span class="n">ytrain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">ytrain</span><span class="p">,</span> <span class="n">y_infill</span> <span class="p">)</span>
     
     <span class="n">itr</span> <span class="o">=</span> <span class="n">itr</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1"># Increasing the iteration number</span>
+
+<span class="c1"># Printing the final results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Best obtained point:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x*: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xtrain</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">ytrain</span><span class="p">)]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;f*: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">ytrain</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1
-[3.43398381 4.57283046]
-f*: [4.10060036]
-x*: [-1.44632111  8.19787294]
+Change in f: [0.82629283]
+f*: [-15.86579262]
+x*: [-4.1447757  14.95867195]
 
 Iteration 2
-[0.14297993 0.80694819]
-Change in f: [0.93273391]
-f*: [60.96088904]
-x*: [1.00000000e+01 8.56816635e-16]
+Change in f: 8.785577236201734
+f*: [283.12909601]
+x*: [-5.00000000e+00  1.77841142e-12]
 
 Iteration 3
-[0.23451272 1.29090527]
-Change in f: [1.64286769]
-f*: [116.04125139]
-x*: [-5.          5.85962864]
+Change in f: 1.181492020710294
+f*: [39.92483075]
+x*: [-1.58172211 15.        ]
 
 Iteration 4
-[1.24235045 3.44981308]
-Change in f: [2.72507861]
-f*: [49.06204877]
-x*: [2.56536111 8.62276955]
+Change in f: 1.1375959952809056
+f*: [24.63609396]
+x*: [2.25294317e+00 1.49544216e-17]
 
 Iteration 5
-[1.10809421 2.70051871]
-Change in f: [2.50980527]
-f*: [52.95064091]
-x*: [8.12440771 3.80873408]
+Change in f: 1.3278481309980739
+f*: [60.96088904]
+x*: [1.00000000e+01 1.93586961e-15]
 
 Iteration 6
-[1.10712719 2.03800979]
-Change in f: [8.45193326]
-f*: [-7.49170048]
-x*: [-5. 15.]
+Change in f: 1.1490009953234266
+f*: [22.61963859]
+x*: [0.56287704 6.44297449]
 
 Iteration 7
-[1.06088932 0.40174548]
-Change in f: [2.97553316]
-f*: [32.16472616]
-x*: [-1.61527774 14.44573025]
+Change in f: 1.2296539552475179
+f*: [21.39175629]
+x*: [-5.         11.38494659]
 
 Iteration 8
-[0.92071402 0.51584236]
-Change in f: [4.94646406]
-f*: [25.81783376]
-x*: [3.92057009e+00 5.98480470e-17]
+Change in f: 0.6363844452098978
+f*: [-15.82902209]
+x*: [-3.25878153 12.52464905]
 
 Iteration 9
-[0.66714031 0.35460752]
-Change in f: [3.44654052]
-f*: [-16.05555953]
-x*: [-3.41662302 12.42728452]
+Change in f: 0.8262348028432618
+f*: [-3.77340434]
+x*: [-1.99222383 10.02343312]
 
 Iteration 10
-[0.62801761 0.34864799]
-Change in f: [8.1382565]
-f*: [3.98645062]
-x*: [-5.         13.15465677]
+Change in f: 0.18483278053574043
+f*: [-15.0066736]
+x*: [-3.72557506 15.        ]
 
 Iteration 11
-[2.37422332 0.60958839]
-Change in f: [2.19150563]
-f*: [20.95858041]
-x*: [1.15275081 3.1983179 ]
+Change in f: 0.05904914293384039
+f*: [-16.51316754]
+x*: [-3.76701529 13.5022388 ]
 
 Iteration 12
-[1.84894619 0.57688898]
-Change in f: [2.46361989]
-f*: [53.49024675]
-x*: [6.65116871e+00 7.98130222e-17]
+Change in f: 0.0407660189289802
+f*: [-16.09661078]
+x*: [-3.55634078 12.60612523]
 
 Iteration 13
-[1.3946436  0.65796045]
-Change in f: [21.42211528]
-f*: [2.14487198]
-x*: [-1.75667637 10.83851923]
+Change in f: 0.0011318254014887669
+f*: [-16.64375032]
+x*: [-3.68349124 13.62680128]
 
 Iteration 14
-[0.82096876 0.07566393]
-Change in f: [1.31334217]
-f*: [-15.93409966]
-x*: [-4.09464466 15.        ]
+Change in f: 7.092807339645009e-05
+f*: [-16.64370748]
+x*: [-3.69783167 13.64784312]
 
-Iteration 15
-[0.85834705 0.08068045]
-Change in f: [0.28143817]
-f*: [-16.14492186]
-x*: [-3.9137585  13.65741893]
-
-Iteration 16
-[1.00989938 0.12246074]
-Change in f: [0.04925608]
-f*: [-16.64209646]
-x*: [-3.68960467 13.5869292 ]
-
-Iteration 17
-[1.21200876 0.45770467]
-Change in f: [0.00360755]
-f*: [-16.55180548]
-x*: [-3.79493221 14.11820292]
-
-Iteration 18
-[0.67884686 0.03029308]
-Change in f: [0.0084266]
-f*: [-16.64395602]
-x*: [-3.68590353 13.62570163]
+Best obtained point:
+x*: [-3.68349124 13.62680128]
+f*: -16.643750324531275
 </pre></div>
 </div>
 </div>
 </div>
-<p>Below block of code plots the convergence of lower confidence bound process and infill points.</p>
+<p>Below block of code plots the convergence of lower confidence bound process.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">####################################### Plotting convergence history</span>
@@ -626,12 +589,12 @@ x*: [-3.68590353 13.62570163]
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">itr</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">xtrain</span><span class="p">[</span><span class="n">num_train</span><span class="p">:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$x_2^*$&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">itr</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">[</span><span class="n">num_train</span><span class="p">:],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$f^*$&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Iterations&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$f^*$ and ($x_1^*$, $x_2^*$)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$f(x^*)$ and ($x_1^*$, $x_2^*$)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="n">itr</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">itr</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">delta_f</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">itr</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">delta_f</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">itr</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="p">[</span><span class="n">tol</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">itr</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Tolerance&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Iterations&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$| \hat</span><span class="si">{f}</span><span class="s2">^* - f(x^*) | / | \hat</span><span class="si">{f}</span><span class="s2">^* |$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
@@ -641,8 +604,21 @@ x*: [-3.68590353 13.62570163]
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Lower Confidence Bound&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">itr</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-
-<span class="c1">####################################### Plotting initial samples and infills</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0.98, &#39;Lower Confidence Bound&#39;)
+</pre></div>
+</div>
+<img alt="../_images/412856563584cde0959ff8975cafdec4714ac9b258fa14405ba8b71200134d7a.png" src="../_images/412856563584cde0959ff8975cafdec4714ac9b258fa14405ba8b71200134d7a.png" />
+</div>
+</div>
+<p>The figure on the left shows the history of infill points and corresponding true function values, and figure on the right shows the convergence of LCB process. At the start, algorithm explores the search space and then it starts exploiting the current best solution. The process stopped before maximum number of iterations since the convergence criteria is met.</p>
+<p>Below code plots the infill points.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">####################################### Plotting initial samples and infills</span>
 
 <span class="c1"># Reshaping into grid</span>
 <span class="n">reshape_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">num_plot</span><span class="p">))</span>
@@ -661,6 +637,8 @@ x*: [-3.68590353 13.62570163]
 <span class="n">ax</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xtrain</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">num_train</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xtrain</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">num_train</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Initial samples&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xtrain</span><span class="p">[</span><span class="n">num_train</span><span class="p">:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xtrain</span><span class="p">[</span><span class="n">num_train</span><span class="p">:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Infills&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">-</span><span class="mf">3.689</span><span class="p">,</span> <span class="mf">13.630</span><span class="p">,</span> <span class="s1">&#39;g*&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Global minimum&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xtrain</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">ytrain</span><span class="p">)][</span><span class="mi">0</span><span class="p">],</span> <span class="n">xtrain</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">ytrain</span><span class="p">)][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;bo&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Obtained minimum&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
@@ -672,14 +650,36 @@ x*: [-3.68590353 13.62570163]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Modified Branin function&#39;)
 </pre></div>
 </div>
-<img alt="../_images/c3a510a49d14121b7b17d7b257db13bfaf8b2f6863c95e4a49c2859dab3908cd.png" src="../_images/c3a510a49d14121b7b17d7b257db13bfaf8b2f6863c95e4a49c2859dab3908cd.png" />
-<img alt="../_images/8e8cbdd12e1886c1047c3b5d950fc0a8b2967a56ab3f73d88244ffabe695643e.png" src="../_images/8e8cbdd12e1886c1047c3b5d950fc0a8b2967a56ab3f73d88244ffabe695643e.png" />
+<img alt="../_images/00973827c7c718f628c20763dc3b2848b0ca4b592163826cad0383e2771ce296.png" src="../_images/00973827c7c718f628c20763dc3b2848b0ca4b592163826cad0383e2771ce296.png" />
 </div>
 </div>
-<p>The process stopped before maximum number of iterations since the convergence criteria is met. Note that some infills are used for exploration and some are used for exploitation. As discussed in lecture, it is hard to know what value of <span class="math notranslate nohighlight">\(A\)</span> to use. You can change the value of <span class="math notranslate nohighlight">\(A\)</span> and see how it changes the infill location.</p>
+<p>As can be seen in above plot, some infills are used for exploration and some are used for exploitation. But it is hard to know what value of <span class="math notranslate nohighlight">\(A\)</span> to use. You can change the value of <span class="math notranslate nohighlight">\(A\)</span> and see how it changes the infill location.</p>
 <blockquote>
 <div><p><strong><em>NOTE</em></strong>: Due to randomness in differential evolution, results may vary slightly between runs. So, it is recommend to run the code multiple times to see average behavior.</p>
 </div></blockquote>
+<p>Final result:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>True minimum</p></th>
+<th class="head"><p>Obtained minimum</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(x_1^*\)</span></p></td>
+<td><p>-3.689</p></td>
+<td><p>-3.684</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(x_2^*\)</span></p></td>
+<td><p>13.630</p></td>
+<td><p>13.627</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(f(x_1^*, x_2^*)\)</span></p></td>
+<td><p>-16.644</p></td>
+<td><p>-16.644</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 
     <script type="text/x-thebe-config">

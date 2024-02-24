@@ -505,90 +505,95 @@ document.write(`
     <span class="n">ytrain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">ytrain</span><span class="p">,</span> <span class="n">y_infill</span> <span class="p">)</span>
     
     <span class="n">itr</span> <span class="o">=</span> <span class="n">itr</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1"># Increasing the iteration number</span>
+
+<span class="c1"># Printing the final results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Best obtained point:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x*: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xbest</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;f*: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ybest</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1
-Maximum PI: 0.9999999991230963
-Best observed value: 13.805780564398226
+Maximum PI: 0.5307276253640137
+Best observed value: -8.969989311850687
 
 Iteration 2
-Maximum PI: 0.7435807640500851
-Best observed value: 13.805780564398226
+Maximum PI: 1.0
+Best observed value: -8.969989311850687
 
 Iteration 3
 Maximum PI: 1.0
-Best observed value: 13.805780564398226
+Best observed value: -10.539622928100016
 
 Iteration 4
 Maximum PI: 1.0
-Best observed value: 10.197523919678549
+Best observed value: -10.548222713569086
 
 Iteration 5
-Maximum PI: 0.9903624555499358
-Best observed value: 0.973169082643313
+Maximum PI: 1.0
+Best observed value: -10.811096859780191
 
 Iteration 6
 Maximum PI: 1.0
-Best observed value: 0.9728827207051118
+Best observed value: -10.846424691094906
 
 Iteration 7
-Maximum PI: 1.0
-Best observed value: 0.9599320464852692
+Maximum PI: 0.9999999823974798
+Best observed value: -10.846586669519857
 
 Iteration 8
 Maximum PI: 1.0
-Best observed value: 0.9555067833132593
+Best observed value: -11.370843631821975
 
 Iteration 9
 Maximum PI: 1.0
-Best observed value: -0.3322857256314915
+Best observed value: -12.62827813750655
 
 Iteration 10
 Maximum PI: 1.0
-Best observed value: -2.3205221675293917
+Best observed value: -12.930375341448068
 
 Iteration 11
 Maximum PI: 1.0
-Best observed value: -3.1143622093150114
+Best observed value: -12.934593556882668
 
 Iteration 12
 Maximum PI: 1.0
-Best observed value: -3.8515045038740094
+Best observed value: -13.879940903713123
 
 Iteration 13
 Maximum PI: 1.0
-Best observed value: -8.338151362534242
+Best observed value: -15.106508885431069
 
 Iteration 14
 Maximum PI: 1.0
-Best observed value: -12.60809920842259
+Best observed value: -16.00839750811641
 
 Iteration 15
-Maximum PI: 1.0
-Best observed value: -16.18773350305041
+Maximum PI: 0.04716145526030488
+Best observed value: -16.30471397961604
 
 Iteration 16
-Maximum PI: 0.029321488037041564
-Best observed value: -16.286848462297982
+Maximum PI: 0.10552741488639861
+Best observed value: -16.30471397961604
 
 Iteration 17
 Maximum PI: 1.0
-Best observed value: -16.286848462297982
+Best observed value: -16.30471397961604
 
 Iteration 18
-Maximum PI: 0.01886117678750783
-Best observed value: -16.325280691799776
+Maximum PI: 0.0007970175519111094
+Best observed value: -16.496788707181345
 
-Iteration 19
-Maximum PI: 9.016860727459053e-05
-Best observed value: -16.325280691799776
+Best obtained point:
+x*: [-3.8761853  14.01060158]
+f*: -16.496788707181345
 </pre></div>
 </div>
 </div>
 </div>
-<p>Below block of code plots the convergence of best observed value, PI and infill points.</p>
+<p>Below code plots the convergence of best observed value and PI.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">####################################### Plotting convergence history</span>
@@ -612,9 +617,22 @@ Best observed value: -16.325280691799776
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
 
-<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Lower Confidence Bound&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-
-<span class="c1">####################################### Plotting initial samples and infills</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Probability of Improvement&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0.98, &#39;Probability of Improvement&#39;)
+</pre></div>
+</div>
+<img alt="../_images/1e16d799f52cadc37bb7e763d405415d50e014e728c26a5dcb5bf18bafdd7986.png" src="../_images/1e16d799f52cadc37bb7e763d405415d50e014e728c26a5dcb5bf18bafdd7986.png" />
+</div>
+</div>
+<p>The figure on left shows the history of best observed <span class="math notranslate nohighlight">\(y\)</span> value and corresponding <span class="math notranslate nohighlight">\(x\)</span> values, and figure on right shows the convergence of PI. At the start, the PI is high since the possibility to find a better point is high. As the iterations progress, the best observed value reaches the global minimum and the PI decreases since there is less possibility to find a better point.</p>
+<p>Below code plots the infill points.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">####################################### Plotting initial samples and infills</span>
 
 <span class="c1"># Reshaping into grid</span>
 <span class="n">reshape_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">num_plot</span><span class="p">))</span>
@@ -633,6 +651,8 @@ Best observed value: -16.325280691799776
 <span class="n">ax</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xtrain</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">num_train</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xtrain</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">num_train</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Initial samples&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xtrain</span><span class="p">[</span><span class="n">num_train</span><span class="p">:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xtrain</span><span class="p">[</span><span class="n">num_train</span><span class="p">:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Infills&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">-</span><span class="mf">3.689</span><span class="p">,</span> <span class="mf">13.630</span><span class="p">,</span> <span class="s1">&#39;g*&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Global minimum&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xbest</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xbest</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;bo&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Obtained minimum&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
@@ -644,14 +664,36 @@ Best observed value: -16.325280691799776
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Modified Branin function&#39;)
 </pre></div>
 </div>
-<img alt="../_images/effea0f5b628f9dd55f10c7c39b90826ccce1d9c6f9885c95f3f155e32abface.png" src="../_images/effea0f5b628f9dd55f10c7c39b90826ccce1d9c6f9885c95f3f155e32abface.png" />
-<img alt="../_images/915925f52403d21c2e2d1792adf0ae6221fbff53b224cc1cb8c9d2c181865b33.png" src="../_images/915925f52403d21c2e2d1792adf0ae6221fbff53b224cc1cb8c9d2c181865b33.png" />
+<img alt="../_images/11a4cdf6b117481faddb1c454c603b6c02dbee2bf35aca09bec8b3d897fc00d0.png" src="../_images/11a4cdf6b117481faddb1c454c603b6c02dbee2bf35aca09bec8b3d897fc00d0.png" />
 </div>
 </div>
-<p>Based on the infills, PI criteria seems to be slightly more biased towards adding points close to the minimum values in the dataset - less exploration and more exploitation - and there is no way to control that through the criteria itself. As discussed in the lecture, PI provides only a probability value and doesn’t quantify the amount of improvement.</p>
+<p>Based on the infills, PI seems to be slightly more biased towards adding points close to the minimum values in the dataset - less exploration and more exploitation - and there is no way to control that through the criteria itself. As discussed in the lecture, PI provides only a probability value and doesn’t quantify the amount of improvement.</p>
 <blockquote>
 <div><p><strong><em>NOTE</em></strong>: Due to randomness in differential evolution, results may vary slightly between runs. So, it is recommended to run the code multiple times to see average behavior.</p>
 </div></blockquote>
+<p>Final result:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>True minimum</p></th>
+<th class="head"><p>Obtained minimum</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(x_1^*\)</span></p></td>
+<td><p>-3.689</p></td>
+<td><p>-3.876</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(x_2^*\)</span></p></td>
+<td><p>13.630</p></td>
+<td><p>14.011</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(f(x_1^*, x_2^*)\)</span></p></td>
+<td><p>-16.644</p></td>
+<td><p>-16.497</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 
     <script type="text/x-thebe-config">
