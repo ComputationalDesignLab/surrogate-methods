@@ -490,79 +490,76 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1
-Max uncertainty: [46.51959977]
+Max uncertainty: [31.45507005]
 
 Iteration 2
-Max uncertainty: [36.63921006]
+Max uncertainty: [20.69180658]
 
 Iteration 3
-Max uncertainty: [57.2307162]
+Max uncertainty: [21.54510105]
 
 Iteration 4
-Max uncertainty: [67.20605275]
+Max uncertainty: [28.00056849]
 
 Iteration 5
-Max uncertainty: [63.99902038]
+Max uncertainty: [28.90382426]
 
 Iteration 6
-Max uncertainty: [48.70953677]
+Max uncertainty: [21.33452458]
 
 Iteration 7
-Max uncertainty: [27.42049175]
+Max uncertainty: [25.76007746]
 
 Iteration 8
-Max uncertainty: [21.49852262]
+Max uncertainty: [12.11431752]
 
 Iteration 9
-Max uncertainty: [7.33483004]
+Max uncertainty: [10.72202523]
 
 Iteration 10
-Max uncertainty: [7.47069848]
+Max uncertainty: [13.37876836]
 
 Iteration 11
-Max uncertainty: [6.0502254]
+Max uncertainty: [15.86912662]
 
 Iteration 12
-Max uncertainty: [4.23929694]
+Max uncertainty: [11.06549901]
 
 Iteration 13
-Max uncertainty: [3.21898472]
+Max uncertainty: [3.38899589]
 
 Iteration 14
-Max uncertainty: [3.12652915]
+Max uncertainty: [2.8320413]
 
 Iteration 15
-Max uncertainty: [1.95773963]
+Max uncertainty: [2.27780155]
 
 Iteration 16
-Max uncertainty: [2.22083194]
+Max uncertainty: [1.67920869]
 
 Iteration 17
-Max uncertainty: [1.45698623]
+Max uncertainty: [1.52343277]
 
 Iteration 18
-Max uncertainty: [1.11324953]
+Max uncertainty: [0.95709217]
 
 Iteration 19
-Max uncertainty: [0.46888927]
+Max uncertainty: [0.76521426]
 
 Iteration 20
-Max uncertainty: [0.58355244]
+Max uncertainty: [0.84509039]
 
 Iteration 21
-Max uncertainty: [0.50755235]
+Max uncertainty: [0.25717433]
 
 Iteration 22
-Max uncertainty: [0.25199918]
+Max uncertainty: [0.23100111]
 
 Iteration 23
-Max uncertainty: [0.11157021]
+Max uncertainty: [0.2366513]
 
 Iteration 24
-Max uncertainty: [0.10490443]
-
-Iteration 25
-Max uncertainty: [0.09813928]
+Max uncertainty: [0.09932242]
 </pre></div>
 </div>
 </div>
@@ -588,10 +585,43 @@ Max uncertainty: [0.09813928]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Exploration&#39;)
 </pre></div>
 </div>
-<img alt="../_images/663823e34ae4b8269eab0d1eb5ae319490104c634b750839b08547c2bb9bca71.png" src="../_images/663823e34ae4b8269eab0d1eb5ae319490104c634b750839b08547c2bb9bca71.png" />
+<img alt="../_images/b546d4f69f7714a1249eb7150945e249ead551fe1e41619ec26f6b6034711f87.png" src="../_images/b546d4f69f7714a1249eb7150945e249ead551fe1e41619ec26f6b6034711f87.png" />
 </div>
 </div>
-<p>Note that process terminated before reaching maximum number of iterations since the <span class="math notranslate nohighlight">\(\sigma_{max}\)</span> is below given tolerance. Below block of code plots the infill points.</p>
+<p>Note that process terminated before reaching maximum number of iterations since the <span class="math notranslate nohighlight">\(\sigma_{max}\)</span> is below given tolerance. This essentially means that model is more or less globally accurate and will be confident about its prediction. Next block minimizes the surrogate model prediction using differential evolution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Problem class</span>
+<span class="k">class</span> <span class="nc">SurrogatePrediction</span><span class="p">(</span><span class="n">Problem</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sm</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_var</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_obj</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_constr</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">xl</span><span class="o">=</span><span class="n">lb</span><span class="p">,</span> <span class="n">xu</span><span class="o">=</span><span class="n">ub</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sm</span> <span class="o">=</span> <span class="n">sm</span> <span class="c1"># store the surrogate model</span>
+
+    <span class="k">def</span> <span class="nf">_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">SurrogatePrediction</span><span class="p">(</span><span class="n">sm</span><span class="p">),</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Minimum of surrogate:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x* = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">X</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;f(x*) = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">F</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Minimum of surrogate:
+
+x* = [-3.70034944 13.66646216]
+f(x*) = [-16.57914514]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The obtained optimum is quite close to the true global minimum which shows that a globally accurate model is created using exploration process. But note the number of infill points needed for accurate model is high which makes the process computationally expensive. The optimum can be obtained using less number of infill points by using a more efficient infill criterion.</p>
+<p>Below block of code plots the infill points and obtained optimum.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">####################################### Plotting initial samples and infills</span>
@@ -613,6 +643,8 @@ Max uncertainty: [0.09813928]
 <span class="n">ax</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xtrain</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">num_train</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xtrain</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">num_train</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Initial samples&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xtrain</span><span class="p">[</span><span class="n">num_train</span><span class="p">:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xtrain</span><span class="p">[</span><span class="n">num_train</span><span class="p">:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Infills&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">-</span><span class="mf">3.689</span><span class="p">,</span> <span class="mf">13.630</span><span class="p">,</span> <span class="s1">&#39;g*&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Global minimum&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">result</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;bo&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Minimum of surrogate&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
@@ -624,13 +656,36 @@ Max uncertainty: [0.09813928]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Modified Branin function&#39;)
 </pre></div>
 </div>
-<img alt="../_images/d4e86bb3e7e1bfb89447dcd281bc89327cf90f36a915f6db8db056d2ec815347.png" src="../_images/d4e86bb3e7e1bfb89447dcd281bc89327cf90f36a915f6db8db056d2ec815347.png" />
+<img alt="../_images/51236ace4f5b9f8965031c30d8b46259a60f9be99b31313c6a481a62bab06722.png" src="../_images/51236ace4f5b9f8965031c30d8b46259a60f9be99b31313c6a481a62bab06722.png" />
 </div>
 </div>
-<p>The infills are added all over the region and not close to minimum value. The exploration process is usually used to build a globally accurate model and not to find a minimum value. But is useful to escape a local minimum when combined with exploitation.</p>
+<p>The infills are added all over the region and not close to minimum value which results in a globally accurate model. As mentioned earlier, exploration process is usually used to build a globally accurate model but is useful to escape a local minimum when combined with exploitation which will enable efficient optimization.</p>
 <blockquote>
 <div><p><strong><em>NOTE</em></strong>: Due to randomness in differential evolution, results may vary slightly between runs. So, it is recommend to run the code multiple times to see average behavior.</p>
 </div></blockquote>
+<p>Final result:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>True minimum</p></th>
+<th class="head"><p>Minimum of surrogate</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(x_1^*\)</span></p></td>
+<td><p>-3.689</p></td>
+<td><p>-3.700</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(x_2^*\)</span></p></td>
+<td><p>13.630</p></td>
+<td><p>13.667</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(f(x_1^*, x_2^*)\)</span></p></td>
+<td><p>-16.644</p></td>
+<td><p>-16.579</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 
     <script type="text/x-thebe-config">
