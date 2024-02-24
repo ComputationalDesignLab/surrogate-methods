@@ -32,3 +32,4 @@ chapters:
     - file: seq_sampling/exploration
     - file: seq_sampling/lcb
     - file: seq_sampling/pf
+    - file: seq_sampling/ego
