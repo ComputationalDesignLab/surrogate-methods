@@ -526,55 +526,55 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1
-Max uncertainty: [49.25157772]
+Max uncertainty: [23.36932637]
 
 Iteration 2
-Max uncertainty: [47.13720275]
+Max uncertainty: [19.30934963]
 
 Iteration 3
-Max uncertainty: [30.07373828]
+Max uncertainty: [9.85329274]
 
 Iteration 4
-Max uncertainty: [21.48359614]
+Max uncertainty: [13.43157144]
 
 Iteration 5
-Max uncertainty: [8.74582952]
+Max uncertainty: [11.11581009]
 
 Iteration 6
-Max uncertainty: [10.39127469]
+Max uncertainty: [2.85847076]
 
 Iteration 7
-Max uncertainty: [6.88332519]
+Max uncertainty: [3.95954151]
 
 Iteration 8
-Max uncertainty: [5.00023291]
+Max uncertainty: [4.30972981]
 
 Iteration 9
-Max uncertainty: [3.21289322]
+Max uncertainty: [2.96315553]
 
 Iteration 10
-Max uncertainty: [4.79418731]
+Max uncertainty: [2.49902351]
 
 Iteration 11
-Max uncertainty: [1.9963795]
+Max uncertainty: [0.88637202]
 
 Iteration 12
-Max uncertainty: [1.10371147]
+Max uncertainty: [0.54919759]
 
 Iteration 13
-Max uncertainty: [0.83562894]
+Max uncertainty: [0.40213456]
 
 Iteration 14
-Max uncertainty: [0.8788077]
+Max uncertainty: [0.36601961]
 
 Iteration 15
-Max uncertainty: [0.50012231]
+Max uncertainty: [0.17449173]
 
 Iteration 16
-Max uncertainty: [0.13727124]
+Max uncertainty: [0.10732988]
 
 Iteration 17
-Max uncertainty: [0.04037308]
+Max uncertainty: [0.04599643]
 </pre></div>
 </div>
 </div>
@@ -600,7 +600,7 @@ Max uncertainty: [0.04037308]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Constrained Exploration&#39;)
 </pre></div>
 </div>
-<img alt="../_images/048e38a8a9003b984b3d25fa208558cf498077e43ad8770950891d9f45b898e3.png" src="../_images/048e38a8a9003b984b3d25fa208558cf498077e43ad8770950891d9f45b898e3.png" />
+<img alt="../_images/6a9ad6045a4cb7b18851652399232ee519b2ae175fc6fb08de306433ab40c62d.png" src="../_images/6a9ad6045a4cb7b18851652399232ee519b2ae175fc6fb08de306433ab40c62d.png" />
 </div>
 </div>
 <p>Note that process terminated before reaching maximum number of iterations since the <span class="math notranslate nohighlight">\(\hat{\sigma}(x)\)</span> is below given tolerance. This essentially means that model is more or less globally accurate and will be confident about its prediction. Next block minimizes the surrogate model prediction taking into account constraint model using differential evolution.</p>
@@ -625,14 +625,16 @@ Max uncertainty: [0.04037308]
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Minimum of surrogate:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x* = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">X</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;f(x*) = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">F</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;g(x*) = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">G</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Minimum of surrogate:
 
-x* = [9.11632752 3.29079957]
-f(x*) = [47.55537342]
+x* = [9.13142199 3.28535951]
+f(x*) = [47.53360888]
+g(x*) = [-1.96431561e-07]
 </pre></div>
 </div>
 </div>
@@ -682,10 +684,10 @@ f(x*) = [47.55537342]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f49e9784610&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f8bab08b560&gt;
 </pre></div>
 </div>
-<img alt="../_images/65327ff06fd2203e72ed3efb597a6c9da0c25db6694e53bb3679e07e765bfb21.png" src="../_images/65327ff06fd2203e72ed3efb597a6c9da0c25db6694e53bb3679e07e765bfb21.png" />
+<img alt="../_images/67af86a2fb5d14d6677d82166d8a130c0865a76372ce15aabc5d48bc885fc682.png" src="../_images/67af86a2fb5d14d6677d82166d8a130c0865a76372ce15aabc5d48bc885fc682.png" />
 </div>
 </div>
 <p>The infills are added all over the feasible region and not close to minimum value which results in a globally accurate model. As mentioned earlier, exploration process is usually used to build a globally accurate model but is useful to escape a local minimum when combined with exploitation which will enable efficient optimization.</p>
@@ -697,21 +699,25 @@ f(x*) = [47.55537342]
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
 <th class="head"><p>True minimum</p></th>
-<th class="head"><p>Obtained minimum</p></th>
+<th class="head"><p>Minimum of surrogate</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><span class="math notranslate nohighlight">\(x_1^*\)</span></p></td>
 <td><p>9.143</p></td>
-<td><p>9.116</p></td>
+<td><p>9.131</p></td>
 </tr>
 <tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(x_2^*\)</span></p></td>
 <td><p>3.281</p></td>
-<td><p>3.291</p></td>
+<td><p>3.285</p></td>
 </tr>
 <tr class="row-even"><td><p><span class="math notranslate nohighlight">\(f(x_1^*, x_2^*)\)</span></p></td>
 <td><p>47.560</p></td>
-<td><p>47.555</p></td>
+<td><p>47.534</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(g_1(x_1^*,x_2^*)\)</span></p></td>
+<td><p>0.0</p></td>
+<td><p>-1.964 <span class="math notranslate nohighlight">\(\cdot 10^{-7}\)</span></p></td>
 </tr>
 </tbody>
 </table>
