@@ -31,6 +31,10 @@ chapters:
     - file: seq_sampling/exploitation
     - file: seq_sampling/exploration
     - file: seq_sampling/lcb
-    - file: seq_sampling/pf
-    - file: seq_sampling/ego
-  - file: constraints/intro
+    - file: seq_sampling/pi
+    - file: seq_sampling/ei
+  - file: const_seq_sampling/intro
+    sections:
+    - file: const_seq_sampling/const_exploit
+    - file: const_seq_sampling/const_explor
+    - file: const_seq_sampling/const_ei
