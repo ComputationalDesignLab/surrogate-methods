@@ -365,7 +365,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="local-sensitivity-analysis">
 <h1>Local Sensitivity Analysis<a class="headerlink" href="#local-sensitivity-analysis" title="Permalink to this heading">#</a></h1>
-<p>This section demonstrates a post-optimality analysis using local sensitivity analysis based on finite difference gradients calculated using the surrogate of the objective and constraint function. The optimization problem used in this section is the modified Branin function problem used in the Constrained Sequential Sampling section. The constrained minimum is <span class="math notranslate nohighlight">\(f(x^*) = 47.56\)</span> at <span class="math notranslate nohighlight">\(x^* = (9.143, 3.281)\)</span>.</p>
+<p>This section demonstrates a post-optimality analysis using local sensitivity analysis based on finite difference gradients calculated using the surrogate of the objective and constraint function. The optimization problem used in this section is the modified Branin function problem also used in the Constrained Sequential Sampling section. The constrained minimum is <span class="math notranslate nohighlight">\(f(x^*) = 47.56\)</span> at <span class="math notranslate nohighlight">\(x^* = (9.143, 3.281)\)</span>. The objective and constraint function can be stated as:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
     \begin{gathered}
@@ -374,6 +374,7 @@ document.write(`
         -5 \leq x_1 \leq 10 \text{ and } 0 \leq x_2 \leq 15,
     \end{gathered}
 \end{split}\]</div>
+<p>The code blocks below import the required packages,</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Imports</span>
