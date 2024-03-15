@@ -360,8 +360,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#water-flow-function">1. Water Flow Function</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#welded-beam-function">2. Welded Beam Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#welded-beam-function">1. Welded Beam Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#water-flow-function">2. Water Flow Function</a></li>
 </ul>
             </nav>
         </div>
@@ -375,17 +375,21 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="global-sensitivity-analysis">
 <h1>Global Sensitivity Analysis<a class="headerlink" href="#global-sensitivity-analysis" title="Permalink to this heading">#</a></h1>
-<p>This section demonstrates global sensitivity analysis using the Sobol’ method. The Sobol’ method is implemented using <code class="docutils literal notranslate"><span class="pre">SALib</span></code>, a Python library built specifically for performing sensitivity analysis. The method is demonstrated on the Water Flow and Welded Beam Function that are available in the benchmarking problems section of <code class="docutils literal notranslate"><span class="pre">smt</span></code>.</p>
-<section id="water-flow-function">
-<h2>1. Water Flow Function<a class="headerlink" href="#water-flow-function" title="Permalink to this heading">#</a></h2>
-<p>The water flow function can be represented as:
-$<span class="math notranslate nohighlight">\(
+<p>This section provides an implementation for global sensitivity analysis using the Sobol’ method. The Sobol’ method is implemented using <code class="docutils literal notranslate"><span class="pre">SALib</span></code>, a Python library built specifically for performing sensitivity analysis. The method is demonstrated on the Welded Beam and Water Flow Function that are available in the benchmarking problems section of <code class="docutils literal notranslate"><span class="pre">smt</span></code>. The first-order and total Sobol’ indices are found using the true function and a Kriging model of the true function.</p>
+<blockquote>
+<div><p><strong><em>NOTE</em></strong>: <code class="docutils literal notranslate"><span class="pre">SALib</span></code> will have to be installed using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">SALib</span></code> in your Conda environment before running the code in this section.</p>
+</div></blockquote>
+<section id="welded-beam-function">
+<h2>1. Welded Beam Function<a class="headerlink" href="#welded-beam-function" title="Permalink to this heading">#</a></h2>
+<p>The three-dimensional welded beam function can be represented as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
     \begin{gathered}
-        f(\textbf{x}) = \frac{2\pi T_u (H_u - H_l)}{\textrm{ln}(\frac{r}{r_w})[1 + \frac{2LT_u}{\textrm{ln}(\frac{r}{r_w})r_w^2K_w}+\frac{T_u}{T_l}]} \\
-            \\
+        f(\textbf{x}) = \sqrt{\frac{\tau'+\tau''^2+l\tau'\tau''}{\sqrt{0.25(l^2+(h+t)^2)}}} \\
+        \textrm{where} \quad  \tau' = \frac{6000}{\sqrt{2}hl}, \tau'' = \frac{6000(14+0.5l)\sqrt{0.25(l^2+(h+t)^2)}}{2[0.707hl(\frac{l^2}{12}+0.25(h+t)^2)]}, \quad \textrm{for} \quad h \in [0.125,1.0], \quad l,t \in [5,10]  \\
     \end{gathered}
-\)</span>$</p>
-<p>The function has 8 variables. The blocks of code below use the Water Flow Function defined in <code class="docutils literal notranslate"><span class="pre">smt</span></code> to define a function for the Sobol’ method.</p>
+\end{split}\]</div>
+<p>The block of code below imports the required packages and defines the Welded Beam Function given in <code class="docutils literal notranslate"><span class="pre">smt</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Imports</span>
@@ -397,228 +401,14 @@ $<span class="math notranslate nohighlight">\(
 <span class="kn">from</span> <span class="nn">SALib.sample</span> <span class="kn">import</span> <span class="n">sobol</span><span class="p">,</span> <span class="n">latin</span>
 <span class="kn">from</span> <span class="nn">SALib.analyze</span> <span class="kn">import</span> <span class="n">sobol</span> <span class="k">as</span> <span class="n">SOBOL</span>
 
-<span class="c1"># Defining water flow function problem</span>
-<span class="n">ndim</span> <span class="o">=</span> <span class="mi">8</span>
-<span class="n">waterflow</span> <span class="o">=</span> <span class="n">WaterFlow</span><span class="p">(</span><span class="n">ndim</span><span class="o">=</span><span class="n">ndim</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>The block of code below defines the bounds of the 8 variables of the function and the sensitivity analysis problem.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining sensitivity analysis problem</span>
-<span class="n">xlimits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">50000.0</span><span class="p">],</span> <span class="p">[</span><span class="mi">63070</span><span class="p">,</span> <span class="mi">115600</span><span class="p">],</span> <span class="p">[</span><span class="mi">990</span><span class="p">,</span> <span class="mi">1110</span><span class="p">],</span> <span class="p">[</span><span class="mf">63.10</span><span class="p">,</span> <span class="mi">116</span><span class="p">],</span> <span class="p">[</span><span class="mi">700</span><span class="p">,</span> <span class="mi">820</span><span class="p">],</span> <span class="p">[</span><span class="mi">1120</span><span class="p">,</span> <span class="mi">1680</span><span class="p">],</span> <span class="p">[</span><span class="mi">9855</span><span class="p">,</span> <span class="mi">12045</span><span class="p">]])</span>
-<span class="n">problem</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;num_vars&#39;</span><span class="p">:</span> <span class="n">ndim</span><span class="p">,</span>
-    <span class="s1">&#39;names&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;$r_w$&#39;</span><span class="p">,</span> <span class="s1">&#39;$r$&#39;</span><span class="p">,</span> <span class="s1">&#39;$T_u$&#39;</span><span class="p">,</span> <span class="s1">&#39;$H_u$&#39;</span><span class="p">,</span> <span class="s1">&#39;$T_l$&#39;</span><span class="p">,</span> <span class="s1">&#39;$H_l$&#39;</span><span class="p">,</span> <span class="s1">&#39;$L$&#39;</span><span class="p">,</span> <span class="s1">&#39;$K_w$&#39;</span><span class="p">],</span>
-    <span class="s1">&#39;bounds&#39;</span><span class="p">:</span> <span class="n">xlimits</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>The next block of code uses Sobol sequences to generate samples for Monte Carlo simulations done to approximate the relevant integrals for applying the Sobol’ method.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">param_values</span> <span class="o">=</span> <span class="n">sobol</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span>
-<span class="n">Y</span> <span class="o">=</span> <span class="n">waterflow</span><span class="p">(</span><span class="n">param_values</span><span class="p">)</span>
-<span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Now, we will use the analyze method to calculate the Sobol’ indices.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Si</span> <span class="o">=</span> <span class="n">SOBOL</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;First-order indices:&quot;</span><span class="p">,</span> <span class="n">Si</span><span class="p">[</span><span class="s1">&#39;S1&#39;</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total indices:&quot;</span><span class="p">,</span> <span class="n">Si</span><span class="p">[</span><span class="s1">&#39;ST&#39;</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>First-order indices: [ 8.25333228e-01 -1.40467348e-05 -5.41807490e-08  4.17527606e-02
- -3.82028524e-05  4.04063932e-02  3.96859536e-02  9.63442556e-03]
-
-Total indices: [8.60305971e-01 2.15270151e-06 1.04877522e-11 5.29330610e-02
- 1.06885098e-05 5.40930801e-02 5.18931057e-02 1.24399649e-02]
-</pre></div>
-</div>
-</div>
-</div>
-<p>From the values of the Sobol’ indices, it is clear that the water flow function is highly sensitive to the <span class="math notranslate nohighlight">\(r_w\)</span> variable. Next, we will plot graphs to visualize the Sobol’ indices for the different variables of the water flow function.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting first order indices</span>
-<span class="nb">vars</span> <span class="o">=</span> <span class="n">problem</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">]</span>
-<span class="n">s1_values</span> <span class="o">=</span> <span class="n">Si</span><span class="p">[</span><span class="s1">&#39;S1&#39;</span><span class="p">]</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">vars</span><span class="p">,</span> <span class="n">s1_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variabls&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;First-order Sobol&#39; Indices&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
-
-<span class="c1"># Plotting total indices</span>
-<span class="n">st_values</span> <span class="o">=</span> <span class="n">Si</span><span class="p">[</span><span class="s1">&#39;ST&#39;</span><span class="p">]</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">vars</span><span class="p">,</span> <span class="n">st_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variabls&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Total Sobol&#39; Indices&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/201b4577bacc76bb44ebfed7c9857dd2c2fd1d313baee43c2f50146cb9eac13c.png" src="../_images/201b4577bacc76bb44ebfed7c9857dd2c2fd1d313baee43c2f50146cb9eac13c.png" />
-</div>
-</div>
-<p>Using surrogates instead of the true function. Creating a kriging model of the water flow function and varying the number of samples and plotting sobol indices for each number of samples.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">35</span><span class="p">,</span><span class="mi">40</span><span class="p">]</span>
-
-<span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
-
-    <span class="c1"># Generate training samples using LHS</span>
-    <span class="n">sampling</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">xlimits</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s2">&quot;ese&quot;</span><span class="p">)</span>
-    <span class="n">xtrain</span> <span class="o">=</span> <span class="n">sampling</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
-    <span class="n">ytrain</span> <span class="o">=</span> <span class="n">waterflow</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
-
-    <span class="c1"># Create kriging model</span>
-    <span class="n">corr</span> <span class="o">=</span> <span class="s1">&#39;squar_exp&#39;</span>
-    <span class="n">sm</span> <span class="o">=</span> <span class="n">KRG</span><span class="p">(</span><span class="n">theta0</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-2</span><span class="p">],</span> <span class="n">corr</span><span class="o">=</span><span class="n">corr</span><span class="p">,</span> <span class="n">theta_bounds</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e2</span><span class="p">],</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">sm</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">)</span>
-    <span class="n">sm</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
-
-    <span class="c1"># Generate values for Sobol sequence samples using the surrogate</span>
-    <span class="n">surrogate_Y</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">param_values</span><span class="p">)</span>
-    <span class="n">surrogate_Y</span> <span class="o">=</span> <span class="n">surrogate_Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-    
-    <span class="n">Si_surrogate</span> <span class="o">=</span> <span class="n">SOBOL</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">surrogate_Y</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Number of samples:&quot;</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;First-order indices:&quot;</span><span class="p">,</span> <span class="n">Si_surrogate</span><span class="p">[</span><span class="s1">&#39;S1&#39;</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total indices:&quot;</span><span class="p">,</span> <span class="n">Si_surrogate</span><span class="p">[</span><span class="s1">&#39;ST&#39;</span><span class="p">])</span>
-    
-    <span class="c1"># Plotting first order indices </span>
-    <span class="nb">vars</span> <span class="o">=</span> <span class="n">problem</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">]</span>
-    <span class="n">s1_surrogate</span> <span class="o">=</span> <span class="n">Si_surrogate</span><span class="p">[</span><span class="s1">&#39;S1&#39;</span><span class="p">]</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s1_surrogate</span><span class="p">))</span>
-    <span class="n">width</span> <span class="o">=</span> <span class="mf">0.4</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">s1_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;True function&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="n">width</span><span class="p">,</span> <span class="n">s1_surrogate</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Kriging model&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variables&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;First-order Sobol&#39; Indices&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="nb">vars</span><span class="p">)</span> 
-    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
-
-    <span class="c1"># Plotting total indices</span>
-    <span class="n">st_surrogate</span> <span class="o">=</span> <span class="n">Si_surrogate</span><span class="p">[</span><span class="s1">&#39;ST&#39;</span><span class="p">]</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">st_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;True function&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="n">width</span><span class="p">,</span> <span class="n">st_surrogate</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Kriging model&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variables&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Total Sobol&#39; Indices&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="nb">vars</span><span class="p">)</span> 
-    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Number of samples: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">size</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of samples: 5
-First-order indices: [ 1.81550459e-03  4.39211294e-05  8.30422306e-07 -3.17867366e-06
-  9.65594184e-01 -3.46628656e-07  3.44819042e-03  1.62302675e-02]
-
-Total indices: [1.97536226e-03 1.63983854e-05 1.27487526e-08 1.64042224e-07
- 9.76725223e-01 3.53794190e-07 1.26318196e-02 2.13675708e-02]
-
-Number of samples: 10
-First-order indices: [ 9.53259164e-01  4.36818582e-02 -1.13201166e-05  1.26863437e-06
-  1.73815968e-05  2.57752024e-04 -5.73314232e-08  9.26558461e-05]
-
-Total indices: [9.67628938e-01 4.98751453e-02 7.91524017e-06 9.19254149e-08
- 8.14613264e-06 2.65464157e-04 7.92778534e-10 5.93873302e-05]
-
-Number of samples: 15
-First-order indices: [8.13214104e-01 9.44583203e-06 1.11837479e-06 2.98684083e-02
- 2.60913540e-03 6.48777491e-02 4.47945525e-02 4.60912404e-03]
-
-Total indices: [8.47275331e-01 1.73887535e-07 1.47819833e-05 3.67454953e-02
- 3.68988448e-03 8.37655072e-02 5.09331514e-02 4.74861945e-03]
-
-Number of samples: 20
-First-order indices: [8.27130572e-01 9.66410768e-06 1.46359545e-04 4.25647590e-02
- 1.42522792e-04 4.44258735e-02 3.33385567e-02 1.23004857e-02]
-
-Total indices: [8.60695401e-01 1.87551330e-05 1.56592668e-04 5.23608807e-02
- 1.54739548e-04 5.73956810e-02 4.29286078e-02 1.51818365e-02]
-
-Number of samples: 25
-First-order indices: [8.34729413e-01 4.17878046e-04 7.45311217e-06 3.18357647e-02
- 1.85999314e-05 4.19524981e-02 3.90915811e-02 1.00726361e-02]
-
-Total indices: [8.69612903e-01 3.32441899e-04 1.11853255e-05 4.27453104e-02
- 6.36883226e-05 5.11147722e-02 5.15012046e-02 1.42992882e-02]
-
-Number of samples: 30
-First-order indices: [ 8.23718291e-01  1.30241060e-05 -2.38688653e-05  4.44514897e-02
-  1.16188556e-05  4.12882330e-02  3.68796447e-02  8.51639907e-03]
-
-Total indices: [8.59578350e-01 5.09974861e-05 6.65255822e-06 5.98131856e-02
- 1.89100659e-05 5.50965579e-02 4.83329423e-02 1.02123213e-02]
-
-Number of samples: 35
-First-order indices: [ 8.25086225e-01  4.85348007e-05 -2.40929133e-05  3.89934312e-02
-  2.25394560e-06  4.23925614e-02  3.92240990e-02  7.91543061e-03]
-
-Total indices: [8.62488551e-01 1.54780978e-05 8.18424494e-06 5.09842511e-02
- 7.87802793e-05 5.87410940e-02 5.30397728e-02 9.03138378e-03]
-
-Number of samples: 40
-First-order indices: [ 8.31168478e-01 -9.49786912e-05 -1.57254999e-04  3.88278197e-02
-  8.10514517e-06  4.11047736e-02  4.11712058e-02  9.72179367e-03]
-
-Total indices: [8.63197997e-01 7.02071784e-05 9.45577034e-05 4.92055904e-02
- 1.16105038e-06 5.24178733e-02 5.23828480e-02 1.13506659e-02]
-</pre></div>
-</div>
-<img alt="../_images/b79632fbe33784ca0e6db37b09c1dece52a880f746552c86dfbeefba37716b9d.png" src="../_images/b79632fbe33784ca0e6db37b09c1dece52a880f746552c86dfbeefba37716b9d.png" />
-<img alt="../_images/3bb5116c064bfee440e4c3b5e020f90488e6c7cadec5dce2ccf03aec9f13d1d0.png" src="../_images/3bb5116c064bfee440e4c3b5e020f90488e6c7cadec5dce2ccf03aec9f13d1d0.png" />
-<img alt="../_images/e8a73a09e737100f11d2610b52f9c3e8bb44c91e6338073544f3e6b937c4f46f.png" src="../_images/e8a73a09e737100f11d2610b52f9c3e8bb44c91e6338073544f3e6b937c4f46f.png" />
-<img alt="../_images/97415ea55e7d5bb070d71c6815a06ab4dffd2961eb58328d1bdbf804185fb9e3.png" src="../_images/97415ea55e7d5bb070d71c6815a06ab4dffd2961eb58328d1bdbf804185fb9e3.png" />
-<img alt="../_images/77053c70007863c0022c946fb18395b0c109e74597db76be58c2c81acf8cc7b5.png" src="../_images/77053c70007863c0022c946fb18395b0c109e74597db76be58c2c81acf8cc7b5.png" />
-<img alt="../_images/8af20b0b54f7034b448b384839ade032597e01be2cca4ae6ae8b2f498095803c.png" src="../_images/8af20b0b54f7034b448b384839ade032597e01be2cca4ae6ae8b2f498095803c.png" />
-<img alt="../_images/b42374348b99a25b1dab32cf230d86674fe5334c78630cc03a7c76be60457ddb.png" src="../_images/b42374348b99a25b1dab32cf230d86674fe5334c78630cc03a7c76be60457ddb.png" />
-<img alt="../_images/946fcaf794e1982cf784a5c8afc1202072de72e5908bf02d614f8b096d46880a.png" src="../_images/946fcaf794e1982cf784a5c8afc1202072de72e5908bf02d614f8b096d46880a.png" />
-</div>
-</div>
-</section>
-<section id="welded-beam-function">
-<h2>2. Welded Beam Function<a class="headerlink" href="#welded-beam-function" title="Permalink to this heading">#</a></h2>
-<p>The welded beam function can be represented as:
-$<span class="math notranslate nohighlight">\(
-    \begin{gathered}
-        f(\textbf{x}) =  \\
-            \\
-    \end{gathered}
-\)</span>$</p>
-<p>The function has 3 variables. The blocks of code below use the Welded Beam Function defined in <code class="docutils literal notranslate"><span class="pre">smt</span></code> to define a function for the Sobol’ method.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ndim</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="c1"># Defining welded beam function problem</span>
+<span class="n">ndim</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">weldedbeam</span> <span class="o">=</span> <span class="n">WeldedBeam</span><span class="p">(</span><span class="n">ndim</span><span class="o">=</span><span class="n">ndim</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Now, we will apply the same procedure as the water flow function to calculate the Sobol’ indices for the welded beam function.</p>
+<p>The next block of code defines the sensitivity analysis problem for <code class="docutils literal notranslate"><span class="pre">SALib</span></code>. The problem is defined as a dictionary with the number of variables, names and bounds of the variables.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining sensitivity analysis problem</span>
@@ -628,13 +418,21 @@ $<span class="math notranslate nohighlight">\(
     <span class="s1">&#39;names&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;$h$&#39;</span><span class="p">,</span> <span class="s1">&#39;$l$&#39;</span><span class="p">,</span> <span class="s1">&#39;$t$&#39;</span><span class="p">],</span>
     <span class="s1">&#39;bounds&#39;</span><span class="p">:</span> <span class="n">xlimits</span>
 <span class="p">}</span>
-<span class="n">param_values</span> <span class="o">=</span> <span class="n">sobol</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the next block of code, Sobol’ sequences are used to create a set of samples for performing Monte Carlo simulations to approximate the relevant integrals for calculating the Sobol’ indices. Essentially, the block of code uses functionality in <code class="docutils literal notranslate"><span class="pre">SALib</span></code> to generate the samples using Sobol’ sequences and calculate the corresponding function values using the true function. Refer to the lecture notes for further details.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">param_values</span> <span class="o">=</span> <span class="n">sobol</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span>
 <span class="n">Y</span> <span class="o">=</span> <span class="n">weldedbeam</span><span class="p">(</span><span class="n">param_values</span><span class="p">)</span>
 <span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Now, the Sobol’ indices can be calculated using the samples and function values generated in the previous code block. Both the first order (<span class="math notranslate nohighlight">\(S_1\)</span>) and total indices (<span class="math notranslate nohighlight">\(S_T\)</span>) are calculated.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Si</span> <span class="o">=</span> <span class="n">SOBOL</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
@@ -645,45 +443,47 @@ $<span class="math notranslate nohighlight">\(
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>First-order indices: [0.00997659 0.95683814 0.02691913]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>First-order indices: [0.01077274 0.95720283 0.02671223]
 
-Total indices: [0.0149239  0.96384449 0.02887234]
+Total indices: [0.01478824 0.96401405 0.02881991]
 </pre></div>
 </div>
 </div>
 </div>
+<p>From the values of the Sobol’ indices, it is clear that the welded beam function is highly sensitive to the <span class="math notranslate nohighlight">\(l\)</span> variable and far less sensitive to the other variables. Next, the code blocks will plot graphs to visualize the Sobol’ indices for the different variables of the welded beam function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting first order indices</span>
 <span class="nb">vars</span> <span class="o">=</span> <span class="n">problem</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">]</span>
 <span class="n">s1_values</span> <span class="o">=</span> <span class="n">Si</span><span class="p">[</span><span class="s1">&#39;S1&#39;</span><span class="p">]</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">vars</span><span class="p">,</span> <span class="n">s1_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variabls&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Sobol&#39; Indices&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;First-order indices for Welded Beam Function&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
-
-<span class="c1"># Plotting total indices</span>
 <span class="n">st_values</span> <span class="o">=</span> <span class="n">Si</span><span class="p">[</span><span class="s1">&#39;ST&#39;</span><span class="p">]</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">vars</span><span class="p">,</span> <span class="n">st_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variabls&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Sobol&#39; Indices&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Total indices for Welded Beam Function&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s1_values</span><span class="p">))</span>
+<span class="n">width</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">s1_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;$S_1$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="n">width</span><span class="p">,</span> <span class="n">st_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;$S_T$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variables&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Sobol&#39; Indices&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="nb">vars</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/b217f79882ebaf2ca490a98cec31682b3c1a92027ce46e60affb53915f7d35d8.png" src="../_images/b217f79882ebaf2ca490a98cec31682b3c1a92027ce46e60affb53915f7d35d8.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 1.0)
+</pre></div>
+</div>
+<img alt="../_images/3ff81302f091f6ae85ba73b46c20d1da76caacbb493cda11e92343d65f0d2c78.png" src="../_images/3ff81302f091f6ae85ba73b46c20d1da76caacbb493cda11e92343d65f0d2c78.png" />
 </div>
 </div>
+<p>In the next few code blocks, the use of surrogates to perform sensitivity analysis is demonstrated. A Kriging model is created of the Welded Beam function using various number of samples and the Monte Carlo simulations needed for calculating the Sobol’ indices are performed using the Kriging model instead of the true function. The idea is to reduce the computational cost of calculating the Sobol’ indices. The Monte Carlo simulations require 1000s of evaluations of the true function which can be a high-fidelity physics simulation that is expensive to evaluate. Using a surrogate in place of the high-fidelity analysis will greatly reduce the computational cost.</p>
+<p>Plots are created to visualize the values of the first-order and total Sobol’ indices and a comparison is drawn between the indices calculated using the true function and the Kriging model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">30</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining sample sizes</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">35</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
 
@@ -715,21 +515,22 @@ Total indices: [0.0149239  0.96384449 0.02887234]
     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
     <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">s1_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;True function&quot;</span><span class="p">)</span>
     <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="n">width</span><span class="p">,</span> <span class="n">s1_surrogate</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Kriging model&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variables&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;First-order Sobol&#39; Indices&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="nb">vars</span><span class="p">)</span> 
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variables&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;First-order Sobol&#39; Indices&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="nb">vars</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">12</span><span class="p">)</span> 
     <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
     <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
     <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
 
     <span class="c1"># Plotting total indices</span>
     <span class="n">st_surrogate</span> <span class="o">=</span> <span class="n">Si_surrogate</span><span class="p">[</span><span class="s1">&#39;ST&#39;</span><span class="p">]</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">st_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;True function&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">st_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;True function&quot;</span><span class="p">)</span>
     <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="n">width</span><span class="p">,</span> <span class="n">st_surrogate</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Kriging model&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variables&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Total Sobol&#39; Indices&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="nb">vars</span><span class="p">)</span> 
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variables&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Total Sobol&#39; Indices&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="nb">vars</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">12</span><span class="p">)</span> 
     <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
     <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
     <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Number of samples: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">size</span><span class="p">))</span>
 </pre></div>
@@ -737,44 +538,261 @@ Total indices: [0.0149239  0.96384449 0.02887234]
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of samples: 5
-First-order indices: [-5.65514831e-08  9.79996156e-01  1.92183567e-02]
+First-order indices: [ 9.94570109e-06  1.00049120e+00 -5.34170665e-08]
 
-Total indices: [2.78677642e-09 9.80722096e-01 1.98289182e-02]
+Total indices: [1.91433915e-05 1.00046091e+00 2.52875435e-09]
 
 Number of samples: 10
-First-order indices: [0.0045175  0.96982767 0.02354606]
+First-order indices: [4.39011181e-07 9.89331488e-01 6.97792336e-03]
 
-Total indices: [0.00484272 0.97201986 0.02553376]
+Total indices: [7.30030144e-09 9.92735620e-01 1.07137562e-02]
 
 Number of samples: 15
-First-order indices: [0.00816947 0.96390814 0.02409232]
+First-order indices: [0.00908904 0.96340884 0.02391534]
 
-Total indices: [0.01126248 0.96796856 0.0250729 ]
+Total indices: [0.01258048 0.96874043 0.02438822]
 
 Number of samples: 20
-First-order indices: [0.00963104 0.95919081 0.02481805]
+First-order indices: [0.00914214 0.9590201  0.02756716]
 
-Total indices: [0.01514408 0.96577308 0.02650192]
+Total indices: [0.01178088 0.96461677 0.02958379]
 
 Number of samples: 25
-First-order indices: [0.01059899 0.95712009 0.02626423]
+First-order indices: [0.01028691 0.96023711 0.02519657]
 
-Total indices: [0.01482453 0.96397143 0.02834464]
+Total indices: [0.01349234 0.96519381 0.02741788]
 
 Number of samples: 30
-First-order indices: [0.00972515 0.95724169 0.02692765]
+First-order indices: [0.01014921 0.95853545 0.02642425]
 
-Total indices: [0.01426719 0.96354829 0.02902243]
+Total indices: [0.0139455  0.96492961 0.02795428]
 </pre></div>
 </div>
-<img alt="../_images/dc0a3656acbced30918968122e750b868d0b33455eb134b2bf71efdee9afd893.png" src="../_images/dc0a3656acbced30918968122e750b868d0b33455eb134b2bf71efdee9afd893.png" />
-<img alt="../_images/f25c3997c3351234988ec4afa1f9619176b5bc6ac75c5172908152e0b3b84b1d.png" src="../_images/f25c3997c3351234988ec4afa1f9619176b5bc6ac75c5172908152e0b3b84b1d.png" />
-<img alt="../_images/9f486977e234cae7cf750295dad22eaefbc8418f177eec606fdc7e943655f0aa.png" src="../_images/9f486977e234cae7cf750295dad22eaefbc8418f177eec606fdc7e943655f0aa.png" />
-<img alt="../_images/abf0b98cc97fd88df0d9b1e3c34a0788fb53ebd99dbbcc2f6312266107cbd6f5.png" src="../_images/abf0b98cc97fd88df0d9b1e3c34a0788fb53ebd99dbbcc2f6312266107cbd6f5.png" />
-<img alt="../_images/e9ef30cef20faf7a1c1fb94e8591b2aabc387644be7b98246d72b2cab612cbb0.png" src="../_images/e9ef30cef20faf7a1c1fb94e8591b2aabc387644be7b98246d72b2cab612cbb0.png" />
-<img alt="../_images/ed342e48e35b0d9df6196f832994850c87e402c05ddd2e5a6067cc18243e175f.png" src="../_images/ed342e48e35b0d9df6196f832994850c87e402c05ddd2e5a6067cc18243e175f.png" />
+<img alt="../_images/6ef618c43be62523de8177091e81dab17496c67453cbf6334f094d45b5e51573.png" src="../_images/6ef618c43be62523de8177091e81dab17496c67453cbf6334f094d45b5e51573.png" />
+<img alt="../_images/252eb80177ee36127f27b45c766fd34e3e658e9c0fc3461db0853d57010d5c26.png" src="../_images/252eb80177ee36127f27b45c766fd34e3e658e9c0fc3461db0853d57010d5c26.png" />
+<img alt="../_images/04d17077b443e8333da39d75bceb872fb99f5ba75b4cca1002d1367861756ae7.png" src="../_images/04d17077b443e8333da39d75bceb872fb99f5ba75b4cca1002d1367861756ae7.png" />
+<img alt="../_images/1c37658f3f4879d477869d18428a4530f0adc771782a54d4070ee50312d7b892.png" src="../_images/1c37658f3f4879d477869d18428a4530f0adc771782a54d4070ee50312d7b892.png" />
+<img alt="../_images/f6e8705b9592209029b45933611aa53990867ae3e52276b5a205a58b37216a34.png" src="../_images/f6e8705b9592209029b45933611aa53990867ae3e52276b5a205a58b37216a34.png" />
+<img alt="../_images/5c65ed7cfa803a0edad9e117beee56e43847608c3b248dac397a038f4f716598.png" src="../_images/5c65ed7cfa803a0edad9e117beee56e43847608c3b248dac397a038f4f716598.png" />
 </div>
 </div>
+<p>With a few number of samples, the Kriging model cannot model the Welded Beam function well enough to accurately calculate the Sobol’ indices. As the number of samples increases, the Kriging model becomes more accurate and the Sobol’ indices calculated using the Kriging model match closely with those calculated using the true function. However, calculating the Sobol’ indices using the Kriging model only required 20 - 30 evaluations of the true function which makes it effective in reducing the computational cost of calculating global sensitivities.</p>
+</section>
+<section id="water-flow-function">
+<h2>2. Water Flow Function<a class="headerlink" href="#water-flow-function" title="Permalink to this heading">#</a></h2>
+<p>The eight-dimensional water flow function can be represented as:
+$<span class="math notranslate nohighlight">\(
+    \begin{gathered}
+        f(\textbf{x}) = \frac{2\pi T_u (H_u - H_l)}{\textrm{ln}(\frac{r}{r_w})[1 + \frac{2LT_u}{\textrm{ln}(\frac{r}{r_w})r_w^2K_w}+\frac{T_u}{T_l}]} \\
+    \textrm{where} \quad r_w \in [0.05,0.15], \quad r \in [100, 50000], \quad T_u \in [63070, 115600], \quad H_u \in [990, 1110], \quad T_l \in [63.10,116], \quad H_l \in [700, 820], \quad L \in [1120, 1680], \quad K_w \in [9855, 12045]       \\
+    \end{gathered}
+\)</span>$</p>
+<p>The blocks of code below defines the Water Flow Function given in <code class="docutils literal notranslate"><span class="pre">smt</span></code> and calculates the Sobol’ indices for the variables in a similar manner as the Welded Beam Function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the water flow function</span>
+<span class="n">ndim</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">waterflow</span> <span class="o">=</span> <span class="n">WaterFlow</span><span class="p">(</span><span class="n">ndim</span><span class="o">=</span><span class="n">ndim</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining sensitivity analysis problem</span>
+<span class="n">xlimits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">50000.0</span><span class="p">],</span> <span class="p">[</span><span class="mi">63070</span><span class="p">,</span> <span class="mi">115600</span><span class="p">],</span> <span class="p">[</span><span class="mi">990</span><span class="p">,</span> <span class="mi">1110</span><span class="p">],</span> <span class="p">[</span><span class="mf">63.10</span><span class="p">,</span> <span class="mi">116</span><span class="p">],</span> <span class="p">[</span><span class="mi">700</span><span class="p">,</span> <span class="mi">820</span><span class="p">],</span> <span class="p">[</span><span class="mi">1120</span><span class="p">,</span> <span class="mi">1680</span><span class="p">],</span> <span class="p">[</span><span class="mi">9855</span><span class="p">,</span> <span class="mi">12045</span><span class="p">]])</span>
+<span class="n">problem</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;num_vars&#39;</span><span class="p">:</span> <span class="n">ndim</span><span class="p">,</span>
+    <span class="s1">&#39;names&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;$r_w$&#39;</span><span class="p">,</span> <span class="s1">&#39;$r$&#39;</span><span class="p">,</span> <span class="s1">&#39;$T_u$&#39;</span><span class="p">,</span> <span class="s1">&#39;$H_u$&#39;</span><span class="p">,</span> <span class="s1">&#39;$T_l$&#39;</span><span class="p">,</span> <span class="s1">&#39;$H_l$&#39;</span><span class="p">,</span> <span class="s1">&#39;$L$&#39;</span><span class="p">,</span> <span class="s1">&#39;$K_w$&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;bounds&#39;</span><span class="p">:</span> <span class="n">xlimits</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, the Sobol’ indices are calculated using the true function and plots are created to visualize the values of the Sobol’ indices.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">param_values</span> <span class="o">=</span> <span class="n">sobol</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">waterflow</span><span class="p">(</span><span class="n">param_values</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Si</span> <span class="o">=</span> <span class="n">SOBOL</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;First-order indices:&quot;</span><span class="p">,</span> <span class="n">Si</span><span class="p">[</span><span class="s1">&#39;S1&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total indices:&quot;</span><span class="p">,</span> <span class="n">Si</span><span class="p">[</span><span class="s1">&#39;ST&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>First-order indices: [ 8.30235500e-01 -4.19011591e-06  1.54054880e-09  4.35175348e-02
+ -7.27496403e-05  3.93399266e-02  3.79409679e-02  9.73889533e-03]
+
+Total indices: [8.69559369e-01 2.33661576e-06 1.09364154e-11 5.40058310e-02
+ 1.06917891e-05 5.40167779e-02 5.27936689e-02 1.25472229e-02]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting first order indices</span>
+<span class="nb">vars</span> <span class="o">=</span> <span class="n">problem</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">]</span>
+<span class="n">s1_values</span> <span class="o">=</span> <span class="n">Si</span><span class="p">[</span><span class="s1">&#39;S1&#39;</span><span class="p">]</span>
+<span class="n">st_values</span> <span class="o">=</span> <span class="n">Si</span><span class="p">[</span><span class="s1">&#39;ST&#39;</span><span class="p">]</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s1_values</span><span class="p">))</span>
+<span class="n">width</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">s1_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;$S_1$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="n">width</span><span class="p">,</span> <span class="n">st_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;$S_T$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variables&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Sobol&#39; Indices&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="nb">vars</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 1.0)
+</pre></div>
+</div>
+<img alt="../_images/8f30bb7a65d401d059f8a27d4df67ed2d5ef28a7e6e76693b8c8b371bd898431.png" src="../_images/8f30bb7a65d401d059f8a27d4df67ed2d5ef28a7e6e76693b8c8b371bd898431.png" />
+</div>
+</div>
+<p>From the values of the Sobol’ indices, it is clear that the water flow function is highly sensitive to the <span class="math notranslate nohighlight">\(r_w\)</span> variable and slightly sensitive to the <span class="math notranslate nohighlight">\(H_u\)</span>, <span class="math notranslate nohighlight">\(H_l\)</span>, <span class="math notranslate nohighlight">\(L\)</span>, and <span class="math notranslate nohighlight">\(K_w\)</span> variables. It can also be seen that the total indices are larger than the first-order indices indicating the presence of interaction effects between the variables of this function.</p>
+<p>The next few code block utilize a Kriging model to conduct the sensitivity analysis in a similar manner to the analysis conducted for the welded beam function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining sample sizes</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
+
+    <span class="c1"># Generate training samples using LHS</span>
+    <span class="n">sampling</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">xlimits</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s2">&quot;ese&quot;</span><span class="p">)</span>
+    <span class="n">xtrain</span> <span class="o">=</span> <span class="n">sampling</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">ytrain</span> <span class="o">=</span> <span class="n">waterflow</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
+
+    <span class="c1"># Create kriging model</span>
+    <span class="n">corr</span> <span class="o">=</span> <span class="s1">&#39;squar_exp&#39;</span>
+    <span class="n">sm</span> <span class="o">=</span> <span class="n">KRG</span><span class="p">(</span><span class="n">theta0</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-2</span><span class="p">],</span> <span class="n">corr</span><span class="o">=</span><span class="n">corr</span><span class="p">,</span> <span class="n">theta_bounds</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e2</span><span class="p">],</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">)</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+    <span class="c1"># Generate values for Sobol sequence samples using the surrogate</span>
+    <span class="n">surrogate_Y</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">param_values</span><span class="p">)</span>
+    <span class="n">surrogate_Y</span> <span class="o">=</span> <span class="n">surrogate_Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="n">Si_surrogate</span> <span class="o">=</span> <span class="n">SOBOL</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">surrogate_Y</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Number of samples:&quot;</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;First-order indices:&quot;</span><span class="p">,</span> <span class="n">Si_surrogate</span><span class="p">[</span><span class="s1">&#39;S1&#39;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total indices:&quot;</span><span class="p">,</span> <span class="n">Si_surrogate</span><span class="p">[</span><span class="s1">&#39;ST&#39;</span><span class="p">])</span>
+    
+    <span class="c1"># Plotting first order indices </span>
+    <span class="nb">vars</span> <span class="o">=</span> <span class="n">problem</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">]</span>
+    <span class="n">s1_surrogate</span> <span class="o">=</span> <span class="n">Si_surrogate</span><span class="p">[</span><span class="s1">&#39;S1&#39;</span><span class="p">]</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s1_surrogate</span><span class="p">))</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="mf">0.4</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">s1_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;True function&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="n">width</span><span class="p">,</span> <span class="n">s1_surrogate</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Kriging model&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variables&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;First-order Sobol&#39; Indices&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="nb">vars</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">12</span><span class="p">)</span> 
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+
+    <span class="c1"># Plotting total indices</span>
+    <span class="n">st_surrogate</span> <span class="o">=</span> <span class="n">Si_surrogate</span><span class="p">[</span><span class="s1">&#39;ST&#39;</span><span class="p">]</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">st_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;True function&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="n">width</span><span class="p">,</span> <span class="n">st_surrogate</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Kriging model&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variables&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Total Sobol&#39; Indices&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="nb">vars</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">12</span><span class="p">)</span> 
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Number of samples: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">size</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of samples: 5
+First-order indices: [ 9.93438598e-01  2.50328347e-06 -2.20537439e-08  1.95820999e-04
+ -9.96982661e-05  2.51565270e-08  5.56965057e-05 -3.82900710e-06]
+
+Total indices: [9.94552963e-01 4.08106550e-10 1.92606781e-12 3.29081818e-04
+ 1.55038394e-03 1.43968542e-10 3.22507901e-04 5.27805655e-04]
+
+Number of samples: 10
+First-order indices: [ 6.82452074e-01  9.84675889e-08  1.82122848e-07  2.41648242e-01
+ -1.43737402e-04 -7.25520255e-06  3.36357277e-05  5.57640212e-05]
+
+Total indices: [7.61579809e-01 1.33640163e-10 2.56969027e-09 3.21226615e-01
+ 4.42842269e-05 3.81569824e-07 1.10899475e-05 4.14863657e-05]
+
+Number of samples: 15
+First-order indices: [8.58051740e-01 2.66915786e-04 1.68140967e-05 7.75349844e-02
+ 9.65527596e-05 1.72258387e-02 3.18472555e-02 1.38530997e-04]
+
+Total indices: [8.70857892e-01 2.45741931e-04 1.94187246e-05 9.08915434e-02
+ 1.08857553e-04 1.96528524e-02 3.33720459e-02 1.42467500e-04]
+
+Number of samples: 20
+First-order indices: [8.55040403e-01 3.10364984e-05 1.01534489e-05 3.68068904e-02
+ 6.08525571e-06 3.38081065e-02 4.14167354e-02 5.14374537e-03]
+
+Total indices: [8.80356458e-01 2.26867445e-04 5.56298637e-06 3.94982224e-02
+ 1.27603646e-05 4.12864996e-02 5.60970120e-02 9.15381952e-03]
+
+Number of samples: 25
+First-order indices: [8.39626805e-01 1.10600696e-05 1.24692393e-04 4.07184627e-02
+ 2.29845360e-04 3.59102499e-02 4.10341457e-02 7.81043770e-03]
+
+Total indices: [8.72377216e-01 9.64450700e-06 1.22529391e-04 4.76767673e-02
+ 1.45360181e-04 4.89059997e-02 5.44908942e-02 9.85386264e-03]
+
+Number of samples: 30
+First-order indices: [ 8.33203983e-01  4.83619819e-05 -2.40628475e-05  4.07111400e-02
+  2.37495219e-04  3.88052741e-02  3.77777377e-02  1.18476847e-02]
+
+Total indices: [8.70617795e-01 5.03952609e-05 1.25236180e-04 4.59015385e-02
+ 6.80540652e-05 5.34650166e-02 5.17097194e-02 1.57713579e-02]
+
+Number of samples: 35
+First-order indices: [8.36551029e-01 2.05422861e-06 3.27177786e-05 4.41153437e-02
+ 2.16311896e-05 3.89172630e-02 3.66115877e-02 8.85926663e-03]
+
+Total indices: [8.71383962e-01 5.45176151e-06 2.27351713e-05 5.36435630e-02
+ 9.88135909e-06 5.23524283e-02 4.85814997e-02 1.07097750e-02]
+
+Number of samples: 40
+First-order indices: [ 8.36370833e-01 -1.77860216e-05  1.30256913e-05  4.21197544e-02
+ -1.27783322e-04  4.03073946e-02  3.79050698e-02  9.83811382e-03]
+
+Total indices: [8.70477362e-01 2.64318790e-05 1.23695916e-05 5.14451360e-02
+ 1.64820583e-05 5.08047648e-02 4.94019325e-02 1.25270600e-02]
+</pre></div>
+</div>
+<img alt="../_images/5fb9a77e2c8250c2e48844fac0cee3354d49308a689cd385b5d75dc0ea735de4.png" src="../_images/5fb9a77e2c8250c2e48844fac0cee3354d49308a689cd385b5d75dc0ea735de4.png" />
+<img alt="../_images/d8f6c98c29e2e0226bd4b86110dd32dfe72142874454172f0cccfab05379fde4.png" src="../_images/d8f6c98c29e2e0226bd4b86110dd32dfe72142874454172f0cccfab05379fde4.png" />
+<img alt="../_images/42cda4f8a7fd9022ec58767975427751c5f67b5727ecc88dd672fb0f20cdbd40.png" src="../_images/42cda4f8a7fd9022ec58767975427751c5f67b5727ecc88dd672fb0f20cdbd40.png" />
+<img alt="../_images/28faefa3aea6c7b02c024176fddb234ca54a66b82e115a89e3d63c8f956b6fbd.png" src="../_images/28faefa3aea6c7b02c024176fddb234ca54a66b82e115a89e3d63c8f956b6fbd.png" />
+<img alt="../_images/d19f0a6036de962b6db70dd65a39f453482dbf495476f21b5ecc32b842d59430.png" src="../_images/d19f0a6036de962b6db70dd65a39f453482dbf495476f21b5ecc32b842d59430.png" />
+<img alt="../_images/64681c77a6585c7b609fc80f37e1b2c39f7896866e05be93ff557a3738137025.png" src="../_images/64681c77a6585c7b609fc80f37e1b2c39f7896866e05be93ff557a3738137025.png" />
+<img alt="../_images/94765b7aa87985945d56522f407a9369d1abd8b93188085c6c9d1c779b62fe6b.png" src="../_images/94765b7aa87985945d56522f407a9369d1abd8b93188085c6c9d1c779b62fe6b.png" />
+<img alt="../_images/582ce847b814ec70076d6b2545439bdd9d261e0faa9eb0afe405ba5a28233e2e.png" src="../_images/582ce847b814ec70076d6b2545439bdd9d261e0faa9eb0afe405ba5a28233e2e.png" />
+</div>
+</div>
+<p>The Kriging model cannot model the Water Flow function well enough to accurately calculate the Sobol’ indices with a few number of samples. As the number of samples increases, the Kriging model becomes more accurate and the Sobol’ indices calculated using the Kriging model match closely with those calculated using the true function. In this case, almost 40 samples are required to accurately calculate the Sobol’ indices as there are more number of variables in this function. However, the computational cost is still much cheaper than calculating the Sobol’ indices using the true function.</p>
 </section>
 </section>
 
@@ -832,8 +850,8 @@ Total indices: [0.01426719 0.96354829 0.02902243]
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#water-flow-function">1. Water Flow Function</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#welded-beam-function">2. Welded Beam Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#welded-beam-function">1. Welded Beam Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#water-flow-function">2. Water Flow Function</a></li>
 </ul>
   </nav></div>
 
