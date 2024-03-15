@@ -1,0 +1,891 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Global Sensitivity Analysis &#8212; AAE 590 Surrogate Methods</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'sens_analysis/global';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Local Sensitivity Analysis" href="local.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">AAE 590 Surrogate Methods</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources.html">Python and Jupyter notebook resources</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../review_nm/intro.html">Review of Numerical Methods and Probability</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../review_nm/error.html">Error estimation for iterative method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../review_nm/num_diff.html">Numerical Differentiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../review_nm/uniform.html">Uniform Distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../review_nm/norm.html">Normal Distribution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../prob_form.html">Problem Formulation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../local_opt/intro.html">Local Optimization</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../local_opt/unconst.html">Unconstrained Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../local_opt/const.html">Constrained Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../global_opt/intro.html">Global Optimization</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../global_opt/multi.html">Multistart Gradient-based Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../global_opt/pso.html">Particle Swarm Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../global_opt/de.html">Differential Evolution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../doe.html">Sampling Plans</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../basic_sm/intro.html">Basic Surrogate Models</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basic_sm/ls_regression.html">Linear Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basic_sm/poly.html">Polynomial Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basic_sm/rbf.html">Radial Basis Function Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../krg.html">Gaussian Process based Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../seq_sampling/intro.html">Sequential Sampling</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../seq_sampling/exploitation.html">Exploitation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../seq_sampling/exploration.html">Exploration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../seq_sampling/lcb.html">Lower Confidence Bound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../seq_sampling/pi.html">Probability of Improvement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../seq_sampling/ei.html">Expected Improvement</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../const_seq_sampling/intro.html">Constrained Sequential Sampling</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../const_seq_sampling/const_exploit.html">Constrained Exploitation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../const_seq_sampling/const_explor.html">Constrained Exploration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../const_seq_sampling/const_ei.html">Constrained Expected Improvement</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Sensitivity Analysis</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="local.html">Local Sensitivity Analysis</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Global Sensitivity Analysis</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/sens_analysis/global.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Global Sensitivity Analysis</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#water-flow-function">1. Water Flow Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#welded-beam-function">2. Welded Beam Function</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="global-sensitivity-analysis">
+<h1>Global Sensitivity Analysis<a class="headerlink" href="#global-sensitivity-analysis" title="Permalink to this heading">#</a></h1>
+<p>This section demonstrates global sensitivity analysis using the Sobol’ method. The Sobol’ method is implemented using <code class="docutils literal notranslate"><span class="pre">SALib</span></code>, a Python library built specifically for performing sensitivity analysis. The method is demonstrated on the Water Flow and Welded Beam Function that are available in the benchmarking problems section of <code class="docutils literal notranslate"><span class="pre">smt</span></code>.</p>
+<section id="water-flow-function">
+<h2>1. Water Flow Function<a class="headerlink" href="#water-flow-function" title="Permalink to this heading">#</a></h2>
+<p>The water flow function can be represented as:
+$<span class="math notranslate nohighlight">\(
+    \begin{gathered}
+        f(\textbf{x}) = \frac{2\pi T_u (H_u - H_l)}{\textrm{ln}(\frac{r}{r_w})[1 + \frac{2LT_u}{\textrm{ln}(\frac{r}{r_w})r_w^2K_w}+\frac{T_u}{T_l}]} \\
+            \\
+    \end{gathered}
+\)</span>$</p>
+<p>The function has 8 variables. The blocks of code below use the Water Flow Function defined in <code class="docutils literal notranslate"><span class="pre">smt</span></code> to define a function for the Sobol’ method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">smt.sampling_methods</span> <span class="kn">import</span> <span class="n">LHS</span>
+<span class="kn">from</span> <span class="nn">smt.surrogate_models</span> <span class="kn">import</span> <span class="n">KRG</span>
+<span class="kn">from</span> <span class="nn">smt.problems</span> <span class="kn">import</span> <span class="n">WaterFlow</span><span class="p">,</span> <span class="n">WeldedBeam</span>
+<span class="kn">from</span> <span class="nn">SALib.sample</span> <span class="kn">import</span> <span class="n">sobol</span><span class="p">,</span> <span class="n">latin</span>
+<span class="kn">from</span> <span class="nn">SALib.analyze</span> <span class="kn">import</span> <span class="n">sobol</span> <span class="k">as</span> <span class="n">SOBOL</span>
+
+<span class="c1"># Defining water flow function problem</span>
+<span class="n">ndim</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">waterflow</span> <span class="o">=</span> <span class="n">WaterFlow</span><span class="p">(</span><span class="n">ndim</span><span class="o">=</span><span class="n">ndim</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The block of code below defines the bounds of the 8 variables of the function and the sensitivity analysis problem.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining sensitivity analysis problem</span>
+<span class="n">xlimits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">50000.0</span><span class="p">],</span> <span class="p">[</span><span class="mi">63070</span><span class="p">,</span> <span class="mi">115600</span><span class="p">],</span> <span class="p">[</span><span class="mi">990</span><span class="p">,</span> <span class="mi">1110</span><span class="p">],</span> <span class="p">[</span><span class="mf">63.10</span><span class="p">,</span> <span class="mi">116</span><span class="p">],</span> <span class="p">[</span><span class="mi">700</span><span class="p">,</span> <span class="mi">820</span><span class="p">],</span> <span class="p">[</span><span class="mi">1120</span><span class="p">,</span> <span class="mi">1680</span><span class="p">],</span> <span class="p">[</span><span class="mi">9855</span><span class="p">,</span> <span class="mi">12045</span><span class="p">]])</span>
+<span class="n">problem</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;num_vars&#39;</span><span class="p">:</span> <span class="n">ndim</span><span class="p">,</span>
+    <span class="s1">&#39;names&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;$r_w$&#39;</span><span class="p">,</span> <span class="s1">&#39;$r$&#39;</span><span class="p">,</span> <span class="s1">&#39;$T_u$&#39;</span><span class="p">,</span> <span class="s1">&#39;$H_u$&#39;</span><span class="p">,</span> <span class="s1">&#39;$T_l$&#39;</span><span class="p">,</span> <span class="s1">&#39;$H_l$&#39;</span><span class="p">,</span> <span class="s1">&#39;$L$&#39;</span><span class="p">,</span> <span class="s1">&#39;$K_w$&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;bounds&#39;</span><span class="p">:</span> <span class="n">xlimits</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next block of code uses Sobol sequences to generate samples for Monte Carlo simulations done to approximate the relevant integrals for applying the Sobol’ method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">param_values</span> <span class="o">=</span> <span class="n">sobol</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">waterflow</span><span class="p">(</span><span class="n">param_values</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we will use the analyze method to calculate the Sobol’ indices.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Si</span> <span class="o">=</span> <span class="n">SOBOL</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;First-order indices:&quot;</span><span class="p">,</span> <span class="n">Si</span><span class="p">[</span><span class="s1">&#39;S1&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total indices:&quot;</span><span class="p">,</span> <span class="n">Si</span><span class="p">[</span><span class="s1">&#39;ST&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>First-order indices: [ 8.25333228e-01 -1.40467348e-05 -5.41807490e-08  4.17527606e-02
+ -3.82028524e-05  4.04063932e-02  3.96859536e-02  9.63442556e-03]
+
+Total indices: [8.60305971e-01 2.15270151e-06 1.04877522e-11 5.29330610e-02
+ 1.06885098e-05 5.40930801e-02 5.18931057e-02 1.24399649e-02]
+</pre></div>
+</div>
+</div>
+</div>
+<p>From the values of the Sobol’ indices, it is clear that the water flow function is highly sensitive to the <span class="math notranslate nohighlight">\(r_w\)</span> variable. Next, we will plot graphs to visualize the Sobol’ indices for the different variables of the water flow function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting first order indices</span>
+<span class="nb">vars</span> <span class="o">=</span> <span class="n">problem</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">]</span>
+<span class="n">s1_values</span> <span class="o">=</span> <span class="n">Si</span><span class="p">[</span><span class="s1">&#39;S1&#39;</span><span class="p">]</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">vars</span><span class="p">,</span> <span class="n">s1_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variabls&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;First-order Sobol&#39; Indices&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+
+<span class="c1"># Plotting total indices</span>
+<span class="n">st_values</span> <span class="o">=</span> <span class="n">Si</span><span class="p">[</span><span class="s1">&#39;ST&#39;</span><span class="p">]</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">vars</span><span class="p">,</span> <span class="n">st_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variabls&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Total Sobol&#39; Indices&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/201b4577bacc76bb44ebfed7c9857dd2c2fd1d313baee43c2f50146cb9eac13c.png" src="../_images/201b4577bacc76bb44ebfed7c9857dd2c2fd1d313baee43c2f50146cb9eac13c.png" />
+</div>
+</div>
+<p>Using surrogates instead of the true function. Creating a kriging model of the water flow function and varying the number of samples and plotting sobol indices for each number of samples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">35</span><span class="p">,</span><span class="mi">40</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
+
+    <span class="c1"># Generate training samples using LHS</span>
+    <span class="n">sampling</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">xlimits</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s2">&quot;ese&quot;</span><span class="p">)</span>
+    <span class="n">xtrain</span> <span class="o">=</span> <span class="n">sampling</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">ytrain</span> <span class="o">=</span> <span class="n">waterflow</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
+
+    <span class="c1"># Create kriging model</span>
+    <span class="n">corr</span> <span class="o">=</span> <span class="s1">&#39;squar_exp&#39;</span>
+    <span class="n">sm</span> <span class="o">=</span> <span class="n">KRG</span><span class="p">(</span><span class="n">theta0</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-2</span><span class="p">],</span> <span class="n">corr</span><span class="o">=</span><span class="n">corr</span><span class="p">,</span> <span class="n">theta_bounds</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e2</span><span class="p">],</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">)</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+    <span class="c1"># Generate values for Sobol sequence samples using the surrogate</span>
+    <span class="n">surrogate_Y</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">param_values</span><span class="p">)</span>
+    <span class="n">surrogate_Y</span> <span class="o">=</span> <span class="n">surrogate_Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="n">Si_surrogate</span> <span class="o">=</span> <span class="n">SOBOL</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">surrogate_Y</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Number of samples:&quot;</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;First-order indices:&quot;</span><span class="p">,</span> <span class="n">Si_surrogate</span><span class="p">[</span><span class="s1">&#39;S1&#39;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total indices:&quot;</span><span class="p">,</span> <span class="n">Si_surrogate</span><span class="p">[</span><span class="s1">&#39;ST&#39;</span><span class="p">])</span>
+    
+    <span class="c1"># Plotting first order indices </span>
+    <span class="nb">vars</span> <span class="o">=</span> <span class="n">problem</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">]</span>
+    <span class="n">s1_surrogate</span> <span class="o">=</span> <span class="n">Si_surrogate</span><span class="p">[</span><span class="s1">&#39;S1&#39;</span><span class="p">]</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s1_surrogate</span><span class="p">))</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="mf">0.4</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">s1_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;True function&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="n">width</span><span class="p">,</span> <span class="n">s1_surrogate</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Kriging model&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variables&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;First-order Sobol&#39; Indices&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="nb">vars</span><span class="p">)</span> 
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+
+    <span class="c1"># Plotting total indices</span>
+    <span class="n">st_surrogate</span> <span class="o">=</span> <span class="n">Si_surrogate</span><span class="p">[</span><span class="s1">&#39;ST&#39;</span><span class="p">]</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">st_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;True function&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="n">width</span><span class="p">,</span> <span class="n">st_surrogate</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Kriging model&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variables&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Total Sobol&#39; Indices&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="nb">vars</span><span class="p">)</span> 
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Number of samples: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">size</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of samples: 5
+First-order indices: [ 1.81550459e-03  4.39211294e-05  8.30422306e-07 -3.17867366e-06
+  9.65594184e-01 -3.46628656e-07  3.44819042e-03  1.62302675e-02]
+
+Total indices: [1.97536226e-03 1.63983854e-05 1.27487526e-08 1.64042224e-07
+ 9.76725223e-01 3.53794190e-07 1.26318196e-02 2.13675708e-02]
+
+Number of samples: 10
+First-order indices: [ 9.53259164e-01  4.36818582e-02 -1.13201166e-05  1.26863437e-06
+  1.73815968e-05  2.57752024e-04 -5.73314232e-08  9.26558461e-05]
+
+Total indices: [9.67628938e-01 4.98751453e-02 7.91524017e-06 9.19254149e-08
+ 8.14613264e-06 2.65464157e-04 7.92778534e-10 5.93873302e-05]
+
+Number of samples: 15
+First-order indices: [8.13214104e-01 9.44583203e-06 1.11837479e-06 2.98684083e-02
+ 2.60913540e-03 6.48777491e-02 4.47945525e-02 4.60912404e-03]
+
+Total indices: [8.47275331e-01 1.73887535e-07 1.47819833e-05 3.67454953e-02
+ 3.68988448e-03 8.37655072e-02 5.09331514e-02 4.74861945e-03]
+
+Number of samples: 20
+First-order indices: [8.27130572e-01 9.66410768e-06 1.46359545e-04 4.25647590e-02
+ 1.42522792e-04 4.44258735e-02 3.33385567e-02 1.23004857e-02]
+
+Total indices: [8.60695401e-01 1.87551330e-05 1.56592668e-04 5.23608807e-02
+ 1.54739548e-04 5.73956810e-02 4.29286078e-02 1.51818365e-02]
+
+Number of samples: 25
+First-order indices: [8.34729413e-01 4.17878046e-04 7.45311217e-06 3.18357647e-02
+ 1.85999314e-05 4.19524981e-02 3.90915811e-02 1.00726361e-02]
+
+Total indices: [8.69612903e-01 3.32441899e-04 1.11853255e-05 4.27453104e-02
+ 6.36883226e-05 5.11147722e-02 5.15012046e-02 1.42992882e-02]
+
+Number of samples: 30
+First-order indices: [ 8.23718291e-01  1.30241060e-05 -2.38688653e-05  4.44514897e-02
+  1.16188556e-05  4.12882330e-02  3.68796447e-02  8.51639907e-03]
+
+Total indices: [8.59578350e-01 5.09974861e-05 6.65255822e-06 5.98131856e-02
+ 1.89100659e-05 5.50965579e-02 4.83329423e-02 1.02123213e-02]
+
+Number of samples: 35
+First-order indices: [ 8.25086225e-01  4.85348007e-05 -2.40929133e-05  3.89934312e-02
+  2.25394560e-06  4.23925614e-02  3.92240990e-02  7.91543061e-03]
+
+Total indices: [8.62488551e-01 1.54780978e-05 8.18424494e-06 5.09842511e-02
+ 7.87802793e-05 5.87410940e-02 5.30397728e-02 9.03138378e-03]
+
+Number of samples: 40
+First-order indices: [ 8.31168478e-01 -9.49786912e-05 -1.57254999e-04  3.88278197e-02
+  8.10514517e-06  4.11047736e-02  4.11712058e-02  9.72179367e-03]
+
+Total indices: [8.63197997e-01 7.02071784e-05 9.45577034e-05 4.92055904e-02
+ 1.16105038e-06 5.24178733e-02 5.23828480e-02 1.13506659e-02]
+</pre></div>
+</div>
+<img alt="../_images/b79632fbe33784ca0e6db37b09c1dece52a880f746552c86dfbeefba37716b9d.png" src="../_images/b79632fbe33784ca0e6db37b09c1dece52a880f746552c86dfbeefba37716b9d.png" />
+<img alt="../_images/3bb5116c064bfee440e4c3b5e020f90488e6c7cadec5dce2ccf03aec9f13d1d0.png" src="../_images/3bb5116c064bfee440e4c3b5e020f90488e6c7cadec5dce2ccf03aec9f13d1d0.png" />
+<img alt="../_images/e8a73a09e737100f11d2610b52f9c3e8bb44c91e6338073544f3e6b937c4f46f.png" src="../_images/e8a73a09e737100f11d2610b52f9c3e8bb44c91e6338073544f3e6b937c4f46f.png" />
+<img alt="../_images/97415ea55e7d5bb070d71c6815a06ab4dffd2961eb58328d1bdbf804185fb9e3.png" src="../_images/97415ea55e7d5bb070d71c6815a06ab4dffd2961eb58328d1bdbf804185fb9e3.png" />
+<img alt="../_images/77053c70007863c0022c946fb18395b0c109e74597db76be58c2c81acf8cc7b5.png" src="../_images/77053c70007863c0022c946fb18395b0c109e74597db76be58c2c81acf8cc7b5.png" />
+<img alt="../_images/8af20b0b54f7034b448b384839ade032597e01be2cca4ae6ae8b2f498095803c.png" src="../_images/8af20b0b54f7034b448b384839ade032597e01be2cca4ae6ae8b2f498095803c.png" />
+<img alt="../_images/b42374348b99a25b1dab32cf230d86674fe5334c78630cc03a7c76be60457ddb.png" src="../_images/b42374348b99a25b1dab32cf230d86674fe5334c78630cc03a7c76be60457ddb.png" />
+<img alt="../_images/946fcaf794e1982cf784a5c8afc1202072de72e5908bf02d614f8b096d46880a.png" src="../_images/946fcaf794e1982cf784a5c8afc1202072de72e5908bf02d614f8b096d46880a.png" />
+</div>
+</div>
+</section>
+<section id="welded-beam-function">
+<h2>2. Welded Beam Function<a class="headerlink" href="#welded-beam-function" title="Permalink to this heading">#</a></h2>
+<p>The welded beam function can be represented as:
+$<span class="math notranslate nohighlight">\(
+    \begin{gathered}
+        f(\textbf{x}) =  \\
+            \\
+    \end{gathered}
+\)</span>$</p>
+<p>The function has 3 variables. The blocks of code below use the Welded Beam Function defined in <code class="docutils literal notranslate"><span class="pre">smt</span></code> to define a function for the Sobol’ method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ndim</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">weldedbeam</span> <span class="o">=</span> <span class="n">WeldedBeam</span><span class="p">(</span><span class="n">ndim</span><span class="o">=</span><span class="n">ndim</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we will apply the same procedure as the water flow function to calculate the Sobol’ indices for the welded beam function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining sensitivity analysis problem</span>
+<span class="n">xlimits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.125</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">]])</span>
+<span class="n">problem</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;num_vars&#39;</span><span class="p">:</span> <span class="n">ndim</span><span class="p">,</span>
+    <span class="s1">&#39;names&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;$h$&#39;</span><span class="p">,</span> <span class="s1">&#39;$l$&#39;</span><span class="p">,</span> <span class="s1">&#39;$t$&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;bounds&#39;</span><span class="p">:</span> <span class="n">xlimits</span>
+<span class="p">}</span>
+<span class="n">param_values</span> <span class="o">=</span> <span class="n">sobol</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">weldedbeam</span><span class="p">(</span><span class="n">param_values</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Si</span> <span class="o">=</span> <span class="n">SOBOL</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;First-order indices:&quot;</span><span class="p">,</span> <span class="n">Si</span><span class="p">[</span><span class="s1">&#39;S1&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total indices:&quot;</span><span class="p">,</span> <span class="n">Si</span><span class="p">[</span><span class="s1">&#39;ST&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>First-order indices: [0.00997659 0.95683814 0.02691913]
+
+Total indices: [0.0149239  0.96384449 0.02887234]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting first order indices</span>
+<span class="nb">vars</span> <span class="o">=</span> <span class="n">problem</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">]</span>
+<span class="n">s1_values</span> <span class="o">=</span> <span class="n">Si</span><span class="p">[</span><span class="s1">&#39;S1&#39;</span><span class="p">]</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">vars</span><span class="p">,</span> <span class="n">s1_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variabls&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Sobol&#39; Indices&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;First-order indices for Welded Beam Function&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+
+<span class="c1"># Plotting total indices</span>
+<span class="n">st_values</span> <span class="o">=</span> <span class="n">Si</span><span class="p">[</span><span class="s1">&#39;ST&#39;</span><span class="p">]</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">vars</span><span class="p">,</span> <span class="n">st_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variabls&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Sobol&#39; Indices&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Total indices for Welded Beam Function&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b217f79882ebaf2ca490a98cec31682b3c1a92027ce46e60affb53915f7d35d8.png" src="../_images/b217f79882ebaf2ca490a98cec31682b3c1a92027ce46e60affb53915f7d35d8.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">30</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
+
+    <span class="c1"># Generate training samples using LHS</span>
+    <span class="n">sampling</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">xlimits</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s2">&quot;ese&quot;</span><span class="p">)</span>
+    <span class="n">xtrain</span> <span class="o">=</span> <span class="n">sampling</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">ytrain</span> <span class="o">=</span> <span class="n">weldedbeam</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
+
+    <span class="c1"># Create kriging model</span>
+    <span class="n">corr</span> <span class="o">=</span> <span class="s1">&#39;squar_exp&#39;</span>
+    <span class="n">sm</span> <span class="o">=</span> <span class="n">KRG</span><span class="p">(</span><span class="n">theta0</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-2</span><span class="p">],</span> <span class="n">corr</span><span class="o">=</span><span class="n">corr</span><span class="p">,</span> <span class="n">theta_bounds</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e2</span><span class="p">],</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">)</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+    <span class="c1"># Generate values for Sobol sequence samples using the surrogate</span>
+    <span class="n">surrogate_Y</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">param_values</span><span class="p">)</span>
+    <span class="n">surrogate_Y</span> <span class="o">=</span> <span class="n">surrogate_Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="n">Si_surrogate</span> <span class="o">=</span> <span class="n">SOBOL</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">surrogate_Y</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Number of samples:&quot;</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;First-order indices:&quot;</span><span class="p">,</span> <span class="n">Si_surrogate</span><span class="p">[</span><span class="s1">&#39;S1&#39;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total indices:&quot;</span><span class="p">,</span> <span class="n">Si_surrogate</span><span class="p">[</span><span class="s1">&#39;ST&#39;</span><span class="p">])</span>
+    
+    <span class="c1"># Plotting first order indices </span>
+    <span class="nb">vars</span> <span class="o">=</span> <span class="n">problem</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">]</span>
+    <span class="n">s1_surrogate</span> <span class="o">=</span> <span class="n">Si_surrogate</span><span class="p">[</span><span class="s1">&#39;S1&#39;</span><span class="p">]</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s1_surrogate</span><span class="p">))</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="mf">0.4</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">s1_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;True function&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="n">width</span><span class="p">,</span> <span class="n">s1_surrogate</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Kriging model&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variables&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;First-order Sobol&#39; Indices&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="nb">vars</span><span class="p">)</span> 
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+
+    <span class="c1"># Plotting total indices</span>
+    <span class="n">st_surrogate</span> <span class="o">=</span> <span class="n">Si_surrogate</span><span class="p">[</span><span class="s1">&#39;ST&#39;</span><span class="p">]</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">st_values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;True function&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="n">width</span><span class="p">,</span> <span class="n">st_surrogate</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Kriging model&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variables&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Total Sobol&#39; Indices&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="nb">vars</span><span class="p">)</span> 
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Number of samples: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">size</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of samples: 5
+First-order indices: [-5.65514831e-08  9.79996156e-01  1.92183567e-02]
+
+Total indices: [2.78677642e-09 9.80722096e-01 1.98289182e-02]
+
+Number of samples: 10
+First-order indices: [0.0045175  0.96982767 0.02354606]
+
+Total indices: [0.00484272 0.97201986 0.02553376]
+
+Number of samples: 15
+First-order indices: [0.00816947 0.96390814 0.02409232]
+
+Total indices: [0.01126248 0.96796856 0.0250729 ]
+
+Number of samples: 20
+First-order indices: [0.00963104 0.95919081 0.02481805]
+
+Total indices: [0.01514408 0.96577308 0.02650192]
+
+Number of samples: 25
+First-order indices: [0.01059899 0.95712009 0.02626423]
+
+Total indices: [0.01482453 0.96397143 0.02834464]
+
+Number of samples: 30
+First-order indices: [0.00972515 0.95724169 0.02692765]
+
+Total indices: [0.01426719 0.96354829 0.02902243]
+</pre></div>
+</div>
+<img alt="../_images/dc0a3656acbced30918968122e750b868d0b33455eb134b2bf71efdee9afd893.png" src="../_images/dc0a3656acbced30918968122e750b868d0b33455eb134b2bf71efdee9afd893.png" />
+<img alt="../_images/f25c3997c3351234988ec4afa1f9619176b5bc6ac75c5172908152e0b3b84b1d.png" src="../_images/f25c3997c3351234988ec4afa1f9619176b5bc6ac75c5172908152e0b3b84b1d.png" />
+<img alt="../_images/9f486977e234cae7cf750295dad22eaefbc8418f177eec606fdc7e943655f0aa.png" src="../_images/9f486977e234cae7cf750295dad22eaefbc8418f177eec606fdc7e943655f0aa.png" />
+<img alt="../_images/abf0b98cc97fd88df0d9b1e3c34a0788fb53ebd99dbbcc2f6312266107cbd6f5.png" src="../_images/abf0b98cc97fd88df0d9b1e3c34a0788fb53ebd99dbbcc2f6312266107cbd6f5.png" />
+<img alt="../_images/e9ef30cef20faf7a1c1fb94e8591b2aabc387644be7b98246d72b2cab612cbb0.png" src="../_images/e9ef30cef20faf7a1c1fb94e8591b2aabc387644be7b98246d72b2cab612cbb0.png" />
+<img alt="../_images/ed342e48e35b0d9df6196f832994850c87e402c05ddd2e5a6067cc18243e175f.png" src="../_images/ed342e48e35b0d9df6196f832994850c87e402c05ddd2e5a6067cc18243e175f.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./sens_analysis"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="local.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Local Sensitivity Analysis</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#water-flow-function">1. Water Flow Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#welded-beam-function">2. Welded Beam Function</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Leifur Leifsson (leifur[at]purdue.edu)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
