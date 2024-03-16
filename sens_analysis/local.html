@@ -429,7 +429,7 @@ document.write(`
     <span class="k">return</span> <span class="n">g</span>
 
 <span class="c1"># Bounds</span>
-<span class="n">lb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">lb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">ub</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">])</span>
 </pre></div>
 </div>
@@ -550,53 +550,49 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1
-Maximum EI: 25.54374175155263
-Best observed value: 52.96960197778638
+Maximum EI: 4.2435340150846725
+Best observed value: 48.67825484163741
 
 Iteration 2
-Maximum EI: 18.05356240794861
-Best observed value: 52.96960197778638
+Maximum EI: 8.5247227831907
+Best observed value: 48.67825484163741
 
 Iteration 3
-Maximum EI: 31.50601950643778
-Best observed value: 52.96960197778638
+Maximum EI: 10.816003121998484
+Best observed value: 48.67825484163741
 
 Iteration 4
-Maximum EI: 3.7435852089898267
-Best observed value: 52.96960197778638
+Maximum EI: 6.283199570998344
+Best observed value: 48.67825484163741
 
 Iteration 5
-Maximum EI: 28.558636317826593
-Best observed value: 52.12161185948388
+Maximum EI: 6.388559279880102
+Best observed value: 48.67825484163741
 
 Iteration 6
-Maximum EI: 0.5978587914146466
-Best observed value: 52.12161185948388
+Maximum EI: 0.6494556093563966
+Best observed value: 48.67825484163741
 
 Iteration 7
-Maximum EI: 0.09738670024128639
-Best observed value: 50.019514994768436
+Maximum EI: 1.0063173657346312
+Best observed value: 48.67825484163741
 
 Iteration 8
-Maximum EI: 0.597128216179422
-Best observed value: 48.147846393902356
+Maximum EI: 0.349100674001239
+Best observed value: 48.67825484163741
 
 Iteration 9
-Maximum EI: 0.6367634494474146
-Best observed value: 48.147846393902356
+Maximum EI: 1.1222562441313357
+Best observed value: 48.67825484163741
 
 Iteration 10
-Maximum EI: 0.02831096227870679
-Best observed value: 47.561548596525846
-
-Iteration 11
-Maximum EI: 4.6322245954191335e-10
-Best observed value: 47.561548596525846
+Maximum EI: 1.530559073118557e-06
+Best observed value: 47.560220768414794
 
 Best feasible point:
-x*: [9.15872537 3.27569385]
-f*: 47.561548596525846
-g*: -0.001180370552184229
+x*: [9.14839017 3.27932746]
+f*: 47.560220768414794
+g*: -0.0005670642572503937
 </pre></div>
 </div>
 </div>
@@ -639,10 +635,10 @@ g*: -0.001180370552184229
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Normalized sensitivity of objective with respect to x1 from surrogate: [[-36.5705421]]
-Normalized sensitivity of objective with respect to x2 from surrogate: [[-13.02450658]]
-Normalized sensitivity of objective with respect to x1 from true function: [-36.56833003]
-Normalized of objective with respect to x2 from true function: [-13.0215631]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Normalized sensitivity of objective with respect to x1 from surrogate: [[-36.54629603]]
+Normalized sensitivity of objective with respect to x2 from surrogate: [[-13.03917405]]
+Normalized sensitivity of objective with respect to x1 from true function: [-36.53936861]
+Normalized of objective with respect to x2 from true function: [-13.0350431]
 </pre></div>
 </div>
 </div>
@@ -668,13 +664,14 @@ Normalized of objective with respect to x2 from true function: [-13.0215631]
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/441df0bd4872736510109a4cf4328c540b74bb67634d59b711efce2288c9a70a.png" src="../_images/441df0bd4872736510109a4cf4328c540b74bb67634d59b711efce2288c9a70a.png" />
+<img alt="../_images/34e13532d14a614d67b0102738cf0c2ec223eaec458a689c84b860b895128e7c.png" src="../_images/34e13532d14a614d67b0102738cf0c2ec223eaec458a689c84b860b895128e7c.png" />
 </div>
 </div>
-<p>The next question related changes in the objective function to changes in the constraints of the problem.</p>
+<p>The plot above shows that the objective function is more sensitive to a change in <span class="math notranslate nohighlight">\(x_1\)</span> as compared to a change in <span class="math notranslate nohighlight">\(x_2\)</span>. It is also clear that the sensitivities generated using the true function and the Krigin model are identical. This indicates that the Kriging model can provide a good prediction of the function near the optimum point.</p>
+<p>The next question of the post-optimality analysis relates changes in the objective function to changes in the constraints of the problem.</p>
 <p><strong>Question:</strong> How sensitive is the optimal solution <span class="math notranslate nohighlight">\(f^*\)</span> to changes in the constraint <span class="math notranslate nohighlight">\(g(\textbf{x})\)</span>?</p>
 <p>This question can be answered by changing the limiting value of the constraint, in this case 30, and observing the change in the optimal solution by resolving the problem using Constrained EI. Two scenarios are shown here. The first scenario reduces the limiting value of 30 by 1 unit and relaxes the constraint. The second scenario increases the limiting value of 30 by 1 unit and tightens the constraint.</p>
-<p>The blocks of code below solve the scenario of reducing the limiting value by 1 unit by defining a new constraint function and repeating the process of sequential sampling using constrained EI.</p>
+<p>The blocks of code below solve the scenario of reducing the limiting value by 1 unit by defining a new constraint function and repeating the process of sequential sampling using constrained EI. A plot of the contours of the objective and constraint function along with other relevant quantities is also created.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definition of relaxed constraint</span>
@@ -703,7 +700,7 @@ Normalized of objective with respect to x2 from true function: [-13.0215631]
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span> <span class="n">xlimits</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[[</span><span class="n">lb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ub</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">lb</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ub</span><span class="p">[</span><span class="mi">1</span><span class="p">]]]</span> <span class="p">),</span> <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;ese&#39;</span><span class="p">)</span>
 
 <span class="c1"># Training data</span>
-<span class="n">num_train</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">num_train</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">xtrain</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="n">num_train</span><span class="p">)</span>
 <span class="n">ytrain</span> <span class="o">=</span> <span class="n">modified_branin</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
 <span class="n">gtrain</span> <span class="o">=</span> <span class="n">relaxed_constraint</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
@@ -780,56 +777,140 @@ Normalized of objective with respect to x2 from true function: [-13.0215631]
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1
-Maximum EI: 27.380084287615972
-Best observed value: 65.42611589765067
+Maximum EI: 42.811030133425874
+Best observed value: 80.13028270690026
 
 Iteration 2
-Maximum EI: 28.567885785241607
-Best observed value: 62.03395396062436
+Maximum EI: 36.49929929130447
+Best observed value: 80.13028270690026
 
 Iteration 3
-Maximum EI: 10.07978781730646
-Best observed value: 62.03395396062436
+Maximum EI: 41.35181768620872
+Best observed value: 51.96355146961573
 
 Iteration 4
-Maximum EI: 10.095569925429174
-Best observed value: 62.03395396062436
+Maximum EI: 3.2921021438372726
+Best observed value: 51.96355146961573
 
 Iteration 5
-Maximum EI: 0.00604322158028988
-Best observed value: 51.945222634522935
+Maximum EI: 0.19384374257301684
+Best observed value: 51.96355146961573
 
 Iteration 6
-Maximum EI: 0.10007261617450797
-Best observed value: 51.945222634522935
+Maximum EI: 1.0143639663586441
+Best observed value: 47.54335641450068
 
 Iteration 7
-Maximum EI: 0.8295450761339536
-Best observed value: 47.870265028693595
+Maximum EI: 0.40930728843860487
+Best observed value: 47.54335641450068
 
 Iteration 8
-Maximum EI: 0.06642825191388368
-Best observed value: 47.42607978257179
+Maximum EI: 0.11466603011430077
+Best observed value: 47.54335641450068
 
 Iteration 9
-Maximum EI: 4.5311084439029066e-06
-Best observed value: 47.34336507515365
+Maximum EI: 0.445992875269998
+Best observed value: 47.54335641450068
+
+Iteration 10
+Maximum EI: 0.07558842167563995
+Best observed value: 47.42867622894837
+
+Iteration 11
+Maximum EI: 0.016643048896121157
+Best observed value: 47.34288992712785
+
+Iteration 12
+Maximum EI: 4.1316414410357144e-17
+Best observed value: 47.34288992712785
 
 Best feasible point:
-x*: [9.11255956 3.18259373]
-f*: 47.34336507515365
-g*: -0.0015749394910358205
+x*: [9.1178789  3.18063032]
+f*: 47.34288992712785
+g*: -0.0006020596228708541
 
-Change in f* with one unit reduction in constraint limit: -0.21818352137219676
+Change in f* with one unit reduction in constraint limit: -0.21733084128694458
 
-Percent change in f* with one unit reduction in constraint limit: -0.4587393131857235
+Percent change in f* with one unit reduction in constraint limit: -0.4569592776812258
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">tight_constraint</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Bounds</span>
+<span class="n">lb_plot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<span class="n">ub_plot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">])</span>
+
+<span class="c1"># Plotting data</span>
+<span class="n">sampler</span> <span class="o">=</span> <span class="n">FullFactorial</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">lb_plot</span><span class="p">,</span> <span class="n">ub_plot</span><span class="p">]))</span>
+<span class="n">num_plot</span> <span class="o">=</span> <span class="mi">400</span>
+<span class="n">xplot</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="n">num_plot</span><span class="p">)</span>
+<span class="n">yplot</span> <span class="o">=</span> <span class="n">modified_branin</span><span class="p">(</span><span class="n">xplot</span><span class="p">)</span>
+<span class="n">gplot</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">(</span><span class="n">xplot</span><span class="p">)</span>
+<span class="n">gplotnew</span> <span class="o">=</span> <span class="n">relaxed_constraint</span><span class="p">(</span><span class="n">xplot</span><span class="p">)</span>
+
+<span class="c1"># Reshaping into grid</span>
+<span class="n">reshape_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">num_plot</span><span class="p">))</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">xplot</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">reshape_size</span><span class="p">,</span> <span class="n">reshape_size</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">xplot</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">reshape_size</span><span class="p">,</span> <span class="n">reshape_size</span><span class="p">)</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">yplot</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">reshape_size</span><span class="p">,</span> <span class="n">reshape_size</span><span class="p">)</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">gplot</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">reshape_size</span><span class="p">,</span> <span class="n">reshape_size</span><span class="p">)</span>
+<span class="n">GNEW</span> <span class="o">=</span> <span class="n">gplotnew</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">reshape_size</span><span class="p">,</span> <span class="n">reshape_size</span><span class="p">)</span>
+
+<span class="c1"># Level</span>
+<span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">17</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">levels</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">7</span><span class="p">)))</span>
+<span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">levels</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">5</span><span class="p">)))</span>
+<span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">levels</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">12</span><span class="p">)))</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Plot function</span>
+<span class="n">CS</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=-</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="c1"># Plot constraint</span>
+<span class="n">cntr1</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot relaxed constraint</span>
+<span class="n">cntr2</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">GNEW</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">GNEW</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">GNEW</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">antialiased</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Plot minimum</span>
+<span class="n">sc1</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xtrain</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">num_train</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xtrain</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">num_train</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Initial samples&#39;</span><span class="p">)</span>
+<span class="n">sc2</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xtrain</span><span class="p">[</span><span class="n">num_train</span><span class="p">:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xtrain</span><span class="p">[</span><span class="n">num_train</span><span class="p">:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Infills&#39;</span><span class="p">)</span>
+<span class="n">sc3</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xstar</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xstar</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;g*&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Original minimum&quot;</span><span class="p">)</span>
+<span class="n">sc4</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xtrain</span><span class="p">[</span><span class="n">index</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xtrain</span><span class="p">[</span><span class="n">index</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;bo&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;New minimum&quot;</span><span class="p">)</span>
+
+<span class="c1"># Asthetics</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Constrained Modified Branin function&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">h1</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">cntr1</span><span class="o">.</span><span class="n">legend_elements</span><span class="p">()</span>
+<span class="n">h2</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">cntr2</span><span class="o">.</span><span class="n">legend_elements</span><span class="p">()</span>
+<span class="n">handles</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span>
+<span class="n">handles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h1</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">handles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Original Constraint&#39;</span><span class="p">)</span>
+<span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Relaxed Constraint&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">bbox_to_anchor</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.35</span><span class="p">,</span><span class="mf">0.7</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f4c579d8b80&gt;
+</pre></div>
+</div>
+<img alt="../_images/9f198e1d98e68b2618603c5f59fb633fc0cf88d925d034acdc22911985d129ba.png" src="../_images/9f198e1d98e68b2618603c5f59fb633fc0cf88d925d034acdc22911985d129ba.png" />
+</div>
+</div>
+<p>As seen from the results of the optimization, if the constraint limit is reduced by 1 unit the objective function reduces by a value between 0.10 and 0.25 approximately. The results will vary when the optimization is run several times. However, this is less than 1% reduction in the objective function which indicates that the objective function is not very sensitive to a reduction in the constraint limit.</p>
+<p>The next few code blocks will implement the scenario of increasing the contraint limit by 1 unit and resolving the optimization problem to calculate the sensitivities. The relevant contour plot is also created.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definition of tightened constraint</span>
+<span class="k">def</span> <span class="nf">tight_constraint</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
 
     <span class="n">dim</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span>
 
@@ -854,7 +935,7 @@ Percent change in f* with one unit reduction in constraint limit: -0.45873931318
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span> <span class="n">xlimits</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[[</span><span class="n">lb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ub</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">lb</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ub</span><span class="p">[</span><span class="mi">1</span><span class="p">]]]</span> <span class="p">),</span> <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;ese&#39;</span><span class="p">)</span>
 
 <span class="c1"># Training data</span>
-<span class="n">num_train</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">num_train</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">xtrain</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="n">num_train</span><span class="p">)</span>
 <span class="n">ytrain</span> <span class="o">=</span> <span class="n">modified_branin</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
 <span class="n">gtrain</span> <span class="o">=</span> <span class="n">tight_constraint</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
@@ -925,47 +1006,124 @@ Percent change in f* with one unit reduction in constraint limit: -0.45873931318
 
 <span class="c1"># Change in objective function</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Change in f* with one unit reduction in constraint limit:&quot;</span><span class="p">,</span> <span class="n">ybest</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ystar</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Percent change in f* with one unit reduction in constraint limit:&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">ybest</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ystar</span><span class="p">)</span><span class="o">/</span><span class="n">ystar</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1
-Maximum EI: 12.088966241726782
-Best observed value: 62.82865173276025
+Maximum EI: 21.016342077492
+Best observed value: 67.86035587318392
 
 Iteration 2
-Maximum EI: 2.4995361074411164
-Best observed value: 51.95274714504929
+Maximum EI: 21.004223598581312
+Best observed value: 67.86035587318392
 
 Iteration 3
-Maximum EI: 0.3360167119785135
-Best observed value: 51.95274714504929
+Maximum EI: 20.730805148204574
+Best observed value: 67.86035587318392
 
 Iteration 4
-Maximum EI: 0.399547967367583
-Best observed value: 47.838426413538585
+Maximum EI: 14.770208093462433
+Best observed value: 67.86035587318392
 
 Iteration 5
-Maximum EI: 0.03375045746064582
-Best observed value: 47.838426413538585
+Maximum EI: 13.725014943713816
+Best observed value: 67.86035587318392
 
 Iteration 6
-Maximum EI: 0.00183775633290394
-Best observed value: 47.795124705207385
+Maximum EI: 3.6829926354584046
+Best observed value: 51.97146800085136
 
 Iteration 7
-Maximum EI: 9.992352408347921e-08
-Best observed value: 47.795124705207385
+Maximum EI: 0.035404085118242994
+Best observed value: 47.93833611198259
+
+Iteration 8
+Maximum EI: 0.0004857992797482188
+Best observed value: 47.79700505469245
 
 Best feasible point:
-x*: [9.17590348 3.37845804]
-f*: 47.795124705207385
-g*: -0.00040491583522594965
-Change in f* with one unit reduction in constraint limit: 0.23516742546243563
+x*: [9.14769357 3.38890755]
+f*: 47.79700505469245
+g*: -0.0006878121864595244
+Change in f* with one unit reduction in constraint limit: 0.23678428627765413
+
+Percent change in f* with one unit reduction in constraint limit: 0.4978620419586128
 </pre></div>
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Bounds</span>
+<span class="n">lb_plot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<span class="n">ub_plot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">])</span>
+
+<span class="c1"># Plotting data</span>
+<span class="n">sampler</span> <span class="o">=</span> <span class="n">FullFactorial</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">lb_plot</span><span class="p">,</span> <span class="n">ub_plot</span><span class="p">]))</span>
+<span class="n">num_plot</span> <span class="o">=</span> <span class="mi">400</span>
+<span class="n">xplot</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="n">num_plot</span><span class="p">)</span>
+<span class="n">yplot</span> <span class="o">=</span> <span class="n">modified_branin</span><span class="p">(</span><span class="n">xplot</span><span class="p">)</span>
+<span class="n">gplot</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">(</span><span class="n">xplot</span><span class="p">)</span>
+<span class="n">gplotnew</span> <span class="o">=</span> <span class="n">tight_constraint</span><span class="p">(</span><span class="n">xplot</span><span class="p">)</span>
+
+<span class="c1"># Reshaping into grid</span>
+<span class="n">reshape_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">num_plot</span><span class="p">))</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">xplot</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">reshape_size</span><span class="p">,</span> <span class="n">reshape_size</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">xplot</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">reshape_size</span><span class="p">,</span> <span class="n">reshape_size</span><span class="p">)</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">yplot</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">reshape_size</span><span class="p">,</span> <span class="n">reshape_size</span><span class="p">)</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">gplot</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">reshape_size</span><span class="p">,</span> <span class="n">reshape_size</span><span class="p">)</span>
+<span class="n">GNEW</span> <span class="o">=</span> <span class="n">gplotnew</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">reshape_size</span><span class="p">,</span> <span class="n">reshape_size</span><span class="p">)</span>
+
+<span class="c1"># Level</span>
+<span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">17</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">levels</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">7</span><span class="p">)))</span>
+<span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">levels</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">5</span><span class="p">)))</span>
+<span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">levels</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">12</span><span class="p">)))</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Plot function</span>
+<span class="n">CS</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=-</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="c1"># Plot constraint</span>
+<span class="n">cntr1</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot relaxed constraint</span>
+<span class="n">cntr2</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">GNEW</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">GNEW</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">GNEW</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">antialiased</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Plot minimum</span>
+<span class="n">sc1</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xtrain</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">num_train</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xtrain</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">num_train</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Initial samples&#39;</span><span class="p">)</span>
+<span class="n">sc2</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xtrain</span><span class="p">[</span><span class="n">num_train</span><span class="p">:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xtrain</span><span class="p">[</span><span class="n">num_train</span><span class="p">:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Infills&#39;</span><span class="p">)</span>
+<span class="n">sc3</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xstar</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xstar</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;g*&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Original minimum&quot;</span><span class="p">)</span>
+<span class="n">sc4</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xtrain</span><span class="p">[</span><span class="n">index</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xtrain</span><span class="p">[</span><span class="n">index</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;bo&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;New minimum&quot;</span><span class="p">)</span>
+
+<span class="c1"># Asthetics</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Constrained Modified Branin function&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">h1</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">cntr1</span><span class="o">.</span><span class="n">legend_elements</span><span class="p">()</span>
+<span class="n">h2</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">cntr2</span><span class="o">.</span><span class="n">legend_elements</span><span class="p">()</span>
+<span class="n">handles</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span>
+<span class="n">handles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h1</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">handles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Original Constraint&#39;</span><span class="p">)</span>
+<span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Tightened Constraint&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">bbox_to_anchor</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.35</span><span class="p">,</span><span class="mf">0.7</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f4c51186c10&gt;
+</pre></div>
+</div>
+<img alt="../_images/12a66d4289fcd2c6edf1df5ebe690d1d6831a0328afaca3f32e5a7028248a1a8.png" src="../_images/12a66d4289fcd2c6edf1df5ebe690d1d6831a0328afaca3f32e5a7028248a1a8.png" />
+</div>
+</div>
+<p>In the case of increasing the constraint limit by 1 unit, there is an increase in the objective function value by approximately 0.20 to 0.30. The results will again vary when the optimization is run several times. Again, this is less than a 1% increase in the objective function which indicates that the objective function is not very sensitive to an increase in the value of the constraint limit.</p>
 </section>
 
     <script type="text/x-thebe-config">
