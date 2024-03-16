@@ -365,7 +365,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="local-sensitivity-analysis">
 <h1>Local Sensitivity Analysis<a class="headerlink" href="#local-sensitivity-analysis" title="Permalink to this heading">#</a></h1>
-<p>This section demonstrates a post-optimality analysis using local sensitivity analysis based on finite difference gradients calculated using the surrogate of the objective and constraint function. The optimization problem used in this section is the modified Branin function problem also used in the Constrained Sequential Sampling section. The constrained minimum is <span class="math notranslate nohighlight">\(f(x^*) = 47.56\)</span> at <span class="math notranslate nohighlight">\(x^* = (9.143, 3.281)\)</span>. The objective and constraint function can be stated as:</p>
+<p>This section demonstrates a post-optimality analysis using local sensitivity analysis based on finite difference gradients calculated using the surrogate of the objective and constraint function. It also demonstrates the effects of changing the limiting value of the constraint on the optimal solution of the problem, another important part of post-optimality analysis. The optimization problem used in this section is the constrained version of the modified Branin function problem also used in the Constrained Sequential Sampling section. The constrained minimum of the original problem is <span class="math notranslate nohighlight">\(f(x^*) = 47.56\)</span> at <span class="math notranslate nohighlight">\(x^* = (9.143, 3.281)\)</span>. The objective and constraint function can be stated as:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
     \begin{gathered}
@@ -466,7 +466,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>The block of code below creates 5 training points and performs the sequential sampling process using constrined EI to solve the constrained optimization problem. The maximum number of iterations is set to 20 and a convergence criterion is defined based on maximum value of EI obtained in each iteration.</p>
+<p>The block of code below creates 5 training points and performs the sequential sampling process using constrined EI to solve the constrained optimization problem. The maximum number of iterations is set to 20 and a convergence criterion is defined based on maximum value of EI obtained in each iteration. A plot of the contours of the objective and constraint function along with other relevant quantities is also created to visualize the results of the optimization.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span> <span class="n">xlimits</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[[</span><span class="n">lb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ub</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">lb</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ub</span><span class="p">[</span><span class="mi">1</span><span class="p">]]]</span> <span class="p">),</span> <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;ese&#39;</span><span class="p">)</span>
@@ -550,51 +550,112 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1
-Maximum EI: 4.2435340150846725
-Best observed value: 48.67825484163741
+Maximum EI: 39.801678700659714
+Best observed value: 74.72241915936578
 
 Iteration 2
-Maximum EI: 8.5247227831907
-Best observed value: 48.67825484163741
+Maximum EI: 11.59418827549413
+Best observed value: 74.72241915936578
 
 Iteration 3
-Maximum EI: 10.816003121998484
-Best observed value: 48.67825484163741
+Maximum EI: 19.49482882444615
+Best observed value: 74.72241915936578
 
 Iteration 4
-Maximum EI: 6.283199570998344
-Best observed value: 48.67825484163741
+Maximum EI: 0.39596156225780565
+Best observed value: 51.491711751413135
 
 Iteration 5
-Maximum EI: 6.388559279880102
-Best observed value: 48.67825484163741
+Maximum EI: 0.326763081470653
+Best observed value: 51.491711751413135
 
 Iteration 6
-Maximum EI: 0.6494556093563966
-Best observed value: 48.67825484163741
+Maximum EI: 1.2717832825566826
+Best observed value: 51.491711751413135
 
 Iteration 7
-Maximum EI: 1.0063173657346312
-Best observed value: 48.67825484163741
+Maximum EI: 6.736541395514857
+Best observed value: 47.75286964962626
 
 Iteration 8
-Maximum EI: 0.349100674001239
-Best observed value: 48.67825484163741
+Maximum EI: 1.7657179736765283
+Best observed value: 47.75286964962626
 
 Iteration 9
-Maximum EI: 1.1222562441313357
-Best observed value: 48.67825484163741
+Maximum EI: 0.035072207718920057
+Best observed value: 47.75286964962626
 
 Iteration 10
-Maximum EI: 1.530559073118557e-06
-Best observed value: 47.560220768414794
+Maximum EI: 0.2186691802550205
+Best observed value: 47.75286964962626
+
+Iteration 11
+Maximum EI: 0.0007718643712592774
+Best observed value: 47.561052217674536
 
 Best feasible point:
-x*: [9.14839017 3.27932746]
-f*: 47.560220768414794
-g*: -0.0005670642572503937
+x*: [9.15616506 3.27656681]
+f*: 47.561052217674536
+g*: -0.0007865658001762199
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Bounds</span>
+<span class="n">lb_plot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<span class="n">ub_plot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">])</span>
+
+<span class="c1"># Plotting data</span>
+<span class="n">sampler</span> <span class="o">=</span> <span class="n">FullFactorial</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">lb_plot</span><span class="p">,</span> <span class="n">ub_plot</span><span class="p">]))</span>
+<span class="n">num_plot</span> <span class="o">=</span> <span class="mi">400</span>
+<span class="n">xplot</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="n">num_plot</span><span class="p">)</span>
+<span class="n">yplot</span> <span class="o">=</span> <span class="n">modified_branin</span><span class="p">(</span><span class="n">xplot</span><span class="p">)</span>
+<span class="n">gplot</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">(</span><span class="n">xplot</span><span class="p">)</span>
+
+<span class="c1"># Reshaping into grid</span>
+<span class="n">reshape_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">num_plot</span><span class="p">))</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">xplot</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">reshape_size</span><span class="p">,</span> <span class="n">reshape_size</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">xplot</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">reshape_size</span><span class="p">,</span> <span class="n">reshape_size</span><span class="p">)</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">yplot</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">reshape_size</span><span class="p">,</span> <span class="n">reshape_size</span><span class="p">)</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">gplot</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">reshape_size</span><span class="p">,</span> <span class="n">reshape_size</span><span class="p">)</span>
+
+<span class="c1"># Level</span>
+<span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">17</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">levels</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">7</span><span class="p">)))</span>
+<span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">levels</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">5</span><span class="p">)))</span>
+<span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">levels</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">12</span><span class="p">)))</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Plot function</span>
+<span class="n">CS</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=-</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="c1"># Plot constraint</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">G</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">antialiased</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Plot minimum</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xtrain</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">num_train</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xtrain</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">num_train</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Initial samples&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xtrain</span><span class="p">[</span><span class="n">num_train</span><span class="p">:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xtrain</span><span class="p">[</span><span class="n">num_train</span><span class="p">:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Infills&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mf">9.143</span><span class="p">,</span> <span class="mf">3.281</span><span class="p">,</span> <span class="s1">&#39;g*&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Constrained minimum&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xtrain</span><span class="p">[</span><span class="n">index</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xtrain</span><span class="p">[</span><span class="n">index</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;bo&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Obtained minimum&quot;</span><span class="p">)</span>
+
+<span class="c1"># Asthetics</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Constrained Modified Branin function&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fb6cc18a520&gt;
+</pre></div>
+</div>
+<img alt="../_images/b9770b64c92d6c3014f2a0c77dc761d3090a009a318eb9decb2ab4e6a55cecd1.png" src="../_images/b9770b64c92d6c3014f2a0c77dc761d3090a009a318eb9decb2ab4e6a55cecd1.png" />
 </div>
 </div>
 <p>Now, a post-optimality analysis will be performed for the constrained optimization problem. There are mainly two important questions that must be answered in a post-optimality analysis.</p>
@@ -635,10 +696,10 @@ g*: -0.0005670642572503937
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Normalized sensitivity of objective with respect to x1 from surrogate: [[-36.54629603]]
-Normalized sensitivity of objective with respect to x2 from surrogate: [[-13.03917405]]
-Normalized sensitivity of objective with respect to x1 from true function: [-36.53936861]
-Normalized of objective with respect to x2 from true function: [-13.0350431]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Normalized sensitivity of objective with respect to x1 from surrogate: [[-36.53825603]]
+Normalized sensitivity of objective with respect to x2 from surrogate: [[-13.00276213]]
+Normalized sensitivity of objective with respect to x1 from true function: [-36.56115806]
+Normalized of objective with respect to x2 from true function: [-13.02479637]
 </pre></div>
 </div>
 </div>
@@ -664,7 +725,7 @@ Normalized of objective with respect to x2 from true function: [-13.0350431]
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/34e13532d14a614d67b0102738cf0c2ec223eaec458a689c84b860b895128e7c.png" src="../_images/34e13532d14a614d67b0102738cf0c2ec223eaec458a689c84b860b895128e7c.png" />
+<img alt="../_images/d7da7aac00d58f4c18e697f7520677813b85bb86b45a64eedc825019a94980bc.png" src="../_images/d7da7aac00d58f4c18e697f7520677813b85bb86b45a64eedc825019a94980bc.png" />
 </div>
 </div>
 <p>The plot above shows that the objective function is more sensitive to a change in <span class="math notranslate nohighlight">\(x_1\)</span> as compared to a change in <span class="math notranslate nohighlight">\(x_2\)</span>. It is also clear that the sensitivities generated using the true function and the Krigin model are identical. This indicates that the Kriging model can provide a good prediction of the function near the optimum point.</p>
@@ -777,61 +838,57 @@ Normalized of objective with respect to x2 from true function: [-13.0350431]
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1
-Maximum EI: 42.811030133425874
-Best observed value: 80.13028270690026
+Maximum EI: 57.06529293770606
+Best observed value: 67.06430876400562
 
 Iteration 2
-Maximum EI: 36.49929929130447
-Best observed value: 80.13028270690026
+Maximum EI: 61.06979960836004
+Best observed value: 67.06430876400562
 
 Iteration 3
-Maximum EI: 41.35181768620872
-Best observed value: 51.96355146961573
+Maximum EI: 54.14629324558277
+Best observed value: 67.06430876400562
 
 Iteration 4
-Maximum EI: 3.2921021438372726
-Best observed value: 51.96355146961573
+Maximum EI: 22.873059791832308
+Best observed value: 67.06430876400562
 
 Iteration 5
-Maximum EI: 0.19384374257301684
-Best observed value: 51.96355146961573
+Maximum EI: 5.819672632080168
+Best observed value: 47.89271615326155
 
 Iteration 6
-Maximum EI: 1.0143639663586441
-Best observed value: 47.54335641450068
+Maximum EI: 2.377408611756132
+Best observed value: 47.89271615326155
 
 Iteration 7
-Maximum EI: 0.40930728843860487
-Best observed value: 47.54335641450068
+Maximum EI: 0.16917338184775144
+Best observed value: 47.89271615326155
 
 Iteration 8
-Maximum EI: 0.11466603011430077
-Best observed value: 47.54335641450068
+Maximum EI: 0.0011604071104820701
+Best observed value: 47.89271615326155
 
 Iteration 9
-Maximum EI: 0.445992875269998
-Best observed value: 47.54335641450068
+Maximum EI: 0.22206069510476167
+Best observed value: 47.89271615326155
 
 Iteration 10
-Maximum EI: 0.07558842167563995
-Best observed value: 47.42867622894837
+Maximum EI: 0.005632474637020338
+Best observed value: 47.40077391019388
 
 Iteration 11
-Maximum EI: 0.016643048896121157
-Best observed value: 47.34288992712785
-
-Iteration 12
-Maximum EI: 4.1316414410357144e-17
-Best observed value: 47.34288992712785
+Maximum EI: 1.5983879334959213e-10
+Best observed value: 47.40077391019388
 
 Best feasible point:
-x*: [9.1178789  3.18063032]
-f*: 47.34288992712785
-g*: -0.0006020596228708541
+x*: [9.01797449 3.21595823]
+f*: 47.40077391019388
+g*: -0.0014292935416087005
 
-Change in f* with one unit reduction in constraint limit: -0.21733084128694458
+Change in f* with one unit reduction in constraint limit: -0.16027830748065952
 
-Percent change in f* with one unit reduction in constraint limit: -0.4569592776812258
+Percent change in f* with one unit reduction in constraint limit: -0.33699487292061475
 </pre></div>
 </div>
 </div>
@@ -899,10 +956,10 @@ Percent change in f* with one unit reduction in constraint limit: -0.45695927768
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f4c579d8b80&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fb6c7ddbfd0&gt;
 </pre></div>
 </div>
-<img alt="../_images/9f198e1d98e68b2618603c5f59fb633fc0cf88d925d034acdc22911985d129ba.png" src="../_images/9f198e1d98e68b2618603c5f59fb633fc0cf88d925d034acdc22911985d129ba.png" />
+<img alt="../_images/83cde115018720a39304165e6508c55488001d25cd8bc528a21498b7ac476f76.png" src="../_images/83cde115018720a39304165e6508c55488001d25cd8bc528a21498b7ac476f76.png" />
 </div>
 </div>
 <p>As seen from the results of the optimization, if the constraint limit is reduced by 1 unit the objective function reduces by a value between 0.10 and 0.25 approximately. The results will vary when the optimization is run several times. However, this is less than 1% reduction in the objective function which indicates that the objective function is not very sensitive to a reduction in the constraint limit.</p>
@@ -1012,44 +1069,60 @@ Percent change in f* with one unit reduction in constraint limit: -0.45695927768
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1
-Maximum EI: 21.016342077492
-Best observed value: 67.86035587318392
+Maximum EI: 59.226039295636134
+Best observed value: 115.18587730685178
 
 Iteration 2
-Maximum EI: 21.004223598581312
-Best observed value: 67.86035587318392
+Maximum EI: 69.31378265403103
+Best observed value: 115.18587730685178
 
 Iteration 3
-Maximum EI: 20.730805148204574
-Best observed value: 67.86035587318392
+Maximum EI: 54.14338659681651
+Best observed value: 115.18587730685178
 
 Iteration 4
-Maximum EI: 14.770208093462433
-Best observed value: 67.86035587318392
+Maximum EI: 66.1350254665447
+Best observed value: 115.18587730685178
 
 Iteration 5
-Maximum EI: 13.725014943713816
-Best observed value: 67.86035587318392
+Maximum EI: 9.416562640678348
+Best observed value: 60.84497156230625
 
 Iteration 6
-Maximum EI: 3.6829926354584046
-Best observed value: 51.97146800085136
+Maximum EI: 8.56970107830341
+Best observed value: 60.84497156230625
 
 Iteration 7
-Maximum EI: 0.035404085118242994
-Best observed value: 47.93833611198259
+Maximum EI: 0.05768397696109159
+Best observed value: 51.95257879883069
 
 Iteration 8
-Maximum EI: 0.0004857992797482188
-Best observed value: 47.79700505469245
+Maximum EI: 0.003079857426005663
+Best observed value: 51.95257879883069
+
+Iteration 9
+Maximum EI: 2.009839924284096
+Best observed value: 49.848041023126925
+
+Iteration 10
+Maximum EI: 0.09308647410149362
+Best observed value: 47.795329305746456
+
+Iteration 11
+Maximum EI: 0.0012246684246897815
+Best observed value: 47.795329305746456
+
+Iteration 12
+Maximum EI: 1.2568280165979639e-14
+Best observed value: 47.795329305746456
 
 Best feasible point:
-x*: [9.14769357 3.38890755]
-f*: 47.79700505469245
-g*: -0.0006878121864595244
-Change in f* with one unit reduction in constraint limit: 0.23678428627765413
+x*: [9.17702383 3.37808514]
+f*: 47.795329305746456
+g*: -0.0007678069187413428
+Change in f* with one unit reduction in constraint limit: 0.23427708807192005
 
-Percent change in f* with one unit reduction in constraint limit: 0.4978620419586128
+Percent change in f* with one unit reduction in constraint limit: 0.4925818020166898
 </pre></div>
 </div>
 </div>
@@ -1117,10 +1190,10 @@ Percent change in f* with one unit reduction in constraint limit: 0.497862041958
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f4c51186c10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fb6c7aaffd0&gt;
 </pre></div>
 </div>
-<img alt="../_images/12a66d4289fcd2c6edf1df5ebe690d1d6831a0328afaca3f32e5a7028248a1a8.png" src="../_images/12a66d4289fcd2c6edf1df5ebe690d1d6831a0328afaca3f32e5a7028248a1a8.png" />
+<img alt="../_images/4d97b1cd6847494d234da92810473a4ea0fa46162e063e7611deff6cd80d56cf.png" src="../_images/4d97b1cd6847494d234da92810473a4ea0fa46162e063e7611deff6cd80d56cf.png" />
 </div>
 </div>
 <p>In the case of increasing the constraint limit by 1 unit, there is an increase in the objective function value by approximately 0.20 to 0.30. The results will again vary when the optimization is run several times. Again, this is less than a 1% increase in the objective function which indicates that the objective function is not very sensitive to an increase in the value of the constraint limit.</p>

@@ -375,7 +375,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="global-sensitivity-analysis">
 <h1>Global Sensitivity Analysis<a class="headerlink" href="#global-sensitivity-analysis" title="Permalink to this heading">#</a></h1>
-<p>This section provides an implementation for global sensitivity analysis using the Sobol’ method. The Sobol’ method is implemented using <code class="docutils literal notranslate"><span class="pre">SALib</span></code>, a Python library built specifically for performing sensitivity analysis. The method is demonstrated on the Welded Beam and Water Flow Function that are available in the benchmarking problems section of <code class="docutils literal notranslate"><span class="pre">smt</span></code>. The first-order and total Sobol’ indices are found using the true function and a Kriging model of the true function.</p>
+<p>This section provides an implementation for global sensitivity analysis using the Sobol’ method. The Sobol’ method is implemented using <code class="docutils literal notranslate"><span class="pre">SALib</span></code>, a Python library built specifically for performing sensitivity analysis. The method is demonstrated on the <a class="reference external" href="https://smt.readthedocs.io/en/latest/_src_docs/problems/weldedbeam.html">Welded Beam Function</a> and <a class="reference external" href="https://smt.readthedocs.io/en/latest/_src_docs/problems/waterflow.html">Water Flow Function</a> that are available in the benchmarking problems section of <code class="docutils literal notranslate"><span class="pre">smt</span></code>. The first-order and total Sobol’ indices are found using the true function and a Kriging model of the true function.</p>
 <blockquote>
 <div><p><strong><em>NOTE</em></strong>: <code class="docutils literal notranslate"><span class="pre">SALib</span></code> will have to be installed using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">SALib</span></code> in your Conda environment before running the code in this section.</p>
 </div></blockquote>
@@ -443,9 +443,9 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>First-order indices: [0.00928395 0.95626776 0.02697477]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>First-order indices: [0.01028963 0.95648679 0.02772503]
 
-Total indices: [0.01490259 0.96402504 0.02893571]
+Total indices: [0.01486678 0.96411039 0.02904756]
 </pre></div>
 </div>
 </div>
@@ -475,7 +475,7 @@ Total indices: [0.01490259 0.96402504 0.02893571]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 1.0)
 </pre></div>
 </div>
-<img alt="../_images/d34821169b87b04b0bd1df83b7308d30da1d7b0e57e4dbb72d1a21a9f894b2cc.png" src="../_images/d34821169b87b04b0bd1df83b7308d30da1d7b0e57e4dbb72d1a21a9f894b2cc.png" />
+<img alt="../_images/3ff81302f091f6ae85ba73b46c20d1da76caacbb493cda11e92343d65f0d2c78.png" src="../_images/3ff81302f091f6ae85ba73b46c20d1da76caacbb493cda11e92343d65f0d2c78.png" />
 </div>
 </div>
 <p>From the values of the Sobol’ indices, it is clear that the welded beam function is highly sensitive to the <span class="math notranslate nohighlight">\(l\)</span> variable and far less sensitive to the other variables. Additionally, the values of the total indices are similar to the first-order indices which means that there are few interaction effects between the design variables of this function.</p>
@@ -539,42 +539,42 @@ Total indices: [0.01490259 0.96402504 0.02893571]
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of samples: 5
-First-order indices: [1.13966195e-02 9.88563082e-01 3.29921948e-07]
+First-order indices: [1.37693877e-05 9.97302890e-01 2.21067196e-03]
 
-Total indices: [1.12181981e-02 9.88289471e-01 5.39731395e-07]
+Total indices: [1.42401518e-05 9.97373354e-01 2.53476962e-03]
 
 Number of samples: 10
-First-order indices: [0.00578012 0.9586505  0.02877054]
+First-order indices: [0.00646114 0.94960575 0.03035952]
 
-Total indices: [0.00890409 0.96433789 0.03298483]
+Total indices: [0.01290354 0.96559608 0.03830813]
 
 Number of samples: 15
-First-order indices: [0.01159483 0.95378071 0.02584314]
+First-order indices: [0.00822939 0.96370015 0.02501789]
 
-Total indices: [0.01770032 0.96363184 0.02789433]
+Total indices: [0.01075834 0.96773798 0.02622307]
 
 Number of samples: 20
-First-order indices: [0.0099728  0.95731997 0.02544485]
+First-order indices: [0.00998103 0.95926553 0.02575915]
 
-Total indices: [0.01511963 0.96457789 0.02737809]
+Total indices: [0.01411708 0.9650664  0.02680449]
 
 Number of samples: 25
-First-order indices: [0.00866847 0.95791501 0.02697397]
+First-order indices: [0.01029052 0.95532787 0.02881293]
 
-Total indices: [0.01300362 0.96420917 0.02916967]
+Total indices: [0.01444364 0.9630323  0.03087732]
 
 Number of samples: 30
-First-order indices: [0.00848489 0.95955988 0.02608726]
+First-order indices: [0.01032052 0.95940491 0.02493292]
 
-Total indices: [0.01261032 0.96530681 0.02779787]
+Total indices: [0.01492942 0.96554287 0.02594154]
 </pre></div>
 </div>
-<img alt="../_images/0596a128bb21bbe828115fc2be366c9b26f07692d6bf8e1e4be2049ba6c75042.png" src="../_images/0596a128bb21bbe828115fc2be366c9b26f07692d6bf8e1e4be2049ba6c75042.png" />
-<img alt="../_images/71377799e8bd3a1592bf06f318562d4de6eb68a8877499ca63e569e550972a8d.png" src="../_images/71377799e8bd3a1592bf06f318562d4de6eb68a8877499ca63e569e550972a8d.png" />
-<img alt="../_images/bc1ec666eee9f6277a95e3bca3af0b8b49419a579a2999260d7bf184198aeedb.png" src="../_images/bc1ec666eee9f6277a95e3bca3af0b8b49419a579a2999260d7bf184198aeedb.png" />
-<img alt="../_images/a89c4207d9fe360da0e249d33636e4e6fba2f53011140a822b12d1f85c3626bf.png" src="../_images/a89c4207d9fe360da0e249d33636e4e6fba2f53011140a822b12d1f85c3626bf.png" />
-<img alt="../_images/2fd553d2355fcef37dce5ce94fc50a02b5d217779912e5b1b313db69060fb2ce.png" src="../_images/2fd553d2355fcef37dce5ce94fc50a02b5d217779912e5b1b313db69060fb2ce.png" />
-<img alt="../_images/2fdd80f2bff023a48187ee4a8cf30458e9b711ac3d5cee930cecab3e27195736.png" src="../_images/2fdd80f2bff023a48187ee4a8cf30458e9b711ac3d5cee930cecab3e27195736.png" />
+<img alt="../_images/c29c4602c1bcbb2b04427c3807a4408cb97a9f76c7c358347692a676b2044262.png" src="../_images/c29c4602c1bcbb2b04427c3807a4408cb97a9f76c7c358347692a676b2044262.png" />
+<img alt="../_images/52b03409dd55beac17b17eb53fc4da1263612101208e230dc564907cc34bdbba.png" src="../_images/52b03409dd55beac17b17eb53fc4da1263612101208e230dc564907cc34bdbba.png" />
+<img alt="../_images/28852bb3a60e81b95323cb78b7abfed5646b698b95b545b8001d025cdb488251.png" src="../_images/28852bb3a60e81b95323cb78b7abfed5646b698b95b545b8001d025cdb488251.png" />
+<img alt="../_images/bbfac8e84c6f5596a4071b1a41785a8cae5f872d4e78d3eb7e047ca86362e328.png" src="../_images/bbfac8e84c6f5596a4071b1a41785a8cae5f872d4e78d3eb7e047ca86362e328.png" />
+<img alt="../_images/bc264f354b08c598ee119572b3b75d4e4688cf37828975f5f2a41afc799adf7c.png" src="../_images/bc264f354b08c598ee119572b3b75d4e4688cf37828975f5f2a41afc799adf7c.png" />
+<img alt="../_images/9c46ae91e5b1a07de6b39d65849444a450a7ee2cfa222fcd88ac9693df975a8a.png" src="../_images/9c46ae91e5b1a07de6b39d65849444a450a7ee2cfa222fcd88ac9693df975a8a.png" />
 </div>
 </div>
 <p>With a few number of samples, the Kriging model cannot model the Welded Beam function well enough to accurately calculate the Sobol’ indices. As the number of samples increases, the Kriging model becomes more accurate and the Sobol’ indices calculated using the Kriging model match closely with those calculated using the true function. However, calculating the Sobol’ indices using the Kriging model only required 20 - 30 evaluations of the true function which makes it effective in reducing the computational cost of calculating global sensitivities.</p>
@@ -631,11 +631,11 @@ $<span class="math notranslate nohighlight">\(
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>First-order indices: [ 8.29433557e-01 -4.43488466e-06  1.83904205e-08  4.22900199e-02
-  3.12916572e-05  4.39435726e-02  3.99552353e-02  9.23921510e-03]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>First-order indices: [ 8.28445308e-01 -4.51840066e-06  8.17747609e-08  4.08135673e-02
+ -2.75497538e-06  4.01758270e-02  4.40706102e-02  8.96296218e-03]
 
-Total indices: [8.70218748e-01 2.32350538e-06 1.01090216e-11 5.41527836e-02
- 1.02151693e-05 5.45134075e-02 5.25077787e-02 1.26722544e-02]
+Total indices: [8.73379076e-01 2.19954119e-06 1.09106045e-11 5.42752602e-02
+ 1.06218066e-05 5.43927734e-02 5.23769342e-02 1.30887982e-02]
 </pre></div>
 </div>
 </div>
@@ -664,7 +664,7 @@ Total indices: [8.70218748e-01 2.32350538e-06 1.01090216e-11 5.41527836e-02
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 1.0)
 </pre></div>
 </div>
-<img alt="../_images/4f3b45113f268edccce7cdab0e9cf6701bb855ba1a41d2e362be86b2e8b926b9.png" src="../_images/4f3b45113f268edccce7cdab0e9cf6701bb855ba1a41d2e362be86b2e8b926b9.png" />
+<img alt="../_images/846e34f9bad1e94e496b8229e2f6dfd6f5f37a90fec9faca288a97f286d8d5e1.png" src="../_images/846e34f9bad1e94e496b8229e2f6dfd6f5f37a90fec9faca288a97f286d8d5e1.png" />
 </div>
 </div>
 <p>From the values of the Sobol’ indices, it is clear that the water flow function is highly sensitive to the <span class="math notranslate nohighlight">\(r_w\)</span> variable and slightly sensitive to the <span class="math notranslate nohighlight">\(H_u\)</span>, <span class="math notranslate nohighlight">\(H_l\)</span>, <span class="math notranslate nohighlight">\(L\)</span>, and <span class="math notranslate nohighlight">\(K_w\)</span> variables. It can also be seen that the total indices are larger than the first-order indices indicating the presence of interaction effects between the variables of this function.</p>
@@ -727,70 +727,70 @@ Total indices: [8.70218748e-01 2.32350538e-06 1.01090216e-11 5.41527836e-02
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of samples: 5
-First-order indices: [ 9.00252609e-01  2.80251936e-08  2.55825438e-08  5.48364553e-04
- -1.12759505e-06 -1.59406114e-07  4.03736442e-02  5.18781807e-04]
+First-order indices: [ 9.09453236e-01  1.01484682e-07  2.84420240e-07  2.41076387e-04
+  9.53073619e-06 -2.63986219e-07  3.54414696e-03  1.85055159e-06]
 
-Total indices: [9.58989576e-01 1.43423186e-11 3.56193129e-11 5.44103626e-04
- 6.10016332e-05 6.13552569e-12 9.90540917e-02 4.35078511e-04]
+Total indices: [9.88208190e-01 6.47413493e-09 1.25730097e-09 2.62921201e-04
+ 2.70841802e-06 9.72896068e-09 1.02623799e-01 5.17662453e-07]
 
 Number of samples: 10
-First-order indices: [8.78529524e-01 1.27185148e-04 1.14674899e-04 3.79520289e-02
- 3.15776645e-05 4.78777507e-02 1.85109884e-02 5.25182642e-05]
+First-order indices: [8.76237150e-01 1.70769100e-05 3.57098438e-05 4.40251692e-02
+ 1.36823386e-04 3.48797078e-02 2.68572720e-02 2.90377951e-04]
 
-Total indices: [8.95943320e-01 1.28172570e-04 1.75842136e-04 4.44373390e-02
- 3.28845704e-05 5.79786378e-02 2.10325029e-02 8.60725946e-05]
+Total indices: [8.92715767e-01 1.29002370e-05 1.12347518e-05 5.51917788e-02
+ 1.15759764e-04 4.37616905e-02 2.76871857e-02 3.09648771e-04]
 
 Number of samples: 15
-First-order indices: [ 8.76821312e-01 -1.12132978e-04  9.94782534e-07  2.35006408e-02
- -9.05682988e-07  3.50198216e-02  3.50741341e-02  1.23327052e-02]
+First-order indices: [8.79510204e-01 6.40388671e-04 3.37737209e-04 3.61289304e-02
+ 4.88321899e-05 2.75694156e-02 3.64030470e-02 4.72334530e-03]
 
-Total indices: [8.96025485e-01 4.25970291e-04 1.73669118e-07 2.41914444e-02
- 5.76558852e-07 4.09926471e-02 4.53783409e-02 1.35888444e-02]
+Total indices: [8.96781883e-01 6.41577284e-04 2.45672874e-04 4.95793460e-02
+ 4.14065306e-05 2.87018791e-02 3.81492365e-02 5.01060712e-03]
 
 Number of samples: 20
-First-order indices: [8.60121134e-01 2.55748097e-05 3.57121052e-04 3.96946791e-02
- 2.18657543e-05 3.26742052e-02 3.65025325e-02 7.00439613e-03]
+First-order indices: [ 8.18288438e-01  6.42833707e-06 -1.45522752e-05  3.44983604e-02
+  1.30473979e-04  4.40400438e-02  5.03977694e-02  1.21439151e-02]
 
-Total indices: [8.84138292e-01 2.61096877e-05 4.00377482e-04 4.77626391e-02
- 1.66822708e-05 4.07694147e-02 4.52225766e-02 8.13357016e-03]
+Total indices: [8.62401910e-01 6.87476260e-06 1.52632844e-05 4.30441444e-02
+ 1.18616212e-04 5.87000623e-02 6.05345966e-02 1.72667754e-02]
 
 Number of samples: 25
-First-order indices: [ 8.30288177e-01  3.53581555e-04  9.91536901e-05  3.69836526e-02
- -2.44734393e-06  4.44578619e-02  4.20346652e-02  1.12207252e-02]
+First-order indices: [ 8.39118954e-01 -8.06482760e-06  2.12681574e-06  3.96469244e-02
+  1.71640541e-05  3.61700217e-02  4.25271347e-02  8.44782708e-03]
 
-Total indices: [8.68017535e-01 3.68536573e-04 9.16967047e-05 4.90346493e-02
- 2.02536169e-05 4.85091984e-02 6.24362110e-02 1.18055896e-02]
+Total indices: [8.76368933e-01 5.11981620e-06 5.81415834e-05 5.43976184e-02
+ 8.69812069e-06 4.72069850e-02 4.80628387e-02 9.84376270e-03]
 
 Number of samples: 30
-First-order indices: [ 8.36810041e-01  1.08574374e-04  5.40323975e-06  3.81249705e-02
- -5.30630182e-06  4.60175434e-02  3.91845061e-02  1.06578484e-02]
+First-order indices: [ 8.28304659e-01  1.11423051e-05 -9.38544928e-06  4.17525784e-02
+  1.81521458e-05  3.74835370e-02  4.44262955e-02  9.14743054e-03]
 
-Total indices: [8.68375724e-01 1.47947812e-04 4.19289998e-06 4.63946121e-02
- 9.72701500e-05 5.76270654e-02 4.73294388e-02 1.45414888e-02]
+Total indices: [8.71516758e-01 5.17679354e-06 8.19041596e-06 5.57755376e-02
+ 6.69192685e-05 5.01189640e-02 5.28669288e-02 1.29697725e-02]
 
 Number of samples: 35
-First-order indices: [ 8.31346727e-01 -7.23067340e-05 -1.88628485e-07  4.13160021e-02
-  6.06467838e-06  4.17361018e-02  3.86489143e-02  9.10863204e-03]
+First-order indices: [ 8.41414754e-01 -1.40485196e-05 -3.15103137e-05  3.83794581e-02
+  9.10084943e-06  3.96237241e-02  3.89561337e-02  8.59357195e-03]
 
-Total indices: [8.72660019e-01 8.41106768e-05 3.77306986e-07 5.36325852e-02
- 2.72435142e-05 5.30718719e-02 5.23249014e-02 1.24099291e-02]
+Total indices: [8.77307596e-01 9.12078669e-06 3.28688308e-05 4.83265629e-02
+ 4.61854159e-06 5.30139361e-02 4.55173747e-02 1.10247882e-02]
 
 Number of samples: 40
-First-order indices: [ 8.33798924e-01  8.57730212e-06  9.57187450e-06  4.19940081e-02
- -3.54432811e-05  4.10529528e-02  3.95265349e-02  8.76513249e-03]
+First-order indices: [ 8.36389018e-01 -2.74071445e-05  1.57989161e-05  3.92549692e-02
+  1.42547080e-05  3.85917644e-02  4.20724967e-02  9.49099264e-03]
 
-Total indices: [8.71728097e-01 1.38549954e-06 3.89601737e-05 5.65055830e-02
- 1.04335881e-04 5.07417669e-02 5.02830218e-02 1.24661528e-02]
+Total indices: [8.73790807e-01 3.21509203e-05 6.74889863e-06 5.02686460e-02
+ 1.12799130e-05 5.31526111e-02 4.87610717e-02 1.28255725e-02]
 </pre></div>
 </div>
-<img alt="../_images/e5ddf2c2f079ff25c58cd0083d9f42abeaff5c468e8fac375abee2e25e45caa5.png" src="../_images/e5ddf2c2f079ff25c58cd0083d9f42abeaff5c468e8fac375abee2e25e45caa5.png" />
-<img alt="../_images/00120c1661fac3c73d10e956800f2ad9e3ea70fcc21817b8ff14cb37435564d0.png" src="../_images/00120c1661fac3c73d10e956800f2ad9e3ea70fcc21817b8ff14cb37435564d0.png" />
-<img alt="../_images/f2176beefd4cc49ec4289be2830bd58d857184be26cd58fadbc2802b36a2b55d.png" src="../_images/f2176beefd4cc49ec4289be2830bd58d857184be26cd58fadbc2802b36a2b55d.png" />
-<img alt="../_images/10866a9af5cbafedfc028724175aa50936dce1e9ae81a52b53de9043ec8aa445.png" src="../_images/10866a9af5cbafedfc028724175aa50936dce1e9ae81a52b53de9043ec8aa445.png" />
-<img alt="../_images/226628dc24dbc11391f924d858a946506e7d75123948983c77d87430a8ed7479.png" src="../_images/226628dc24dbc11391f924d858a946506e7d75123948983c77d87430a8ed7479.png" />
-<img alt="../_images/b1536dedc3e01d78a52f3b59d62603fd8334544aedaccc99b8e15a40c84d4f37.png" src="../_images/b1536dedc3e01d78a52f3b59d62603fd8334544aedaccc99b8e15a40c84d4f37.png" />
-<img alt="../_images/fd5197b7aa5f919f6f5e639d820f6e6ac18123b752cb7487001b039b00b181b2.png" src="../_images/fd5197b7aa5f919f6f5e639d820f6e6ac18123b752cb7487001b039b00b181b2.png" />
-<img alt="../_images/8f1a463b28f526eb2d80904a4f7dc8fc073a5cdc2f37849f94a7769de73624bb.png" src="../_images/8f1a463b28f526eb2d80904a4f7dc8fc073a5cdc2f37849f94a7769de73624bb.png" />
+<img alt="../_images/7e7f7612c700669689085d6359cd511bb8bdfb55e47d6b9172818aa0c4cdfe64.png" src="../_images/7e7f7612c700669689085d6359cd511bb8bdfb55e47d6b9172818aa0c4cdfe64.png" />
+<img alt="../_images/f9f2a4528f86c101ecc62bb2b3c3638faa10436d8d48b12667067965f8bcfd90.png" src="../_images/f9f2a4528f86c101ecc62bb2b3c3638faa10436d8d48b12667067965f8bcfd90.png" />
+<img alt="../_images/4d1c4ca95aa2ddcd47387f26e5e4690cadb4cf6e36a5d7e7a39ac1b62c43c674.png" src="../_images/4d1c4ca95aa2ddcd47387f26e5e4690cadb4cf6e36a5d7e7a39ac1b62c43c674.png" />
+<img alt="../_images/08d62445dc61f21d02f971c0f2392f4505e584ead0c209ff8eb3cf6d92abc5bf.png" src="../_images/08d62445dc61f21d02f971c0f2392f4505e584ead0c209ff8eb3cf6d92abc5bf.png" />
+<img alt="../_images/9f9cf9de4937e1ace3424f96902ca449a6159a48c12e9301d21bde3688952cee.png" src="../_images/9f9cf9de4937e1ace3424f96902ca449a6159a48c12e9301d21bde3688952cee.png" />
+<img alt="../_images/ccbb775687e7b9e61ca6f9ffea1d99eb67879d49edfbc76fef95e4707d99d23c.png" src="../_images/ccbb775687e7b9e61ca6f9ffea1d99eb67879d49edfbc76fef95e4707d99d23c.png" />
+<img alt="../_images/f6b2e4ea12c8b1a09377b1bcde24daac53120c401392d5a68bf0025954b3114d.png" src="../_images/f6b2e4ea12c8b1a09377b1bcde24daac53120c401392d5a68bf0025954b3114d.png" />
+<img alt="../_images/3b29de77487b7d6286d1cae3449c0c19c6a6090f190254a44d9d1db5c448b469.png" src="../_images/3b29de77487b7d6286d1cae3449c0c19c6a6090f190254a44d9d1db5c448b469.png" />
 </div>
 </div>
 <p>The Kriging model cannot model the Water Flow function well enough to accurately calculate the Sobol’ indices with a few number of samples. As the number of samples increases, the Kriging model becomes more accurate and the Sobol’ indices calculated using the Kriging model match closely with those calculated using the true function. In this case, almost 40 samples are required to accurately calculate the Sobol’ indices as there are more number of variables in this function and there are more interaction effects to capture. However, the computational cost is still much cheaper than calculating the Sobol’ indices using the true function.</p>

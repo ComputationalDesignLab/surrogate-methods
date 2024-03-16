@@ -265,7 +265,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/sens_analysis/intro.ipynb" target="_blank"
+      <li><a href="../_sources/sens_analysis/intro.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -275,7 +275,7 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -363,6 +363,11 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="sensitivity-analysis">
 <h1>Sensitivity Analysis<a class="headerlink" href="#sensitivity-analysis" title="Permalink to this heading">#</a></h1>
+<p>This section provides implementation of the concepts of sensitivity analysis that are covered in class. There are mainly two types of sensitivities that are of interest - local and global sensitivities. Local sensitivities are used to perform a post-optimality analysis for the constrained optimization of the modified Branin function. Local sensitivities are calculated using a normalized version of the partial derivative of the objective function at the optimum point of the problem. The sensitivity of the optimal solution to the limiting value of the constraint is also calculated by changing the limit value and resolving the optimization problem. Global sensitivities are calculated using the Sobol’ method which aims to calculate the variance in the objective function that is explained by each of the design variables. Refer to the lecture notes for more details. The above topics are covered in the following subsections:</p>
+<ol class="arabic simple">
+<li><p>Local Sensitivity Analysis</p></li>
+<li><p>Global Sensitivity Analysis</p></li>
+</ol>
 <div class="toctree-wrapper compound">
 </div>
 </section>
