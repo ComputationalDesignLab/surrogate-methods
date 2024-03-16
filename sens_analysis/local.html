@@ -374,7 +374,7 @@ document.write(`
         -5 \leq x_1 \leq 10 \text{ and } 0 \leq x_2 \leq 15,
     \end{gathered}
 \end{split}\]</div>
-<p>The code blocks below import the required packages,</p>
+<p>The constrained optimization problem is solved using Constrained Expected Improvement (EI). The code blocks below import the required packages and define the obejctive and constraint function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Imports</span>
@@ -435,7 +435,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>Differential evolution (DE) from <code class="docutils literal notranslate"><span class="pre">pymoo</span></code> is used for maximizing EI. Below code defines problem class and initializes DE.</p>
+<p>Differential evolution (DE) from <code class="docutils literal notranslate"><span class="pre">pymoo</span></code> is used for solving the constrained problem of maximizing expected improvement. The code block below defines the problem class and the algorithm.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Problem class</span>
@@ -466,7 +466,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>Below block of code creates 5 training points and performs sequential sampling process using EI. The maximum number of iterations is set to 20 and a convergence criterion is defined based on maximum value of EI obtained in each iteration.</p>
+<p>The block of code below creates 5 training points and performs the sequential sampling process using constrined EI to solve the constrained optimization problem. The maximum number of iterations is set to 20 and a convergence criterion is defined based on maximum value of EI obtained in each iteration.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span> <span class="n">xlimits</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[[</span><span class="n">lb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ub</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">lb</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ub</span><span class="p">[</span><span class="mi">1</span><span class="p">]]]</span> <span class="p">),</span> <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;ese&#39;</span><span class="p">)</span>
@@ -550,90 +550,62 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1
-Maximum EI: 110.63921985820126
-Best observed value: 153.49765654383987
+Maximum EI: 25.54374175155263
+Best observed value: 52.96960197778638
 
 Iteration 2
-Maximum EI: 102.10638946547952
-Best observed value: 153.49765654383987
+Maximum EI: 18.05356240794861
+Best observed value: 52.96960197778638
 
 Iteration 3
-Maximum EI: 98.4739990805927
-Best observed value: 153.49765654383987
+Maximum EI: 31.50601950643778
+Best observed value: 52.96960197778638
 
 Iteration 4
-Maximum EI: 96.65862468782339
-Best observed value: 153.49765654383987
+Maximum EI: 3.7435852089898267
+Best observed value: 52.96960197778638
 
 Iteration 5
-Maximum EI: 96.42041361211108
-Best observed value: 153.49765654383987
+Maximum EI: 28.558636317826593
+Best observed value: 52.12161185948388
 
 Iteration 6
-Maximum EI: 96.41935943091737
-Best observed value: 153.49765654383987
+Maximum EI: 0.5978587914146466
+Best observed value: 52.12161185948388
 
 Iteration 7
-Maximum EI: 96.41931310217768
-Best observed value: 153.49765654383987
+Maximum EI: 0.09738670024128639
+Best observed value: 50.019514994768436
 
 Iteration 8
-Maximum EI: 96.419304512324
-Best observed value: 153.49765654383987
+Maximum EI: 0.597128216179422
+Best observed value: 48.147846393902356
 
 Iteration 9
-Maximum EI: 96.41928562725735
-Best observed value: 153.49765654383987
+Maximum EI: 0.6367634494474146
+Best observed value: 48.147846393902356
 
 Iteration 10
-Maximum EI: 96.41928353677444
-Best observed value: 153.49765654383987
+Maximum EI: 0.02831096227870679
+Best observed value: 47.561548596525846
 
 Iteration 11
-Maximum EI: 96.41928142277604
-Best observed value: 153.49765654383987
-
-Iteration 12
-Maximum EI: 96.41927801038334
-Best observed value: 153.49765654383987
-
-Iteration 13
-Maximum EI: 2.8154957213088676
-Best observed value: 57.07837842482488
-
-Iteration 14
-Maximum EI: 0.038445834218269775
-Best observed value: 57.07837842482488
-
-Iteration 15
-Maximum EI: 0.3182650800115538
-Best observed value: 52.06196012031148
-
-Iteration 16
-Maximum EI: 0.02140654788398985
-Best observed value: 51.94315924310138
-
-Iteration 17
-Maximum EI: 4.472798759792163
-Best observed value: 51.94315924310138
-
-Iteration 18
-Maximum EI: 0.0036260407070239876
-Best observed value: 47.564607584538535
-
-Iteration 19
-Maximum EI: 1.003574175093288e-06
-Best observed value: 47.55995727974495
+Maximum EI: 4.6322245954191335e-10
+Best observed value: 47.561548596525846
 
 Best feasible point:
-x*: [9.1441477  3.28078703]
-f*: 47.55995727974495
-g*: -1.1394998686853341e-06
+x*: [9.15872537 3.27569385]
+f*: 47.561548596525846
+g*: -0.001180370552184229
 </pre></div>
 </div>
 </div>
 </div>
-<p>The blocks of code below perform the post-optimality analysis at the optimum point that is found using sequential sampling using the gradients obtained using finite differences which is a local sensitivity analysis approach.</p>
+<p>Now, a post-optimality analysis will be performed for the constrained optimization problem. There are mainly two important questions that must be answered in a post-optimality analysis.</p>
+<p><strong>Question:</strong> How sensitive is the optimal solution <span class="math notranslate nohighlight">\(f^*\)</span> to changes in the design variables <span class="math notranslate nohighlight">\(x^*\)</span>?</p>
+<p>To answer this first question, the local sensitivies of the objective function with respect to both of the design variables will be calculated. These sensitivities will be the normalized partial derivatives of the objective function with respect to each of the design variables, <span class="math notranslate nohighlight">\(x_i\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\nabla \bar{f} = \frac{x_i^*}{f(\textbf{x}^*)}\frac{\partial f}{\partial x_i}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">central_diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">index</span><span class="p">,</span><span class="n">func</span><span class="p">):</span>
@@ -655,22 +627,22 @@ g*: -1.1394998686853341e-06
 <span class="c1"># Calculating slopes from surrogates</span>
 <span class="n">x1_slope_surrogate</span> <span class="o">=</span> <span class="p">(</span><span class="n">xstar</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">sm_func</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">xstar</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span> <span class="o">*</span> <span class="n">central_diff</span><span class="p">(</span><span class="n">xstar</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">func</span> <span class="o">=</span> <span class="n">sm_func</span><span class="o">.</span><span class="n">predict_values</span><span class="p">)</span>
 <span class="n">x2_slope_surrogate</span> <span class="o">=</span> <span class="p">(</span><span class="n">xstar</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">sm_func</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">xstar</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span> <span class="o">*</span> <span class="n">central_diff</span><span class="p">(</span><span class="n">xstar</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">func</span> <span class="o">=</span> <span class="n">sm_func</span><span class="o">.</span><span class="n">predict_values</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Derivative of objective with respect to x1 from surrogate:&quot;</span><span class="p">,</span> <span class="n">x1_slope_surrogate</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Derivative of objective with respect to x2 from surrogate:&quot;</span><span class="p">,</span> <span class="n">x2_slope_surrogate</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Normalized sensitivity of objective with respect to x1 from surrogate:&quot;</span><span class="p">,</span> <span class="n">x1_slope_surrogate</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Normalized sensitivity of objective with respect to x2 from surrogate:&quot;</span><span class="p">,</span> <span class="n">x2_slope_surrogate</span><span class="p">)</span>
 
 <span class="c1"># Calculating slopes from true function</span>
 <span class="n">x1_slope</span> <span class="o">=</span> <span class="p">(</span><span class="n">xstar</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">modified_branin</span><span class="p">(</span><span class="n">xstar</span><span class="p">))</span> <span class="o">*</span> <span class="n">central_diff</span><span class="p">(</span><span class="n">xstar</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">func</span> <span class="o">=</span> <span class="n">modified_branin</span><span class="p">)</span>
 <span class="n">x2_slope</span> <span class="o">=</span> <span class="p">(</span><span class="n">xstar</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">modified_branin</span><span class="p">(</span><span class="n">xstar</span><span class="p">))</span> <span class="o">*</span> <span class="n">central_diff</span><span class="p">(</span><span class="n">xstar</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">func</span> <span class="o">=</span> <span class="n">modified_branin</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Derivative of objective with respect to x1 from true function:&quot;</span><span class="p">,</span> <span class="n">x1_slope</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Derivative of objective with respect to x2 from true function:&quot;</span><span class="p">,</span> <span class="n">x2_slope</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Normalized sensitivity of objective with respect to x1 from true function:&quot;</span><span class="p">,</span> <span class="n">x1_slope</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Normalized of objective with respect to x2 from true function:&quot;</span><span class="p">,</span> <span class="n">x2_slope</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative of objective with respect to x1 from surrogate: [[-36.52839023]]
-Derivative of objective with respect to x2 from surrogate: [[-13.03679635]]
-Derivative of objective with respect to x1 from true function: [-36.52745123]
-Derivative of objective with respect to x2 from true function: [-13.04045254]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Normalized sensitivity of objective with respect to x1 from surrogate: [[-36.5705421]]
+Normalized sensitivity of objective with respect to x2 from surrogate: [[-13.02450658]]
+Normalized sensitivity of objective with respect to x1 from true function: [-36.56833003]
+Normalized of objective with respect to x2 from true function: [-13.0215631]
 </pre></div>
 </div>
 </div>
@@ -688,86 +660,25 @@ Derivative of objective with respect to x2 from true function: [-13.04045254]
 <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="n">width</span><span class="p">,</span> <span class="n">slope_surrogate</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Kriging model&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variables&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Normalized sensitivities&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Normalized sensitivities in objective function for Modified Branin Function&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="nb">vars</span><span class="p">)</span> 
 <span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/4ea805dd90676fdbfb6d5922d12ae2691d1c5e10fcebda259ce595a39f05de86.png" src="../_images/4ea805dd90676fdbfb6d5922d12ae2691d1c5e10fcebda259ce595a39f05de86.png" />
+<img alt="../_images/441df0bd4872736510109a4cf4328c540b74bb67634d59b711efce2288c9a70a.png" src="../_images/441df0bd4872736510109a4cf4328c540b74bb67634d59b711efce2288c9a70a.png" />
 </div>
 </div>
+<p>The next question related changes in the objective function to changes in the constraints of the problem.</p>
+<p><strong>Question:</strong> How sensitive is the optimal solution <span class="math notranslate nohighlight">\(f^*\)</span> to changes in the constraint <span class="math notranslate nohighlight">\(g(\textbf{x})\)</span>?</p>
+<p>This question can be answered by changing the limiting value of the constraint, in this case 30, and observing the change in the optimal solution by resolving the problem using Constrained EI. Two scenarios are shown here. The first scenario reduces the limiting value of 30 by 1 unit and relaxes the constraint. The second scenario increases the limiting value of 30 by 1 unit and tightens the constraint.</p>
+<p>The blocks of code below solve the scenario of reducing the limiting value by 1 unit by defining a new constraint function and repeating the process of sequential sampling using constrained EI.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">central_diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">index</span><span class="p">,</span><span class="n">func</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Function for computing multivariate central difference.</span>
-<span class="sd">        Input:</span>
-<span class="sd">        x - input at which derivative is desired</span>
-<span class="sd">        h - step size</span>
-<span class="sd">        func - python function which should return function value based on x.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="n">delta</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">x_plus</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">delta</span><span class="o">*</span><span class="n">h</span>
-    <span class="n">x_minus</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">delta</span><span class="o">*</span><span class="n">h</span>
-    <span class="n">slope</span> <span class="o">=</span> <span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">x_plus</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span> <span class="o">-</span> <span class="n">func</span><span class="p">(</span><span class="n">x_minus</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="n">h</span>
-    <span class="k">return</span> <span class="n">slope</span>
-
-<span class="c1"># Calculating slopes from surrogates</span>
-<span class="n">x1_slope_surrogate</span> <span class="o">=</span> <span class="p">(</span><span class="n">xstar</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">sm_const</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">xstar</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span> <span class="o">*</span> <span class="n">central_diff</span><span class="p">(</span><span class="n">xstar</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">func</span> <span class="o">=</span> <span class="n">sm_const</span><span class="o">.</span><span class="n">predict_values</span><span class="p">)</span>
-<span class="n">x2_slope_surrogate</span> <span class="o">=</span> <span class="p">(</span><span class="n">xstar</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">sm_const</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">xstar</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span> <span class="o">*</span> <span class="n">central_diff</span><span class="p">(</span><span class="n">xstar</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">func</span> <span class="o">=</span> <span class="n">sm_const</span><span class="o">.</span><span class="n">predict_values</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Derivative of constraint with respect to x1 from surrogate:&quot;</span><span class="p">,</span> <span class="n">x1_slope_surrogate</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Derivative of constraint with respect to x2 from surrogate:&quot;</span><span class="p">,</span> <span class="n">x2_slope_surrogate</span><span class="p">)</span>
-
-<span class="c1"># Calculating slopes from true function</span>
-<span class="n">x1_slope</span> <span class="o">=</span> <span class="p">(</span><span class="n">xstar</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">constraint</span><span class="p">(</span><span class="n">xstar</span><span class="p">))</span> <span class="o">*</span> <span class="n">central_diff</span><span class="p">(</span><span class="n">xstar</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">func</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">)</span>
-<span class="n">x2_slope</span> <span class="o">=</span> <span class="p">(</span><span class="n">xstar</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">constraint</span><span class="p">(</span><span class="n">xstar</span><span class="p">))</span> <span class="o">*</span> <span class="n">central_diff</span><span class="p">(</span><span class="n">xstar</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">func</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Derivative of constraint with respect to x1 from true function:&quot;</span><span class="p">,</span> <span class="n">x1_slope</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Derivative of constraint with respect to x2 from true function:&quot;</span><span class="p">,</span> <span class="n">x2_slope</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative of constraint with respect to x1 from surrogate: [[25616593.40922132]]
-Derivative of constraint with respect to x2 from surrogate: [[25608246.54591248]]
-Derivative of constraint with respect to x1 from true function: [15796367.77443987]
-Derivative of constraint with respect to x2 from true function: [15796391.22788259]
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting constraint sensitivities</span>
-<span class="nb">vars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;$x_1$&#39;</span><span class="p">,</span><span class="s1">&#39;$x_2$&#39;</span><span class="p">]</span>
-<span class="n">slope_surrogate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x1_slope_surrogate</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x2_slope_surrogate</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]])</span>
-<span class="n">slope_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x1_slope</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x2_slope</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
-<span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">slope_surrogate</span><span class="p">))</span>
-<span class="n">width</span> <span class="o">=</span> <span class="mf">0.3</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">slope_true</span><span class="p">),</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;True function&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="n">width</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">slope_surrogate</span><span class="p">),</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Kriging model&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Design Variables&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Normalized sensitivities&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Normalized sensitivities in constraint function for Modified Branin Function&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="nb">vars</span><span class="p">)</span> 
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/ff02dbb74beaba43892f9ea54591cf2f22adae149042e46d332ae8a81a21392c.png" src="../_images/ff02dbb74beaba43892f9ea54591cf2f22adae149042e46d332ae8a81a21392c.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">relaxed_constraint</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definition of relaxed constraint</span>
+<span class="k">def</span> <span class="nf">relaxed_constraint</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
 
     <span class="n">dim</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span>
 
@@ -777,7 +688,7 @@ Derivative of constraint with respect to x2 from true function: [15796391.227882
     <span class="n">x1</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">x2</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
 
-    <span class="n">g</span> <span class="o">=</span> <span class="o">-</span><span class="n">x1</span><span class="o">*</span><span class="n">x2</span> <span class="o">+</span> <span class="mi">29</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="o">-</span><span class="n">x1</span><span class="o">*</span><span class="n">x2</span> <span class="o">+</span> <span class="mi">29</span> <span class="c1"># Relaxed constraint</span>
     
     <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">g</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
@@ -862,48 +773,56 @@ Derivative of constraint with respect to x2 from true function: [15796391.227882
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;g*: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">gtrain</span><span class="p">[</span><span class="n">index</span><span class="p">]))</span>
 
 <span class="c1"># Change in objective function</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Change in f* with one unit reduction in constraint limit:&quot;</span><span class="p">,</span> <span class="n">ybest</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ystar</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Change in f* with one unit reduction in constraint limit:&quot;</span><span class="p">,</span> <span class="n">ybest</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ystar</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Percent change in f* with one unit reduction in constraint limit:&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">ybest</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ystar</span><span class="p">)</span><span class="o">/</span><span class="n">ystar</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1
-Maximum EI: 6.184123205820542
-Best observed value: 48.640516711623135
+Maximum EI: 27.380084287615972
+Best observed value: 65.42611589765067
 
 Iteration 2
-Maximum EI: 6.28268309941965
-Best observed value: 48.640516711623135
+Maximum EI: 28.567885785241607
+Best observed value: 62.03395396062436
 
 Iteration 3
-Maximum EI: 6.259582251862996
-Best observed value: 48.640516711623135
+Maximum EI: 10.07978781730646
+Best observed value: 62.03395396062436
 
 Iteration 4
-Maximum EI: 0.5133697703895117
-Best observed value: 48.640516711623135
+Maximum EI: 10.095569925429174
+Best observed value: 62.03395396062436
 
 Iteration 5
-Maximum EI: 1.069603623862199
-Best observed value: 48.640516711623135
+Maximum EI: 0.00604322158028988
+Best observed value: 51.945222634522935
 
 Iteration 6
-Maximum EI: 0.05436643464515678
-Best observed value: 47.4497371020886
+Maximum EI: 0.10007261617450797
+Best observed value: 51.945222634522935
 
 Iteration 7
-Maximum EI: 0.09022509834140495
-Best observed value: 47.4497371020886
+Maximum EI: 0.8295450761339536
+Best observed value: 47.870265028693595
 
 Iteration 8
-Maximum EI: 3.406132250410318e-14
-Best observed value: 47.347523066344436
+Maximum EI: 0.06642825191388368
+Best observed value: 47.42607978257179
+
+Iteration 9
+Maximum EI: 4.5311084439029066e-06
+Best observed value: 47.34336507515365
 
 Best feasible point:
-x*: [9.14867665 3.16987103]
-f*: 47.347523066344436
-g*: -0.00012512165594458224
-Change in f* with one unit reduction in constraint limit: -0.21243421340051327
+x*: [9.11255956 3.18259373]
+f*: 47.34336507515365
+g*: -0.0015749394910358205
+
+Change in f* with one unit reduction in constraint limit: -0.21818352137219676
+
+Percent change in f* with one unit reduction in constraint limit: -0.4587393131857235
 </pre></div>
 </div>
 </div>
@@ -1043,30 +962,6 @@ x*: [9.17590348 3.37845804]
 f*: 47.795124705207385
 g*: -0.00040491583522594965
 Change in f* with one unit reduction in constraint limit: 0.23516742546243563
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ystar</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>47.55995727974495
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ybest</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>47.608488472945716
 </pre></div>
 </div>
 </div>
