@@ -42,3 +42,6 @@ chapters:
     sections:
     - file: sens_analysis/local
     - file: sens_analysis/global
+  - file: dim_reduction/intro
+    sections:
+    - file: dim_reduction/dim_red_methods
