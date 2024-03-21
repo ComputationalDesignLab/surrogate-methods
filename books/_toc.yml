@@ -45,3 +45,4 @@ chapters:
   - file: dim_reduction/intro
     sections:
     - file: dim_reduction/dim_red_methods
+    - file: dim_reduction/seq_sampling
