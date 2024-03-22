@@ -46,3 +46,4 @@ chapters:
     sections:
     - file: dim_reduction/dim_red_methods
     - file: dim_reduction/seq_sampling
+  - file: engineering_design  
