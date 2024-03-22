@@ -65,6 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'dim_reduction/seq_sampling';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Engineering Modeling and Design Optimization" href="../engineering_design.html" />
     <link rel="prev" title="Dimensionality Reduction Methods" href="dim_red_methods.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -212,15 +213,10 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Dimensionality Reduction</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="dim_red_methods.html">Dimensionality Reduction Methods</a></li>
-
-
-
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Sequential Sampling using Dimensionality Reduction</a></li>
-
-
-
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../engineering_design.html">Engineering Modeling and Design Optimization</a></li>
 </ul>
 
     </div>
@@ -369,12 +365,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Sequential Sampling using Dimensionality Reduction</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sequential-sampling-using-expected-improvement-ei">Sequential Sampling using Expected Improvement (EI)</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sequential-sampling-using-pricinpal-component-analysis-pca-and-ei">Sequential Sampling using Pricinpal Component Analysis (PCA) and EI</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sequential-sampling-using-kernel-pca-and-ei">Sequential Sampling using Kernel PCA and EI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sequential-sampling-using-expected-improvement-ei">Sequential Sampling using Expected Improvement (EI)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sequential-sampling-using-pricinpal-component-analysis-pca-and-ei">Sequential Sampling using Pricinpal Component Analysis (PCA) and EI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sequential-sampling-using-kernel-pca-and-ei">Sequential Sampling using Kernel PCA and EI</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -444,9 +438,8 @@ document.write(`
 </div>
 </div>
 </div>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="sequential-sampling-using-expected-improvement-ei">
-<h1>Sequential Sampling using Expected Improvement (EI)<a class="headerlink" href="#sequential-sampling-using-expected-improvement-ei" title="Permalink to this heading">#</a></h1>
+<section id="sequential-sampling-using-expected-improvement-ei">
+<h2>Sequential Sampling using Expected Improvement (EI)<a class="headerlink" href="#sequential-sampling-using-expected-improvement-ei" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Setting number of dimensions for the problem - 10D Styblinski-Tang Function</span>
@@ -559,189 +552,189 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1
-Maximum EI: 24.349139276208742
+Maximum EI: 24.349139276209733
 Best observed value: -150.53602901269912
 
 Iteration 2
-Maximum EI: 22.145984282338603
+Maximum EI: 14.2587175348378
 Best observed value: -150.53602901269912
 
 Iteration 3
-Maximum EI: 7.52454259962564
+Maximum EI: 32.56112939371631
 Best observed value: -150.53602901269912
 
 Iteration 4
-Maximum EI: 14.514500755677018
+Maximum EI: 118.3072808103247
 Best observed value: -150.53602901269912
 
 Iteration 5
-Maximum EI: 18.382487356671245
-Best observed value: -239.6827127816443
+Maximum EI: 140.42812412216225
+Best observed value: -150.53602901269912
 
 Iteration 6
-Maximum EI: 8.019438987073126
-Best observed value: -239.6827127816443
+Maximum EI: 364.257525933953
+Best observed value: -150.53602901269912
 
 Iteration 7
-Maximum EI: 42.856266594122026
-Best observed value: -239.6827127816443
+Maximum EI: 150.42148221178286
+Best observed value: -150.53602901269912
 
 Iteration 8
-Maximum EI: 24.9802460449389
-Best observed value: -239.6827127816443
+Maximum EI: 65.78213401031749
+Best observed value: -150.53602901269912
 
 Iteration 9
-Maximum EI: 77.88985457266725
-Best observed value: -239.6827127816443
+Maximum EI: 222.4666467705548
+Best observed value: -150.53602901269912
 
 Iteration 10
-Maximum EI: 17.90613946050636
-Best observed value: -239.6827127816443
+Maximum EI: 48.74335062997925
+Best observed value: -150.53602901269912
 
 Iteration 11
-Maximum EI: 116.435318734991
-Best observed value: -239.6827127816443
+Maximum EI: 52.657775878436524
+Best observed value: -150.53602901269912
 
 Iteration 12
-Maximum EI: 97.57894645343109
-Best observed value: -239.6827127816443
+Maximum EI: 103.8798588986767
+Best observed value: -150.53602901269912
 
 Iteration 13
-Maximum EI: 115.28582144583399
-Best observed value: -239.6827127816443
+Maximum EI: 77.53318861282284
+Best observed value: -150.53602901269912
 
 Iteration 14
-Maximum EI: 295.25938743262975
-Best observed value: -239.6827127816443
+Maximum EI: 85.01164135148007
+Best observed value: -150.53602901269912
 
 Iteration 15
-Maximum EI: 192.8671745784592
-Best observed value: -239.6827127816443
+Maximum EI: 54.7123701029158
+Best observed value: -150.53602901269912
 
 Iteration 16
-Maximum EI: 185.44297347291305
-Best observed value: -239.6827127816443
+Maximum EI: 64.59849157504398
+Best observed value: -150.53602901269912
 
 Iteration 17
-Maximum EI: 100.5128985139516
-Best observed value: -239.6827127816443
+Maximum EI: 427.1513435498791
+Best observed value: -150.53602901269912
 
 Iteration 18
-Maximum EI: 44.73128448090539
-Best observed value: -239.6827127816443
+Maximum EI: 109.01618902874239
+Best observed value: -150.53602901269912
 
 Iteration 19
-Maximum EI: 169.30833485674876
-Best observed value: -239.6827127816443
+Maximum EI: 181.19155587581056
+Best observed value: -150.53602901269912
 
 Iteration 20
-Maximum EI: 116.68840680370498
-Best observed value: -239.6827127816443
+Maximum EI: 102.1128926313867
+Best observed value: -150.53602901269912
 
 Iteration 21
-Maximum EI: 57.34843317467305
-Best observed value: -239.6827127816443
+Maximum EI: 165.9187150048029
+Best observed value: -150.53602901269912
 
 Iteration 22
-Maximum EI: 32.62180374624188
-Best observed value: -239.6827127816443
+Maximum EI: 350.2237963070535
+Best observed value: -150.53602901269912
 
 Iteration 23
-Maximum EI: 196.99484038353353
-Best observed value: -239.6827127816443
+Maximum EI: 71.19992106541503
+Best observed value: -169.73248800012067
 
 Iteration 24
-Maximum EI: 78.71559036394314
-Best observed value: -239.6827127816443
+Maximum EI: 282.38809582220154
+Best observed value: -169.73248800012067
 
 Iteration 25
-Maximum EI: 146.76167884219993
-Best observed value: -239.6827127816443
+Maximum EI: 69.4588537724485
+Best observed value: -169.73248800012067
 
 Iteration 26
-Maximum EI: 173.0112660462745
-Best observed value: -239.6827127816443
+Maximum EI: 280.95587937016126
+Best observed value: -169.73248800012067
 
 Iteration 27
-Maximum EI: 47.59333327322172
-Best observed value: -239.6827127816443
+Maximum EI: 97.13548523916077
+Best observed value: -169.73248800012067
 
 Iteration 28
-Maximum EI: 86.42541892976001
-Best observed value: -239.6827127816443
+Maximum EI: 67.24667865028728
+Best observed value: -169.73248800012067
 
 Iteration 29
-Maximum EI: 36.045409397108855
-Best observed value: -239.6827127816443
+Maximum EI: 185.38372086592483
+Best observed value: -169.73248800012067
 
 Iteration 30
-Maximum EI: 103.24702895741707
-Best observed value: -239.6827127816443
+Maximum EI: 76.43922146411924
+Best observed value: -169.73248800012067
 
 Iteration 31
-Maximum EI: 145.45945182507762
-Best observed value: -239.6827127816443
+Maximum EI: 78.70095384432237
+Best observed value: -204.53890391114342
 
 Iteration 32
-Maximum EI: 143.01505593094922
-Best observed value: -239.6827127816443
+Maximum EI: 111.10593362017661
+Best observed value: -204.53890391114342
 
 Iteration 33
-Maximum EI: 141.72967510771895
-Best observed value: -239.6827127816443
+Maximum EI: 163.60861873349617
+Best observed value: -204.53890391114342
 
 Iteration 34
-Maximum EI: 123.6505077206389
-Best observed value: -239.6827127816443
+Maximum EI: 181.4027301856543
+Best observed value: -204.53890391114342
 
 Iteration 35
-Maximum EI: 80.43124362486898
-Best observed value: -239.6827127816443
+Maximum EI: 163.65358577996284
+Best observed value: -204.53890391114342
 
 Iteration 36
-Maximum EI: 135.69024586299344
-Best observed value: -239.6827127816443
+Maximum EI: 115.77482509724848
+Best observed value: -204.53890391114342
 
 Iteration 37
-Maximum EI: 80.83377026343753
-Best observed value: -239.6827127816443
+Maximum EI: 85.97843329977964
+Best observed value: -204.53890391114342
 
 Iteration 38
-Maximum EI: 132.58612726105986
-Best observed value: -239.6827127816443
+Maximum EI: 154.71807812224048
+Best observed value: -204.53890391114342
 
 Iteration 39
-Maximum EI: 86.67462057664706
-Best observed value: -239.6827127816443
+Maximum EI: 149.19770876114308
+Best observed value: -204.53890391114342
 
 Iteration 40
-Maximum EI: 98.46395875731145
-Best observed value: -239.6827127816443
+Maximum EI: 177.89311387160095
+Best observed value: -204.53890391114342
 
 Iteration 41
-Maximum EI: 76.91241019369615
-Best observed value: -239.6827127816443
+Maximum EI: 156.632290408344
+Best observed value: -204.53890391114342
 
 Iteration 42
-Maximum EI: 109.57106975741218
-Best observed value: -239.6827127816443
+Maximum EI: 70.28728238413774
+Best observed value: -204.53890391114342
 
 Iteration 43
-Maximum EI: 94.93633213650904
-Best observed value: -239.6827127816443
+Maximum EI: 146.70144810176987
+Best observed value: -204.53890391114342
 
 Iteration 44
-Maximum EI: 92.85873793279855
-Best observed value: -239.6827127816443
+Maximum EI: 169.24700509331865
+Best observed value: -204.53890391114342
 
 Iteration 45
-Maximum EI: 79.0001140737802
-Best observed value: -239.6827127816443
+Maximum EI: 66.29714629734181
+Best observed value: -204.53890391114342
 
 Best obtained point:
-x*: [ 2.93409038 -2.63351095  0.30486054 -2.87684617  2.89054605 -2.47397056
- -1.0798997  -2.95842427 -0.67391073 -1.60228826]
-f*: -239.6827127816443
+x*: [-1.23185448 -2.96861128  3.58122547  1.02497629  2.29904217 -1.27418621
+  2.97886181  1.74786351  2.1227714  -2.53454635]
+f*: -204.53890391114342
 </pre></div>
 </div>
 </div>
@@ -760,12 +753,12 @@ f*: -239.6827127816443
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/1d08ac5ccf50cbfb022f86cdb8095d86a574dec2077a5761bbb26c36f6762a81.png" src="../_images/1d08ac5ccf50cbfb022f86cdb8095d86a574dec2077a5761bbb26c36f6762a81.png" />
+<img alt="../_images/770acb761d1ba2010dbb51f19f522e6403e4778655b6fb24822b1eb68454b0ac.png" src="../_images/770acb761d1ba2010dbb51f19f522e6403e4778655b6fb24822b1eb68454b0ac.png" />
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="sequential-sampling-using-pricinpal-component-analysis-pca-and-ei">
-<h1>Sequential Sampling using Pricinpal Component Analysis (PCA) and EI<a class="headerlink" href="#sequential-sampling-using-pricinpal-component-analysis-pca-and-ei" title="Permalink to this heading">#</a></h1>
+<section id="sequential-sampling-using-pricinpal-component-analysis-pca-and-ei">
+<h2>Sequential Sampling using Pricinpal Component Analysis (PCA) and EI<a class="headerlink" href="#sequential-sampling-using-pricinpal-component-analysis-pca-and-ei" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Problem class</span>
@@ -799,6 +792,8 @@ f*: -239.6827127816443
         
         <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected_improvement</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         
+        <span class="c1"># Assigning a high valued penalty for points that are outside the original bounds of the </span>
+        <span class="c1"># problem</span>
         <span class="n">out</span><span class="p">[</span><span class="n">idx_lower</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1000</span>
         <span class="n">out</span><span class="p">[</span><span class="n">idx_upper</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1000</span>
 
@@ -841,7 +836,7 @@ f*: -239.6827127816443
     
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Iteration </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">itr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
     
-    <span class="c1"># Pre-processing data before applying PCA - standardization of data helps in PCA</span>
+    <span class="c1"># Pre-processing data before applying PCA</span>
     <span class="n">center</span> <span class="o">=</span> <span class="n">xtrain</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">xtrain_center</span> <span class="o">=</span> <span class="n">xtrain</span> <span class="o">-</span> <span class="n">center</span> 
 
@@ -907,189 +902,189 @@ f*: -239.6827127816443
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1
-Maximum EI: 9.782232412635054
+Maximum EI: 9.782232412238802
 Best observed value: -150.53602901269912
 
 Iteration 2
-Maximum EI: 7.865841529174926
+Maximum EI: 7.865816516797695
 Best observed value: -150.53602901269912
 
 Iteration 3
-Maximum EI: 17.528029919565974
+Maximum EI: 17.528603543698978
 Best observed value: -150.53602901269912
 
 Iteration 4
-Maximum EI: 8.3098345342346
+Maximum EI: 3.0333466458064473
 Best observed value: -150.53602901269912
 
 Iteration 5
-Maximum EI: 13.276081250413768
+Maximum EI: 17.75782931001559
 Best observed value: -150.53602901269912
 
 Iteration 6
-Maximum EI: 17.8023133448591
+Maximum EI: 20.870694772905455
 Best observed value: -150.53602901269912
 
 Iteration 7
-Maximum EI: 15.384107967256963
+Maximum EI: 21.663999892607887
 Best observed value: -150.53602901269912
 
 Iteration 8
-Maximum EI: 55.00862858226949
+Maximum EI: 9.017925603909774
 Best observed value: -150.53602901269912
 
 Iteration 9
-Maximum EI: 10.257994586097272
+Maximum EI: 21.303240598948403
 Best observed value: -150.53602901269912
 
 Iteration 10
-Maximum EI: 20.83528651097844
+Maximum EI: 14.767373615218247
 Best observed value: -150.53602901269912
 
 Iteration 11
-Maximum EI: 17.455296429242672
+Maximum EI: 10.44538504012866
 Best observed value: -150.53602901269912
 
 Iteration 12
-Maximum EI: 8.534624039246456
-Best observed value: -179.37138361716265
+Maximum EI: 13.103141824278767
+Best observed value: -192.82574997432786
 
 Iteration 13
-Maximum EI: 9.778486934588377
-Best observed value: -179.37138361716265
+Maximum EI: 1.513573684402795
+Best observed value: -192.82574997432786
 
 Iteration 14
-Maximum EI: 4.052691772007444
-Best observed value: -179.37138361716265
+Maximum EI: 6.148619595328473
+Best observed value: -192.82574997432786
 
 Iteration 15
-Maximum EI: 17.7126867661027
-Best observed value: -179.37138361716265
+Maximum EI: 17.63714019995188
+Best observed value: -192.82574997432786
 
 Iteration 16
-Maximum EI: 2.941059870671978
-Best observed value: -203.4539047497004
+Maximum EI: 11.226872559916771
+Best observed value: -192.82574997432786
 
 Iteration 17
-Maximum EI: 7.850062227857093
-Best observed value: -203.4539047497004
+Maximum EI: 7.7733765991740205
+Best observed value: -192.82574997432786
 
 Iteration 18
-Maximum EI: 19.437940809779537
-Best observed value: -203.4539047497004
+Maximum EI: 6.130892486193725
+Best observed value: -192.82574997432786
 
 Iteration 19
-Maximum EI: 7.63183521422265
-Best observed value: -207.25657834027902
+Maximum EI: 1.1572104998310717
+Best observed value: -192.82574997432786
 
 Iteration 20
-Maximum EI: 11.719709087859922
-Best observed value: -207.25657834027902
+Maximum EI: 5.554521522124984
+Best observed value: -192.82574997432786
 
 Iteration 21
-Maximum EI: 3.9013579138481367
-Best observed value: -220.68939900219885
+Maximum EI: 8.36290076713789
+Best observed value: -192.82574997432786
 
 Iteration 22
-Maximum EI: 14.290525670174429
-Best observed value: -220.68939900219885
+Maximum EI: 21.810607324401843
+Best observed value: -192.82574997432786
 
 Iteration 23
-Maximum EI: 0.7173634275010126
-Best observed value: -220.68939900219885
+Maximum EI: 20.48104673497086
+Best observed value: -192.82574997432786
 
 Iteration 24
-Maximum EI: 4.214050975650882
-Best observed value: -220.68939900219885
+Maximum EI: 1.8727069781425971
+Best observed value: -192.82574997432786
 
 Iteration 25
-Maximum EI: 8.484482510823792
-Best observed value: -220.68939900219885
+Maximum EI: 17.051659166259377
+Best observed value: -192.82574997432786
 
 Iteration 26
-Maximum EI: 12.836935071140577
-Best observed value: -249.25023741419608
+Maximum EI: 4.873283669772975
+Best observed value: -192.82574997432786
 
 Iteration 27
-Maximum EI: 7.817618675788147
-Best observed value: -249.25023741419608
+Maximum EI: 14.305238659428134
+Best observed value: -192.82574997432786
 
 Iteration 28
-Maximum EI: 24.112037373236483
-Best observed value: -249.25023741419608
+Maximum EI: 9.939135214965605
+Best observed value: -192.82574997432786
 
 Iteration 29
-Maximum EI: 17.81776131605346
-Best observed value: -249.25023741419608
+Maximum EI: 5.795999611580157
+Best observed value: -192.82574997432786
 
 Iteration 30
-Maximum EI: 9.46937214420044
-Best observed value: -249.25023741419608
+Maximum EI: 5.325604771028587
+Best observed value: -234.64613352735554
 
 Iteration 31
-Maximum EI: 0.37808163355972724
-Best observed value: -249.25023741419608
+Maximum EI: 7.47210739422875
+Best observed value: -234.64613352735554
 
 Iteration 32
-Maximum EI: 2.9450796868578575
-Best observed value: -249.25023741419608
+Maximum EI: 2.983068916601754
+Best observed value: -248.58349294248188
 
 Iteration 33
-Maximum EI: 14.669585715372811
-Best observed value: -249.25023741419608
+Maximum EI: 0.08806974819330127
+Best observed value: -262.01586703616636
 
 Iteration 34
-Maximum EI: 0.3289199738869981
-Best observed value: -267.06094089767885
+Maximum EI: 0.06121325403144906
+Best observed value: -262.01586703616636
 
 Iteration 35
-Maximum EI: 0.17546989639388388
-Best observed value: -267.06094089767885
+Maximum EI: 2.6607223033608425
+Best observed value: -262.01586703616636
 
 Iteration 36
-Maximum EI: 1.7721353804728879
-Best observed value: -267.06094089767885
+Maximum EI: 2.8146685432752223
+Best observed value: -262.01586703616636
 
 Iteration 37
-Maximum EI: 0.07237618575340643
-Best observed value: -267.06094089767885
+Maximum EI: 0.038311720578386554
+Best observed value: -262.01586703616636
 
 Iteration 38
-Maximum EI: 1.8867581853838087
-Best observed value: -267.06094089767885
+Maximum EI: 3.526274113254915
+Best observed value: -262.01586703616636
 
 Iteration 39
-Maximum EI: 1.0716518681609941
-Best observed value: -267.06094089767885
+Maximum EI: 2.0551681646525677
+Best observed value: -262.01586703616636
 
 Iteration 40
-Maximum EI: 6.617520752988116
-Best observed value: -274.37650773286225
+Maximum EI: 0.07469169148578947
+Best observed value: -262.01586703616636
 
 Iteration 41
-Maximum EI: 1.97771611510264
-Best observed value: -279.171148377631
+Maximum EI: 0.03042995096235057
+Best observed value: -262.01586703616636
 
 Iteration 42
-Maximum EI: 0.0886534050295148
-Best observed value: -279.171148377631
+Maximum EI: 1.1833761243254919
+Best observed value: -262.01586703616636
 
 Iteration 43
-Maximum EI: 0.49578689570068324
-Best observed value: -279.171148377631
+Maximum EI: 0.06930072269070031
+Best observed value: -263.85383834207215
 
 Iteration 44
-Maximum EI: 16.83967392039741
-Best observed value: -279.171148377631
+Maximum EI: 0.6106814952891572
+Best observed value: -263.85383834207215
 
 Iteration 45
-Maximum EI: 0.5242449519759731
-Best observed value: -279.171148377631
+Maximum EI: 0.0836883446108998
+Best observed value: -265.62342466843893
 
 Best obtained point:
-x*: [ 2.79384537 -2.66665456 -3.45262989  1.58716943  2.05354084 -2.49935611
- -1.54225025 -2.92206505  3.27857027 -3.39445581]
-f*: -279.171148377631
+x*: [-0.40415502 -0.60437323 -2.77572839 -1.63661171 -2.92362605  2.73153136
+ -2.43845152 -3.27393047 -3.13296271  3.07268858]
+f*: -265.62342466843893
 </pre></div>
 </div>
 </div>
@@ -1109,12 +1104,12 @@ f*: -279.171148377631
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/af24222ee544b56483bbbcb39d4895b5b3fbf0fe4afbc8d75ecb0de1582bf875.png" src="../_images/af24222ee544b56483bbbcb39d4895b5b3fbf0fe4afbc8d75ecb0de1582bf875.png" />
+<img alt="../_images/093583c5c0afbed7a4c4117580eb5dc32614a393c2800fd0e44f1517874923c4.png" src="../_images/093583c5c0afbed7a4c4117580eb5dc32614a393c2800fd0e44f1517874923c4.png" />
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="sequential-sampling-using-kernel-pca-and-ei">
-<h1>Sequential Sampling using Kernel PCA and EI<a class="headerlink" href="#sequential-sampling-using-kernel-pca-and-ei" title="Permalink to this heading">#</a></h1>
+<section id="sequential-sampling-using-kernel-pca-and-ei">
+<h2>Sequential Sampling using Kernel PCA and EI<a class="headerlink" href="#sequential-sampling-using-kernel-pca-and-ei" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">random_state</span> <span class="o">=</span> <span class="mi">20</span>
@@ -1140,11 +1135,11 @@ f*: -279.171148377631
     
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Iteration </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">itr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
     
-    <span class="c1"># Pre-processing data before applying PCA - standardization of data helps in PCA</span>
+    <span class="c1"># Pre-processing data before applying KPCA</span>
     <span class="n">center</span> <span class="o">=</span> <span class="n">xtrain</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">xtrain_center</span> <span class="o">=</span> <span class="n">xtrain</span> <span class="o">-</span> <span class="n">center</span> 
 
-    <span class="c1"># Applying PCA to the data</span>
+    <span class="c1"># Applying KPCA to the data</span>
     <span class="n">transform</span> <span class="o">=</span> <span class="n">KernelPCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;cosine&#39;</span><span class="p">,</span> <span class="n">fit_inverse_transform</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">xprime</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">xtrain_center</span><span class="p">)</span>
     
@@ -1204,189 +1199,189 @@ f*: -279.171148377631
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1
-Maximum EI: 6.309217063641253
+Maximum EI: 6.263913343702318
 Best observed value: -150.53602901269912
 
 Iteration 2
-Maximum EI: 41.55228510287358
+Maximum EI: 9.9847664807879
 Best observed value: -150.53602901269912
 
 Iteration 3
-Maximum EI: 18.270344826810362
-Best observed value: -182.85174969357095
+Maximum EI: 19.639170047750635
+Best observed value: -150.53602901269912
 
 Iteration 4
-Maximum EI: 8.973085565396698
-Best observed value: -182.85174969357095
+Maximum EI: 31.699307573939883
+Best observed value: -183.46246764712484
 
 Iteration 5
-Maximum EI: 10.512232848091156
-Best observed value: -190.13978538721625
+Maximum EI: 13.645961225528303
+Best observed value: -183.46246764712484
 
 Iteration 6
-Maximum EI: 18.151449276261083
-Best observed value: -190.13978538721625
+Maximum EI: 34.765348180450005
+Best observed value: -183.46246764712484
 
 Iteration 7
-Maximum EI: 12.930257329509384
-Best observed value: -190.13978538721625
+Maximum EI: 14.601296574342179
+Best observed value: -183.46246764712484
 
 Iteration 8
-Maximum EI: 8.787769823142817
-Best observed value: -194.5357406227563
+Maximum EI: 24.39002375133531
+Best observed value: -189.27545468795148
 
 Iteration 9
-Maximum EI: 11.860761103156227
-Best observed value: -194.5357406227563
+Maximum EI: 9.538667088887617
+Best observed value: -189.27545468795148
 
 Iteration 10
-Maximum EI: 9.200722728625319
-Best observed value: -199.44148163034978
+Maximum EI: 9.15478232706567
+Best observed value: -189.27545468795148
 
 Iteration 11
-Maximum EI: 8.984318121964524
-Best observed value: -199.44148163034978
+Maximum EI: 13.551291246732221
+Best observed value: -189.27545468795148
 
 Iteration 12
-Maximum EI: 13.006156116132438
-Best observed value: -199.44148163034978
+Maximum EI: 27.08811608148906
+Best observed value: -189.27545468795148
 
 Iteration 13
-Maximum EI: 28.180223775918865
-Best observed value: -199.44148163034978
+Maximum EI: 17.176831581636502
+Best observed value: -189.27545468795148
 
 Iteration 14
-Maximum EI: 5.62014345867783
-Best observed value: -199.44148163034978
+Maximum EI: 8.570553053036306
+Best observed value: -203.97670550372644
 
 Iteration 15
-Maximum EI: 37.22735177781786
-Best observed value: -199.44148163034978
+Maximum EI: 3.4529412360127374
+Best observed value: -203.97670550372644
 
 Iteration 16
-Maximum EI: 16.654062551824303
-Best observed value: -199.44148163034978
+Maximum EI: 12.593109050004271
+Best observed value: -203.97670550372644
 
 Iteration 17
-Maximum EI: 12.09446028398246
-Best observed value: -218.0877735992568
+Maximum EI: 18.6277362583294
+Best observed value: -224.47854429101045
 
 Iteration 18
-Maximum EI: 22.508893634392088
-Best observed value: -221.76647529745054
+Maximum EI: 9.087521316091568
+Best observed value: -224.47854429101045
 
 Iteration 19
-Maximum EI: 16.146414878301396
-Best observed value: -221.7706974027601
+Maximum EI: 3.1202210928531997
+Best observed value: -238.34374463297397
 
 Iteration 20
-Maximum EI: 34.80824370126796
-Best observed value: -221.7706974027601
+Maximum EI: 1.3732847376961095
+Best observed value: -238.34374463297397
 
 Iteration 21
-Maximum EI: 29.811584214151875
-Best observed value: -245.0953918212715
+Maximum EI: 4.3913725842334275
+Best observed value: -238.34374463297397
 
 Iteration 22
-Maximum EI: 10.037020047874215
-Best observed value: -258.8756319353467
+Maximum EI: 4.879138208887118
+Best observed value: -243.49870842308536
 
 Iteration 23
-Maximum EI: 12.014910332132846
-Best observed value: -258.8756319353467
+Maximum EI: 21.730684219485063
+Best observed value: -243.49870842308536
 
 Iteration 24
-Maximum EI: 1.5777070071116333
-Best observed value: -258.8756319353467
+Maximum EI: 17.02407185880497
+Best observed value: -243.49870842308536
 
 Iteration 25
-Maximum EI: 12.636888156286982
-Best observed value: -258.8756319353467
+Maximum EI: 11.864157216667433
+Best observed value: -246.51584076716466
 
 Iteration 26
-Maximum EI: 16.049116126124282
-Best observed value: -258.8756319353467
+Maximum EI: 14.056915811121524
+Best observed value: -246.51584076716466
 
 Iteration 27
-Maximum EI: 21.962390981857116
-Best observed value: -260.9048208620841
+Maximum EI: 15.347977324636762
+Best observed value: -246.51584076716466
 
 Iteration 28
-Maximum EI: 48.00403203305622
-Best observed value: -260.9048208620841
+Maximum EI: 15.21286377743176
+Best observed value: -246.51584076716466
 
 Iteration 29
-Maximum EI: 18.001186069969933
-Best observed value: -260.9048208620841
+Maximum EI: 24.80492851546691
+Best observed value: -246.51584076716466
 
 Iteration 30
-Maximum EI: 10.21947325427833
-Best observed value: -260.9048208620841
+Maximum EI: 12.009768869123768
+Best observed value: -246.51584076716466
 
 Iteration 31
-Maximum EI: 6.925680213666855
-Best observed value: -260.9048208620841
+Maximum EI: 7.675524067562228
+Best observed value: -246.51584076716466
 
 Iteration 32
-Maximum EI: 31.9019342077004
-Best observed value: -273.0741283476772
+Maximum EI: 19.57504861482233
+Best observed value: -246.51584076716466
 
 Iteration 33
-Maximum EI: 21.770810072176104
-Best observed value: -273.0741283476772
+Maximum EI: 15.522293217020128
+Best observed value: -246.51584076716466
 
 Iteration 34
-Maximum EI: 8.928039071862223
-Best observed value: -273.0741283476772
+Maximum EI: 4.8705594078619106
+Best observed value: -246.51584076716466
 
 Iteration 35
-Maximum EI: 10.703319013611168
-Best observed value: -273.0741283476772
+Maximum EI: 9.83018261576211
+Best observed value: -246.51584076716466
 
 Iteration 36
-Maximum EI: 7.3518164110650925
-Best observed value: -273.0741283476772
+Maximum EI: 63.17707858370992
+Best observed value: -246.51584076716466
 
 Iteration 37
-Maximum EI: 2.2190284303675094
-Best observed value: -273.0741283476772
+Maximum EI: 39.98020048303306
+Best observed value: -246.51584076716466
 
 Iteration 38
-Maximum EI: 2.8116987032304994
-Best observed value: -273.0741283476772
+Maximum EI: 52.10431572854061
+Best observed value: -246.51584076716466
 
 Iteration 39
-Maximum EI: 10.2827841966824
-Best observed value: -273.0741283476772
+Maximum EI: 63.36174135002064
+Best observed value: -246.51584076716466
 
 Iteration 40
-Maximum EI: 15.90557391137917
-Best observed value: -273.0741283476772
+Maximum EI: 45.41651959857999
+Best observed value: -246.51584076716466
 
 Iteration 41
-Maximum EI: 17.883933312855664
-Best observed value: -273.0741283476772
+Maximum EI: 39.475761011104915
+Best observed value: -246.51584076716466
 
 Iteration 42
-Maximum EI: 10.001251027102835
-Best observed value: -273.0741283476772
+Maximum EI: 60.33760711414524
+Best observed value: -246.51584076716466
 
 Iteration 43
-Maximum EI: 45.62668216624328
-Best observed value: -273.0741283476772
+Maximum EI: 41.892691889864466
+Best observed value: -246.51584076716466
 
 Iteration 44
-Maximum EI: 10.4775144112873
-Best observed value: -273.0741283476772
+Maximum EI: 22.63227586917113
+Best observed value: -246.51584076716466
 
 Iteration 45
-Maximum EI: 14.709509697242254
-Best observed value: -273.0741283476772
+Maximum EI: 54.814868525734184
+Best observed value: -246.51584076716466
 
 Best obtained point:
-x*: [ 1.47468873 -1.69573328 -2.56964619 -2.2126637  -2.74469878  2.01031106
-  1.80119628 -2.75458754 -3.27107126  2.00308787]
-f*: -273.0741283476772
+x*: [-0.6369146  -1.26943849 -2.46741629 -0.24927076 -1.99700133  2.6547852
+ -2.79660926 -3.37013218 -3.1591147   3.00245529]
+f*: -246.51584076716466
 </pre></div>
 </div>
 </div>
@@ -1407,7 +1402,7 @@ f*: -273.0741283476772
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c386f842e344eb11e63b37b889b0fb5ff1b6b60ea93b27056b0fb584e42e2142.png" src="../_images/c386f842e344eb11e63b37b889b0fb5ff1b6b60ea93b27056b0fb584e42e2142.png" />
+<img alt="../_images/015be97f964bbb28411307ddecc05b19f004ced8cb96bc958d455f4733d6c0bf.png" src="../_images/015be97f964bbb28411307ddecc05b19f004ced8cb96bc958d455f4733d6c0bf.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1423,9 +1418,10 @@ f*: -273.0741283476772
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/5117a9caf904f34c4cc4322b57ac01672cdaac85db1d0a10049277fe2616e0d7.png" src="../_images/5117a9caf904f34c4cc4322b57ac01672cdaac85db1d0a10049277fe2616e0d7.png" />
+<img alt="../_images/82bd8e1956ac8133947bf0324d0dc320794f1c62a629d91634626ad7a7c9f2e2.png" src="../_images/82bd8e1956ac8133947bf0324d0dc320794f1c62a629d91634626ad7a7c9f2e2.png" />
 </div>
 </div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1467,6 +1463,15 @@ f*: -273.0741283476772
         <p class="prev-next-title">Dimensionality Reduction Methods</p>
       </div>
     </a>
+    <a class="right-next"
+       href="../engineering_design.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Engineering Modeling and Design Optimization</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -1482,12 +1487,10 @@ f*: -273.0741283476772
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Sequential Sampling using Dimensionality Reduction</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sequential-sampling-using-expected-improvement-ei">Sequential Sampling using Expected Improvement (EI)</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sequential-sampling-using-pricinpal-component-analysis-pca-and-ei">Sequential Sampling using Pricinpal Component Analysis (PCA) and EI</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sequential-sampling-using-kernel-pca-and-ei">Sequential Sampling using Kernel PCA and EI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sequential-sampling-using-expected-improvement-ei">Sequential Sampling using Expected Improvement (EI)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sequential-sampling-using-pricinpal-component-analysis-pca-and-ei">Sequential Sampling using Pricinpal Component Analysis (PCA) and EI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sequential-sampling-using-kernel-pca-and-ei">Sequential Sampling using Kernel PCA and EI</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>

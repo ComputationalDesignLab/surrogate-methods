@@ -213,15 +213,10 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Dimensionality Reduction</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Dimensionality Reduction Methods</a></li>
-
-
-
 <li class="toctree-l2"><a class="reference internal" href="seq_sampling.html">Sequential Sampling using Dimensionality Reduction</a></li>
-
-
-
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../engineering_design.html">Engineering Modeling and Design Optimization</a></li>
 </ul>
 
     </div>
@@ -370,12 +365,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Dimensionality Reduction Methods</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#half-moon-shape-dataset">Half Moon Shape Dataset</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#concentric-circles-dataset">Concentric Circles Dataset</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#swiss-roll-dataset">Swiss Roll Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#half-moon-shape-dataset">Half Moon Shape Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#concentric-circles-dataset">Concentric Circles Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#swiss-roll-dataset">Swiss Roll Dataset</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -399,9 +392,8 @@ document.write(`
 </div>
 </div>
 </div>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="half-moon-shape-dataset">
-<h1>Half Moon Shape Dataset<a class="headerlink" href="#half-moon-shape-dataset" title="Permalink to this heading">#</a></h1>
+<section id="half-moon-shape-dataset">
+<h2>Half Moon Shape Dataset<a class="headerlink" href="#half-moon-shape-dataset" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generating half moon shape dataset</span>
@@ -463,8 +455,8 @@ document.write(`
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="concentric-circles-dataset">
-<h1>Concentric Circles Dataset<a class="headerlink" href="#concentric-circles-dataset" title="Permalink to this heading">#</a></h1>
+<section id="concentric-circles-dataset">
+<h2>Concentric Circles Dataset<a class="headerlink" href="#concentric-circles-dataset" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generating concentric circles dataset</span>
@@ -526,8 +518,8 @@ document.write(`
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="swiss-roll-dataset">
-<h1>Swiss Roll Dataset<a class="headerlink" href="#swiss-roll-dataset" title="Permalink to this heading">#</a></h1>
+<section id="swiss-roll-dataset">
+<h2>Swiss Roll Dataset<a class="headerlink" href="#swiss-roll-dataset" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Obtaining Swiss Roll dataset from scikit learn</span>
@@ -539,19 +531,19 @@ document.write(`
 <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">sr_points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">sr_points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">sr_points</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">sr_color</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Swiss Roll Dataset&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">view_init</span><span class="p">(</span><span class="n">azim</span><span class="o">=-</span><span class="mi">66</span><span class="p">,</span> <span class="n">elev</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/80cb89e051cfc05f28bc0c989c3c06d403b52168646453c861398b091b64e9c8.png" src="../_images/80cb89e051cfc05f28bc0c989c3c06d403b52168646453c861398b091b64e9c8.png" />
+<img alt="../_images/0183c237efd8a8a64e7d0b788dd78e5d55503dc2a5056f2381ce8f41a9e55de3.png" src="../_images/0183c237efd8a8a64e7d0b788dd78e5d55503dc2a5056f2381ce8f41a9e55de3.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Applying PCA to the Swiss Roll Dataset</span>
-
-<span class="c1"># Applying PCA to the data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Applying PCA to the data</span>
 <span class="n">transform</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">xprime</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">sr_points</span><span class="p">)</span>
 </pre></div>
@@ -562,8 +554,8 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xprime</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">xprime</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">sr_color</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Coordinate 1&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Coordinate 2&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Principal Component 1&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Principal Component 2&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;PCA Embedding of the Swiss Roll Function&quot;</span><span class="p">)</span>
 </pre></div>
@@ -573,14 +565,12 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;PCA Embedding of the Swiss Roll Function&#39;)
 </pre></div>
 </div>
-<img alt="../_images/78417b92f5ee49fa86770ced319e108e30f91bf67ea35b069ea52f9d3c21fa28.png" src="../_images/78417b92f5ee49fa86770ced319e108e30f91bf67ea35b069ea52f9d3c21fa28.png" />
+<img alt="../_images/bf5e8e7de046e992a673768e0b96ec5e05d142e7e98844d3c7af49c7dbf811e6.png" src="../_images/bf5e8e7de046e992a673768e0b96ec5e05d142e7e98844d3c7af49c7dbf811e6.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Applying Kernel PCA to the Swiss Roll Dataset - no standardization applied for better visualization</span>
-
-<span class="c1"># Applying Kernel PCA to the data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Applying Kernel PCA to the data</span>
 <span class="n">transform</span> <span class="o">=</span> <span class="n">KernelPCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">)</span>
 <span class="n">xprime</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">sr_points</span><span class="p">)</span>
 </pre></div>
@@ -591,8 +581,8 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xprime</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">xprime</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">sr_color</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Coordinate 1&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Coordinate 2&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Principal Component 1&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Principal Component 2&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Kernel PCA Embedding of the Swiss Roll Function&quot;</span><span class="p">)</span>
 </pre></div>
@@ -602,9 +592,10 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Kernel PCA Embedding of the Swiss Roll Function&#39;)
 </pre></div>
 </div>
-<img alt="../_images/67e160c1541651b959700eb230cbf47b80c7dfa65604e00854740e78db0ec279.png" src="../_images/67e160c1541651b959700eb230cbf47b80c7dfa65604e00854740e78db0ec279.png" />
+<img alt="../_images/b8b248f2457da3c20525202e7d241589e404e2b1e9b9d1927afc4a95afe695c7.png" src="../_images/b8b248f2457da3c20525202e7d241589e404e2b1e9b9d1927afc4a95afe695c7.png" />
 </div>
 </div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -670,12 +661,10 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Dimensionality Reduction Methods</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#half-moon-shape-dataset">Half Moon Shape Dataset</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#concentric-circles-dataset">Concentric Circles Dataset</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#swiss-roll-dataset">Swiss Roll Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#half-moon-shape-dataset">Half Moon Shape Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#concentric-circles-dataset">Concentric Circles Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#swiss-roll-dataset">Swiss Roll Dataset</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>
