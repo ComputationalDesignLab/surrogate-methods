@@ -381,6 +381,8 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="dimensionality-reduction-methods">
 <h1>Dimensionality Reduction Methods<a class="headerlink" href="#dimensionality-reduction-methods" title="Permalink to this heading">#</a></h1>
+<p>This section demonstrates the use of dimensionality reduction methods on various datasets to show the workings of each of the methods. The methods used in this section include Principal Component Analysis (PCA) and Kernel PCA. PCA is a linear dimensionality reduction method that is often applicable to very simple datasets and Kernel PCA is a nonlinear dimensionality reduction method that has a wider range of applicability. In the dimensionality reduction problems shown here, the main aim is to discover the intrinsic structure that is present within the data and represent that structure in a lower dimension than the original data.</p>
+<p>To start off, the block of code below will import the required packages for this section.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -394,6 +396,7 @@ document.write(`
 </div>
 <section id="half-moon-shape-dataset">
 <h2>Half Moon Shape Dataset<a class="headerlink" href="#half-moon-shape-dataset" title="Permalink to this heading">#</a></h2>
+<p>The first dataset is the half moon shape dataset that consists of two halves of an elliptical shape in two dimensions. The block of code below will plot this dataset for a hundred samples and set random state. The red and blue coloured points represent the two halves. The aim of dimensionality reduction is the represent the structure of the data within a single dimension. The structure to look for in this data is that there are two separable halves to the data which must be visible in the single dimension.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generating half moon shape dataset</span>
@@ -411,9 +414,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/6783f264a1c74222a0471b19e511ff3f7ba30ecec0fae0ee3cef69009ae6b836.png" src="../_images/6783f264a1c74222a0471b19e511ff3f7ba30ecec0fae0ee3cef69009ae6b836.png" />
+<img alt="../_images/a8c9714047dcdecc97c0c84a0a6c5b449664884c6f8c63fec892665163a97bb8.png" src="../_images/a8c9714047dcdecc97c0c84a0a6c5b449664884c6f8c63fec892665163a97bb8.png" />
 </div>
 </div>
+<p>The block of code below uses PCA to reduce the dimension of the dataset to a single dimension. The plot shows the principal component that is obtained after dimensionality reduction and the y-coordinate of the plot is essentially zero since the data is one dimensional. The red and blue colours are still used to denote the points from each half of the original dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Applying PCA to the dataset</span>
@@ -431,9 +435,11 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ca050d85c843017e856fe20d94af0113ed4a61c08f0d44f37e50d67a29ba986e.png" src="../_images/ca050d85c843017e856fe20d94af0113ed4a61c08f0d44f37e50d67a29ba986e.png" />
+<img alt="../_images/0ba998c21407101995a8d5dcc5643dbcb215e7e825f1e2b24f1260385dbc23df.png" src="../_images/0ba998c21407101995a8d5dcc5643dbcb215e7e825f1e2b24f1260385dbc23df.png" />
 </div>
 </div>
+<p>The plot above shows that in the single principal component chosen there is a high overlap between the points coming from each half of the dataset and PCA is not able to fully separate the two halves of the dataset. This means that PCA is not able to fully represent the underlying structure that is present within the original dataset.</p>
+<p>The next block of code will apply Kernel PCA to the dataset and creates a similar plot as the one created for PCA. This block of code using the radial basis function kernel for Kernel PCA.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Applying Kernel PCA to the dataset</span>
@@ -451,12 +457,14 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/1526405caac2720249c15a8bb84911dcd24dbc7ad7779b32866a35e515c4d6a5.png" src="../_images/1526405caac2720249c15a8bb84911dcd24dbc7ad7779b32866a35e515c4d6a5.png" />
+<img alt="../_images/67c68895e369e02e35416e76dc1e7eebee08267dc688d77f6f1a025b6c2e67e6.png" src="../_images/67c68895e369e02e35416e76dc1e7eebee08267dc688d77f6f1a025b6c2e67e6.png" />
 </div>
 </div>
+<p>The above plot shows that Kernel PCA is able to separate the two halves of the original data set as represented by a clear separation between the red and blue coloured points. This shows that Kernel PCA is able to discover the intrinsic structure of the data set and separate the two halves originally present in the data.</p>
 </section>
 <section id="concentric-circles-dataset">
 <h2>Concentric Circles Dataset<a class="headerlink" href="#concentric-circles-dataset" title="Permalink to this heading">#</a></h2>
+<p>The second data set used in this section is the concentric circles dataset. This is a noisy dataset that represents points within two concentric circles. Similar to the half-moon dataset, the intrinsic structure of the dataset is the two distinct circular regions present within the dataset that must be separated when the data is reduced to a single dimension. The block of code below generates 1000 samples from the noisy dataset and plots the samples in two dimensions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generating concentric circles dataset</span>
@@ -474,9 +482,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/43bba4e38fc9a452469dec91fcca0c1472f6bc7c236af4d8c0090df806fae107.png" src="../_images/43bba4e38fc9a452469dec91fcca0c1472f6bc7c236af4d8c0090df806fae107.png" />
+<img alt="../_images/5e4a23c3b11ead8e32322f298f19212eedb2976e751e9befce10c2ad2c266e5e.png" src="../_images/5e4a23c3b11ead8e32322f298f19212eedb2976e751e9befce10c2ad2c266e5e.png" />
 </div>
 </div>
+<p>The next block of code will reduce the concentric circles dataset to a single dimension using PCA and a plot of the principal component obtained is shown.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Applying PCA to the dataset</span>
@@ -494,9 +503,11 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2eb4cfaced23298329159aec5a3d0a866900f8913469a02f8f171e70e71d8b45.png" src="../_images/2eb4cfaced23298329159aec5a3d0a866900f8913469a02f8f171e70e71d8b45.png" />
+<img alt="../_images/f3b98386e463b060c9f14c0758962a958f3126bb470d7b0ce48dfb898ff24b9f.png" src="../_images/f3b98386e463b060c9f14c0758962a958f3126bb470d7b0ce48dfb898ff24b9f.png" />
 </div>
 </div>
+<p>Similar to the half moon dataset, PCA is unable to separate the points from the two circles and there is a significant overlap between the points in the single principal component that is obtained.</p>
+<p>The block of code below will use Kernel PCA to reduce the dimension of the concentric circles dataset using the radial basis function as the kernel for reducing the dimension.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Applying Kernel PCA to the dataset</span>
@@ -514,12 +525,14 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/bc5dc08721e4a66d2bb759f33ff5fcdfe8116b4e0c9a3b92e7a98028faf58bf7.png" src="../_images/bc5dc08721e4a66d2bb759f33ff5fcdfe8116b4e0c9a3b92e7a98028faf58bf7.png" />
+<img alt="../_images/d07e8030ff5586099376ccd87eede6eee87dd6288f4cb28d2f6d281113af1715.png" src="../_images/d07e8030ff5586099376ccd87eede6eee87dd6288f4cb28d2f6d281113af1715.png" />
 </div>
 </div>
+<p>Kernel PCA is able to separate the points from the two circles in the single principal component and therefore, can represent the intrinsic structure of the dataset within a single dimension. In general, both of these datasets have an intrinsic nonlinear that can be best represented using Kernel PCA rather than PCA. PCA will be more effective in simpler cases where the data has an intrinsic linear structure. It is, therefore, important to analyze the data that is being used to understand if there is an intrinsic structure to the data that is well-suited to a dimensionality reduction method.</p>
 </section>
 <section id="swiss-roll-dataset">
 <h2>Swiss Roll Dataset<a class="headerlink" href="#swiss-roll-dataset" title="Permalink to this heading">#</a></h2>
+<p>The final dataset is the swiss roll dataset that consists of points in three dimensions that form the shape of a swiss roll. The intrinsic structure within the data is that the swiss roll is actually a two dimensional plane that has been rolled into the shape of a swiss roll. A successful dimensionality reduction would be able to represent the two dimensional plane using two principal components. The block of code below generates 1500 samples from the dataset and creates a three dimensional scatter plot of the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Obtaining Swiss Roll dataset from scikit learn</span>
@@ -538,9 +551,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/0183c237efd8a8a64e7d0b788dd78e5d55503dc2a5056f2381ce8f41a9e55de3.png" src="../_images/0183c237efd8a8a64e7d0b788dd78e5d55503dc2a5056f2381ce8f41a9e55de3.png" />
+<img alt="../_images/f8fe980aece38ba36258166e66f4b5fa82e7b8e7478958a1cff54379ce0c23b6.png" src="../_images/f8fe980aece38ba36258166e66f4b5fa82e7b8e7478958a1cff54379ce0c23b6.png" />
 </div>
 </div>
+<p>The next blocks of code apply PCA to reduce the dimension to two principal components and create a two dimensional scatter plot of the principal components.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Applying PCA to the data</span>
@@ -565,9 +579,11 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;PCA Embedding of the Swiss Roll Function&#39;)
 </pre></div>
 </div>
-<img alt="../_images/bf5e8e7de046e992a673768e0b96ec5e05d142e7e98844d3c7af49c7dbf811e6.png" src="../_images/bf5e8e7de046e992a673768e0b96ec5e05d142e7e98844d3c7af49c7dbf811e6.png" />
+<img alt="../_images/5bc5b746710eebc21887fa81beb363b243fc2f033e8e986b4abdb5b1f948ff99.png" src="../_images/5bc5b746710eebc21887fa81beb363b243fc2f033e8e986b4abdb5b1f948ff99.png" />
 </div>
 </div>
+<p>The above scatter plot of the principal componets shows that PCA is not able to discover the two dimensional plane the underlies the swiss roll dataset. In fact, it represents the swiss roll spiral directly in two dimensions which means it is unable to discover the underlying structure of the dataset. This was expected as the swiss roll dataset is a highly nonlinear dimensionality reduction problem and PCA is not well-suited to this dataset.</p>
+<p>The next block of code applies Kernel PCA to the dataset and creates a plot of the principal components. The radial basis function kernel is used in this case as well.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Applying Kernel PCA to the data</span>
@@ -592,9 +608,10 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Kernel PCA Embedding of the Swiss Roll Function&#39;)
 </pre></div>
 </div>
-<img alt="../_images/b8b248f2457da3c20525202e7d241589e404e2b1e9b9d1927afc4a95afe695c7.png" src="../_images/b8b248f2457da3c20525202e7d241589e404e2b1e9b9d1927afc4a95afe695c7.png" />
+<img alt="../_images/c5a7a05c829c9c1a193b7d24c6f526e1eaf857d8be1ec194f9c9f27bdabf28f2.png" src="../_images/c5a7a05c829c9c1a193b7d24c6f526e1eaf857d8be1ec194f9c9f27bdabf28f2.png" />
 </div>
 </div>
+<p>The above plot of the principal components shows that Kernel PCA could partially unravel the roll in the dataset and represent it in two dimensions. A full unraveling into a two dimensional plane would be taking the edges with the yellow coloured and purple coloured points and pulling them apart to create a two dimensional plane. However, Kernel PCA can only unravel it to the point that it appears similar to a circle in two dimensions. This shows that while Kernel PCA is a nonlinear method, it may not be well-suited for all nonlinear problems and in this case, a different dimensionality reduction method is required to fully represent the intrinsic structure of the swiss roll dataset. Examples of dimensionality reduction methods that could prove more effective in this case are isometric mapping (IsoMap) and locally linear embedding (LLE).</p>
 </section>
 </section>
 
