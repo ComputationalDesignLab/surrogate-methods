@@ -62,6 +62,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'dim_reduction/dim_red_methods';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -368,6 +370,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-clusters-dataset">Gaussian Clusters Dataset</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#concentric-circles-dataset">Concentric Circles Dataset</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#swiss-roll-dataset">Swiss Roll Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-the-number-of-principal-components-for-pca">Choosing the number of principal components for PCA</a></li>
 </ul>
             </nav>
         </div>
@@ -390,6 +393,8 @@ document.write(`
 <span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_circles</span><span class="p">,</span> <span class="n">make_swiss_roll</span><span class="p">,</span> <span class="n">make_blobs</span>
 <span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span><span class="p">,</span> <span class="n">KernelPCA</span>
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">smt.sampling_methods</span> <span class="kn">import</span> <span class="n">LHS</span>
+<span class="kn">from</span> <span class="nn">smt.problems</span> <span class="kn">import</span> <span class="n">CantileverBeam</span>
 </pre></div>
 </div>
 </div>
@@ -617,6 +622,57 @@ document.write(`
 </div>
 <p>The above plot of the principal components shows that Kernel PCA could partially unravel the roll in the dataset and represent it in two dimensions. A full unraveling into a two dimensional plane would be taking the edges with the yellow coloured and purple coloured points and pulling them apart to create a two dimensional plane. However, Kernel PCA can only unravel it to the point that it appears similar to a circle in two dimensions. This shows that while Kernel PCA is a nonlinear method, it may not be well-suited for all nonlinear problems and in this case, a different dimensionality reduction method is required to fully represent the intrinsic structure of the swiss roll dataset. Examples of dimensionality reduction methods that could prove more effective in this case are isometric mapping (IsoMap) and locally linear embedding (LLE).</p>
 </section>
+<section id="choosing-the-number-of-principal-components-for-pca">
+<h2>Choosing the number of principal components for PCA<a class="headerlink" href="#choosing-the-number-of-principal-components-for-pca" title="Permalink to this heading">#</a></h2>
+<p>In the datasets shown above, the choice of principal components can seem trivial since the datasets are two or three-dimensional and there are few possibilities for the number of principal components. However, choosing the exact number of principal components can be a challenge in datasets with much higher dimensionality. To correctly choose the principal components, it is necessary to calculate the cumulative ratio of the total variance that is explained by each of the principal components. This cumulative explained variance ratio can be calculated as</p>
+<div class="math notranslate nohighlight">
+\[\frac{\sum_{i=1}^d \lambda_i}{\sum_{j=1}^n \lambda_j},\]</div>
+<p>where <span class="math notranslate nohighlight">\(\lambda_{i,j}\)</span> are the eigenvalues of the covariance matrix used in PCA, <span class="math notranslate nohighlight">\(d\)</span> is the number of principal components and <span class="math notranslate nohighlight">\(n\)</span> is the total dimensionality of the original dataset. The cumulative explained variance ratio allows the different principal components to be ranked and the most important components can be identified. To determine the correct number of principal components, a threshold value is set for the cumulative explained variance ratio. A good choice for the threshold value can be between 90% to 95%. The minimum number of principal components that can satisfy this threshold value are used to perform dimensionality reduction.</p>
+<p>This procedure of determining the correct number of principal components for a given dataset is demonstrated on the 30-dimensional <a class="reference external" href="https://smt.readthedocs.io/en/latest/_src_docs/problems/cantileverbeam.html">Cantilever Beam</a> dataset that is provided in <code class="docutils literal notranslate"><span class="pre">smt</span></code>. The block code below defines the dataset using <code class="docutils literal notranslate"><span class="pre">smt</span></code>, generates a sampling plan using Latin Hypercube Sampling (LHS) and applies PCA to the dataset for many different number of principal components. At each number of principal components, the cumulative explained variance ratio is calculated. A plot is created that shows the variation of the cumulative explained variance ratio against the number of principal components. A threshold value of 95% is chosen to select the correct number of principal components.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining Cantilever Beam problem</span>
+<span class="n">ndim</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">problem</span> <span class="o">=</span> <span class="n">CantileverBeam</span><span class="p">(</span><span class="n">ndim</span><span class="o">=</span><span class="n">ndim</span><span class="p">)</span>
+
+<span class="c1"># Generating data</span>
+<span class="n">sampler</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">problem</span><span class="o">.</span><span class="n">xlimits</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;ese&#39;</span><span class="p">)</span>
+<span class="n">num_train</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">xtrain</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="n">num_train</span><span class="p">)</span>
+<span class="n">ytrain</span> <span class="o">=</span> <span class="n">problem</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
+
+<span class="c1"># Pre-processing data before applying PCA</span>
+<span class="n">center</span> <span class="o">=</span> <span class="n">xtrain</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">xtrain_center</span> <span class="o">=</span> <span class="n">xtrain</span> <span class="o">-</span> <span class="n">center</span>
+
+<span class="c1"># Calculating cumulative explained variance ratios</span>
+<span class="n">sum_explained_variance_ratio_</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">n_components</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">ndim</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">n_components</span><span class="p">:</span>
+    <span class="c1"># Applying PCA to the data</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">component</span><span class="p">)</span>
+    <span class="n">xprime</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">xtrain_center</span><span class="p">)</span>
+    <span class="n">sum_explained_variance_ratio_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">transform</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">))</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n_components</span><span class="p">,</span> <span class="n">sum_explained_variance_ratio_</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of Principal Components&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Cumulative Explained Variance Ratio&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">xmin</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="n">ndim</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x13d7ba100&gt;
+</pre></div>
+</div>
+<img alt="../_images/4e9877db5d25b583fe131c83724e1002ad868629d5ef0f31339bcb71ec01c321.png" src="../_images/4e9877db5d25b583fe131c83724e1002ad868629d5ef0f31339bcb71ec01c321.png" />
+</div>
+</div>
+<p>From the above plot, it can be seen that using 18 principal components approximately reaches the threshold of 95% that was set for this problem. This indicates that using 18 principal components is the right choice to reduce the dimensionality of the 30-dimensional Cantilever Beam problem. It is important to look for the minimum integer value of the number of principal components that can be used to meet the threshold of the cumulative explained variance ratio.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -685,6 +741,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-clusters-dataset">Gaussian Clusters Dataset</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#concentric-circles-dataset">Concentric Circles Dataset</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#swiss-roll-dataset">Swiss Roll Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-the-number-of-principal-components-for-pca">Choosing the number of principal components for PCA</a></li>
 </ul>
   </nav></div>
 

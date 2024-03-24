@@ -395,10 +395,8 @@ document.write(`
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span><span class="p">,</span> <span class="n">KernelPCA</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
 <span class="kn">from</span> <span class="nn">smt.surrogate_models</span> <span class="kn">import</span> <span class="n">KRG</span>
 <span class="kn">from</span> <span class="nn">smt.sampling_methods</span> <span class="kn">import</span> <span class="n">LHS</span>
-<span class="kn">from</span> <span class="nn">smt.problems</span> <span class="kn">import</span> <span class="n">TorsionVibration</span><span class="p">,</span> <span class="n">CantileverBeam</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">pymoo.core.problem</span> <span class="kn">import</span> <span class="n">Problem</span>
 <span class="kn">from</span> <span class="nn">pymoo.algorithms.soo.nonconvex.de</span> <span class="kn">import</span> <span class="n">DE</span>
@@ -782,7 +780,49 @@ f*: -253.5774800946036
 <div class="math notranslate nohighlight">
 \[ \min(\xi_i) \leq \xi_i \leq \max(\xi_i), \quad i = 1,...,5 \]</div>
 <p>where <span class="math notranslate nohighlight">\(\xi\)</span> represents the principal components found using PCA and <span class="math notranslate nohighlight">\(\text{PEI}(\xi)\)</span> represents the penalized version of EI. The bounds for the maximization are the maximum and minimum values of <span class="math notranslate nohighlight">\(\xi\)</span> that are found using the sampling plan at a given iteration of the sequential sampling algorithm. Even though bounds are placed on the low-dimensional representation of the problem using the minimum and maximum values of the principal components, the usage of penalized expected improvement is required since it is not known that the point evaluated by differential evolution while maximizing the penalized EI actually lies within the bounds of the original problem. It is, therefore, necessary to penalize the points that are outside of the original bounds of the problem. At each evaluation of the objective in differential evolution, the principal components are transformed back to the original high-dimensional space and a check is performed to determine if the point being evaluated is within the bounds of the original problem or not. If it is within the original bounds, then the objective returns the standard EI otherwise it will return a large value as a penalty. In this case, the penalty, P, is a fixed value of 1000, however, more intricate implementations could vary the penalty based on the point in the design space being evaluated.</p>
-<p>The block of code below defines the Problem class and differential evolution algorithm for the penalized EI that is to be used for sequential sampling using dimensionality reduction.</p>
+<p>Additionally, an important parameter for PCA is the number of principal components to use, which must be selected by the user. To determine the correct number of principal components, the cumulative explained variance ratio plot described in the previous section can be used. The block of code below plots the cumulative explained variance ratio plot for the 10-dimensional Styblinksi-Tang function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generating data</span>
+<span class="n">xlimits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">lb</span><span class="p">,</span><span class="n">ub</span><span class="p">))</span>
+<span class="n">random_state</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">sampler</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">xlimits</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;ese&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+
+<span class="n">num_train</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">xtrain</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="n">num_train</span><span class="p">)</span>
+<span class="n">ytrain</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
+
+<span class="c1"># Pre-processing data before applying PCA</span>
+<span class="n">center</span> <span class="o">=</span> <span class="n">xtrain</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">xtrain_center</span> <span class="o">=</span> <span class="n">xtrain</span> <span class="o">-</span> <span class="n">center</span>
+
+<span class="c1"># Calculating sum of explained variance ratios</span>
+<span class="n">sum_explained_variance_ratio_</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">n_components</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">ndim</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">n_components</span><span class="p">:</span>
+    <span class="c1"># Applying PCA to the data</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">component</span><span class="p">)</span>
+    <span class="n">xprime</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">xtrain_center</span><span class="p">)</span>
+    <span class="n">sum_explained_variance_ratio_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">transform</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">))</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n_components</span><span class="p">,</span> <span class="n">sum_explained_variance_ratio_</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of Principal Components&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Cumulative Explained Variance Ratio&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Cumulative Explained Variance Ratio&#39;)
+</pre></div>
+</div>
+<img alt="../_images/35e1332d5b294a62ea01e640de9d8d40ea21aa74e2f5474324fe0855281bb749.png" src="../_images/35e1332d5b294a62ea01e640de9d8d40ea21aa74e2f5474324fe0855281bb749.png" />
+</div>
+</div>
+<p>The above plot of the cumulative explained variance ratio shows that the cumulative explained variance ratio increases linearly with the number of principal components. This suggests that each of the design variables explains an equal ratio of the variance of the objective function and to satisfy a threshold of 95% cumulative explained variance ratio it will be necessary to select all of the principal components. However, in order to demonstrate the use of dimensionality reduction, five principal components are chosen to represent the objective function. This allows the representation of at least 50% of the variance in the objective which is enough to aid in optimizing the objective function of interest for this section. This will be made clear in the results of the sequential sampling that follow.</p>
+<p>To begin the implementation of sequential sampling using PCA and EI, the block of code below defines the Problem class and differential evolution algorithm for the penalized EI that is to be used for sequential sampling using dimensionality reduction.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Problem class</span>
