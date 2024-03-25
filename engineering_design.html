@@ -365,7 +365,13 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modeling-noisy-data-using-regression-kriging">Modeling Noisy Data using Regression Kriging</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-scaling-for-engineering-modeling">Feature scaling for engineering modeling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-scaling-for-engineering-modeling">Feature Scaling for engineering modeling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modeling-the-torsion-vibration-problem-from-smt-using-rbf">Modeling the Torsion Vibration problem from SMT using RBF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploitation-of-unconstrained-modified-branin-function-using-rbf-model">Exploitation of unconstrained modified Branin function using RBF model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-unscaled-version-of-the-data">Using unscaled version of the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-scaled-version-of-the-data">Using scaled version of the data</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -381,11 +387,12 @@ document.write(`
 <h1>Engineering Modeling and Design Optimization<a class="headerlink" href="#engineering-modeling-and-design-optimization" title="Permalink to this heading">#</a></h1>
 <section id="modeling-noisy-data-using-regression-kriging">
 <h2>Modeling Noisy Data using Regression Kriging<a class="headerlink" href="#modeling-noisy-data-using-regression-kriging" title="Permalink to this heading">#</a></h2>
+<p>Adding simulated gaussian noise to the xsinx function and modelling using regression kriging</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">smt.surrogate_models</span> <span class="kn">import</span> <span class="n">KRG</span>
-<span class="kn">from</span> <span class="nn">smt.problems</span> <span class="kn">import</span> <span class="n">TorsionVibration</span>
+<span class="kn">from</span> <span class="nn">smt.surrogate_models</span> <span class="kn">import</span> <span class="n">KRG</span><span class="p">,</span> <span class="n">RBF</span>
+<span class="kn">from</span> <span class="nn">smt.problems</span> <span class="kn">import</span> <span class="n">TorsionVibration</span><span class="p">,</span> <span class="n">CantileverBeam</span><span class="p">,</span> <span class="n">WingWeight</span>
 <span class="kn">from</span> <span class="nn">smt.sampling_methods</span> <span class="kn">import</span> <span class="n">LHS</span><span class="p">,</span> <span class="n">FullFactorial</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
@@ -398,8 +405,8 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the noisy forrester function</span>
-<span class="n">forrester</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">12</span><span class="o">*</span><span class="n">x</span><span class="o">-</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the noisy xsinx function</span>
+<span class="n">forrester</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -407,11 +414,11 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting data</span>
-<span class="n">xplot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">yplot</span> <span class="o">=</span> <span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">xplot</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">12</span><span class="o">*</span><span class="n">xplot</span><span class="o">-</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">xplot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">yplot</span> <span class="o">=</span> <span class="n">xplot</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">xplot</span><span class="p">)</span>
 
 <span class="c1"># Creating array of training sample sizes</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">15</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">35</span><span class="p">,</span><span class="mi">40</span><span class="p">])</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">25</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">35</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">50</span><span class="p">])</span>
 
 <span class="c1"># Initializing nrmse list</span>
 <span class="n">nrmse</span> <span class="o">=</span> <span class="p">[]</span>
@@ -419,7 +426,7 @@ document.write(`
 <span class="c1"># Fitting with different sample size</span>
 <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
     
-    <span class="n">xtrain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+    <span class="n">xtrain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
     <span class="n">ytrain</span> <span class="o">=</span> <span class="n">forrester</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
     
     <span class="c1"># Fitting the kriging</span>
@@ -441,7 +448,6 @@ document.write(`
     <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span> <span class="n">yplot</span><span class="p">,</span> <span class="s1">&#39;b--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True function&#39;</span><span class="p">)</span>
     <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span> <span class="n">yplot_pred</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Prediction&#39;</span><span class="p">)</span>
     <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span> <span class="n">yplot_pred</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">yplot_var</span><span class="p">),</span> <span class="n">yplot_pred</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">yplot_var</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightblue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;95% CI&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
     <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
     <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
     <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
@@ -457,69 +463,141 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/675ce133c59074a7104be5f47a867be1c6cdbfb0ac987213fe0abdab8170ece3.png" src="_images/675ce133c59074a7104be5f47a867be1c6cdbfb0ac987213fe0abdab8170ece3.png" />
-<img alt="_images/2af14440a2704746310530c24da606b17cd29723b6bca4e7b33f600a62c6c8c3.png" src="_images/2af14440a2704746310530c24da606b17cd29723b6bca4e7b33f600a62c6c8c3.png" />
-<img alt="_images/4ab64f9151203f149cc70990e52eb161bfd092c0b8394046bdf5b26d45b407df.png" src="_images/4ab64f9151203f149cc70990e52eb161bfd092c0b8394046bdf5b26d45b407df.png" />
-<img alt="_images/05f50d533f37656f6581348cc3839dbaa7fa444e57f8ae6b7c489b5949190846.png" src="_images/05f50d533f37656f6581348cc3839dbaa7fa444e57f8ae6b7c489b5949190846.png" />
-<img alt="_images/537be124bad95caed4ffb358b96cb6be90f457418134481408f76298a8eaf56b.png" src="_images/537be124bad95caed4ffb358b96cb6be90f457418134481408f76298a8eaf56b.png" />
-<img alt="_images/f8002bb36e349d4147c0d56b84727b6ce386e2c5c4941cc8cd13661755eec0f9.png" src="_images/f8002bb36e349d4147c0d56b84727b6ce386e2c5c4941cc8cd13661755eec0f9.png" />
+<img alt="_images/c264110b9e98446ff20c2dabef9b2803d9c4d6b2aea4f0f6011179eb5b21a62f.png" src="_images/c264110b9e98446ff20c2dabef9b2803d9c4d6b2aea4f0f6011179eb5b21a62f.png" />
+<img alt="_images/5474915741bdf06efe2258e3e2921b6effabe203286d7c85b6121aca32bc05c8.png" src="_images/5474915741bdf06efe2258e3e2921b6effabe203286d7c85b6121aca32bc05c8.png" />
+<img alt="_images/42748dc26b9120009a080a804447306f9d95133feefb5f17ebd8b64593b85d6b.png" src="_images/42748dc26b9120009a080a804447306f9d95133feefb5f17ebd8b64593b85d6b.png" />
+<img alt="_images/acac834fcc1cd7c4eaad49ad0e6058b576d3e748bd9c425bd6bc39e03343567b.png" src="_images/acac834fcc1cd7c4eaad49ad0e6058b576d3e748bd9c425bd6bc39e03343567b.png" />
+<img alt="_images/c77b181132225217cf59a3899aeca4dab0688b9e7ba9e5a3a22ac1f871b3a775.png" src="_images/c77b181132225217cf59a3899aeca4dab0688b9e7ba9e5a3a22ac1f871b3a775.png" />
+<img alt="_images/c2418d6ff08b38b30aca0991ac71b095628542efad55eb9d6d188a04bc4e8336.png" src="_images/c2418d6ff08b38b30aca0991ac71b095628542efad55eb9d6d188a04bc4e8336.png" />
 </div>
 </div>
+</section>
+<section id="feature-scaling-for-engineering-modeling">
+<h2>Feature Scaling for engineering modeling<a class="headerlink" href="#feature-scaling-for-engineering-modeling" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="modeling-the-torsion-vibration-problem-from-smt-using-rbf">
+<h2>Modeling the Torsion Vibration problem from SMT using RBF<a class="headerlink" href="#modeling-the-torsion-vibration-problem-from-smt-using-rbf" title="Permalink to this heading">#</a></h2>
+<p>Scale of design variables vary from 1e+07 to 1e-02</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the torsion vibration problem</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the Torsion Vibration problem</span>
 <span class="n">ndim</span> <span class="o">=</span> <span class="mi">15</span>
 <span class="n">problem</span> <span class="o">=</span> <span class="n">TorsionVibration</span><span class="p">(</span><span class="n">ndim</span><span class="o">=</span><span class="n">ndim</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Setting up the training and testing data along with the standard scaler</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_sigma</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">,</span> <span class="n">xstd_scaler</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ystd_scaler</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function finds the best sigma for a RBF model by fitting the model to the training data and</span>
+<span class="sd">    evaluating it on testing data. The best sigma is the one that achieves minimum normalized RMSE.</span>
 
-<span class="c1"># Defining noisy version of the problem </span>
-<span class="n">noisy_problem</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">problem</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x_train : numpy array</span>
+<span class="sd">        Training data x values</span>
+<span class="sd">    y_train : numpy array</span>
+<span class="sd">        Training data y values</span>
+<span class="sd">    x_test : numpy array</span>
+<span class="sd">        Testing data x values</span>
+<span class="sd">    y_test : numpy array</span>
+<span class="sd">        Testing data y values</span>
+<span class="sd">    sigmas : numpy array</span>
+<span class="sd">        Sigmas to be tested</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    best_sigma : float</span>
+<span class="sd">        Best sigma value</span>
+<span class="sd">    metric : list</span>
+<span class="sd">        List of NRMSE values for each sigma</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Initializing normalized RMSE list</span>
+    <span class="n">metric</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Fitting various polynomials</span>
+    <span class="k">for</span> <span class="n">sigma</span> <span class="ow">in</span> <span class="n">sigmas</span><span class="p">:</span>
+
+        <span class="c1"># Fit the RBF to current fold</span>
+        <span class="n">sm</span> <span class="o">=</span> <span class="n">RBF</span><span class="p">(</span><span class="n">d0</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">poly_degree</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">sm</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+        <span class="n">sm</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+        <span class="c1"># Predict at test values</span>
+        <span class="k">if</span> <span class="n">xstd_scaler</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ystd_scaler</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">y_pred</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">xstd_scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">x_test</span><span class="p">))</span>
+            <span class="n">y_pred</span> <span class="o">=</span> <span class="n">ystd_scaler</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">y_pred</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+
+        <span class="c1"># Adding all the rmse to calculate average later</span>
+        <span class="n">nrmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">ptp</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
+            
+        <span class="c1"># Calculating average nrmse</span>
+        <span class="n">metric</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nrmse</span><span class="p">)</span>
+
+    <span class="n">best_sigma</span> <span class="o">=</span> <span class="n">sigmas</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">metric</span><span class="p">)]</span>
+
+    <span class="k">return</span> <span class="n">best_sigma</span><span class="p">,</span> <span class="n">metric</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculating NRMSE with and without noisy training data</span>
-
-<span class="c1"># Creating array of training sample sizes</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">70</span><span class="p">,</span><span class="mi">80</span><span class="p">])</span>
-
-<span class="c1"># Initializing nrmse list</span>
-<span class="n">nrmse</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">nrmse_noisy</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="c1"># Creating testing data for the problem</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating testing data for the problem</span>
 <span class="n">test_sampler</span> <span class="o">=</span> <span class="n">FullFactorial</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">problem</span><span class="o">.</span><span class="n">xlimits</span><span class="p">)</span>
-<span class="n">num_test</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">num_test</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">xtest</span> <span class="o">=</span> <span class="n">test_sampler</span><span class="p">(</span><span class="n">num_test</span><span class="p">)</span>
 <span class="n">ytest</span> <span class="o">=</span> <span class="n">problem</span><span class="p">(</span><span class="n">xtest</span><span class="p">)</span>
 
+<span class="c1"># Standard scaling</span>
+<span class="n">xstd_scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">ystd_scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+
 <span class="c1"># Fitting with different sample size</span>
 <span class="n">train_sampler</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">problem</span><span class="o">.</span><span class="n">xlimits</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s2">&quot;ese&quot;</span><span class="p">)</span>
+
+<span class="c1"># Defining the number of samples</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">35</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">50</span><span class="p">]</span>
+
+<span class="n">scaled_nrmse</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">nrmse</span> <span class="o">=</span> <span class="p">[]</span>
+
 <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
-    
-    <span class="n">num_train</span> <span class="o">=</span> <span class="n">sample</span>
-    <span class="n">xtrain</span> <span class="o">=</span> <span class="n">train_sampler</span><span class="p">(</span><span class="n">num_train</span><span class="p">)</span>
+    <span class="c1"># Creating a model with and without scaling</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="n">sample</span>
+    <span class="n">xtrain</span> <span class="o">=</span> <span class="n">train_sampler</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
     <span class="n">ytrain</span> <span class="o">=</span> <span class="n">problem</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
-    <span class="n">noisy_ytrain</span> <span class="o">=</span> <span class="n">noisy_problem</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
     
-    <span class="c1"># Fitting the kriging</span>
-    <span class="n">sm</span> <span class="o">=</span> <span class="n">KRG</span><span class="p">(</span><span class="n">theta0</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-2</span><span class="p">],</span> <span class="n">corr</span><span class="o">=</span><span class="s1">&#39;squar_exp&#39;</span><span class="p">,</span> <span class="n">theta_bounds</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e2</span><span class="p">],</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">xtrain_scaled</span> <span class="o">=</span> <span class="n">xstd_scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
+    <span class="n">ytrain_scaled</span> <span class="o">=</span> <span class="n">ystd_scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">ytrain</span><span class="p">)</span>
+    
+    <span class="n">sigmas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="n">best_sigma</span><span class="p">,</span> <span class="n">test_metric</span> <span class="o">=</span> <span class="n">find_sigma</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">,</span> <span class="n">xtest</span><span class="p">,</span> <span class="n">ytest</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">,</span> <span class="n">xstd_scaler</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ystd_scaler</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">best_sigma_scaled</span><span class="p">,</span> <span class="n">test_metric_scaled</span> <span class="o">=</span> <span class="n">find_sigma</span><span class="p">(</span><span class="n">xtrain_scaled</span><span class="p">,</span> <span class="n">ytrain_scaled</span><span class="p">,</span> <span class="n">xtest</span><span class="p">,</span> <span class="n">ytest</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">,</span> <span class="n">xstd_scaler</span><span class="p">,</span> <span class="n">ystd_scaler</span><span class="p">)</span>
+    
+    <span class="c1"># Fitting RBF using scaled data</span>
+    <span class="n">sm_scaled</span> <span class="o">=</span> <span class="n">RBF</span><span class="p">(</span><span class="n">d0</span><span class="o">=</span><span class="n">best_sigma_scaled</span><span class="p">,</span> <span class="n">print_global</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">sm_scaled</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">xtrain_scaled</span><span class="p">,</span> <span class="n">ytrain_scaled</span><span class="p">)</span>
+    <span class="n">sm_scaled</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+    
+    <span class="c1"># Fitting RBF using unscaled data</span>
+    <span class="n">sm</span> <span class="o">=</span> <span class="n">RBF</span><span class="p">(</span><span class="n">d0</span><span class="o">=</span><span class="n">best_sigma</span><span class="p">,</span> <span class="n">print_global</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
     <span class="n">sm</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">)</span>
     <span class="n">sm</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
     
-    <span class="c1"># Fitting the kriging to noisy data</span>
-    <span class="n">sm_noisy</span> <span class="o">=</span> <span class="n">KRG</span><span class="p">(</span><span class="n">theta0</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-2</span><span class="p">],</span> <span class="n">corr</span><span class="o">=</span><span class="s1">&#39;squar_exp&#39;</span><span class="p">,</span> <span class="n">theta_bounds</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e2</span><span class="p">],</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">eval_noise</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-    <span class="n">sm_noisy</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">noisy_ytrain</span><span class="p">)</span>
-    <span class="n">sm_noisy</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
-    
-    <span class="c1"># Predict at test values</span>
+    <span class="c1"># Predicting on test data</span>
+    <span class="n">ypred_scaled</span> <span class="o">=</span> <span class="n">sm_scaled</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">xstd_scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">xtest</span><span class="p">))</span>
+    <span class="n">ypred_scaled</span> <span class="o">=</span> <span class="n">ystd_scaler</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">ypred_scaled</span><span class="p">)</span>
     <span class="n">ypred</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">xtest</span><span class="p">)</span>
-    <span class="n">noisy_ypred</span> <span class="o">=</span> <span class="n">sm_noisy</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">xtest</span><span class="p">)</span>
 
-    <span class="c1"># Calculating average nrmse</span>
+    <span class="n">scaled_nrmse</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">ytest</span><span class="p">,</span> <span class="n">ypred_scaled</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">ptp</span><span class="p">(</span><span class="n">ytest</span><span class="p">))</span>
     <span class="n">nrmse</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">ytest</span><span class="p">,</span> <span class="n">ypred</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">ptp</span><span class="p">(</span><span class="n">ytest</span><span class="p">))</span>
-    <span class="n">nrmse_noisy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">ytest</span><span class="p">,</span> <span class="n">noisy_ypred</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">ptp</span><span class="p">(</span><span class="n">ytest</span><span class="p">)</span> <span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -528,10 +606,11 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting NMRSE</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nrmse</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Deterministic Data&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nrmse_noisy</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Noisy Data&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nrmse</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Unscaled Data&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">scaled_nrmse</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Scaled Data&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">((</span><span class="n">samples</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">samples</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Number of samples&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Normalized RMSE&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 </pre></div>
@@ -541,63 +620,434 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Normalized RMSE&#39;)
 </pre></div>
 </div>
-<img alt="_images/0c9391bd59c61fe0c3299569e162fbd132ea7793d78a347dd9cc772f9d7bede8.png" src="_images/0c9391bd59c61fe0c3299569e162fbd132ea7793d78a347dd9cc772f9d7bede8.png" />
+<img alt="_images/083e8b5ba0cd0b524902f8d391d1ad15aba1493ec8c600c9c06b557082cab4ae.png" src="_images/083e8b5ba0cd0b524902f8d391d1ad15aba1493ec8c600c9c06b557082cab4ae.png" />
 </div>
 </div>
 </section>
-<section id="feature-scaling-for-engineering-modeling">
-<h2>Feature scaling for engineering modeling<a class="headerlink" href="#feature-scaling-for-engineering-modeling" title="Permalink to this heading">#</a></h2>
+<section id="exploitation-of-unconstrained-modified-branin-function-using-rbf-model">
+<h2>Exploitation of unconstrained modified Branin function using RBF model<a class="headerlink" href="#exploitation-of-unconstrained-modified-branin-function-using-rbf-model" title="Permalink to this heading">#</a></h2>
+<p>Using scaled and unscaled data</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Minmax scaling</span>
-<span class="n">minmax_scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">modified_branin</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
 
-<span class="c1"># Standard scaling</span>
-<span class="n">std_scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+    <span class="n">dim</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span>
+
+    <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">a</span> <span class="o">=</span> <span class="mf">1.</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="mf">5.1</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="mf">5.</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="mf">6.</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mf">10.</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="mf">8.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="n">b</span><span class="o">*</span><span class="n">x1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">c</span><span class="o">*</span><span class="n">x1</span> <span class="o">-</span> <span class="n">r</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">s</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span> <span class="o">+</span> <span class="n">s</span> <span class="o">+</span> <span class="mi">5</span><span class="o">*</span><span class="n">x1</span>
+
+    <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">y</span>
+
+<span class="c1"># Bounds</span>
+<span class="n">lb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">ub</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">])</span>
+
+<span class="c1"># Plotting data</span>
+<span class="n">sampler</span> <span class="o">=</span> <span class="n">FullFactorial</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[[</span><span class="n">lb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ub</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">lb</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ub</span><span class="p">[</span><span class="mi">1</span><span class="p">]]]</span> <span class="p">))</span>
+<span class="n">num_test</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">xtest</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="n">num_test</span><span class="p">)</span>
+<span class="n">ytest</span> <span class="o">=</span> <span class="n">modified_branin</span><span class="p">(</span><span class="n">xtest</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="using-unscaled-version-of-the-data">
+<h3>Using unscaled version of the data<a class="headerlink" href="#using-unscaled-version-of-the-data" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pymoo.core.problem</span> <span class="kn">import</span> <span class="n">Problem</span>
+<span class="kn">from</span> <span class="nn">pymoo.algorithms.soo.nonconvex.de</span> <span class="kn">import</span> <span class="n">DE</span>
+<span class="kn">from</span> <span class="nn">pymoo.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+<span class="kn">from</span> <span class="nn">pymoo.config</span> <span class="kn">import</span> <span class="n">Config</span>
+<span class="n">Config</span><span class="o">.</span><span class="n">warnings</span><span class="p">[</span><span class="s1">&#39;not_compiled&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="c1"># Problem class</span>
+<span class="k">class</span> <span class="nc">Exploitation</span><span class="p">(</span><span class="n">Problem</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sm</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_var</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_obj</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_constr</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">xl</span><span class="o">=</span><span class="n">lb</span><span class="p">,</span> <span class="n">xu</span><span class="o">=</span><span class="n">ub</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sm</span> <span class="o">=</span> <span class="n">sm</span> <span class="c1"># store the surrogate model</span>
+
+    <span class="k">def</span> <span class="nf">_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># Optimization algorithm</span>
+<span class="n">algorithm</span> <span class="o">=</span> <span class="n">DE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">dither</span><span class="o">=</span><span class="s2">&quot;vector&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating a model with and without scaling</span>
-<span class="n">num</span> <span class="o">=</span> <span class="mi">40</span>
-<span class="n">xtrain</span> <span class="o">=</span> <span class="n">train_sampler</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
-<span class="n">ytrain</span> <span class="o">=</span> <span class="n">problem</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[[</span><span class="n">lb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ub</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">lb</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ub</span><span class="p">[</span><span class="mi">1</span><span class="p">]]]</span> <span class="p">),</span> <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;ese&#39;</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">45</span><span class="p">)</span>
 
-<span class="n">xtrain_scaled</span> <span class="o">=</span> <span class="n">minmax_scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fitting the kriging using scaled data</span>
-<span class="n">sm_scaled</span> <span class="o">=</span> <span class="n">KRG</span><span class="p">(</span><span class="n">theta0</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-2</span><span class="p">],</span> <span class="n">corr</span><span class="o">=</span><span class="s1">&#39;squar_exp&#39;</span><span class="p">,</span> <span class="n">theta_bounds</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e2</span><span class="p">],</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">sm_scaled</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">xtrain_scaled</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">)</span>
-<span class="n">sm_scaled</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<span class="c1"># Training data</span>
+<span class="n">num_train</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">xtrain</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="n">num_train</span><span class="p">)</span>
+<span class="n">ytrain</span> <span class="o">=</span> <span class="n">modified_branin</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
 
-<span class="c1"># Fitting the kriging using unscaled data</span>
-<span class="n">sm</span> <span class="o">=</span> <span class="n">KRG</span><span class="p">(</span><span class="n">theta0</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-2</span><span class="p">],</span> <span class="n">corr</span><span class="o">=</span><span class="s1">&#39;squar_exp&#39;</span><span class="p">,</span> <span class="n">theta_bounds</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e2</span><span class="p">],</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">sm</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">)</span>
-<span class="n">sm</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<span class="c1"># Variables</span>
+<span class="n">itr</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">max_itr</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">tol</span> <span class="o">=</span> <span class="mf">5e-3</span>
+<span class="n">delta_f</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">bounds</span> <span class="o">=</span> <span class="p">[(</span><span class="n">lb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ub</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="n">lb</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ub</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+<span class="n">corr</span> <span class="o">=</span> <span class="s1">&#39;squar_exp&#39;</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="mi">12</span>
 
-<span class="c1"># Predicting on test data</span>
-<span class="n">ypred_scaled</span> <span class="o">=</span> <span class="n">sm_scaled</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">minmax_scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">xtest</span><span class="p">))</span>
-<span class="n">ypred</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">xtest</span><span class="p">)</span>
+<span class="c1"># Sequential sampling Loop</span>
+<span class="k">while</span> <span class="n">itr</span> <span class="o">&lt;</span> <span class="n">max_itr</span> <span class="ow">and</span> <span class="n">tol</span> <span class="o">&lt;</span> <span class="n">delta_f</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Iteration </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">itr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NRMSE for scaled data:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">ytest</span><span class="p">,</span> <span class="n">ypred_scaled</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">ptp</span><span class="p">(</span><span class="n">ytest</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NRMSE for unscaled data:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">ytest</span><span class="p">,</span> <span class="n">ypred</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">ptp</span><span class="p">(</span><span class="n">ytest</span><span class="p">))</span>
+    <span class="n">sigmas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">best_sigma</span><span class="p">,</span> <span class="n">test_metric</span> <span class="o">=</span> <span class="n">find_sigma</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">,</span> <span class="n">xtest</span><span class="p">,</span> <span class="n">ytest</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">)</span>
+
+    <span class="c1"># Initializing the kriging model</span>
+    <span class="n">sm</span> <span class="o">=</span> <span class="n">RBF</span><span class="p">(</span><span class="n">d0</span><span class="o">=</span><span class="n">best_sigma</span><span class="p">,</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># Setting the training values</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">)</span>
+    
+    <span class="c1"># Creating surrogate model</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+    <span class="c1"># Find the minimum of surrogate model</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">Exploitation</span><span class="p">(</span><span class="n">sm</span><span class="p">),</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    
+    <span class="c1"># Computing true function value at infill point</span>
+    <span class="n">y_infill</span> <span class="o">=</span> <span class="n">modified_branin</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">itr</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">delta_f</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">F</span> <span class="o">-</span> <span class="n">y_infill</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">F</span><span class="p">)]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">delta_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">delta_f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">F</span> <span class="o">-</span> <span class="n">y_infill</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">F</span><span class="p">))</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Change in f: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">delta_f</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;f*: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y_infill</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x*: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">X</span><span class="p">))</span>
+    
+    <span class="c1"># Appending the the new point to the current data set</span>
+    <span class="n">xtrain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span> <span class="n">xtrain</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">))</span>
+    <span class="n">ytrain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">ytrain</span><span class="p">,</span> <span class="n">y_infill</span> <span class="p">)</span>
+    
+    <span class="n">itr</span> <span class="o">=</span> <span class="n">itr</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1"># Increasing the iteration number</span>
+
+<span class="c1"># Printing the final results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Best obtained point:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x*: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xtrain</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">ytrain</span><span class="p">)]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;f*: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">ytrain</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NRMSE for scaled data: 0.09674368894133425
-NRMSE for unscaled data: 0.09674368894128359
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1
+Change in f: [0.86363425]
+f*: [-7.49170155]
+x*: [-4.99999993 14.99999999]
+
+Iteration 2
+Change in f: 0.4650742769067305
+f*: [-7.14189051]
+x*: [-4.99999131 14.92141564]
+
+Iteration 3
+Change in f: 0.10969420294742016
+f*: [-12.3319303]
+x*: [-4.36136831 13.73228963]
+
+Iteration 4
+Change in f: 0.06977226444213074
+f*: [-12.27345055]
+x*: [-4.35391747 13.68575025]
+
+Iteration 5
+Change in f: 0.04883276370440886
+f*: [-12.22820958]
+x*: [-4.35352576 13.67091625]
+
+Iteration 6
+Change in f: 0.03701170306520387
+f*: [-12.20263557]
+x*: [-4.35122221 13.65450544]
+
+Iteration 7
+Change in f: 0.027827491396385576
+f*: [-12.16658083]
+x*: [-4.35285117 13.65034007]
+
+Iteration 8
+Change in f: 0.02454071417509867
+f*: [-12.17471211]
+x*: [-4.34973578 13.64064017]
+
+Iteration 9
+Change in f: 0.020906584754386125
+f*: [-12.16803629]
+x*: [-4.34897931 13.63578379]
+
+Iteration 10
+Change in f: 0.01836876593377306
+f*: [-12.16557879]
+x*: [-4.34835039 13.6326435 ]
+
+Iteration 11
+Change in f: 0.014949850019911493
+f*: [-12.14673327]
+x*: [-4.34866043 13.62840392]
+
+Iteration 12
+Change in f: 0.013149670807310334
+f*: [-12.14152928]
+x*: [-4.34901115 13.62825894]
+
+Iteration 13
+Change in f: 0.0132921903579867
+f*: [-12.15641396]
+x*: [-4.347687   13.62743668]
+
+Iteration 14
+Change in f: 0.010620771581771144
+f*: [-12.13669153]
+x*: [-4.34830603 13.62414647]
+
+Iteration 15
+Change in f: 0.010355404985117528
+f*: [-12.14268504]
+x*: [-4.34753801 13.62290786]
+
+Iteration 16
+Change in f: 0.011094886158800317
+f*: [-12.15994639]
+x*: [-4.34712503 13.62628642]
+
+Iteration 17
+Change in f: 0.009374210266325756
+f*: [-12.1476683]
+x*: [-4.34682132 13.6215776 ]
+
+Iteration 18
+Change in f: 0.008718922963013664
+f*: [-12.14645156]
+x*: [-4.34605778 13.61828376]
+
+Iteration 19
+Change in f: 0.008977483304937672
+f*: [-12.15548483]
+x*: [-4.34583513 13.62002476]
+
+Iteration 20
+Change in f: 0.005094065353971081
+f*: [-12.11436744]
+x*: [-4.34963745 13.62287137]
+
+Iteration 21
+Change in f: 0.007757282322089059
+f*: [-12.14961381]
+x*: [-4.34611855 13.61942762]
+
+Iteration 22
+Change in f: 0.00501831864179339
+f*: [-12.12103915]
+x*: [-4.34914585 13.62288945]
+
+Iteration 23
+Change in f: 0.0060408975198481775
+f*: [-12.13612156]
+x*: [-4.3479726  13.62269661]
+
+Iteration 24
+Change in f: 0.0054083902355813885
+f*: [-12.13170754]
+x*: [-4.34740413 13.61923682]
+
+Iteration 25
+Change in f: 0.005913637172099506
+f*: [-12.14058682]
+x*: [-4.34625761 13.61736818]
+
+Iteration 26
+Change in f: 0.005412487984312021
+f*: [-12.13744267]
+x*: [-4.34650712 13.61742655]
+
+Iteration 27
+Change in f: 0.0024459987807699222
+f*: [-12.10411271]
+x*: [-4.34875448 13.6165316 ]
+
+Best obtained point:
+x*: [-3.16664788 10.66867206]
+f*: -12.65470688602858
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section id="using-scaled-version-of-the-data">
+<h3>Using scaled version of the data<a class="headerlink" href="#using-scaled-version-of-the-data" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Problem class</span>
+<span class="k">class</span> <span class="nc">Exploitation</span><span class="p">(</span><span class="n">Problem</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sm</span><span class="p">,</span> <span class="n">xscaler</span><span class="p">,</span> <span class="n">yscaler</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_var</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_obj</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_constr</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">xl</span><span class="o">=</span><span class="n">lb</span><span class="p">,</span> <span class="n">xu</span><span class="o">=</span><span class="n">ub</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sm</span> <span class="o">=</span> <span class="n">sm</span> <span class="c1"># store the surrogate model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xscaler</span> <span class="o">=</span> <span class="n">xscaler</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yscaler</span> <span class="o">=</span> <span class="n">yscaler</span>
+
+    <span class="k">def</span> <span class="nf">_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">yscaler</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xscaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+
+<span class="c1"># Optimization algorithm</span>
+<span class="n">algorithm</span> <span class="o">=</span> <span class="n">DE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">dither</span><span class="o">=</span><span class="s2">&quot;vector&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[[</span><span class="n">lb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ub</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">lb</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ub</span><span class="p">[</span><span class="mi">1</span><span class="p">]]]</span> <span class="p">),</span> <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;ese&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+
+<span class="c1"># Training data</span>
+<span class="n">num_train</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">xtrain</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="n">num_train</span><span class="p">)</span>
+<span class="n">ytrain</span> <span class="o">=</span> <span class="n">modified_branin</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Variables</span>
+<span class="n">itr</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">max_itr</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">tol</span> <span class="o">=</span> <span class="mf">5e-3</span>
+<span class="n">delta_f</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># Sequential sampling Loop</span>
+<span class="k">while</span> <span class="n">itr</span> <span class="o">&lt;</span> <span class="n">max_itr</span> <span class="ow">and</span> <span class="n">tol</span> <span class="o">&lt;</span> <span class="n">delta_f</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Iteration </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">itr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="c1"># Standard scaling</span>
+    <span class="n">xstd_scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+    <span class="n">ystd_scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+
+    <span class="n">xtrain_scaled</span> <span class="o">=</span> <span class="n">xstd_scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ytrain</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">ytrain</span> <span class="o">=</span> <span class="n">ytrain</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ytrain_scaled</span> <span class="o">=</span> <span class="n">ystd_scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">ytrain</span><span class="p">)</span>
+
+    <span class="n">sigmas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">best_sigma</span><span class="p">,</span> <span class="n">test_metric</span> <span class="o">=</span> <span class="n">find_sigma</span><span class="p">(</span><span class="n">xtrain_scaled</span><span class="p">,</span> <span class="n">ytrain_scaled</span><span class="p">,</span> <span class="n">xtest</span><span class="p">,</span> <span class="n">ytest</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">,</span> <span class="n">xstd_scaler</span><span class="p">,</span> <span class="n">ystd_scaler</span><span class="p">)</span>
+
+    <span class="c1"># Initializing the kriging model</span>
+    <span class="n">sm</span> <span class="o">=</span> <span class="n">RBF</span><span class="p">(</span><span class="n">d0</span><span class="o">=</span><span class="n">best_sigma</span><span class="p">,</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># Setting the training values</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">xtrain_scaled</span><span class="p">,</span> <span class="n">ytrain_scaled</span><span class="p">)</span>
+    
+    <span class="c1"># Creating surrogate model</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+    <span class="c1"># Find the minimum of surrogate model</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">Exploitation</span><span class="p">(</span><span class="n">sm</span><span class="p">,</span> <span class="n">xstd_scaler</span><span class="p">,</span> <span class="n">ystd_scaler</span><span class="p">),</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    
+    <span class="c1"># Computing true function value at infill point</span>
+    <span class="n">y_infill</span> <span class="o">=</span> <span class="n">modified_branin</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">itr</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">delta_f</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">F</span> <span class="o">-</span> <span class="n">y_infill</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">F</span><span class="p">)]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">delta_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">delta_f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">F</span> <span class="o">-</span> <span class="n">y_infill</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">F</span><span class="p">))</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Change in f: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">delta_f</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;f*: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y_infill</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x*: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">X</span><span class="p">))</span>
+    
+    <span class="c1"># Appending the the new point to the current data set</span>
+    <span class="n">xtrain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span> <span class="n">xtrain</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">))</span>
+    <span class="n">ytrain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">ytrain</span><span class="p">,</span> <span class="n">y_infill</span> <span class="p">)</span>
+
+    <span class="n">itr</span> <span class="o">=</span> <span class="n">itr</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1"># Increasing the iteration number</span>
+
+<span class="c1"># Printing the final results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Best obtained point:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x*: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xtrain</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">ytrain</span><span class="p">)]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;f*: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">ytrain</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1
+Change in f: [0.86856496]
+f*: [-7.49169803]
+x*: [-4.99999963 14.99999803]
+
+Iteration 2
+Change in f: 0.5288107812469868
+f*: [-6.96336929]
+x*: [-4.99999926 14.88238972]
+
+Iteration 3
+Change in f: 0.10983366880321722
+f*: [-13.51045921]
+x*: [-4.19433928 13.45952555]
+
+Iteration 4
+Change in f: 0.05758309736691329
+f*: [-13.28724528]
+x*: [-4.20483707 13.42580719]
+
+Iteration 5
+Change in f: 0.032865315729798394
+f*: [-13.14077589]
+x*: [-4.21575086 13.42023204]
+
+Iteration 6
+Change in f: 0.017218983215701894
+f*: [-13.02067865]
+x*: [-4.22382561 13.41308292]
+
+Iteration 7
+Change in f: 0.011637389623782728
+f*: [-12.98932386]
+x*: [-4.22555973 13.40991264]
+
+Iteration 8
+Change in f: 0.006080036880136135
+f*: [-12.94762764]
+x*: [-4.22833882 13.40753891]
+
+Iteration 9
+Change in f: 0.0034229314140226843
+f*: [-12.93429573]
+x*: [-4.22816109 13.40279174]
+
+Best obtained point:
+x*: [-4.19433928 13.45952555]
+f*: -13.510459205242743
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 </section>
 
@@ -656,7 +1106,13 @@ NRMSE for unscaled data: 0.09674368894128359
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modeling-noisy-data-using-regression-kriging">Modeling Noisy Data using Regression Kriging</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-scaling-for-engineering-modeling">Feature scaling for engineering modeling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-scaling-for-engineering-modeling">Feature Scaling for engineering modeling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modeling-the-torsion-vibration-problem-from-smt-using-rbf">Modeling the Torsion Vibration problem from SMT using RBF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploitation-of-unconstrained-modified-branin-function-using-rbf-model">Exploitation of unconstrained modified Branin function using RBF model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-unscaled-version-of-the-data">Using unscaled version of the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-scaled-version-of-the-data">Using scaled version of the data</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
