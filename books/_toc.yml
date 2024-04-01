@@ -50,3 +50,4 @@ chapters:
   - file: multi_objective/intro_moo
     sections:
     - file: multi_objective/multi_objective_optimization
+    - file: multi_objective/krg_multi_objective
