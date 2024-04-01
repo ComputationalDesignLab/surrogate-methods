@@ -65,6 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'multi_objective/multi_objective_optimization';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Multiobjective optimization using Kriging models" href="krg_multi_objective.html" />
     <link rel="prev" title="Multiobjective Optimization" href="intro_moo.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -218,6 +219,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../engineering_design.html">Engineering Modeling and Design Optimization</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="intro_moo.html">Multiobjective Optimization</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Multiobjective optimization using differential evolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="krg_multi_objective.html">Multiobjective optimization using Kriging models</a></li>
 </ul>
 </li>
 </ul>
@@ -500,18 +502,16 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/540d646925d9ca9ae24a2e60132bc0221218f38d2795dae8b141c0676ad2a0d8.png" src="../_images/540d646925d9ca9ae24a2e60132bc0221218f38d2795dae8b141c0676ad2a0d8.png" />
-<img alt="../_images/248849f1ce1a48a0615061340e76a4769815a030ae493cf568b6a6ca51e2cb33.png" src="../_images/248849f1ce1a48a0615061340e76a4769815a030ae493cf568b6a6ca51e2cb33.png" />
-<img alt="../_images/d6e43c35cedcbee68f88b4233af6af61e9f56e1e6d1ec8f09f2a990a51d9ae69.png" src="../_images/d6e43c35cedcbee68f88b4233af6af61e9f56e1e6d1ec8f09f2a990a51d9ae69.png" />
-<img alt="../_images/b4eaac949250d62c687b3dd4c2c823c570994e42d4981a80c6894f274d11eecf.png" src="../_images/b4eaac949250d62c687b3dd4c2c823c570994e42d4981a80c6894f274d11eecf.png" />
-<img alt="../_images/153d93b15cd3c05fe1c57841ae995e5d7fa727d41e2701a0208faaf73c38c9e2.png" src="../_images/153d93b15cd3c05fe1c57841ae995e5d7fa727d41e2701a0208faaf73c38c9e2.png" />
-<img alt="../_images/70898ba9e7e3a9360886fbc9b9d0b325efd8e553afffbb34df5305ac5c28658d.png" src="../_images/70898ba9e7e3a9360886fbc9b9d0b325efd8e553afffbb34df5305ac5c28658d.png" />
-<img alt="../_images/0ad8e984739bb59d78c2caf13c7117a56e602dda4189e7fd1dd79342142445d4.png" src="../_images/0ad8e984739bb59d78c2caf13c7117a56e602dda4189e7fd1dd79342142445d4.png" />
-<img alt="../_images/f1453f84e184e2af031d14d042f5f3a2452ee892273844b4128b0e4f3e29b11f.png" src="../_images/f1453f84e184e2af031d14d042f5f3a2452ee892273844b4128b0e4f3e29b11f.png" />
-<img alt="../_images/9565e2e781393296300b606b9f13d30a6a4d46d5053166840b10bdc889a79d33.png" src="../_images/9565e2e781393296300b606b9f13d30a6a4d46d5053166840b10bdc889a79d33.png" />
-<img alt="../_images/30b520b3a776841144e41976acdb036df4f5739b0b166c32155e83bea9ffdf9c.png" src="../_images/30b520b3a776841144e41976acdb036df4f5739b0b166c32155e83bea9ffdf9c.png" />
-<img alt="../_images/55411c3ed9bc220e21caee47be67ae28bf04fe61b5722b71168951de1c1f5571.png" src="../_images/55411c3ed9bc220e21caee47be67ae28bf04fe61b5722b71168951de1c1f5571.png" />
-<img alt="../_images/0de2fea5200e269658813194a77dc295b582d7244163cebd50b91067d4f0742d.png" src="../_images/0de2fea5200e269658813194a77dc295b582d7244163cebd50b91067d4f0742d.png" />
+<img alt="../_images/47105258711baa9dac45f5c547fdf2f63fe20ea6e1ef3a043c4fd7b467323a11.png" src="../_images/47105258711baa9dac45f5c547fdf2f63fe20ea6e1ef3a043c4fd7b467323a11.png" />
+<img alt="../_images/04a43cf945a16d264de8d313d0bfe7d34faca40368a2a3f1f48b5d1dfe6ab2d1.png" src="../_images/04a43cf945a16d264de8d313d0bfe7d34faca40368a2a3f1f48b5d1dfe6ab2d1.png" />
+<img alt="../_images/714a610f52f83798ca0288609f5f36d00da8963e8e90754e10280b16aeea2543.png" src="../_images/714a610f52f83798ca0288609f5f36d00da8963e8e90754e10280b16aeea2543.png" />
+<img alt="../_images/b67a3911d65eb26ed481d946f67e19664d1cb9c19736914533e2ed81894b393c.png" src="../_images/b67a3911d65eb26ed481d946f67e19664d1cb9c19736914533e2ed81894b393c.png" />
+<img alt="../_images/b6c13ffdf3296b0c9b691f9b7d57e3af79eb1936ce39d29b44f2a18460620d07.png" src="../_images/b6c13ffdf3296b0c9b691f9b7d57e3af79eb1936ce39d29b44f2a18460620d07.png" />
+<img alt="../_images/84be2a4ad245da5a8f74e2383e008950a869aed70278b859f90eac434527eeb8.png" src="../_images/84be2a4ad245da5a8f74e2383e008950a869aed70278b859f90eac434527eeb8.png" />
+<img alt="../_images/75a27c2a33ac12c5123f64a2666b60cab1aadda3edfd1a4a27f6ee2cf93ec0e1.png" src="../_images/75a27c2a33ac12c5123f64a2666b60cab1aadda3edfd1a4a27f6ee2cf93ec0e1.png" />
+<img alt="../_images/bebc0e7636ab3ffae1a5281a549d10ae581718a359f739f781467620bc3b703d.png" src="../_images/bebc0e7636ab3ffae1a5281a549d10ae581718a359f739f781467620bc3b703d.png" />
+<img alt="../_images/60b289a7e11932d27126a6b746d212e58dc96779f4cefcd931632262f28b5969.png" src="../_images/60b289a7e11932d27126a6b746d212e58dc96779f4cefcd931632262f28b5969.png" />
+<img alt="../_images/714995093f75002ceb8f02f244f165511ec01dce074ad054174e31ab55f2650a.png" src="../_images/714995093f75002ceb8f02f244f165511ec01dce074ad054174e31ab55f2650a.png" />
 </div>
 </div>
 <p>The block of code below plots the final Pareto front obtained for the problem and comapares it to the one found using non-dominated sorting alone. The Pareto front obtained using differential evolution is identical to the one obtained using non-dominated sorting indicating that the NSDE algorithm works well for the problem.</p>
@@ -547,7 +547,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/cd62c72c17677e1cd408fc38991ffe84ef2dd3bc451fe4f7c0f045ae78973707.png" src="../_images/cd62c72c17677e1cd408fc38991ffe84ef2dd3bc451fe4f7c0f045ae78973707.png" />
+<img alt="../_images/ac5e98f654500154fc166f4366ef9bd763252cdf2356387b24d871e473f3f72d.png" src="../_images/ac5e98f654500154fc166f4366ef9bd763252cdf2356387b24d871e473f3f72d.png" />
 </div>
 </div>
 </section>
@@ -648,12 +648,13 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/a2a0f2e153a395b61e5646bb7046bd3b3421c671ce282aef85337ef66a657964.png" src="../_images/a2a0f2e153a395b61e5646bb7046bd3b3421c671ce282aef85337ef66a657964.png" />
-<img alt="../_images/4b9c5ad0855288eb0e479d7ac449208dd89b3ff458ce670a577c290d5c3cfe59.png" src="../_images/4b9c5ad0855288eb0e479d7ac449208dd89b3ff458ce670a577c290d5c3cfe59.png" />
-<img alt="../_images/94f483fb4521d74dc132d5e5b2dbd63332f4ce33803e92e704ffa364baa3cc27.png" src="../_images/94f483fb4521d74dc132d5e5b2dbd63332f4ce33803e92e704ffa364baa3cc27.png" />
-<img alt="../_images/06a87a0bc99b3cf2a702450427618385ecd67b3ea63fddb8d09b63f045b761b5.png" src="../_images/06a87a0bc99b3cf2a702450427618385ecd67b3ea63fddb8d09b63f045b761b5.png" />
-<img alt="../_images/c55704b919801dbfd39e00aa57765fba6d5f520d685e735d5f204928b6eb69b5.png" src="../_images/c55704b919801dbfd39e00aa57765fba6d5f520d685e735d5f204928b6eb69b5.png" />
-<img alt="../_images/c55704b919801dbfd39e00aa57765fba6d5f520d685e735d5f204928b6eb69b5.png" src="../_images/c55704b919801dbfd39e00aa57765fba6d5f520d685e735d5f204928b6eb69b5.png" />
+<img alt="../_images/eb451b5b03483c8c22610e233d360429f842261b42fe2a7fb61d74339beaae0f.png" src="../_images/eb451b5b03483c8c22610e233d360429f842261b42fe2a7fb61d74339beaae0f.png" />
+<img alt="../_images/52cb8a033684d56b9d38a12b9ad2c18a18f6ec776e0c38bf330d334c95487bb7.png" src="../_images/52cb8a033684d56b9d38a12b9ad2c18a18f6ec776e0c38bf330d334c95487bb7.png" />
+<img alt="../_images/55e453f03573aceb4cac244ea74574552d2409f547a4acc1cf3c3a5bf799a505.png" src="../_images/55e453f03573aceb4cac244ea74574552d2409f547a4acc1cf3c3a5bf799a505.png" />
+<img alt="../_images/d28e3cecb3b968f671bcd766ed5cdb09c69a526d3a6f5455c2be47346f8af279.png" src="../_images/d28e3cecb3b968f671bcd766ed5cdb09c69a526d3a6f5455c2be47346f8af279.png" />
+<img alt="../_images/14545a2cd279f32208730806937533f14c41935b018dd06bfbaf4ebe9457d6f9.png" src="../_images/14545a2cd279f32208730806937533f14c41935b018dd06bfbaf4ebe9457d6f9.png" />
+<img alt="../_images/14545a2cd279f32208730806937533f14c41935b018dd06bfbaf4ebe9457d6f9.png" src="../_images/14545a2cd279f32208730806937533f14c41935b018dd06bfbaf4ebe9457d6f9.png" />
+<img alt="../_images/32b56576ebadeafcc2cf437191ec779f67f1c763fa1822fb4be57380cfb5c60a.png" src="../_images/32b56576ebadeafcc2cf437191ec779f67f1c763fa1822fb4be57380cfb5c60a.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -683,7 +684,7 @@ document.write(`
 <span class="c1"># Plotting final Pareto frontier obtained</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Z_pareto</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">Z_pareto</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Non-dominated sorting&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res_nsde</span><span class="o">.</span><span class="n">F</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">res_nsde</span><span class="o">.</span><span class="n">F</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;NSDE&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res_nsde</span><span class="o">.</span><span class="n">F</span><span class="p">[::</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">res_nsde</span><span class="o">.</span><span class="n">F</span><span class="p">[::</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;NSDE&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$f_2$&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$f_1$&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
@@ -692,7 +693,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/5d8d84c07e0a5fcdad5c791765239223f504bf3a04fe8bdb26755813fb9cfff8.png" src="../_images/5d8d84c07e0a5fcdad5c791765239223f504bf3a04fe8bdb26755813fb9cfff8.png" />
+<img alt="../_images/8231aeaddb8f22952a4a36ba7c8aadad36ffde94305e362ea6bb77309ee6cdcf.png" src="../_images/8231aeaddb8f22952a4a36ba7c8aadad36ffde94305e362ea6bb77309ee6cdcf.png" />
 </div>
 </div>
 </section>
@@ -736,6 +737,15 @@ document.write(`
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Multiobjective Optimization</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="krg_multi_objective.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Multiobjective optimization using Kriging models</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
