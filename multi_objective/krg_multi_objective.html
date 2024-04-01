@@ -370,8 +370,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branin-currin-optimization-problem">Branin-Currin optimization problem</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constrained-ctp1-optimization-problem">Constrained CTP1 optimization problem</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constrained-tnk-optimization-problem">Constrained TNK optimization problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constrained-multiobjective-optimization-problem">Constrained multiobjective optimization problem</a></li>
 </ul>
             </nav>
         </div>
@@ -529,17 +528,17 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/4a49a39f3cd246d47c28d869a91da0c6dbd85014b89ad1c93ba3e79971d92b84.png" src="../_images/4a49a39f3cd246d47c28d869a91da0c6dbd85014b89ad1c93ba3e79971d92b84.png" />
-<img alt="../_images/9a3c8495fe0e89a2f91a92c5adeaa8288b32c71b6fd4e8d380b8bf1c3e586e54.png" src="../_images/9a3c8495fe0e89a2f91a92c5adeaa8288b32c71b6fd4e8d380b8bf1c3e586e54.png" />
-<img alt="../_images/d04e638b883cc15d33de97dae67a0c8fef39eb8f0791852f43c01c8c9d27be02.png" src="../_images/d04e638b883cc15d33de97dae67a0c8fef39eb8f0791852f43c01c8c9d27be02.png" />
-<img alt="../_images/49031fbb39fb33d46e48d61cad291e209ab2e54dcef82a90cd68a0b4532d9da6.png" src="../_images/49031fbb39fb33d46e48d61cad291e209ab2e54dcef82a90cd68a0b4532d9da6.png" />
-<img alt="../_images/97668f8bb97a748a42d77dc551726a3b84331eda4737675b4a75977007a4f5a8.png" src="../_images/97668f8bb97a748a42d77dc551726a3b84331eda4737675b4a75977007a4f5a8.png" />
-<img alt="../_images/03da7b2335f0a5507c509cca442bf8103c0fa2444a42acad2a04545b1911e9a3.png" src="../_images/03da7b2335f0a5507c509cca442bf8103c0fa2444a42acad2a04545b1911e9a3.png" />
+<img alt="../_images/ba067aa51b33efdef29fae237b9e931246828a72a17de1a0caa26ff7cde363bd.png" src="../_images/ba067aa51b33efdef29fae237b9e931246828a72a17de1a0caa26ff7cde363bd.png" />
+<img alt="../_images/6c9671c42c405eb9321527a7a8aa9c21a9c4468070ba7b023c7430bd4b35270d.png" src="../_images/6c9671c42c405eb9321527a7a8aa9c21a9c4468070ba7b023c7430bd4b35270d.png" />
+<img alt="../_images/0eee8d49cc891958665fcc5dee72091acf56241b5a187e2f5f0e39419973aa29.png" src="../_images/0eee8d49cc891958665fcc5dee72091acf56241b5a187e2f5f0e39419973aa29.png" />
+<img alt="../_images/bb58bcef6f4774a302b39b27341305c0a5b19548d8606c9344022d34359bd2e3.png" src="../_images/bb58bcef6f4774a302b39b27341305c0a5b19548d8606c9344022d34359bd2e3.png" />
+<img alt="../_images/8511a39a2f85216db07b7da0560bc18930bb5a681c93d724e29bab0dd308252c.png" src="../_images/8511a39a2f85216db07b7da0560bc18930bb5a681c93d724e29bab0dd308252c.png" />
+<img alt="../_images/cfd70ab95e8855fc703653b41b0436322141cdc5a4f5462d6670774d987e965d.png" src="../_images/cfd70ab95e8855fc703653b41b0436322141cdc5a4f5462d6670774d987e965d.png" />
 </div>
 </div>
 </section>
-<section id="constrained-ctp1-optimization-problem">
-<h2>Constrained CTP1 optimization problem<a class="headerlink" href="#constrained-ctp1-optimization-problem" title="Permalink to this heading">#</a></h2>
+<section id="constrained-multiobjective-optimization-problem">
+<h2>Constrained multiobjective optimization problem<a class="headerlink" href="#constrained-multiobjective-optimization-problem" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the objective functions</span>
@@ -664,7 +663,7 @@ document.write(`
     <span class="n">yg2</span> <span class="o">=</span> <span class="n">g2</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
     
     <span class="c1"># Create kriging model</span>
-    <span class="n">corr</span> <span class="o">=</span> <span class="s1">&#39;matern52&#39;</span>
+    <span class="n">corr</span> <span class="o">=</span> <span class="s1">&#39;squar_exp&#39;</span>
     <span class="n">sm_f1</span> <span class="o">=</span> <span class="n">KRG</span><span class="p">(</span><span class="n">theta0</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-2</span><span class="p">],</span> <span class="n">corr</span><span class="o">=</span><span class="n">corr</span><span class="p">,</span> <span class="n">theta_bounds</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e2</span><span class="p">],</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">sm_f1</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">yf2</span><span class="p">)</span>
     <span class="n">sm_f1</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
@@ -695,145 +694,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c61610cbbc4b5ef72ae939f3dc7558a04879c443c84cc725255c93f110be00a3.png" src="../_images/c61610cbbc4b5ef72ae939f3dc7558a04879c443c84cc725255c93f110be00a3.png" />
-<img alt="../_images/a8c9c6ed778d3a2630816d0fd3a87a82e2c82cb04cc70d7a107fb87170489be1.png" src="../_images/a8c9c6ed778d3a2630816d0fd3a87a82e2c82cb04cc70d7a107fb87170489be1.png" />
-<img alt="../_images/f5fe0027a019231c8c646fab8b92ff0db0040d47bde86811a07d309c0071766a.png" src="../_images/f5fe0027a019231c8c646fab8b92ff0db0040d47bde86811a07d309c0071766a.png" />
-<img alt="../_images/efb26ec2c3949411ce371087b4b1b5617eb9ae1e583b48de9ea463fb85d31879.png" src="../_images/efb26ec2c3949411ce371087b4b1b5617eb9ae1e583b48de9ea463fb85d31879.png" />
-</div>
-</div>
-</section>
-<section id="constrained-tnk-optimization-problem">
-<h2>Constrained TNK optimization problem<a class="headerlink" href="#constrained-tnk-optimization-problem" title="Permalink to this heading">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TNK</span><span class="p">(</span><span class="n">Problem</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_var</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_obj</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_ieq_constr</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">xl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">xu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">])</span>
-
-    <span class="k">def</span> <span class="nf">_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">f1</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
-        <span class="n">f2</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
-        <span class="n">g1</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mf">16.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])))</span>
-        <span class="n">g2</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
-
-        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">])</span>
-        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">g1</span><span class="p">,</span> <span class="n">g2</span><span class="p">])</span>
-
-<span class="n">termination</span> <span class="o">=</span> <span class="n">DefaultMultiObjectiveTermination</span><span class="p">(</span>
-    <span class="n">xtol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
-    <span class="n">cvtol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
-    <span class="n">ftol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
-    <span class="n">period</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
-    <span class="n">n_max_gen</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-    <span class="n">n_max_evals</span><span class="o">=</span><span class="mi">100000</span>
-<span class="p">)</span>
-<span class="n">problem</span> <span class="o">=</span> <span class="n">TNK</span><span class="p">()</span>
-<span class="n">nsde</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">termination</span> <span class="o">=</span> <span class="n">termination</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">res_true</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">nsde</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining functions to generate data for surrogates</span>
-<span class="k">def</span> <span class="nf">g1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    
-    <span class="n">dim</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span>
-    <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="n">g</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mf">16.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])))</span>
-    <span class="k">return</span> <span class="n">g</span>
-
-<span class="k">def</span> <span class="nf">g2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-
-    <span class="n">dim</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span>
-    <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="n">g</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">g</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
-
-<span class="c1"># Defining problem for kriging model based optimization</span>
-<span class="k">class</span> <span class="nc">KRGTNK</span><span class="p">(</span><span class="n">Problem</span><span class="p">):</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sm_g1</span><span class="p">,</span> <span class="n">sm_g2</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_var</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_obj</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_ieq_constr</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sm_g1</span> <span class="o">=</span> <span class="n">sm_g1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sm_g2</span> <span class="o">=</span> <span class="n">sm_g2</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">xl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">xu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">])</span>
-
-    <span class="k">def</span> <span class="nf">_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-
-        <span class="n">F1</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
-        <span class="n">F2</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
-        <span class="n">G1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm_g1</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">G2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm_g2</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-
-        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">F1</span><span class="p">,</span> <span class="n">F2</span><span class="p">])</span>
-        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">G1</span><span class="p">,</span> <span class="n">G2</span><span class="p">])</span>
-
-<span class="c1"># Defining sample sizes</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
-<span class="n">xlimits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1e-6</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">],[</span><span class="mf">1e-6</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]])</span>
-
-<span class="n">test_sample</span> <span class="o">=</span> <span class="n">FullFactorial</span><span class="p">(</span><span class="n">xlimits</span> <span class="o">=</span> <span class="n">xlimits</span><span class="p">)</span>
-<span class="n">xtest</span> <span class="o">=</span> <span class="n">test_sample</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-<span class="n">ytest</span> <span class="o">=</span> <span class="n">g1</span><span class="p">(</span><span class="n">xtest</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
-
-    <span class="c1"># Generate training samples using LHS</span>
-    <span class="n">sampling</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">xlimits</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s2">&quot;ese&quot;</span><span class="p">)</span>
-    <span class="n">xtrain</span> <span class="o">=</span> <span class="n">sampling</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
-    <span class="n">yg1</span> <span class="o">=</span> <span class="n">g1</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
-    <span class="n">yg2</span> <span class="o">=</span> <span class="n">g2</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
-    
-    <span class="c1"># Create kriging model</span>
-    <span class="n">corr</span> <span class="o">=</span> <span class="s1">&#39;matern52&#39;</span>
-    <span class="n">sm_g1</span> <span class="o">=</span> <span class="n">KRG</span><span class="p">(</span><span class="n">theta0</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-2</span><span class="p">],</span> <span class="n">corr</span><span class="o">=</span><span class="n">corr</span><span class="p">,</span> <span class="n">theta_bounds</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e2</span><span class="p">],</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">sm_g1</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">yg1</span><span class="p">)</span>
-    <span class="n">sm_g1</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
-
-    <span class="n">sm_g2</span> <span class="o">=</span> <span class="n">KRG</span><span class="p">(</span><span class="n">theta0</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-2</span><span class="p">],</span> <span class="n">corr</span><span class="o">=</span><span class="n">corr</span><span class="p">,</span> <span class="n">theta_bounds</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e2</span><span class="p">],</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">sm_g2</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">yg2</span><span class="p">)</span>
-    <span class="n">sm_g2</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
-
-    <span class="n">ypred</span> <span class="o">=</span> <span class="n">sm_g1</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">xtest</span><span class="p">)</span> 
-    <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">ytest</span><span class="p">,</span> <span class="n">ypred</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">ptp</span><span class="p">(</span><span class="n">ytest</span><span class="p">))</span>
-
-    <span class="n">problem</span> <span class="o">=</span> <span class="n">KRGTNK</span><span class="p">(</span><span class="n">sm_g1</span><span class="p">,</span> <span class="n">sm_g2</span><span class="p">)</span>
-    <span class="n">algorithm</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">termination</span> <span class="o">=</span> <span class="n">termination</span><span class="p">,</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-    <span class="n">res_krg</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
-    <span class="n">F_krg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">res_krg</span><span class="o">.</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">res_krg</span><span class="o">.</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]))</span>
-    <span class="c1"># Plotting final Pareto frontier obtained</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res_true</span><span class="o">.</span><span class="n">F</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">res_true</span><span class="o">.</span><span class="n">F</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;True function&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">F_krg</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">F_krg</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Kriging model&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$f_2$&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$f_1$&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0037596743476084457
-</pre></div>
-</div>
-<img alt="../_images/0c7856744975a57c399d4e77df482ba195464a3f8550db18bb7054630caca9da.png" src="../_images/0c7856744975a57c399d4e77df482ba195464a3f8550db18bb7054630caca9da.png" />
+<img alt="../_images/2786ff270a21b7e4e0b8b186ccaa9788759adfc04a39ef4e343add68f0dace8b.png" src="../_images/2786ff270a21b7e4e0b8b186ccaa9788759adfc04a39ef4e343add68f0dace8b.png" />
+<img alt="../_images/243132f64ad731833d2330db37e36c6d8a284e87bc13ad335dc285ee3ca61121.png" src="../_images/243132f64ad731833d2330db37e36c6d8a284e87bc13ad335dc285ee3ca61121.png" />
+<img alt="../_images/fe1be47eed9950a2a2ecec7dc5521c87d2cabbfc7c4466c65746b770242b9949.png" src="../_images/fe1be47eed9950a2a2ecec7dc5521c87d2cabbfc7c4466c65746b770242b9949.png" />
+<img alt="../_images/a4cb8c35ae435fcbae87e31be80945834ff65295bc6d742921510a753ad1b112.png" src="../_images/a4cb8c35ae435fcbae87e31be80945834ff65295bc6d742921510a753ad1b112.png" />
 </div>
 </div>
 </section>
@@ -894,8 +758,7 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branin-currin-optimization-problem">Branin-Currin optimization problem</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constrained-ctp1-optimization-problem">Constrained CTP1 optimization problem</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constrained-tnk-optimization-problem">Constrained TNK optimization problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constrained-multiobjective-optimization-problem">Constrained multiobjective optimization problem</a></li>
 </ul>
   </nav></div>
 

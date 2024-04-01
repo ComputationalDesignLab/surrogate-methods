@@ -374,7 +374,6 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branin-currin-optimization-problem">Branin-Currin optimization problem</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constrained-ctp1-optimization-problem">Constrained CTP1 optimization problem</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constrained-tnk-optimization-problem">Constrained TNK optimization problem</a></li>
 </ul>
             </nav>
         </div>
@@ -391,7 +390,7 @@ document.write(`
 <p>This section provides code implementations for the concepts covered in class for multiobjective optimization. Multiobjective optimization provides methods to solve optimization problems with multiple competing objectives. The application of these methods to simple analytical examples is also provided in this section. The multiobjective methods used in class and in this section of the Jupyter book are based on differential evolution (DE) covered earlier in the class. This section has the following two subsections:</p>
 <ol class="arabic simple">
 <li><p>Multiobjective optimization using differential evolution</p></li>
-<li><p>Surrogate-based multiobjective optimization</p></li>
+<li><p>Multiobjective optimization using Kriging models</p></li>
 </ol>
 <p>The code blocks below introduce the multiobjective optimization examples used in this section. The next code block imports the required packages for this section.</p>
 <div class="cell docutils container">
@@ -501,7 +500,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fc5bae139a0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fc5b8df7370&gt;
 </pre></div>
 </div>
 <img alt="../_images/01fedf5e5d654377361d53d5c9183eac3bb6ac38fcbf4710599daf569f38d552.png" src="../_images/01fedf5e5d654377361d53d5c9183eac3bb6ac38fcbf4710599daf569f38d552.png" />
@@ -615,27 +614,13 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fc5b8e8c2b0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fc5b8d8bfa0&gt;
 </pre></div>
 </div>
-<img alt="../_images/ca0a3d6a7c6545d3f1cd32bb43e257c900f6ef00ea854ac4e13cee39aefc0e0a.png" src="../_images/ca0a3d6a7c6545d3f1cd32bb43e257c900f6ef00ea854ac4e13cee39aefc0e0a.png" />
+<img alt="../_images/b60bd022f3276d9ca2977d43825df7982525ee4cbfec758387d56cce24bfe407.png" src="../_images/b60bd022f3276d9ca2977d43825df7982525ee4cbfec758387d56cce24bfe407.png" />
 </div>
 </div>
 <p>The Pareto front for the 2D truss optimization problem is as shown above in the plot. The Pareto front for this problem is also convex.</p>
-</section>
-<section id="constrained-tnk-optimization-problem">
-<h2>Constrained TNK optimization problem<a class="headerlink" href="#constrained-tnk-optimization-problem" title="Permalink to this heading">#</a></h2>
-<p>The third and final example is another analytical multiobjective optimization problem. The suite of test functions are derived from a set of local adjustment and distance functions. The problem has two design variables, two objective functions and two constraints. Intrestingly, the two objective functions in this case are the two design variables themselves. The optimization problem statement is given as</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-    \begin{gathered}
-    \min f(\textbf{x}) = \begin{cases} f_1(\textbf{x}) = x_1 \\ f_2(\textbf{x}) = x_2 \end{cases} \\
-    \textrm{subject to} \quad g_1(\textbf{x}) = -(x_1^2 + x_2^2) - 1 - 0.1\cos(16\arctan(\frac{x_1}{x_2})) \leq 0 \\
-    g_2(\textbf{x}) = (x_1-0.5)^2 + (x_2-0.5)^2 - 0.5 \leq 0\\
-    0.0 \leq x_1,x_2 \leq 1.0
-    \end{gathered}
-\end{split}\]</div>
-<p>The block of code below defines the objective and constraint functions for the problem. The code is adapted from the <code class="docutils literal notranslate"><span class="pre">pymoo</span></code> source code on GitHub.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the objective functions</span>
@@ -800,7 +785,6 @@ document.write(`
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branin-currin-optimization-problem">Branin-Currin optimization problem</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constrained-ctp1-optimization-problem">Constrained CTP1 optimization problem</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constrained-tnk-optimization-problem">Constrained TNK optimization problem</a></li>
 </ul>
   </nav></div>
 
