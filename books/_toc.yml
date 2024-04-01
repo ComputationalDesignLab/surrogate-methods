@@ -47,3 +47,6 @@ chapters:
     - file: dim_reduction/dim_red_methods
     - file: dim_reduction/seq_sampling
   - file: engineering_design  
+  - file: multi_objective/intro_moo
+    - file: multi_objective/multi_objective_optimization
+    - file: multi_objective/krg_multi_objective
