@@ -65,7 +65,6 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'multi_objective/multi_objective_optimization';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Multiobjective optimization using Kriging models" href="krg_multi_objective.html" />
     <link rel="prev" title="Multiobjective Optimization" href="intro_moo.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -219,7 +218,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../engineering_design.html">Engineering Modeling and Design Optimization</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="intro_moo.html">Multiobjective Optimization</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Multiobjective optimization using differential evolution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="krg_multi_objective.html">Multiobjective optimization using Kriging models</a></li>
 </ul>
 </li>
 </ul>
@@ -564,7 +562,8 @@ document.write(`
     <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+    
     <span class="k">return</span> <span class="n">y</span>
     
 <span class="k">def</span> <span class="nf">f2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -573,10 +572,7 @@ document.write(`
     <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="n">x1</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">x2</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
-
-    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">x2</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">x2</span><span class="p">))</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
 
     <span class="k">return</span> <span class="n">y</span>
 
@@ -586,10 +582,7 @@ document.write(`
     <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
     
-    <span class="n">F1</span> <span class="o">=</span> <span class="n">f1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">F2</span> <span class="o">=</span> <span class="n">f2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    
-    <span class="n">g</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">F2</span><span class="o">/</span><span class="p">(</span><span class="mf">0.858</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.541</span><span class="o">*</span><span class="n">F1</span><span class="p">))</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">25</span>
 
     <span class="k">return</span> <span class="n">g</span>
 
@@ -599,29 +592,22 @@ document.write(`
     <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
     
-    <span class="n">F1</span> <span class="o">=</span> <span class="n">f1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">F2</span> <span class="o">=</span> <span class="n">f2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    
-    <span class="n">g</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">F2</span><span class="o">/</span><span class="p">(</span><span class="mf">0.728</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.295</span><span class="o">*</span><span class="n">F1</span><span class="p">))</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="mf">7.7</span> <span class="o">-</span> <span class="p">((</span><span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">8</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">g</span>
 
 <span class="c1"># Defining the problem class for pymoo - we are evaluating two objective and two constraint functions in this case</span>
-<span class="k">class</span> <span class="nc">CTP1</span><span class="p">(</span><span class="n">Problem</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">ConstrainedProblem</span><span class="p">(</span><span class="n">Problem</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_var</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_obj</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_ieq_constr</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">xl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">xu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">20.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">20.0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">20.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
-        <span class="c1"># objectives</span>
-        <span class="n">F1</span> <span class="o">=</span> <span class="n">f1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">F2</span> <span class="o">=</span> <span class="n">f2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-
-        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">F1</span><span class="p">,</span> <span class="n">F2</span><span class="p">])</span>
+        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">f1</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">f2</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
         <span class="n">out</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">g1</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">g2</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
 </pre></div>
 </div>
@@ -637,7 +623,7 @@ document.write(`
     <span class="n">n_max_gen</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
     <span class="n">n_max_evals</span><span class="o">=</span><span class="mi">100000</span>
 <span class="p">)</span>
-<span class="n">problem</span> <span class="o">=</span> <span class="n">CTP1</span><span class="p">()</span>
+<span class="n">problem</span> <span class="o">=</span> <span class="n">ConstrainedProblem</span><span class="p">()</span>
 <span class="n">nsde</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">termination</span> <span class="o">=</span> <span class="n">termination</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 <span class="n">res_nsde</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">nsde</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
@@ -662,39 +648,37 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/b754b9d9ae299381ca4726eac14730675bd46aab9a26626905fb5c779605c789.png" src="../_images/b754b9d9ae299381ca4726eac14730675bd46aab9a26626905fb5c779605c789.png" />
-<img alt="../_images/9c0a988c1c3a164bc5d68fb0dd6e991a1eaf26ac0f65dc46c5189e0af53e52b9.png" src="../_images/9c0a988c1c3a164bc5d68fb0dd6e991a1eaf26ac0f65dc46c5189e0af53e52b9.png" />
-<img alt="../_images/cfb974c8dbd88b0f4b719132d9be4dd2696f2ace7910b475f5e177e2a7893781.png" src="../_images/cfb974c8dbd88b0f4b719132d9be4dd2696f2ace7910b475f5e177e2a7893781.png" />
-<img alt="../_images/c2b641d48f39f99fe34baf1b096239f2c592c1fc6bf4f5f7be588dd6f8194f22.png" src="../_images/c2b641d48f39f99fe34baf1b096239f2c592c1fc6bf4f5f7be588dd6f8194f22.png" />
-<img alt="../_images/15b41f15254e67b8c63f6706865f44d6369bd953fe7ff745282805bc7c320720.png" src="../_images/15b41f15254e67b8c63f6706865f44d6369bd953fe7ff745282805bc7c320720.png" />
-<img alt="../_images/15b41f15254e67b8c63f6706865f44d6369bd953fe7ff745282805bc7c320720.png" src="../_images/15b41f15254e67b8c63f6706865f44d6369bd953fe7ff745282805bc7c320720.png" />
-<img alt="../_images/64aa428ddd29abed502b070d3aecc779fffdf598e1351afa8b631d4e938e4689.png" src="../_images/64aa428ddd29abed502b070d3aecc779fffdf598e1351afa8b631d4e938e4689.png" />
-<img alt="../_images/842e84d551863fe018cddee70f491c994de4b815a14df80341f707c5b0d0c530.png" src="../_images/842e84d551863fe018cddee70f491c994de4b815a14df80341f707c5b0d0c530.png" />
-<img alt="../_images/414b210b13666c071807bacb6f689cf6a7044ecb5b8c042b94caca08f9c3082c.png" src="../_images/414b210b13666c071807bacb6f689cf6a7044ecb5b8c042b94caca08f9c3082c.png" />
-<img alt="../_images/ae821d3afa0a21c79e0d34ee84428a64c9a1464835bd38738d37da644c76f015.png" src="../_images/ae821d3afa0a21c79e0d34ee84428a64c9a1464835bd38738d37da644c76f015.png" />
-<img alt="../_images/6fa33b859343e307a4ccd1d837c1d75efa689388c6263230bfa6786073e11f25.png" src="../_images/6fa33b859343e307a4ccd1d837c1d75efa689388c6263230bfa6786073e11f25.png" />
+<img alt="../_images/a2a0f2e153a395b61e5646bb7046bd3b3421c671ce282aef85337ef66a657964.png" src="../_images/a2a0f2e153a395b61e5646bb7046bd3b3421c671ce282aef85337ef66a657964.png" />
+<img alt="../_images/4b9c5ad0855288eb0e479d7ac449208dd89b3ff458ce670a577c290d5c3cfe59.png" src="../_images/4b9c5ad0855288eb0e479d7ac449208dd89b3ff458ce670a577c290d5c3cfe59.png" />
+<img alt="../_images/94f483fb4521d74dc132d5e5b2dbd63332f4ce33803e92e704ffa364baa3cc27.png" src="../_images/94f483fb4521d74dc132d5e5b2dbd63332f4ce33803e92e704ffa364baa3cc27.png" />
+<img alt="../_images/06a87a0bc99b3cf2a702450427618385ecd67b3ea63fddb8d09b63f045b761b5.png" src="../_images/06a87a0bc99b3cf2a702450427618385ecd67b3ea63fddb8d09b63f045b761b5.png" />
+<img alt="../_images/c55704b919801dbfd39e00aa57765fba6d5f520d685e735d5f204928b6eb69b5.png" src="../_images/c55704b919801dbfd39e00aa57765fba6d5f520d685e735d5f204928b6eb69b5.png" />
+<img alt="../_images/c55704b919801dbfd39e00aa57765fba6d5f520d685e735d5f204928b6eb69b5.png" src="../_images/c55704b919801dbfd39e00aa57765fba6d5f520d685e735d5f204928b6eb69b5.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generating an LHS sample plan</span>
-<span class="n">sampler</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]]</span> <span class="p">),</span> <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;ese&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generating a grid of points</span>
+<span class="n">num_points</span> <span class="o">=</span> <span class="mi">100</span>
 
-<span class="c1"># Training data</span>
-<span class="n">num_sample</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1"># Sampling a high number of points to make the process more accurate</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="n">num_sample</span><span class="p">)</span>
+<span class="c1"># Defining x and y values</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="n">num_points</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="n">num_points</span><span class="p">)</span>
 
-<span class="c1"># Evaluating the function values at meshpoints</span>
-<span class="n">z1</span> <span class="o">=</span> <span class="n">f1</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">z2</span> <span class="o">=</span> <span class="n">f2</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">const1</span> <span class="o">=</span> <span class="n">g1</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">const2</span> <span class="o">=</span> <span class="n">g2</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="c1"># Creating a mesh</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
+<span class="c1"># Finding the front through non-dominated sorting</span>
+<span class="n">z1</span> <span class="o">=</span> <span class="n">f1</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))))</span>
+<span class="n">z2</span> <span class="o">=</span> <span class="n">f2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))))</span>
+<span class="n">const1</span> <span class="o">=</span> <span class="n">g1</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))))</span>
+<span class="n">const2</span> <span class="o">=</span> <span class="n">g2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))))</span>
 <span class="n">z1</span> <span class="o">=</span> <span class="n">z1</span><span class="p">[(</span><span class="n">const1</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">const2</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)]</span>
 <span class="n">z2</span> <span class="o">=</span> <span class="n">z2</span><span class="p">[(</span><span class="n">const1</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">const2</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)]</span>
+<span class="n">nds</span> <span class="o">=</span> <span class="n">NonDominatedSorting</span><span class="p">()</span>
 <span class="n">F</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">z1</span><span class="p">,</span><span class="n">z2</span><span class="p">))</span>
-<span class="n">pareto</span> <span class="o">=</span> <span class="n">nds</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">n_stop_if_ranked</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
-<span class="n">Z_pareto</span> <span class="o">=</span> <span class="n">F</span><span class="p">[</span><span class="n">pareto</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">pareto</span> <span class="o">=</span> <span class="n">nds</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">n_stop_if_ranked</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">Z_pareto</span> <span class="o">=</span> <span class="n">F</span><span class="p">[</span><span class="n">pareto</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
 
 <span class="c1"># Plotting final Pareto frontier obtained</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -708,7 +692,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/6addf9d79bfecaecca2f7ae727434bf8c5c4922c178ea52b78e03a930c92c6ab.png" src="../_images/6addf9d79bfecaecca2f7ae727434bf8c5c4922c178ea52b78e03a930c92c6ab.png" />
+<img alt="../_images/5d8d84c07e0a5fcdad5c791765239223f504bf3a04fe8bdb26755813fb9cfff8.png" src="../_images/5d8d84c07e0a5fcdad5c791765239223f504bf3a04fe8bdb26755813fb9cfff8.png" />
 </div>
 </div>
 </section>
@@ -752,15 +736,6 @@ document.write(`
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Multiobjective Optimization</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="krg_multi_objective.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Multiobjective optimization using Kriging models</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>

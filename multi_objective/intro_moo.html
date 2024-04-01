@@ -221,7 +221,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../engineering_design.html">Engineering Modeling and Design Optimization</a></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Multiobjective Optimization</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="multi_objective_optimization.html">Multiobjective optimization using differential evolution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="krg_multi_objective.html">Multiobjective optimization using Kriging models</a></li>
 </ul>
 </li>
 </ul>
@@ -373,7 +372,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branin-currin-optimization-problem">Branin-Currin optimization problem</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constrained-ctp1-optimization-problem">Constrained CTP1 optimization problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constrained-multiobjective-optimization-problem">Constrained multiobjective optimization problem</a></li>
 </ul>
             </nav>
         </div>
@@ -500,7 +499,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fc5b8df7370&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fc5b8cecf10&gt;
 </pre></div>
 </div>
 <img alt="../_images/01fedf5e5d654377361d53d5c9183eac3bb6ac38fcbf4710599daf569f38d552.png" src="../_images/01fedf5e5d654377361d53d5c9183eac3bb6ac38fcbf4710599daf569f38d552.png" />
@@ -508,16 +507,16 @@ document.write(`
 </div>
 <p>The above plot shows the non-dominated solutions of the problem in the objective space. The curve passing through these points is the Pareto front of the problem. The Pareto front is convex in shape for this problem.</p>
 </section>
-<section id="constrained-ctp1-optimization-problem">
-<h2>Constrained CTP1 optimization problem<a class="headerlink" href="#constrained-ctp1-optimization-problem" title="Permalink to this heading">#</a></h2>
-<p>The second example used in this section is a constrained multiobjective problem with two design variables, two objective functions and two constraints. This optimization problem is from the CTP suite of test functions for multiobjective design. The optimization problem statement is given as</p>
+<section id="constrained-multiobjective-optimization-problem">
+<h2>Constrained multiobjective optimization problem<a class="headerlink" href="#constrained-multiobjective-optimization-problem" title="Permalink to this heading">#</a></h2>
+<p>The second example used in this section is a constrained multiobjective problem with two design variables, two objective functions and two constraints. The optimization problem statement is given as</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
     \begin{gathered}
-    \min f(\textbf{x}) = \begin{cases} f_1(\textbf{x}) = x_1 \\ f_2(\textbf{x}) = (1+x_2)\exp(-\frac{x_1}{1+x_2}) \end{cases} \\
-    \textrm{subject to} \quad g_1(\textbf{x}) = 1 - \frac{f_2(\textbf{x})}{0.858\exp(-0.541f_1(\textbf{x}))} \leq 0\\
-    g_2(\textbf{x}) = 1 - \frac{f_2(\textbf{x})}{0.728\exp(-0.295f_1(\textbf{x}))} \leq 0\\
-    0 \leq x_1,x_2 \leq 1\\
+    \min f(\textbf{x}) = \begin{cases} f_1(\textbf{x}) = 4x_1^2+4x_2^2 \\ f_2(\textbf{x}) = (x_1-5)^2 + (x_2-5)^2 \end{cases} \\
+    \textrm{subject to} \quad g_1(\textbf{x}) = (x_1-5)^2 + x_2^2 -25 \leq 0\\
+    g_2(\textbf{x}) = 7.7 - ((x_1-8)^2 + (x_2+3)^2) \leq 0\\
+    -20 \leq x_1,x_2 \leq 20\\
     \end{gathered}
 \end{split}\]</div>
 <p>The block of code below defines the objective and constraint functions for the problem.</p>
@@ -530,7 +529,8 @@ document.write(`
     <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+    
     <span class="k">return</span> <span class="n">y</span>
     
 <span class="k">def</span> <span class="nf">f2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -539,10 +539,7 @@ document.write(`
     <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="n">x1</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">x2</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
-
-    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">x2</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">x2</span><span class="p">))</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
 
     <span class="k">return</span> <span class="n">y</span>
 
@@ -552,10 +549,7 @@ document.write(`
     <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
     
-    <span class="n">F1</span> <span class="o">=</span> <span class="n">f1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">F2</span> <span class="o">=</span> <span class="n">f2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    
-    <span class="n">g</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">F2</span><span class="o">/</span><span class="p">(</span><span class="mf">0.858</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.541</span><span class="o">*</span><span class="n">F1</span><span class="p">))</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">25</span>
 
     <span class="k">return</span> <span class="n">g</span>
 
@@ -565,13 +559,9 @@ document.write(`
     <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
     
-    <span class="n">F1</span> <span class="o">=</span> <span class="n">f1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">F2</span> <span class="o">=</span> <span class="n">f2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    
-    <span class="n">g</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">F2</span><span class="o">/</span><span class="p">(</span><span class="mf">0.728</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.295</span><span class="o">*</span><span class="n">F1</span><span class="p">))</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="mf">7.7</span> <span class="o">-</span> <span class="p">((</span><span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">8</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">g</span>
-    
 </pre></div>
 </div>
 </div>
@@ -579,117 +569,26 @@ document.write(`
 <p>The code block below uses the non-dominated sorting algorithm of <code class="docutils literal notranslate"><span class="pre">pymoo</span></code> to find the non-dominated points in the objective space. The non-dominated points represent the Pareto front of the problem.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generating an LHS sample plan</span>
-<span class="n">sampler</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]]</span> <span class="p">),</span> <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;ese&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generating a grid of points</span>
+<span class="n">num_points</span> <span class="o">=</span> <span class="mi">100</span>
 
-<span class="c1"># Training data</span>
-<span class="n">num_sample</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1"># Sampling a high number of points to make the process more accurate</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="n">num_sample</span><span class="p">)</span>
+<span class="c1"># Defining x and y values</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="n">num_points</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="n">num_points</span><span class="p">)</span>
 
-<span class="c1"># Evaluating the function values at meshpoints</span>
-<span class="n">z1</span> <span class="o">=</span> <span class="n">f1</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">z2</span> <span class="o">=</span> <span class="n">f2</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">const1</span> <span class="o">=</span> <span class="n">g1</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">const2</span> <span class="o">=</span> <span class="n">g2</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="c1"># Creating a mesh</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
+<span class="c1"># Finding the front through non-dominated sorting</span>
+<span class="n">z1</span> <span class="o">=</span> <span class="n">f1</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))))</span>
+<span class="n">z2</span> <span class="o">=</span> <span class="n">f2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))))</span>
+<span class="n">const1</span> <span class="o">=</span> <span class="n">g1</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))))</span>
+<span class="n">const2</span> <span class="o">=</span> <span class="n">g2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))))</span>
 <span class="n">z1</span> <span class="o">=</span> <span class="n">z1</span><span class="p">[(</span><span class="n">const1</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">const2</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)]</span>
 <span class="n">z2</span> <span class="o">=</span> <span class="n">z2</span><span class="p">[(</span><span class="n">const1</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">const2</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)]</span>
+<span class="n">nds</span> <span class="o">=</span> <span class="n">NonDominatedSorting</span><span class="p">()</span>
 <span class="n">F</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">z1</span><span class="p">,</span><span class="n">z2</span><span class="p">))</span>
-<span class="n">pareto</span> <span class="o">=</span> <span class="n">nds</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">n_stop_if_ranked</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
-<span class="n">Z_pareto</span> <span class="o">=</span> <span class="n">F</span><span class="p">[</span><span class="n">pareto</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting the contours</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Z_pareto</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">Z_pareto</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Pareto Front&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$f_1$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$f_2$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper right&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fc5b8d8bfa0&gt;
-</pre></div>
-</div>
-<img alt="../_images/b60bd022f3276d9ca2977d43825df7982525ee4cbfec758387d56cce24bfe407.png" src="../_images/b60bd022f3276d9ca2977d43825df7982525ee4cbfec758387d56cce24bfe407.png" />
-</div>
-</div>
-<p>The Pareto front for the 2D truss optimization problem is as shown above in the plot. The Pareto front for this problem is also convex.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the objective functions</span>
-<span class="k">def</span> <span class="nf">f1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-
-    <span class="n">dim</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span>
-    <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        
-    <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
-    
-    <span class="k">return</span> <span class="n">y</span>
-
-<span class="k">def</span> <span class="nf">f2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-
-    <span class="n">dim</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span>
-    <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        
-    <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
-    
-    <span class="k">return</span> <span class="n">y</span>
-
-<span class="c1"># Defining the constraints</span>
-<span class="k">def</span> <span class="nf">g1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-
-    <span class="n">dim</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span>
-    <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        
-    <span class="n">g</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mf">16.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])))</span>
-    
-    <span class="k">return</span> <span class="n">g</span>
-
-<span class="k">def</span> <span class="nf">g2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-
-    <span class="n">dim</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span>
-    <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        
-    <span class="n">g</span> <span class="o">=</span>  <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">anp</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span> <span class="n">anp</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
-
-    <span class="k">return</span> <span class="n">g</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>The block of code below will locate the Pareto front of the problem using the non-dominated sorting algorithm as done for the previous examples.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># To accurately find the Pareto front through non-dominated sorting a LHS sampling will be used</span>
-<span class="c1"># The Pareto front of this problem has an interesting shape</span>
-<span class="c1"># Generating an LHS sample plan</span>
-<span class="n">sampler</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]]</span> <span class="p">),</span> <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;ese&#39;</span><span class="p">)</span>
-
-<span class="c1"># Training data</span>
-<span class="n">num_sample</span> <span class="o">=</span> <span class="mi">10000</span> <span class="c1"># Sampling a high number of points to make the process more accurate</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="n">num_sample</span><span class="p">)</span>
-
-<span class="c1"># Evaluating the function values at meshpoints</span>
-<span class="n">z1</span> <span class="o">=</span> <span class="n">f1</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">z2</span> <span class="o">=</span> <span class="n">f2</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">const1</span> <span class="o">=</span> <span class="n">g1</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">const2</span> <span class="o">=</span> <span class="n">g2</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-
-<span class="n">z1</span> <span class="o">=</span> <span class="n">z1</span><span class="p">[(</span><span class="n">const1</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">const2</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)]</span>
-<span class="n">z2</span> <span class="o">=</span> <span class="n">z2</span><span class="p">[(</span><span class="n">const1</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">const2</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)]</span>
-<span class="n">F</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">z1</span><span class="p">,</span><span class="n">z2</span><span class="p">))</span>
-<span class="n">pareto</span> <span class="o">=</span> <span class="n">nds</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">n_stop_if_ranked</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+<span class="n">pareto</span> <span class="o">=</span> <span class="n">nds</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">n_stop_if_ranked</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
 <span class="n">Z_pareto</span> <span class="o">=</span> <span class="n">F</span><span class="p">[</span><span class="n">pareto</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
 </pre></div>
 </div>
@@ -708,13 +607,12 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fc5baf05d60&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fc5b8e62b80&gt;
 </pre></div>
 </div>
-<img alt="../_images/e8283f7b8f6bc8e858e81e0f4d6c6363ddc668e433811b5dd7204d1ccc1e8e88.png" src="../_images/e8283f7b8f6bc8e858e81e0f4d6c6363ddc668e433811b5dd7204d1ccc1e8e88.png" />
+<img alt="../_images/ebb10c4e7b0917894011783ad11c5b4648130abc76a047f29f9ca7730389652c.png" src="../_images/ebb10c4e7b0917894011783ad11c5b4648130abc76a047f29f9ca7730389652c.png" />
 </div>
 </div>
-<p>The above plot shows the Pareto front for the TNK optimization problem that is found through non-dominated sorting. The Pareto front for this problem is complex and therefore, the non-dominated sorting algorithm required a large number of LHS samples to find a good representation of the front. The front has both convex and concave regions and also has discontinuities. The non-dominated sorting method is an inefficient way to find the Pareto front for this problem as it requires a large number of sampling points. In the next section, the non-dominated sorting differential evolution (NSDE) algorithm will be used to find the Pareto front.</p>
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -784,7 +682,7 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branin-currin-optimization-problem">Branin-Currin optimization problem</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constrained-ctp1-optimization-problem">Constrained CTP1 optimization problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constrained-multiobjective-optimization-problem">Constrained multiobjective optimization problem</a></li>
 </ul>
   </nav></div>
 
