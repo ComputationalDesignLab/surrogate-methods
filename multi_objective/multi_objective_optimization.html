@@ -385,7 +385,10 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="multiobjective-optimization-using-differential-evolution">
 <h1>Multiobjective optimization using differential evolution<a class="headerlink" href="#multiobjective-optimization-using-differential-evolution" title="Permalink to this heading">#</a></h1>
-<p>In the introduction, three multiobjective optimization problems were described and the Pareto fronts of the problems were found by sampling the space with a large number of points and using a non-dominated sorting algorithm that finds a set of non-dominated solutions within the sampled points. In the case of troublesome Pareto fronts, this approach can be computationally expensive as a large number of sampling points may be required to accurately find the Pareto front. In this section, the non-dominated sorting differential evolution (NSDE) algorithm is introduced and used to solve the same three optimization problems. This algorithm uses the non-dominated sorting method and applies it to each population of the differential evolution algorithm. That along with other heuristics such as crowding functions can ensure that the algorithm finds the Pareto frontier of a problem more efficiently than just using the non-dominated sorting algorithm.</p>
+<p>In the introduction, two multiobjective optimization problems were described and the Pareto fronts of the problems were found by sampling the space and using a non-dominated sorting algorithm that finds a set of non-dominated solutions within the sampled points. However, the sorting algorithm can find it harder to find accurate fronts in the case of problems with complex functions. In this section, the non-dominated sorting differential evolution (NSDE) algorithm is introduced and used to solve the same two optimization problems. This algorithm uses the non-dominated sorting method and applies it to each population of the differential evolution algorithm. That along with other heuristics such as crowding functions makes it more likely that the algorithm finds a more accurate Pareto front for a problem than just using the non-dominated sorting method.</p>
+<blockquote>
+<div><p><strong><em>NOTE</em></strong>: The NSDE algorithm used in this section has been implemented using <code class="docutils literal notranslate"><span class="pre">pymoode</span></code> which is an extension for <code class="docutils literal notranslate"><span class="pre">pymoo</span></code> and contains multiobjective differential evolution methods. <code class="docutils literal notranslate"><span class="pre">pymoode</span></code> must be installed before running the code of this section. To install it, activate your conda environment and use the command <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pymoode==0.3.0rc3</span></code>. Make sure that you use this exact command since other versions <code class="docutils literal notranslate"><span class="pre">pymoode</span></code> have certains bugs that prevent installation.</p>
+</div></blockquote>
 <p>The block of code below imports the required packages for this section</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -450,7 +453,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>The blocks of code below defines the <code class="docutils literal notranslate"><span class="pre">problem</span></code> class for the optimization problem. The optimization problem is solved using the <code class="docutils literal notranslate"><span class="pre">NSDE</span></code> algorithm that is given in <code class="docutils literal notranslate"><span class="pre">pymoo</span></code>.</p>
+<p>The blocks of code below defines the <code class="docutils literal notranslate"><span class="pre">Problem</span></code> class for the optimization problem. The optimization problem is solved using the <code class="docutils literal notranslate"><span class="pre">NSDE</span></code> algorithm that is given in <code class="docutils literal notranslate"><span class="pre">pymoode</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the problem class for pymoo - we are evaluating two objective functions in this case</span>
@@ -502,19 +505,16 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/47105258711baa9dac45f5c547fdf2f63fe20ea6e1ef3a043c4fd7b467323a11.png" src="../_images/47105258711baa9dac45f5c547fdf2f63fe20ea6e1ef3a043c4fd7b467323a11.png" />
-<img alt="../_images/04a43cf945a16d264de8d313d0bfe7d34faca40368a2a3f1f48b5d1dfe6ab2d1.png" src="../_images/04a43cf945a16d264de8d313d0bfe7d34faca40368a2a3f1f48b5d1dfe6ab2d1.png" />
-<img alt="../_images/714a610f52f83798ca0288609f5f36d00da8963e8e90754e10280b16aeea2543.png" src="../_images/714a610f52f83798ca0288609f5f36d00da8963e8e90754e10280b16aeea2543.png" />
-<img alt="../_images/b67a3911d65eb26ed481d946f67e19664d1cb9c19736914533e2ed81894b393c.png" src="../_images/b67a3911d65eb26ed481d946f67e19664d1cb9c19736914533e2ed81894b393c.png" />
-<img alt="../_images/b6c13ffdf3296b0c9b691f9b7d57e3af79eb1936ce39d29b44f2a18460620d07.png" src="../_images/b6c13ffdf3296b0c9b691f9b7d57e3af79eb1936ce39d29b44f2a18460620d07.png" />
-<img alt="../_images/84be2a4ad245da5a8f74e2383e008950a869aed70278b859f90eac434527eeb8.png" src="../_images/84be2a4ad245da5a8f74e2383e008950a869aed70278b859f90eac434527eeb8.png" />
-<img alt="../_images/75a27c2a33ac12c5123f64a2666b60cab1aadda3edfd1a4a27f6ee2cf93ec0e1.png" src="../_images/75a27c2a33ac12c5123f64a2666b60cab1aadda3edfd1a4a27f6ee2cf93ec0e1.png" />
-<img alt="../_images/bebc0e7636ab3ffae1a5281a549d10ae581718a359f739f781467620bc3b703d.png" src="../_images/bebc0e7636ab3ffae1a5281a549d10ae581718a359f739f781467620bc3b703d.png" />
-<img alt="../_images/60b289a7e11932d27126a6b746d212e58dc96779f4cefcd931632262f28b5969.png" src="../_images/60b289a7e11932d27126a6b746d212e58dc96779f4cefcd931632262f28b5969.png" />
-<img alt="../_images/714995093f75002ceb8f02f244f165511ec01dce074ad054174e31ab55f2650a.png" src="../_images/714995093f75002ceb8f02f244f165511ec01dce074ad054174e31ab55f2650a.png" />
+<img alt="../_images/f4bb1082d5afaaa11c9d6d960ad31c4636db89bc9210d01d087b84ca2441d658.png" src="../_images/f4bb1082d5afaaa11c9d6d960ad31c4636db89bc9210d01d087b84ca2441d658.png" />
+<img alt="../_images/f0179e20f715af3113033e12417297601f6ea4a487371f36c4ea7b8025c505a3.png" src="../_images/f0179e20f715af3113033e12417297601f6ea4a487371f36c4ea7b8025c505a3.png" />
+<img alt="../_images/fbd7735c981f2eafe2471d89b931b7a6a7f4cee1b29d390469e26cd468bf2399.png" src="../_images/fbd7735c981f2eafe2471d89b931b7a6a7f4cee1b29d390469e26cd468bf2399.png" />
+<img alt="../_images/cc971e06a21272e65ff05b1fa84f31e26f4871adc68b1efdc5d6693d6d0f2348.png" src="../_images/cc971e06a21272e65ff05b1fa84f31e26f4871adc68b1efdc5d6693d6d0f2348.png" />
+<img alt="../_images/70bb5742cf2f26e25661f6a54c0ccbc8ea45787db0641d5be3dfb3a67ded9267.png" src="../_images/70bb5742cf2f26e25661f6a54c0ccbc8ea45787db0641d5be3dfb3a67ded9267.png" />
+<img alt="../_images/2d0b074d6fe88f0b4d4bf4e7cad09c6bcad8ad94c04b544c24919e0f0c61f885.png" src="../_images/2d0b074d6fe88f0b4d4bf4e7cad09c6bcad8ad94c04b544c24919e0f0c61f885.png" />
+<img alt="../_images/4a3cd8da63eef5f19ecfadfd020d704f5cae7cb69577c398d9e43ce54c459fdc.png" src="../_images/4a3cd8da63eef5f19ecfadfd020d704f5cae7cb69577c398d9e43ce54c459fdc.png" />
 </div>
 </div>
-<p>The block of code below plots the final Pareto front obtained for the problem and comapares it to the one found using non-dominated sorting alone. The Pareto front obtained using differential evolution is identical to the one obtained using non-dominated sorting indicating that the NSDE algorithm works well for the problem.</p>
+<p>The block of code below plots the final Pareto front obtained for the problem and comapares it to the one found using non-dominated sorting alone. The Pareto front obtained using differential evolution is similar to the one obtained using non-dominated sorting, however, the known frontier of the problem is known to be smooth and this smoothness is better captured by the NSDE solution as compared to the non-dominated sorting solution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generating a grid of points</span>
@@ -547,12 +547,13 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ac5e98f654500154fc166f4366ef9bd763252cdf2356387b24d871e473f3f72d.png" src="../_images/ac5e98f654500154fc166f4366ef9bd763252cdf2356387b24d871e473f3f72d.png" />
+<img alt="../_images/6a4d618f60b65b00c5bfe6d14dddb2aebad61aaaaeabd3f569756e5e1bdce7ea.png" src="../_images/6a4d618f60b65b00c5bfe6d14dddb2aebad61aaaaeabd3f569756e5e1bdce7ea.png" />
 </div>
 </div>
 </section>
 <section id="constrained-optimization-problem">
 <h2>Constrained optimization problem<a class="headerlink" href="#constrained-optimization-problem" title="Permalink to this heading">#</a></h2>
+<p>The constrained optimization problem was described in the previous section. The code block below defines the objective and constraint functions for the problem.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the objective functions</span>
@@ -613,6 +614,7 @@ document.write(`
 </div>
 </div>
 </div>
+<p>The blocks of code below defines the <code class="docutils literal notranslate"><span class="pre">Problem</span></code> class for the optimization problem. The optimization problem is solved using the <code class="docutils literal notranslate"><span class="pre">NSDE</span></code> algorithm that is given in <code class="docutils literal notranslate"><span class="pre">pymoode</span></code>. The convergence of the process is shown by plotting the non-dominated solutions obtained at every iteration of the algorithm. This shows the evolution of the Pareto front as the iterations progress.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">termination</span> <span class="o">=</span> <span class="n">DefaultMultiObjectiveTermination</span><span class="p">(</span>
@@ -648,13 +650,13 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/eb451b5b03483c8c22610e233d360429f842261b42fe2a7fb61d74339beaae0f.png" src="../_images/eb451b5b03483c8c22610e233d360429f842261b42fe2a7fb61d74339beaae0f.png" />
-<img alt="../_images/52cb8a033684d56b9d38a12b9ad2c18a18f6ec776e0c38bf330d334c95487bb7.png" src="../_images/52cb8a033684d56b9d38a12b9ad2c18a18f6ec776e0c38bf330d334c95487bb7.png" />
-<img alt="../_images/55e453f03573aceb4cac244ea74574552d2409f547a4acc1cf3c3a5bf799a505.png" src="../_images/55e453f03573aceb4cac244ea74574552d2409f547a4acc1cf3c3a5bf799a505.png" />
-<img alt="../_images/d28e3cecb3b968f671bcd766ed5cdb09c69a526d3a6f5455c2be47346f8af279.png" src="../_images/d28e3cecb3b968f671bcd766ed5cdb09c69a526d3a6f5455c2be47346f8af279.png" />
-<img alt="../_images/14545a2cd279f32208730806937533f14c41935b018dd06bfbaf4ebe9457d6f9.png" src="../_images/14545a2cd279f32208730806937533f14c41935b018dd06bfbaf4ebe9457d6f9.png" />
-<img alt="../_images/14545a2cd279f32208730806937533f14c41935b018dd06bfbaf4ebe9457d6f9.png" src="../_images/14545a2cd279f32208730806937533f14c41935b018dd06bfbaf4ebe9457d6f9.png" />
-<img alt="../_images/32b56576ebadeafcc2cf437191ec779f67f1c763fa1822fb4be57380cfb5c60a.png" src="../_images/32b56576ebadeafcc2cf437191ec779f67f1c763fa1822fb4be57380cfb5c60a.png" />
+<img alt="../_images/ecc632d327b2f3be2ea17007fb30191bd9f669735c77ffb7a1bac0dccda50505.png" src="../_images/ecc632d327b2f3be2ea17007fb30191bd9f669735c77ffb7a1bac0dccda50505.png" />
+<img alt="../_images/8979a84730a018cdc74e50133249af4b211e024e270d912dd98a80b2fcd2f2b6.png" src="../_images/8979a84730a018cdc74e50133249af4b211e024e270d912dd98a80b2fcd2f2b6.png" />
+<img alt="../_images/503dc5d58c64da093107d26ea9ed8fc2ec3769f9620f256cd864ff0fd6a335f9.png" src="../_images/503dc5d58c64da093107d26ea9ed8fc2ec3769f9620f256cd864ff0fd6a335f9.png" />
+<img alt="../_images/2d976b747967fbb18da2f924cebaf0c29da1c7bff862e413a5c0f391e9913e74.png" src="../_images/2d976b747967fbb18da2f924cebaf0c29da1c7bff862e413a5c0f391e9913e74.png" />
+<img alt="../_images/6cbc186c401551ffa46649b872f3a42aaa77972d5e6032da2483eba8a679764c.png" src="../_images/6cbc186c401551ffa46649b872f3a42aaa77972d5e6032da2483eba8a679764c.png" />
+<img alt="../_images/6cbc186c401551ffa46649b872f3a42aaa77972d5e6032da2483eba8a679764c.png" src="../_images/6cbc186c401551ffa46649b872f3a42aaa77972d5e6032da2483eba8a679764c.png" />
+<img alt="../_images/81728a40c48c7f87de419085c7492ba36f40fc0b4dd0164ed65d7ebb074f57d9.png" src="../_images/81728a40c48c7f87de419085c7492ba36f40fc0b4dd0164ed65d7ebb074f57d9.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -693,9 +695,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8231aeaddb8f22952a4a36ba7c8aadad36ffde94305e362ea6bb77309ee6cdcf.png" src="../_images/8231aeaddb8f22952a4a36ba7c8aadad36ffde94305e362ea6bb77309ee6cdcf.png" />
+<img alt="../_images/479e3f77af741e791279c01c5ce8410d1d0a65899096d7ffcf50a3c1d7f31b83.png" src="../_images/479e3f77af741e791279c01c5ce8410d1d0a65899096d7ffcf50a3c1d7f31b83.png" />
 </div>
 </div>
+<p>In this case, the Pareto front obtained using the non-dominated sorting algorithm and the NSDE algorithm are identical to each other. This means that when the functions of the problem are simple enough, both direct sorting of the solutions and directly solving the optimization problems will yield similar results. The Pareto front for this problem is a smooth convex curve.</p>
 </section>
 </section>
 

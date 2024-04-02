@@ -384,6 +384,8 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="multiobjective-optimization-using-kriging-models">
 <h1>Multiobjective optimization using Kriging models<a class="headerlink" href="#multiobjective-optimization-using-kriging-models" title="Permalink to this heading">#</a></h1>
+<p>In this section, multiobjective optimization using Kriging models will be described. The idea in this section is to replace the true function with an accurate enough Kriging surrogate model and perform multiobjective optimization using the Kriging model. In this case, an accurate enough model is one that correctly describe the Pareto front of the problem in conjunction with an optimizer such as NSDE. The Kriging models used in this section are generated in much the same way as done in previous sections.</p>
+<p>The block of code below imports the required packages for this section.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -402,6 +404,7 @@ document.write(`
 </div>
 <section id="branin-currin-optimization-problem">
 <h2>Branin-Currin optimization problem<a class="headerlink" href="#branin-currin-optimization-problem" title="Permalink to this heading">#</a></h2>
+<p>The Branin-Currin optimization problem has been described in the previous section. The block of code below defines the two functions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the objective functions</span>
@@ -447,6 +450,7 @@ document.write(`
 </div>
 </div>
 </div>
+<p>The block of code below solves the optimization problem directly using the true functions and NSDE. This will be used as a point of comparison when solving the problem using Kriging models.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the problem class for pymoo - we are evaluating two objective functions in this case</span>
@@ -474,6 +478,8 @@ document.write(`
 </div>
 </div>
 </div>
+<p>The next block of code defines a new problem class for solving the optimization problem using Kriging models. The problem class accepts two models, one for each function, as input arguments when initializing the class.</p>
+<p>After the definition of the problem class, a loop is utilized to iteratively create Kriging models for varying number of samples. Separte Kriging models are created for each of the objective functions. The optimization problem is solved using each of the Kriging models created and NSDE. Plots are created to compare the Pareto front obtained using the Kriging model and that obtained from the true function at each number of samples used.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining problem for kriging model based optimization</span>
@@ -511,7 +517,7 @@ document.write(`
     <span class="n">sm_currin</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
 
     <span class="n">problem</span> <span class="o">=</span> <span class="n">KRGBraninCurrin</span><span class="p">(</span><span class="n">sm_branin</span><span class="p">,</span> <span class="n">sm_currin</span><span class="p">)</span>
-    <span class="n">algorithm</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">termination</span> <span class="o">=</span> <span class="n">termination</span><span class="p">,</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">algorithm</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">termination</span> <span class="o">=</span> <span class="n">termination</span><span class="p">,</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
     <span class="n">res_krg</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="n">F_krg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">branin</span><span class="p">(</span><span class="n">res_krg</span><span class="o">.</span><span class="n">X</span><span class="p">),</span> <span class="n">currin</span><span class="p">(</span><span class="n">res_krg</span><span class="o">.</span><span class="n">X</span><span class="p">)))</span>
@@ -528,17 +534,19 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/eb823a3f8f70565f18fe5c4a7c337254135532c8ca2f08389b1cdb57e1f78e22.png" src="../_images/eb823a3f8f70565f18fe5c4a7c337254135532c8ca2f08389b1cdb57e1f78e22.png" />
-<img alt="../_images/2e3abe562be1cbab82c1fb2819b124aa267073d0f207e9878be3ce54bffe68c1.png" src="../_images/2e3abe562be1cbab82c1fb2819b124aa267073d0f207e9878be3ce54bffe68c1.png" />
-<img alt="../_images/642fb4c3fb1f4f94afce7204c0eed2af9ac10024f8dcc128b4efe8b16baa2a00.png" src="../_images/642fb4c3fb1f4f94afce7204c0eed2af9ac10024f8dcc128b4efe8b16baa2a00.png" />
-<img alt="../_images/8022c8439d4d8a437f7be2332ce514a9728174077632d814c4b1b94f41ed5207.png" src="../_images/8022c8439d4d8a437f7be2332ce514a9728174077632d814c4b1b94f41ed5207.png" />
-<img alt="../_images/53862381b57a1a46cd70723d897f27f75ccd4515f284a47556ca591432c5f991.png" src="../_images/53862381b57a1a46cd70723d897f27f75ccd4515f284a47556ca591432c5f991.png" />
-<img alt="../_images/0dce0c358424c03a6e59a2436d642a7613f7a2f2dcc66a2b5890375e2e11eea2.png" src="../_images/0dce0c358424c03a6e59a2436d642a7613f7a2f2dcc66a2b5890375e2e11eea2.png" />
+<img alt="../_images/b4580f0926ae52c0a764a0b5fb37f95fcf7afe796593ea1020896ef00719bf2d.png" src="../_images/b4580f0926ae52c0a764a0b5fb37f95fcf7afe796593ea1020896ef00719bf2d.png" />
+<img alt="../_images/f4a25d2857437a9ea4354b710044f4d5ef93c989581bcbcd7fa5558c3409b07b.png" src="../_images/f4a25d2857437a9ea4354b710044f4d5ef93c989581bcbcd7fa5558c3409b07b.png" />
+<img alt="../_images/922050fa0f9e28364e81b88820fcb3c6d49317fcbe00a80e5245029276256bbb.png" src="../_images/922050fa0f9e28364e81b88820fcb3c6d49317fcbe00a80e5245029276256bbb.png" />
+<img alt="../_images/6cd1964b2eef192592214d115dd9f756d53d05f5cbe1d14fd849cf2f851849c8.png" src="../_images/6cd1964b2eef192592214d115dd9f756d53d05f5cbe1d14fd849cf2f851849c8.png" />
+<img alt="../_images/eb0d40c5ba332ffaeb4fce92f7b7e01cb2e5b256cb2ed23d28ac1cd012593d3f.png" src="../_images/eb0d40c5ba332ffaeb4fce92f7b7e01cb2e5b256cb2ed23d28ac1cd012593d3f.png" />
+<img alt="../_images/fe3590fed8d94063d6cd71b9de675de2d34dc08ca110b277fad531e3f35b37f2.png" src="../_images/fe3590fed8d94063d6cd71b9de675de2d34dc08ca110b277fad531e3f35b37f2.png" />
 </div>
 </div>
+<p>The plots obtained from creating the various Kriging models show that approximately 100 samples are required to obtain an accurate enough representation of the Pareto front. Even though the Kriging models can be very accurate with a large number of samples, they can still produce certain solutions that lie outside of the Pareto front found using the true function. In most cases, these solutions are dominated solutions and should be ignored when plotting the Pareto front. This shows that it is indeed difficult to obtain an accurate Pareto front using surrogates when the problem involves complex multimodal functions.</p>
 </section>
 <section id="constrained-multiobjective-optimization-problem">
 <h2>Constrained multiobjective optimization problem<a class="headerlink" href="#constrained-multiobjective-optimization-problem" title="Permalink to this heading">#</a></h2>
+<p>The constrained multiobjective optimization problem has been described previously. The block of code below defines the objective and constraint functions for the problem. After the definition of the functions, a Problem class is defined and the optimization problem is solved using NSDE and the true function. This solution will be used as a point of comparison for the surrogate-based methods.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the objective functions</span>
@@ -611,6 +619,7 @@ document.write(`
 </div>
 </div>
 </div>
+<p>In the block of code below, a loop is utilized to iteratively create Kriging models for varying number of samples. The optimization problem is solved using each of the Kriging models created and NSDE. Separate Kriging models are created for each of the objective and constraint functions. This means the four Kriging models in total are created and used as input arguments for the new Problem class. Plots are created to compare the Pareto front obtained using the Kriging model and that obtained from the true function at each number of samples used.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining problem for kriging model based optimization</span>
@@ -639,7 +648,7 @@ document.write(`
         <span class="n">out</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">G1</span><span class="p">,</span> <span class="n">G2</span><span class="p">))</span>
 
 <span class="c1"># Defining sample sizes</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">]</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">]</span>
 <span class="n">xlimits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">20.0</span><span class="p">,</span><span class="mf">20.0</span><span class="p">],[</span><span class="o">-</span><span class="mf">20.0</span><span class="p">,</span><span class="mf">20.0</span><span class="p">]])</span>
 
 <span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
@@ -678,7 +687,7 @@ document.write(`
     <span class="c1"># Plotting final Pareto frontier obtained</span>
     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res_true</span><span class="o">.</span><span class="n">F</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">res_true</span><span class="o">.</span><span class="n">F</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;True function&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">F_krg</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">F_krg</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Kriging model&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">F_krg</span><span class="p">[::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">F_krg</span><span class="p">[::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Kriging model&quot;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$f_2$&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$f_1$&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
@@ -688,16 +697,16 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ffbd1c7ab70906bc584c9372250922933e8666207255e0789494a1fa5a20fc7a.png" src="../_images/ffbd1c7ab70906bc584c9372250922933e8666207255e0789494a1fa5a20fc7a.png" />
-<img alt="../_images/aa8e8f6c57e42b78c9222bfcfc29c4758c9e92d87fb7a2dd072e915bdd40cc75.png" src="../_images/aa8e8f6c57e42b78c9222bfcfc29c4758c9e92d87fb7a2dd072e915bdd40cc75.png" />
-<img alt="../_images/f6e7b707812bda4a9463f8b6a854d997ce1e495f02bdb7f338aba45fd3c592a3.png" src="../_images/f6e7b707812bda4a9463f8b6a854d997ce1e495f02bdb7f338aba45fd3c592a3.png" />
-<img alt="../_images/5f2143377c89015f48458ded3db2473e28e104f841aef405cb035b202c61dd9f.png" src="../_images/5f2143377c89015f48458ded3db2473e28e104f841aef405cb035b202c61dd9f.png" />
-<img alt="../_images/9161db90129c99f47fb3ded8482260b5f7ad22a6ac0dca0a37a3463e31e19a6c.png" src="../_images/9161db90129c99f47fb3ded8482260b5f7ad22a6ac0dca0a37a3463e31e19a6c.png" />
-<img alt="../_images/5ed993c34a4c79843ba3bb075c6e9fc73c8fcfc767cf8eb6ad36943d31eb710e.png" src="../_images/5ed993c34a4c79843ba3bb075c6e9fc73c8fcfc767cf8eb6ad36943d31eb710e.png" />
-<img alt="../_images/d94de44971e2b1f9e071f8de76fca0900ebdd707267ddec537b7780df9e12dca.png" src="../_images/d94de44971e2b1f9e071f8de76fca0900ebdd707267ddec537b7780df9e12dca.png" />
-<img alt="../_images/60141df20d1ba1a9d2854334611be6eb32a4a308f38ce5465c838ca7d698974e.png" src="../_images/60141df20d1ba1a9d2854334611be6eb32a4a308f38ce5465c838ca7d698974e.png" />
+<img alt="../_images/e023c74e962ba70dcba3d46e34594b60de09fa2ed963b37ae54be601d54f2bb7.png" src="../_images/e023c74e962ba70dcba3d46e34594b60de09fa2ed963b37ae54be601d54f2bb7.png" />
+<img alt="../_images/6b6f7b62f70a98a39f46f0c98dd551f9ad34a9bf597af649024772623a6d110d.png" src="../_images/6b6f7b62f70a98a39f46f0c98dd551f9ad34a9bf597af649024772623a6d110d.png" />
+<img alt="../_images/bd302abd21d536d9630d2ab962dc92167a912779a4509b1df7e2f0591ee45e7d.png" src="../_images/bd302abd21d536d9630d2ab962dc92167a912779a4509b1df7e2f0591ee45e7d.png" />
+<img alt="../_images/d6317ab3ce428f39f67833bf141166fe8d08dbd1619ae8d43d3c36f4c07209bd.png" src="../_images/d6317ab3ce428f39f67833bf141166fe8d08dbd1619ae8d43d3c36f4c07209bd.png" />
+<img alt="../_images/f5fa3f5548feac02fbb81c1751090f359cc17e40dc5aa5d29612482040403720.png" src="../_images/f5fa3f5548feac02fbb81c1751090f359cc17e40dc5aa5d29612482040403720.png" />
+<img alt="../_images/e3e963c050f0d1fed74fcef483ede95cdf2b3289a0f62ecddeaae7e2b890054e.png" src="../_images/e3e963c050f0d1fed74fcef483ede95cdf2b3289a0f62ecddeaae7e2b890054e.png" />
+<img alt="../_images/fd0a1706c38dfec3aa9accab8b1b9dfccd3012e9289d90d33c170e56b850aac4.png" src="../_images/fd0a1706c38dfec3aa9accab8b1b9dfccd3012e9289d90d33c170e56b850aac4.png" />
 </div>
 </div>
+<p>Owing to the simple nature of the functions used in this problem, only a few samples are required for the Kriging models to accurately obtain the Pareto front of the problem in conjunction with the NSDE algorithm. In such cases, surrogates prove to be useful tools for performing multiobjective optimization and require drastically lower evaluations of the true function to find the Pareto front.</p>
 </section>
 </section>
 
