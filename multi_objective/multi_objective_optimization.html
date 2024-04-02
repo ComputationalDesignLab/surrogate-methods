@@ -394,13 +394,11 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">smt.sampling_methods</span> <span class="kn">import</span> <span class="n">LHS</span>
 <span class="kn">from</span> <span class="nn">pymoo.core.problem</span> <span class="kn">import</span> <span class="n">Problem</span>
 <span class="kn">from</span> <span class="nn">pymoo.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
 <span class="kn">from</span> <span class="nn">pymoode.algorithms</span> <span class="kn">import</span> <span class="n">NSDE</span>
 <span class="kn">from</span> <span class="nn">pymoode.survival</span> <span class="kn">import</span> <span class="n">RankAndCrowding</span>
 <span class="kn">from</span> <span class="nn">pymoo.util.nds.non_dominated_sorting</span> <span class="kn">import</span> <span class="n">NonDominatedSorting</span>
-<span class="kn">from</span> <span class="nn">pymoo.termination.default</span> <span class="kn">import</span> <span class="n">DefaultMultiObjectiveTermination</span>
 </pre></div>
 </div>
 </div>
@@ -471,16 +469,8 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">termination</span> <span class="o">=</span> <span class="n">DefaultMultiObjectiveTermination</span><span class="p">(</span>
-    <span class="n">xtol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
-    <span class="n">cvtol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
-    <span class="n">ftol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
-    <span class="n">period</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
-    <span class="n">n_max_gen</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-    <span class="n">n_max_evals</span><span class="o">=</span><span class="mi">100000</span>
-<span class="p">)</span>
-<span class="n">problem</span> <span class="o">=</span> <span class="n">BraninCurrin</span><span class="p">()</span>
-<span class="n">algorithm</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">termination</span> <span class="o">=</span> <span class="n">termination</span><span class="p">,</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">problem</span> <span class="o">=</span> <span class="n">BraninCurrin</span><span class="p">()</span>
+<span class="n">algorithm</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span><span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> 
 <span class="n">res_nsde</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -505,13 +495,14 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f4bb1082d5afaaa11c9d6d960ad31c4636db89bc9210d01d087b84ca2441d658.png" src="../_images/f4bb1082d5afaaa11c9d6d960ad31c4636db89bc9210d01d087b84ca2441d658.png" />
-<img alt="../_images/f0179e20f715af3113033e12417297601f6ea4a487371f36c4ea7b8025c505a3.png" src="../_images/f0179e20f715af3113033e12417297601f6ea4a487371f36c4ea7b8025c505a3.png" />
-<img alt="../_images/fbd7735c981f2eafe2471d89b931b7a6a7f4cee1b29d390469e26cd468bf2399.png" src="../_images/fbd7735c981f2eafe2471d89b931b7a6a7f4cee1b29d390469e26cd468bf2399.png" />
-<img alt="../_images/cc971e06a21272e65ff05b1fa84f31e26f4871adc68b1efdc5d6693d6d0f2348.png" src="../_images/cc971e06a21272e65ff05b1fa84f31e26f4871adc68b1efdc5d6693d6d0f2348.png" />
-<img alt="../_images/70bb5742cf2f26e25661f6a54c0ccbc8ea45787db0641d5be3dfb3a67ded9267.png" src="../_images/70bb5742cf2f26e25661f6a54c0ccbc8ea45787db0641d5be3dfb3a67ded9267.png" />
-<img alt="../_images/2d0b074d6fe88f0b4d4bf4e7cad09c6bcad8ad94c04b544c24919e0f0c61f885.png" src="../_images/2d0b074d6fe88f0b4d4bf4e7cad09c6bcad8ad94c04b544c24919e0f0c61f885.png" />
-<img alt="../_images/4a3cd8da63eef5f19ecfadfd020d704f5cae7cb69577c398d9e43ce54c459fdc.png" src="../_images/4a3cd8da63eef5f19ecfadfd020d704f5cae7cb69577c398d9e43ce54c459fdc.png" />
+<img alt="../_images/317417d1d52750d373a226ac6c26d15fe8d7d1749b482fb5e57c3be8a1eb0e74.png" src="../_images/317417d1d52750d373a226ac6c26d15fe8d7d1749b482fb5e57c3be8a1eb0e74.png" />
+<img alt="../_images/b5def15de834d8a1150d951001b83c105de669b8f96629966ba1d5601ea4086b.png" src="../_images/b5def15de834d8a1150d951001b83c105de669b8f96629966ba1d5601ea4086b.png" />
+<img alt="../_images/7dbbbfd25a57764e97a46a0f5a9d3ba2db7a98c86f7262d936966bf674898854.png" src="../_images/7dbbbfd25a57764e97a46a0f5a9d3ba2db7a98c86f7262d936966bf674898854.png" />
+<img alt="../_images/07646f07e04edb4ecdc34a50347fad57d5e14cafd2e18b282b21439838acaf98.png" src="../_images/07646f07e04edb4ecdc34a50347fad57d5e14cafd2e18b282b21439838acaf98.png" />
+<img alt="../_images/1f304139c8a9d3e7943c8929625ed12ca3abefb152d2ef99ca67009c8141cff7.png" src="../_images/1f304139c8a9d3e7943c8929625ed12ca3abefb152d2ef99ca67009c8141cff7.png" />
+<img alt="../_images/81384cf46eef9ed3d05fe369b0802595b3acdfa8da2bd8a5249adec616b4e2a7.png" src="../_images/81384cf46eef9ed3d05fe369b0802595b3acdfa8da2bd8a5249adec616b4e2a7.png" />
+<img alt="../_images/3f9fdd9482782d579a64dfde982f34c19dd6929004bfc9e0643d471288590950.png" src="../_images/3f9fdd9482782d579a64dfde982f34c19dd6929004bfc9e0643d471288590950.png" />
+<img alt="../_images/0851e2f11fbe2d0b3d26f0246d99fb76a37e9084e9dceb91f1e9101d91e3aceb.png" src="../_images/0851e2f11fbe2d0b3d26f0246d99fb76a37e9084e9dceb91f1e9101d91e3aceb.png" />
 </div>
 </div>
 <p>The block of code below plots the final Pareto front obtained for the problem and comapares it to the one found using non-dominated sorting alone. The Pareto front obtained using differential evolution is similar to the one obtained using non-dominated sorting, however, the known frontier of the problem is known to be smooth and this smoothness is better captured by the NSDE solution as compared to the non-dominated sorting solution.</p>
@@ -547,7 +538,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/6a4d618f60b65b00c5bfe6d14dddb2aebad61aaaaeabd3f569756e5e1bdce7ea.png" src="../_images/6a4d618f60b65b00c5bfe6d14dddb2aebad61aaaaeabd3f569756e5e1bdce7ea.png" />
+<img alt="../_images/439c2692e2b5e1f26ad5886add26d493b778bd098d3ce183542a289bcfa5ce70.png" src="../_images/439c2692e2b5e1f26ad5886add26d493b778bd098d3ce183542a289bcfa5ce70.png" />
 </div>
 </div>
 </section>
@@ -617,16 +608,8 @@ document.write(`
 <p>The blocks of code below defines the <code class="docutils literal notranslate"><span class="pre">Problem</span></code> class for the optimization problem. The optimization problem is solved using the <code class="docutils literal notranslate"><span class="pre">NSDE</span></code> algorithm that is given in <code class="docutils literal notranslate"><span class="pre">pymoode</span></code>. The convergence of the process is shown by plotting the non-dominated solutions obtained at every iteration of the algorithm. This shows the evolution of the Pareto front as the iterations progress.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">termination</span> <span class="o">=</span> <span class="n">DefaultMultiObjectiveTermination</span><span class="p">(</span>
-    <span class="n">xtol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
-    <span class="n">cvtol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
-    <span class="n">ftol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
-    <span class="n">period</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
-    <span class="n">n_max_gen</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-    <span class="n">n_max_evals</span><span class="o">=</span><span class="mi">100000</span>
-<span class="p">)</span>
-<span class="n">problem</span> <span class="o">=</span> <span class="n">ConstrainedProblem</span><span class="p">()</span>
-<span class="n">nsde</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">termination</span> <span class="o">=</span> <span class="n">termination</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">problem</span> <span class="o">=</span> <span class="n">ConstrainedProblem</span><span class="p">()</span>
+<span class="n">nsde</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 <span class="n">res_nsde</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">nsde</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -635,7 +618,7 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">niter</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">res_nsde</span><span class="o">.</span><span class="n">history</span><span class="p">)</span> <span class="c1"># Number of iterations</span>
-<span class="n">iterations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">iterations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">iterations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">iterations</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="n">niter</span><span class="p">,</span><span class="mi">50</span><span class="p">)))</span>
 
 <span class="c1"># Plotting the particle evolution</span>
@@ -650,13 +633,12 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ecc632d327b2f3be2ea17007fb30191bd9f669735c77ffb7a1bac0dccda50505.png" src="../_images/ecc632d327b2f3be2ea17007fb30191bd9f669735c77ffb7a1bac0dccda50505.png" />
-<img alt="../_images/8979a84730a018cdc74e50133249af4b211e024e270d912dd98a80b2fcd2f2b6.png" src="../_images/8979a84730a018cdc74e50133249af4b211e024e270d912dd98a80b2fcd2f2b6.png" />
-<img alt="../_images/503dc5d58c64da093107d26ea9ed8fc2ec3769f9620f256cd864ff0fd6a335f9.png" src="../_images/503dc5d58c64da093107d26ea9ed8fc2ec3769f9620f256cd864ff0fd6a335f9.png" />
-<img alt="../_images/2d976b747967fbb18da2f924cebaf0c29da1c7bff862e413a5c0f391e9913e74.png" src="../_images/2d976b747967fbb18da2f924cebaf0c29da1c7bff862e413a5c0f391e9913e74.png" />
-<img alt="../_images/6cbc186c401551ffa46649b872f3a42aaa77972d5e6032da2483eba8a679764c.png" src="../_images/6cbc186c401551ffa46649b872f3a42aaa77972d5e6032da2483eba8a679764c.png" />
-<img alt="../_images/6cbc186c401551ffa46649b872f3a42aaa77972d5e6032da2483eba8a679764c.png" src="../_images/6cbc186c401551ffa46649b872f3a42aaa77972d5e6032da2483eba8a679764c.png" />
-<img alt="../_images/81728a40c48c7f87de419085c7492ba36f40fc0b4dd0164ed65d7ebb074f57d9.png" src="../_images/81728a40c48c7f87de419085c7492ba36f40fc0b4dd0164ed65d7ebb074f57d9.png" />
+<img alt="../_images/c33c6f1d12ab1d50a8524bc02a77b81494d1b73cd9ec41922e2020eebfd06fc0.png" src="../_images/c33c6f1d12ab1d50a8524bc02a77b81494d1b73cd9ec41922e2020eebfd06fc0.png" />
+<img alt="../_images/0025656e170b524d6397fadf607512ac249b84cf080dc8818c0faeea8b63a9bb.png" src="../_images/0025656e170b524d6397fadf607512ac249b84cf080dc8818c0faeea8b63a9bb.png" />
+<img alt="../_images/2de9ff81959d984842c1567ee3af8ed9ebc3bc7b1f93fbb443d300f2b9eaa2cf.png" src="../_images/2de9ff81959d984842c1567ee3af8ed9ebc3bc7b1f93fbb443d300f2b9eaa2cf.png" />
+<img alt="../_images/233cb73a0692e832f9c3ae6218a3f8a63761b37e24dffd5996f0d124bfa91b71.png" src="../_images/233cb73a0692e832f9c3ae6218a3f8a63761b37e24dffd5996f0d124bfa91b71.png" />
+<img alt="../_images/c294fb7abc91307b4344f2d8fd14221f6d19317faa3f07673f36ac4f52adddb5.png" src="../_images/c294fb7abc91307b4344f2d8fd14221f6d19317faa3f07673f36ac4f52adddb5.png" />
+<img alt="../_images/87a261981bffcf536d4ad23b1cb7ed1c272693c994b3011e64fc380987648751.png" src="../_images/87a261981bffcf536d4ad23b1cb7ed1c272693c994b3011e64fc380987648751.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -695,7 +677,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/479e3f77af741e791279c01c5ce8410d1d0a65899096d7ffcf50a3c1d7f31b83.png" src="../_images/479e3f77af741e791279c01c5ce8410d1d0a65899096d7ffcf50a3c1d7f31b83.png" />
+<img alt="../_images/604b00c48f7d70b27bcc9b827ca70b45cc4911334c86df497fee9c4c6b21a548.png" src="../_images/604b00c48f7d70b27bcc9b827ca70b45cc4911334c86df497fee9c4c6b21a548.png" />
 </div>
 </div>
 <p>In this case, the Pareto front obtained using the non-dominated sorting algorithm and the NSDE algorithm are identical to each other. This means that when the functions of the problem are simple enough, both direct sorting of the solutions and directly solving the optimization problems will yield similar results. The Pareto front for this problem is a smooth convex curve.</p>

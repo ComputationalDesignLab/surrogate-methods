@@ -390,14 +390,13 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">smt.sampling_methods</span> <span class="kn">import</span> <span class="n">LHS</span><span class="p">,</span> <span class="n">FullFactorial</span>
+<span class="kn">from</span> <span class="nn">smt.sampling_methods</span> <span class="kn">import</span> <span class="n">LHS</span>
 <span class="kn">from</span> <span class="nn">smt.surrogate_models</span> <span class="kn">import</span> <span class="n">KRG</span>
 <span class="kn">from</span> <span class="nn">pymoo.core.problem</span> <span class="kn">import</span> <span class="n">Problem</span>
 <span class="kn">from</span> <span class="nn">pymoo.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
 <span class="kn">from</span> <span class="nn">pymoode.algorithms</span> <span class="kn">import</span> <span class="n">NSDE</span>
 <span class="kn">from</span> <span class="nn">pymoode.survival</span> <span class="kn">import</span> <span class="n">RankAndCrowding</span>
 <span class="kn">from</span> <span class="nn">pymoo.util.nds.non_dominated_sorting</span> <span class="kn">import</span> <span class="n">NonDominatedSorting</span>
-<span class="kn">from</span> <span class="nn">pymoo.termination.default</span> <span class="kn">import</span> <span class="n">DefaultMultiObjectiveTermination</span>
 </pre></div>
 </div>
 </div>
@@ -463,16 +462,8 @@ document.write(`
 
         <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">branin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">currin</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
 
-<span class="n">termination</span> <span class="o">=</span> <span class="n">DefaultMultiObjectiveTermination</span><span class="p">(</span>
-    <span class="n">xtol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
-    <span class="n">cvtol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
-    <span class="n">ftol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
-    <span class="n">period</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
-    <span class="n">n_max_gen</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-    <span class="n">n_max_evals</span><span class="o">=</span><span class="mi">100000</span>
-<span class="p">)</span>
 <span class="n">problem</span> <span class="o">=</span> <span class="n">BraninCurrin</span><span class="p">()</span>
-<span class="n">algorithm</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">termination</span> <span class="o">=</span> <span class="n">termination</span><span class="p">,</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">algorithm</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 <span class="n">res_true</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -517,7 +508,7 @@ document.write(`
     <span class="n">sm_currin</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
 
     <span class="n">problem</span> <span class="o">=</span> <span class="n">KRGBraninCurrin</span><span class="p">(</span><span class="n">sm_branin</span><span class="p">,</span> <span class="n">sm_currin</span><span class="p">)</span>
-    <span class="n">algorithm</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">termination</span> <span class="o">=</span> <span class="n">termination</span><span class="p">,</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">algorithm</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
     <span class="n">res_krg</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="n">F_krg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">branin</span><span class="p">(</span><span class="n">res_krg</span><span class="o">.</span><span class="n">X</span><span class="p">),</span> <span class="n">currin</span><span class="p">(</span><span class="n">res_krg</span><span class="o">.</span><span class="n">X</span><span class="p">)))</span>
@@ -534,12 +525,12 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/b4580f0926ae52c0a764a0b5fb37f95fcf7afe796593ea1020896ef00719bf2d.png" src="../_images/b4580f0926ae52c0a764a0b5fb37f95fcf7afe796593ea1020896ef00719bf2d.png" />
-<img alt="../_images/f4a25d2857437a9ea4354b710044f4d5ef93c989581bcbcd7fa5558c3409b07b.png" src="../_images/f4a25d2857437a9ea4354b710044f4d5ef93c989581bcbcd7fa5558c3409b07b.png" />
-<img alt="../_images/922050fa0f9e28364e81b88820fcb3c6d49317fcbe00a80e5245029276256bbb.png" src="../_images/922050fa0f9e28364e81b88820fcb3c6d49317fcbe00a80e5245029276256bbb.png" />
-<img alt="../_images/6cd1964b2eef192592214d115dd9f756d53d05f5cbe1d14fd849cf2f851849c8.png" src="../_images/6cd1964b2eef192592214d115dd9f756d53d05f5cbe1d14fd849cf2f851849c8.png" />
-<img alt="../_images/eb0d40c5ba332ffaeb4fce92f7b7e01cb2e5b256cb2ed23d28ac1cd012593d3f.png" src="../_images/eb0d40c5ba332ffaeb4fce92f7b7e01cb2e5b256cb2ed23d28ac1cd012593d3f.png" />
-<img alt="../_images/fe3590fed8d94063d6cd71b9de675de2d34dc08ca110b277fad531e3f35b37f2.png" src="../_images/fe3590fed8d94063d6cd71b9de675de2d34dc08ca110b277fad531e3f35b37f2.png" />
+<img alt="../_images/f4ecccec1e7a7db2147a7d099af6ba53cda690eb83ff85f95f244c97e04adb39.png" src="../_images/f4ecccec1e7a7db2147a7d099af6ba53cda690eb83ff85f95f244c97e04adb39.png" />
+<img alt="../_images/267034c7d8605fe690077c4394f5c233890e4f12c63567a6c8a9fb335385343a.png" src="../_images/267034c7d8605fe690077c4394f5c233890e4f12c63567a6c8a9fb335385343a.png" />
+<img alt="../_images/9c664cecd3f27a4a752dcd9acaedb1450cbf99cd03070bbb886d42d82ba3de01.png" src="../_images/9c664cecd3f27a4a752dcd9acaedb1450cbf99cd03070bbb886d42d82ba3de01.png" />
+<img alt="../_images/2e51908aa66614f46c3f544cce22795b7bc4f83ff9e143f77a3e868f207108ec.png" src="../_images/2e51908aa66614f46c3f544cce22795b7bc4f83ff9e143f77a3e868f207108ec.png" />
+<img alt="../_images/1a4cb3466dcae45f847da9e4d8aadfc84f089357a264375dc3128937daebbade.png" src="../_images/1a4cb3466dcae45f847da9e4d8aadfc84f089357a264375dc3128937daebbade.png" />
+<img alt="../_images/9ef720ff6978cfcd8a9a0296716293fca04b109bfbd3ad61494e6c15a12d93f7.png" src="../_images/9ef720ff6978cfcd8a9a0296716293fca04b109bfbd3ad61494e6c15a12d93f7.png" />
 </div>
 </div>
 <p>The plots obtained from creating the various Kriging models show that approximately 100 samples are required to obtain an accurate enough representation of the Pareto front. Even though the Kriging models can be very accurate with a large number of samples, they can still produce certain solutions that lie outside of the Pareto front found using the true function. In most cases, these solutions are dominated solutions and should be ignored when plotting the Pareto front. This shows that it is indeed difficult to obtain an accurate Pareto front using surrogates when the problem involves complex multimodal functions.</p>
@@ -604,16 +595,8 @@ document.write(`
         <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">f1</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">f2</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
         <span class="n">out</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">g1</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">g2</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
 
-<span class="n">termination</span> <span class="o">=</span> <span class="n">DefaultMultiObjectiveTermination</span><span class="p">(</span>
-    <span class="n">xtol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
-    <span class="n">cvtol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
-    <span class="n">ftol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
-    <span class="n">period</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
-    <span class="n">n_max_gen</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-    <span class="n">n_max_evals</span><span class="o">=</span><span class="mi">100000</span>
-<span class="p">)</span>
 <span class="n">problem</span> <span class="o">=</span> <span class="n">ConstrainedProblem</span><span class="p">()</span>
-<span class="n">nsde</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">termination</span> <span class="o">=</span> <span class="n">termination</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">nsde</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 <span class="n">res_true</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">nsde</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -680,7 +663,7 @@ document.write(`
     <span class="n">sm_g2</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
 
     <span class="n">problem</span> <span class="o">=</span> <span class="n">KRGProb</span><span class="p">(</span><span class="n">sm_f1</span><span class="p">,</span> <span class="n">sm_f2</span><span class="p">,</span> <span class="n">sm_g1</span><span class="p">,</span> <span class="n">sm_g2</span><span class="p">)</span>
-    <span class="n">algorithm</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">termination</span> <span class="o">=</span> <span class="n">termination</span><span class="p">,</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">algorithm</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
     <span class="n">res_krg</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     
     <span class="n">F_krg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">f1</span><span class="p">(</span><span class="n">res_krg</span><span class="o">.</span><span class="n">X</span><span class="p">),</span> <span class="n">f2</span><span class="p">(</span><span class="n">res_krg</span><span class="o">.</span><span class="n">X</span><span class="p">)))</span>
@@ -697,13 +680,13 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/e023c74e962ba70dcba3d46e34594b60de09fa2ed963b37ae54be601d54f2bb7.png" src="../_images/e023c74e962ba70dcba3d46e34594b60de09fa2ed963b37ae54be601d54f2bb7.png" />
-<img alt="../_images/6b6f7b62f70a98a39f46f0c98dd551f9ad34a9bf597af649024772623a6d110d.png" src="../_images/6b6f7b62f70a98a39f46f0c98dd551f9ad34a9bf597af649024772623a6d110d.png" />
-<img alt="../_images/bd302abd21d536d9630d2ab962dc92167a912779a4509b1df7e2f0591ee45e7d.png" src="../_images/bd302abd21d536d9630d2ab962dc92167a912779a4509b1df7e2f0591ee45e7d.png" />
-<img alt="../_images/d6317ab3ce428f39f67833bf141166fe8d08dbd1619ae8d43d3c36f4c07209bd.png" src="../_images/d6317ab3ce428f39f67833bf141166fe8d08dbd1619ae8d43d3c36f4c07209bd.png" />
-<img alt="../_images/f5fa3f5548feac02fbb81c1751090f359cc17e40dc5aa5d29612482040403720.png" src="../_images/f5fa3f5548feac02fbb81c1751090f359cc17e40dc5aa5d29612482040403720.png" />
-<img alt="../_images/e3e963c050f0d1fed74fcef483ede95cdf2b3289a0f62ecddeaae7e2b890054e.png" src="../_images/e3e963c050f0d1fed74fcef483ede95cdf2b3289a0f62ecddeaae7e2b890054e.png" />
-<img alt="../_images/fd0a1706c38dfec3aa9accab8b1b9dfccd3012e9289d90d33c170e56b850aac4.png" src="../_images/fd0a1706c38dfec3aa9accab8b1b9dfccd3012e9289d90d33c170e56b850aac4.png" />
+<img alt="../_images/1a865f08c09c3f43b58affc974c645a0c9dc01cfacae54c48ab0f586adf67165.png" src="../_images/1a865f08c09c3f43b58affc974c645a0c9dc01cfacae54c48ab0f586adf67165.png" />
+<img alt="../_images/a067e4057cc07534aed5bde9656859d8891203689ad6202cec60d266f1eebc90.png" src="../_images/a067e4057cc07534aed5bde9656859d8891203689ad6202cec60d266f1eebc90.png" />
+<img alt="../_images/1dc574bf510ee9e5c12c55c595443b5e67af4f2ee3bca9dbf9f0ce61773b65f3.png" src="../_images/1dc574bf510ee9e5c12c55c595443b5e67af4f2ee3bca9dbf9f0ce61773b65f3.png" />
+<img alt="../_images/b2893783295799c94f3141ffc02282bb5e68e03db419dcb2c08e91c1aa920d3b.png" src="../_images/b2893783295799c94f3141ffc02282bb5e68e03db419dcb2c08e91c1aa920d3b.png" />
+<img alt="../_images/a3f2db830a3e40a6aba77659d219fb5111d3fe09f4a040535978a252a8259da1.png" src="../_images/a3f2db830a3e40a6aba77659d219fb5111d3fe09f4a040535978a252a8259da1.png" />
+<img alt="../_images/bc6ca9e593e8702f91a226fe3c858ce947bb61ae10a27f984040b9f8f58d1650.png" src="../_images/bc6ca9e593e8702f91a226fe3c858ce947bb61ae10a27f984040b9f8f58d1650.png" />
+<img alt="../_images/3d04c04c977d1cbc8fb01fed2e29eec971ce55593c4c803deb283a597d1d5abd.png" src="../_images/3d04c04c977d1cbc8fb01fed2e29eec971ce55593c4c803deb283a597d1d5abd.png" />
 </div>
 </div>
 <p>Owing to the simple nature of the functions used in this problem, only a few samples are required for the Kriging models to accurately obtain the Pareto front of the problem in conjunction with the NSDE algorithm. In such cases, surrogates prove to be useful tools for performing multiobjective optimization and require drastically lower evaluations of the true function to find the Pareto front.</p>
