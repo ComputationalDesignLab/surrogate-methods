@@ -451,7 +451,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>The blocks of code below defines the <code class="docutils literal notranslate"><span class="pre">Problem</span></code> class for the optimization problem. The optimization problem is solved using the <code class="docutils literal notranslate"><span class="pre">NSDE</span></code> algorithm that is given in <code class="docutils literal notranslate"><span class="pre">pymoode</span></code>.</p>
+<p>The blocks of code below defines the <code class="docutils literal notranslate"><span class="pre">Problem</span></code> class for the optimization problem. The optimization problem is solved using the <code class="docutils literal notranslate"><span class="pre">NSDE</span></code> algorithm that is given in <code class="docutils literal notranslate"><span class="pre">pymoode</span></code>. The number of generations and function evaluations required by the algorithm are also reported.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the problem class for pymoo - we are evaluating two objective functions in this case</span>
@@ -472,6 +472,14 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">problem</span> <span class="o">=</span> <span class="n">BraninCurrin</span><span class="p">()</span>
 <span class="n">algorithm</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span><span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> 
 <span class="n">res_nsde</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of generations:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">res_nsde</span><span class="o">.</span><span class="n">history</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of function evaluations:&quot;</span><span class="p">,</span> <span class="n">res_nsde</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">evaluator</span><span class="o">.</span><span class="n">n_eval</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of generations: 95
+Number of function evaluations: 9500
 </pre></div>
 </div>
 </div>
@@ -495,14 +503,14 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/317417d1d52750d373a226ac6c26d15fe8d7d1749b482fb5e57c3be8a1eb0e74.png" src="../_images/317417d1d52750d373a226ac6c26d15fe8d7d1749b482fb5e57c3be8a1eb0e74.png" />
-<img alt="../_images/b5def15de834d8a1150d951001b83c105de669b8f96629966ba1d5601ea4086b.png" src="../_images/b5def15de834d8a1150d951001b83c105de669b8f96629966ba1d5601ea4086b.png" />
-<img alt="../_images/7dbbbfd25a57764e97a46a0f5a9d3ba2db7a98c86f7262d936966bf674898854.png" src="../_images/7dbbbfd25a57764e97a46a0f5a9d3ba2db7a98c86f7262d936966bf674898854.png" />
-<img alt="../_images/07646f07e04edb4ecdc34a50347fad57d5e14cafd2e18b282b21439838acaf98.png" src="../_images/07646f07e04edb4ecdc34a50347fad57d5e14cafd2e18b282b21439838acaf98.png" />
-<img alt="../_images/1f304139c8a9d3e7943c8929625ed12ca3abefb152d2ef99ca67009c8141cff7.png" src="../_images/1f304139c8a9d3e7943c8929625ed12ca3abefb152d2ef99ca67009c8141cff7.png" />
-<img alt="../_images/81384cf46eef9ed3d05fe369b0802595b3acdfa8da2bd8a5249adec616b4e2a7.png" src="../_images/81384cf46eef9ed3d05fe369b0802595b3acdfa8da2bd8a5249adec616b4e2a7.png" />
-<img alt="../_images/3f9fdd9482782d579a64dfde982f34c19dd6929004bfc9e0643d471288590950.png" src="../_images/3f9fdd9482782d579a64dfde982f34c19dd6929004bfc9e0643d471288590950.png" />
-<img alt="../_images/0851e2f11fbe2d0b3d26f0246d99fb76a37e9084e9dceb91f1e9101d91e3aceb.png" src="../_images/0851e2f11fbe2d0b3d26f0246d99fb76a37e9084e9dceb91f1e9101d91e3aceb.png" />
+<img alt="../_images/0d3eb756e7bdd2f46c1ddd474ac38778112b1fc67977bf8ed38d49f48ec73d63.png" src="../_images/0d3eb756e7bdd2f46c1ddd474ac38778112b1fc67977bf8ed38d49f48ec73d63.png" />
+<img alt="../_images/72b53bfc51e36ed159705c95f3d1505e1638546179335300c3ad91773bceebc6.png" src="../_images/72b53bfc51e36ed159705c95f3d1505e1638546179335300c3ad91773bceebc6.png" />
+<img alt="../_images/0897cb5b1ed6a2b2e254c86378b038e46b84754ccb33a9a2e03acf02f8697b33.png" src="../_images/0897cb5b1ed6a2b2e254c86378b038e46b84754ccb33a9a2e03acf02f8697b33.png" />
+<img alt="../_images/65334e57f9e8cf26fb9d92e4b8d19e9083b5e09d1c2e07745530606f410e1fa8.png" src="../_images/65334e57f9e8cf26fb9d92e4b8d19e9083b5e09d1c2e07745530606f410e1fa8.png" />
+<img alt="../_images/ea1c804ee3e31a716da100bff9b221a109cdbabb9a9f55eb712b1a7d79358b07.png" src="../_images/ea1c804ee3e31a716da100bff9b221a109cdbabb9a9f55eb712b1a7d79358b07.png" />
+<img alt="../_images/6ec07065ecee0f76bb7c0cdd339aad635c9bd9784c53678dd088bfe28cba7d92.png" src="../_images/6ec07065ecee0f76bb7c0cdd339aad635c9bd9784c53678dd088bfe28cba7d92.png" />
+<img alt="../_images/455f0f7b911c3755869186ea828c00459d3bc7e6993c4fe16525119c3ff633bb.png" src="../_images/455f0f7b911c3755869186ea828c00459d3bc7e6993c4fe16525119c3ff633bb.png" />
+<img alt="../_images/49bb92fdb39ab422f398d8eb523808ec126e8712500fadb72c0d8fa95b31f022.png" src="../_images/49bb92fdb39ab422f398d8eb523808ec126e8712500fadb72c0d8fa95b31f022.png" />
 </div>
 </div>
 <p>The block of code below plots the final Pareto front obtained for the problem and comapares it to the one found using non-dominated sorting alone. The Pareto front obtained using differential evolution is similar to the one obtained using non-dominated sorting, however, the known frontier of the problem is known to be smooth and this smoothness is better captured by the NSDE solution as compared to the non-dominated sorting solution.</p>
@@ -538,7 +546,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/439c2692e2b5e1f26ad5886add26d493b778bd098d3ce183542a289bcfa5ce70.png" src="../_images/439c2692e2b5e1f26ad5886add26d493b778bd098d3ce183542a289bcfa5ce70.png" />
+<img alt="../_images/3560b3aced538ca266782d8cca32eb75f16544d83d193c77b359d55991907d67.png" src="../_images/3560b3aced538ca266782d8cca32eb75f16544d83d193c77b359d55991907d67.png" />
 </div>
 </div>
 </section>
@@ -605,12 +613,20 @@ document.write(`
 </div>
 </div>
 </div>
-<p>The blocks of code below defines the <code class="docutils literal notranslate"><span class="pre">Problem</span></code> class for the optimization problem. The optimization problem is solved using the <code class="docutils literal notranslate"><span class="pre">NSDE</span></code> algorithm that is given in <code class="docutils literal notranslate"><span class="pre">pymoode</span></code>. The convergence of the process is shown by plotting the non-dominated solutions obtained at every iteration of the algorithm. This shows the evolution of the Pareto front as the iterations progress.</p>
+<p>The blocks of code below defines the <code class="docutils literal notranslate"><span class="pre">Problem</span></code> class for the optimization problem. The optimization problem is solved using the <code class="docutils literal notranslate"><span class="pre">NSDE</span></code> algorithm that is given in <code class="docutils literal notranslate"><span class="pre">pymoode</span></code>. The number of generations and function evaluations required by the algorithm are also reported. The convergence of the process is shown by plotting the non-dominated solutions obtained at every iteration of the algorithm. This shows the evolution of the Pareto front as the iterations progress.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">problem</span> <span class="o">=</span> <span class="n">ConstrainedProblem</span><span class="p">()</span>
 <span class="n">nsde</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 <span class="n">res_nsde</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">nsde</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of generations:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">res_nsde</span><span class="o">.</span><span class="n">history</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of function evaluations:&quot;</span><span class="p">,</span> <span class="n">res_nsde</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">evaluator</span><span class="o">.</span><span class="n">n_eval</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of generations: 78
+Number of function evaluations: 15600
 </pre></div>
 </div>
 </div>
@@ -619,7 +635,7 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">niter</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">res_nsde</span><span class="o">.</span><span class="n">history</span><span class="p">)</span> <span class="c1"># Number of iterations</span>
 <span class="n">iterations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">iterations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">iterations</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="n">niter</span><span class="p">,</span><span class="mi">50</span><span class="p">)))</span>
+<span class="n">iterations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">iterations</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="n">niter</span><span class="p">,</span><span class="mi">20</span><span class="p">)))</span>
 
 <span class="c1"># Plotting the particle evolution</span>
 <span class="k">for</span> <span class="n">itr</span> <span class="ow">in</span> <span class="n">iterations</span><span class="p">:</span>
@@ -633,12 +649,13 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c33c6f1d12ab1d50a8524bc02a77b81494d1b73cd9ec41922e2020eebfd06fc0.png" src="../_images/c33c6f1d12ab1d50a8524bc02a77b81494d1b73cd9ec41922e2020eebfd06fc0.png" />
-<img alt="../_images/0025656e170b524d6397fadf607512ac249b84cf080dc8818c0faeea8b63a9bb.png" src="../_images/0025656e170b524d6397fadf607512ac249b84cf080dc8818c0faeea8b63a9bb.png" />
-<img alt="../_images/2de9ff81959d984842c1567ee3af8ed9ebc3bc7b1f93fbb443d300f2b9eaa2cf.png" src="../_images/2de9ff81959d984842c1567ee3af8ed9ebc3bc7b1f93fbb443d300f2b9eaa2cf.png" />
-<img alt="../_images/233cb73a0692e832f9c3ae6218a3f8a63761b37e24dffd5996f0d124bfa91b71.png" src="../_images/233cb73a0692e832f9c3ae6218a3f8a63761b37e24dffd5996f0d124bfa91b71.png" />
-<img alt="../_images/c294fb7abc91307b4344f2d8fd14221f6d19317faa3f07673f36ac4f52adddb5.png" src="../_images/c294fb7abc91307b4344f2d8fd14221f6d19317faa3f07673f36ac4f52adddb5.png" />
-<img alt="../_images/87a261981bffcf536d4ad23b1cb7ed1c272693c994b3011e64fc380987648751.png" src="../_images/87a261981bffcf536d4ad23b1cb7ed1c272693c994b3011e64fc380987648751.png" />
+<img alt="../_images/f27d380b40b4279b4d5285ee72f5e6bae377a0be44477cfd7561feecfc2fcd84.png" src="../_images/f27d380b40b4279b4d5285ee72f5e6bae377a0be44477cfd7561feecfc2fcd84.png" />
+<img alt="../_images/5b829068bd91c009618a0abde4c9aeb1f57e083ecf24dc002dff068bea7e8362.png" src="../_images/5b829068bd91c009618a0abde4c9aeb1f57e083ecf24dc002dff068bea7e8362.png" />
+<img alt="../_images/b525782d574a58b138d95753b3b96052586d264549fb09c62193a622788db0ee.png" src="../_images/b525782d574a58b138d95753b3b96052586d264549fb09c62193a622788db0ee.png" />
+<img alt="../_images/13b187dc570365f32da4062e03ab8c616baa0eef9a454c7b905b13ccc210a112.png" src="../_images/13b187dc570365f32da4062e03ab8c616baa0eef9a454c7b905b13ccc210a112.png" />
+<img alt="../_images/b7ec6b469a9e05af45084f0296d805f34fbedb56c5cb68e762c534a5a71da6f4.png" src="../_images/b7ec6b469a9e05af45084f0296d805f34fbedb56c5cb68e762c534a5a71da6f4.png" />
+<img alt="../_images/c4b84da8936641670f02b58a36b9e8d980580b33be9dcc08fad4574ae6e3e2ed.png" src="../_images/c4b84da8936641670f02b58a36b9e8d980580b33be9dcc08fad4574ae6e3e2ed.png" />
+<img alt="../_images/81117d498e446d9748745a6e4f4c5e73fec65825aacce34c8a8b642c04635841.png" src="../_images/81117d498e446d9748745a6e4f4c5e73fec65825aacce34c8a8b642c04635841.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -677,7 +694,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/604b00c48f7d70b27bcc9b827ca70b45cc4911334c86df497fee9c4c6b21a548.png" src="../_images/604b00c48f7d70b27bcc9b827ca70b45cc4911334c86df497fee9c4c6b21a548.png" />
+<img alt="../_images/2baed32e00006e169be5c5b8b3a195b19f1057195281ba7f19de1019b2d93159.png" src="../_images/2baed32e00006e169be5c5b8b3a195b19f1057195281ba7f19de1019b2d93159.png" />
 </div>
 </div>
 <p>In this case, the Pareto front obtained using the non-dominated sorting algorithm and the NSDE algorithm are identical to each other. This means that when the functions of the problem are simple enough, both direct sorting of the solutions and directly solving the optimization problems will yield similar results. The Pareto front for this problem is a smooth convex curve.</p>
