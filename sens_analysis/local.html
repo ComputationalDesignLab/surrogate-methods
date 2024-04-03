@@ -561,53 +561,49 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration 1
-Maximum EI: 39.801678700659714
-Best observed value: 74.72241915936578
+Maximum EI: 113.98534387216576
+Best observed value: 103.56472323205112
 
 Iteration 2
-Maximum EI: 11.59418827549413
-Best observed value: 74.72241915936578
+Maximum EI: 51.286466352243764
+Best observed value: 103.56472323205112
 
 Iteration 3
-Maximum EI: 19.49482882444615
-Best observed value: 74.72241915936578
+Maximum EI: 65.85878858609523
+Best observed value: 103.56472323205112
 
 Iteration 4
-Maximum EI: 0.39596156225780565
-Best observed value: 51.491711751413135
+Maximum EI: 56.16221803171064
+Best observed value: 103.56472323205112
 
 Iteration 5
-Maximum EI: 0.326763081470653
-Best observed value: 51.491711751413135
+Maximum EI: 3.2374951458777543
+Best observed value: 51.94316412520012
 
 Iteration 6
-Maximum EI: 1.2717832825566826
-Best observed value: 51.491711751413135
+Maximum EI: 1.5021706176842642
+Best observed value: 51.94316412520012
 
 Iteration 7
-Maximum EI: 6.736541395514857
-Best observed value: 47.75286964962626
+Maximum EI: 2.670022445093572
+Best observed value: 51.94316412520012
 
 Iteration 8
-Maximum EI: 1.7657179736765283
-Best observed value: 47.75286964962626
+Maximum EI: 2.047968423254593
+Best observed value: 47.989565529699796
 
 Iteration 9
-Maximum EI: 0.035072207718920057
-Best observed value: 47.75286964962626
+Maximum EI: 0.0010243204942338765
+Best observed value: 47.989565529699796
 
 Iteration 10
-Maximum EI: 0.2186691802550205
-Best observed value: 47.75286964962626
-
-Iteration 11
-Maximum EI: 0.0007718643712592774
-Best observed value: 47.561052217674536
+Maximum EI: 2.0155210821456296e-22
+Best observed value: 47.989565529699796
 
 Best feasible point:
-x*: [9.15616506 3.27656681]
-f*: 47.561052217674536
-g*: -0.0007865658001762199
+x*: [8.86392235 3.38456557]
+f*: 47.989565529699796
+g*: -0.0005263548446627908
 </pre></div>
 </div>
 </div>
@@ -663,10 +659,10 @@ g*: -0.0007865658001762199
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fb6cc18a520&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fb23533c670&gt;
 </pre></div>
 </div>
-<img alt="../_images/b9770b64c92d6c3014f2a0c77dc761d3090a009a318eb9decb2ab4e6a55cecd1.png" src="../_images/b9770b64c92d6c3014f2a0c77dc761d3090a009a318eb9decb2ab4e6a55cecd1.png" />
+<img alt="../_images/5b58a9b39c0b021bc9ecc95ec54d19f2eda2c06726ce9d54300a5dcb9b7f80bf.png" src="../_images/5b58a9b39c0b021bc9ecc95ec54d19f2eda2c06726ce9d54300a5dcb9b7f80bf.png" />
 </div>
 </div>
 <p>Now, a post-optimality analysis will be performed for the constrained optimization problem. There are mainly two important questions that must be answered in a post-optimality analysis.</p>
@@ -681,6 +677,7 @@ g*: -0.0007865658001762199
 <span class="sd">        Function for computing multivariate central difference.</span>
 <span class="sd">        Input:</span>
 <span class="sd">        x - input at which derivative is desired</span>
+<span class="sd">        index - variable for which the derivative is calculated</span>
 <span class="sd">        h - step size</span>
 <span class="sd">        func - python function which should return function value based on x.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -689,7 +686,7 @@ g*: -0.0007865658001762199
     <span class="n">delta</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">x_plus</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">delta</span><span class="o">*</span><span class="n">h</span>
     <span class="n">x_minus</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">delta</span><span class="o">*</span><span class="n">h</span>
-    <span class="n">slope</span> <span class="o">=</span> <span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">x_plus</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span> <span class="o">-</span> <span class="n">func</span><span class="p">(</span><span class="n">x_minus</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="n">h</span>
+    <span class="n">slope</span> <span class="o">=</span> <span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">x_plus</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="n">func</span><span class="p">(</span><span class="n">x_minus</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="n">h</span>
     <span class="k">return</span> <span class="n">slope</span>
 
 <span class="c1"># Calculating slopes from surrogates</span>
@@ -702,15 +699,15 @@ g*: -0.0007865658001762199
 <span class="n">x1_slope</span> <span class="o">=</span> <span class="p">(</span><span class="n">xstar</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">modified_branin</span><span class="p">(</span><span class="n">xstar</span><span class="p">))</span> <span class="o">*</span> <span class="n">central_diff</span><span class="p">(</span><span class="n">xstar</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">func</span> <span class="o">=</span> <span class="n">modified_branin</span><span class="p">)</span>
 <span class="n">x2_slope</span> <span class="o">=</span> <span class="p">(</span><span class="n">xstar</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">modified_branin</span><span class="p">(</span><span class="n">xstar</span><span class="p">))</span> <span class="o">*</span> <span class="n">central_diff</span><span class="p">(</span><span class="n">xstar</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">func</span> <span class="o">=</span> <span class="n">modified_branin</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Normalized sensitivity of objective with respect to x1 from true function:&quot;</span><span class="p">,</span> <span class="n">x1_slope</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Normalized of objective with respect to x2 from true function:&quot;</span><span class="p">,</span> <span class="n">x2_slope</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Normalized sensitivity of objective with respect to x2 from true function:&quot;</span><span class="p">,</span> <span class="n">x2_slope</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Normalized sensitivity of objective with respect to x1 from surrogate: [[-36.53825603]]
-Normalized sensitivity of objective with respect to x2 from surrogate: [[-13.00276213]]
-Normalized sensitivity of objective with respect to x1 from true function: [-36.56115806]
-Normalized of objective with respect to x2 from true function: [-13.02479637]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Normalized sensitivity of objective with respect to x1 from surrogate: [[-0.39224541]]
+Normalized sensitivity of objective with respect to x2 from surrogate: [[0.19091895]]
+Normalized sensitivity of objective with respect to x1 from true function: [-0.36428782]
+Normalized sensitivity of objective with respect to x2 from true function: [0.18929802]
 </pre></div>
 </div>
 </div>
@@ -736,10 +733,10 @@ Normalized of objective with respect to x2 from true function: [-13.02479637]
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/d7da7aac00d58f4c18e697f7520677813b85bb86b45a64eedc825019a94980bc.png" src="../_images/d7da7aac00d58f4c18e697f7520677813b85bb86b45a64eedc825019a94980bc.png" />
+<img alt="../_images/bbe21bb715d3df10ff4c76c1cf0f1310222146809fff650e5553be6264ba423c.png" src="../_images/bbe21bb715d3df10ff4c76c1cf0f1310222146809fff650e5553be6264ba423c.png" />
 </div>
 </div>
-<p>The plot above shows that the objective function is more sensitive to a change in <span class="math notranslate nohighlight">\(x_1\)</span> as compared to a change in <span class="math notranslate nohighlight">\(x_2\)</span>. It is also clear that the sensitivities generated using the true function and the Krigin model are identical. This indicates that the Kriging model can provide a good prediction of the function near the optimum point.</p>
+<p>The plot above shows that the objective function is more sensitive to a change in <span class="math notranslate nohighlight">\(x_1\)</span> as compared to a change in <span class="math notranslate nohighlight">\(x_2\)</span>. This is because the magnitude of the sensitivity is higher for <span class="math notranslate nohighlight">\(x_1\)</span> as compared to <span class="math notranslate nohighlight">\(x_2\)</span>. It is also clear that the sensitivities generated using the true function and the Krigin model are comparable. This indicates that the Kriging model can provide a good prediction of the function near the optimum point.</p>
 <p>The next question of the post-optimality analysis relates changes in the objective function to changes in the constraints of the problem.</p>
 <p><strong>Question:</strong> How sensitive is the optimal solution <span class="math notranslate nohighlight">\(f^*\)</span> to changes in the constraint <span class="math notranslate nohighlight">\(g(\textbf{x})\)</span>?</p>
 <p>This question can be answered by changing the limiting value of the constraint, in this case 30, and observing the change in the optimal solution by resolving the problem using Constrained EI. Two scenarios are shown here. The first scenario reduces the limiting value of 30 by 1 unit and relaxes the constraint. The second scenario increases the limiting value of 30 by 1 unit and tightens the constraint.</p>
