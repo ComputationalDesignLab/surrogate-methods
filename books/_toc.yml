@@ -51,3 +51,4 @@ chapters:
     sections:
     - file: multi_objective/multi_objective_optimization
     - file: multi_objective/krg_multi_objective
+  - file: uncertainty_analysis
