@@ -459,11 +459,11 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated mean (true): 6.124625934211817
-Estimated standard deviation (true): 1.2344939174213458
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated mean (true): 6.126466640290937
+Estimated standard deviation (true): 1.2359362998688583
 </pre></div>
 </div>
-<img alt="_images/732b6a2452643928f2ea09eb094dde9f7e7b3c1f55c7b8e463a78887221239da.png" src="_images/732b6a2452643928f2ea09eb094dde9f7e7b3c1f55c7b8e463a78887221239da.png" />
+<img alt="_images/c198b3aac069727ee05a24422f961f6b924fb0770589d9850fe02e32577559b2.png" src="_images/c198b3aac069727ee05a24422f961f6b924fb0770589d9850fe02e32577559b2.png" />
 </div>
 </div>
 <p>From the above MCS with random sampling, the <span class="math notranslate nohighlight">\(\mu\)</span> is 6.13 and <span class="math notranslate nohighlight">\(\sigma\)</span> is 1.23. This distribution is slightly asymmetric and has a longer right tail.</p>
@@ -624,10 +624,10 @@ Estimated standard deviation (Halton): 1.235459444685999
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d92429131944ae9ed135c477033ceb659db8c1fa03db3978f402ebc4ab17857a.png" src="_images/d92429131944ae9ed135c477033ceb659db8c1fa03db3978f402ebc4ab17857a.png" />
-<img alt="_images/bf50d4d96df17d659c1ad93b343286f47dc46e01e5dc7b7569f751e62abe2d56.png" src="_images/bf50d4d96df17d659c1ad93b343286f47dc46e01e5dc7b7569f751e62abe2d56.png" />
-<img alt="_images/7425e3a13b5feef676dc63fa63dde0b339a2abf3402730c7228c1a85717d73bb.png" src="_images/7425e3a13b5feef676dc63fa63dde0b339a2abf3402730c7228c1a85717d73bb.png" />
-<img alt="_images/dd5765b330cd98876b433214c642912e2ac365e416fd52dd88590e1a294b69b5.png" src="_images/dd5765b330cd98876b433214c642912e2ac365e416fd52dd88590e1a294b69b5.png" />
+<img alt="_images/e016715458dd79b49fa80ef06b063d5c307499cfeeaf57d30c38a851b6406866.png" src="_images/e016715458dd79b49fa80ef06b063d5c307499cfeeaf57d30c38a851b6406866.png" />
+<img alt="_images/06dde0e6f567ce5c22046b67e75944c214d87cc3adf39c76825816cb44dd565f.png" src="_images/06dde0e6f567ce5c22046b67e75944c214d87cc3adf39c76825816cb44dd565f.png" />
+<img alt="_images/c5fddb175d319c48b7b4707d6fe4d4940ed213cc959ff91aaf39cc9e2ace5341.png" src="_images/c5fddb175d319c48b7b4707d6fe4d4940ed213cc959ff91aaf39cc9e2ace5341.png" />
+<img alt="_images/b9638a2ec526c94b8b2aecfa43c7df47c6390ff7a8658846dcd2ed8584ccfdd2.png" src="_images/b9638a2ec526c94b8b2aecfa43c7df47c6390ff7a8658846dcd2ed8584ccfdd2.png" />
 </div>
 </div>
 <p>Notice that as the number of samples increase, the <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span> also converge to the value obtained from MCS in the previous block of code. The above convergence plots show the benefit of using LHS and Halton sequences to sample the distribution as compared to using random sampling. MCS performed using LHS and Halton sequences tends to converge faster to the known values of <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span>. This can be deduced from the quick reduction in the relative change of the mean and standard deviation that is brought by using the LHS and Halton sequence sampling method. It is also deduced from the variation of mean and standard deviation with the number of samples as the values converge to those obtained from performing MCS using a large number of samples. This means a lower number of samples must be drawn from the distribution and evaluated to calculate the statistics. This reduces the computational cost of performing the uncertainty analysis.</p>
@@ -648,16 +648,16 @@ Estimated standard deviation (Halton): 1.235459444685999
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8d1aa1eb0038119cd1f3a6121e78258cc18fceaeec911e32147a4184201bb77e.png" src="_images/8d1aa1eb0038119cd1f3a6121e78258cc18fceaeec911e32147a4184201bb77e.png" />
-<img alt="_images/0628d4135b2d97a2980544f5bddbd89819e4b547afabb9dc04b3d4ea259003f4.png" src="_images/0628d4135b2d97a2980544f5bddbd89819e4b547afabb9dc04b3d4ea259003f4.png" />
-<img alt="_images/b0742de8d00cdd8c27df6d31943e2eb38f90505ab8df4c5734c762913b53e04e.png" src="_images/b0742de8d00cdd8c27df6d31943e2eb38f90505ab8df4c5734c762913b53e04e.png" />
-<img alt="_images/d61e6a2552532f82e46ea0464e52a321f27e105789187d5195eadb367de02111.png" src="_images/d61e6a2552532f82e46ea0464e52a321f27e105789187d5195eadb367de02111.png" />
-<img alt="_images/757e944bc598d30893bf56d0bff85134207aa8ec044fec5fc2eaab65fc739187.png" src="_images/757e944bc598d30893bf56d0bff85134207aa8ec044fec5fc2eaab65fc739187.png" />
-<img alt="_images/2d6518706158c57c5f9f1220ee2f03a3d4883616bf85dc279f01c530cb758524.png" src="_images/2d6518706158c57c5f9f1220ee2f03a3d4883616bf85dc279f01c530cb758524.png" />
-<img alt="_images/da8a23b2c667f27a910cfd33db33ea79788b6ab7ea6e5bf7fcb09f9b5f7dcedc.png" src="_images/da8a23b2c667f27a910cfd33db33ea79788b6ab7ea6e5bf7fcb09f9b5f7dcedc.png" />
-<img alt="_images/cc615bb7b034bdac17c1d45c0977c0605e1bb09bdef0d0f9d95392e89d730862.png" src="_images/cc615bb7b034bdac17c1d45c0977c0605e1bb09bdef0d0f9d95392e89d730862.png" />
-<img alt="_images/106607c6d5c0f5ca57ceae21bdd2cceaa6adaa17a8486000c347f04939869bce.png" src="_images/106607c6d5c0f5ca57ceae21bdd2cceaa6adaa17a8486000c347f04939869bce.png" />
-<img alt="_images/b9663c84adf5bb04974bb0e812ec3ea505d51dc1d78cfc5f45fc93d4c0f9fd8a.png" src="_images/b9663c84adf5bb04974bb0e812ec3ea505d51dc1d78cfc5f45fc93d4c0f9fd8a.png" />
+<img alt="_images/fd602ff8b9bee36e533a3126b238dd49e41eeb39b148d4c59b8d34e933beb304.png" src="_images/fd602ff8b9bee36e533a3126b238dd49e41eeb39b148d4c59b8d34e933beb304.png" />
+<img alt="_images/9b0547adc0f60eb3146fbe50ae26d1b6f24b18504f835722034b49ce75b0b9c8.png" src="_images/9b0547adc0f60eb3146fbe50ae26d1b6f24b18504f835722034b49ce75b0b9c8.png" />
+<img alt="_images/0bdc791ef170f4ee102f1c55ea73a73b2e9f33eb895c078de25169c546642b9f.png" src="_images/0bdc791ef170f4ee102f1c55ea73a73b2e9f33eb895c078de25169c546642b9f.png" />
+<img alt="_images/e214606db06b2488d95f757c90b87592ccfbbac5be9b450e22c6e112c4cc5fef.png" src="_images/e214606db06b2488d95f757c90b87592ccfbbac5be9b450e22c6e112c4cc5fef.png" />
+<img alt="_images/fda3d940d7d53f6f4b053cba121602cb626dcc14bf53f04ae5d6412c99101cdb.png" src="_images/fda3d940d7d53f6f4b053cba121602cb626dcc14bf53f04ae5d6412c99101cdb.png" />
+<img alt="_images/379ad93f15ba847d7c7ed9b6cf5679f2dab9008bcc7af57064523a9cd5daadfb.png" src="_images/379ad93f15ba847d7c7ed9b6cf5679f2dab9008bcc7af57064523a9cd5daadfb.png" />
+<img alt="_images/912b7331d45e2c5a0f169e478e69ee5abba880c722d5e8c167a57d6578ed287f.png" src="_images/912b7331d45e2c5a0f169e478e69ee5abba880c722d5e8c167a57d6578ed287f.png" />
+<img alt="_images/8f80954c562072a27fceddac1e1ea55b77c2909aae3943eacf0150f3ab678384.png" src="_images/8f80954c562072a27fceddac1e1ea55b77c2909aae3943eacf0150f3ab678384.png" />
+<img alt="_images/09e568c6d3f33196008e18cfcd8733d07ce67bd4ad8393d917cfb70dcdd93e71.png" src="_images/09e568c6d3f33196008e18cfcd8733d07ce67bd4ad8393d917cfb70dcdd93e71.png" />
+<img alt="_images/adabf00596d2451543581496fc69d5e215d1b5d087c68e53d2ede12b1673fd5b.png" src="_images/adabf00596d2451543581496fc69d5e215d1b5d087c68e53d2ede12b1673fd5b.png" />
 </div>
 </div>
 </section>
@@ -685,7 +685,7 @@ Estimated standard deviation (Halton): 1.235459444685999
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated reliability (true): 0.991637
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated reliability (true): 0.991697
 </pre></div>
 </div>
 </div>
@@ -744,7 +744,7 @@ Estimated standard deviation (Halton): 1.235459444685999
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/17232e7473533dcad9ec054534f862711253404c36549e6f9bcb7c6f52943401.png" src="_images/17232e7473533dcad9ec054534f862711253404c36549e6f9bcb7c6f52943401.png" />
+<img alt="_images/4bf51dc3180b5457956f39238ef29b1cd08dd0cd51c20667053b4d5cf33bd2b0.png" src="_images/4bf51dc3180b5457956f39238ef29b1cd08dd0cd51c20667053b4d5cf33bd2b0.png" />
 </div>
 </div>
 </section>
