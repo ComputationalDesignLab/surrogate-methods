@@ -393,7 +393,7 @@ document.write(`
 \[Y = f(\textbf{x}) = x_1^2 + 2x_2^2 + 3x_3^2\]</div>
 <div class="math notranslate nohighlight">
 \[g(\textbf{x}) = x_1 + x_2 + x_3 - 3.5 \leq 0\]</div>
-<p>In this problem, <span class="math notranslate nohighlight">\(x_1\)</span> is deterministic and other two variables are uncertain with standard deviations: <span class="math notranslate nohighlight">\(\sigma_2 = 0.06\)</span> and <span class="math notranslate nohighlight">\(\sigma_3 = 0.2\)</span>. For the following analysis, the design variable values used are <span class="math notranslate nohighlight">\(x = [1,1,1]^T\)</span>. This means that <span class="math notranslate nohighlight">\(x_1 = 1\)</span>, <span class="math notranslate nohighlight">\(x_2 \sim \mathcal{N}(1,0.06)\)</span>, and <span class="math notranslate nohighlight">\(x_3 \sim \mathcal{N}(1, 0.2)\)</span>.</p>
+<p>In this problem, <span class="math notranslate nohighlight">\(x_1\)</span> is deterministic and other two variables are normally distributed with standard deviations: <span class="math notranslate nohighlight">\(\sigma_2 = 0.06\)</span> and <span class="math notranslate nohighlight">\(\sigma_3 = 0.2\)</span>. For the following analysis, the design variable values used are <span class="math notranslate nohighlight">\(x = [1,1,1]^T\)</span>. This means that <span class="math notranslate nohighlight">\(x_1 = 1\)</span>, <span class="math notranslate nohighlight">\(x_2 \sim \mathcal{N}(1,0.06)\)</span>, and <span class="math notranslate nohighlight">\(x_3 \sim \mathcal{N}(1, 0.2)\)</span>.</p>
 <p>The first block of code below imports the required packages to perform the uncertainty analysis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -404,7 +404,6 @@ document.write(`
 <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
 <span class="kn">from</span> <span class="nn">smt.sampling_methods</span> <span class="kn">import</span> <span class="n">LHS</span>
 <span class="kn">from</span> <span class="nn">scipy.stats.qmc</span> <span class="kn">import</span> <span class="n">Halton</span><span class="p">,</span> <span class="n">scale</span>
-<span class="kn">from</span> <span class="nn">pyDOE3</span> <span class="kn">import</span> <span class="n">lhs</span>
 </pre></div>
 </div>
 </div>
@@ -460,11 +459,11 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated mean (true): 6.124968409992113
-Estimated standard deviation (true): 1.2355302750837531
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated mean (true): 6.124625934211817
+Estimated standard deviation (true): 1.2344939174213458
 </pre></div>
 </div>
-<img alt="_images/a06cfbc8d2e274eb1ce00197f81199711e0dd75517a881283272dd4382281105.png" src="_images/a06cfbc8d2e274eb1ce00197f81199711e0dd75517a881283272dd4382281105.png" />
+<img alt="_images/732b6a2452643928f2ea09eb094dde9f7e7b3c1f55c7b8e463a78887221239da.png" src="_images/732b6a2452643928f2ea09eb094dde9f7e7b3c1f55c7b8e463a78887221239da.png" />
 </div>
 </div>
 <p>From the above MCS with random sampling, the <span class="math notranslate nohighlight">\(\mu\)</span> is 6.13 and <span class="math notranslate nohighlight">\(\sigma\)</span> is 1.23. This distribution is slightly asymmetric and has a longer right tail.</p>
@@ -502,7 +501,7 @@ Estimated standard deviation (true): 1.2355302750837531
 Estimated standard deviation (Halton): 1.235459444685999
 </pre></div>
 </div>
-<img alt="_images/22fde220066ea49c3a417afa7210b50e8c539fa935419e2043c596c314298017.png" src="_images/22fde220066ea49c3a417afa7210b50e8c539fa935419e2043c596c314298017.png" />
+<img alt="_images/2b636e12bae47efaaa7393a303fe41829e4897a5255773097d324865fc5c72ac.png" src="_images/2b636e12bae47efaaa7393a303fe41829e4897a5255773097d324865fc5c72ac.png" />
 </div>
 </div>
 <p>The <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span> obtained using Halton sequences closely matches the values obtained using random sampling. The output distribution is also a good match for the one obtained using random sampling.</p>
@@ -510,7 +509,7 @@ Estimated standard deviation (Halton): 1.235459444685999
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining different samples sizes for MCS</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
 <span class="c1"># Defining the LHS sampler</span>
 <span class="n">lhs_sampler</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">]]),</span> <span class="n">criterion</span><span class="o">=</span><span class="s2">&quot;ese&quot;</span><span class="p">)</span>
@@ -529,7 +528,7 @@ Estimated standard deviation (Halton): 1.235459444685999
 <span class="n">F_halton</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
-
+    
     <span class="c1"># LHS sampling</span>
     <span class="n">x_lhs</span> <span class="o">=</span> <span class="n">lhs_sampler</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
     <span class="n">x2_lhs</span> <span class="o">=</span> <span class="n">rv_x2</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">x_lhs</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
@@ -625,10 +624,10 @@ Estimated standard deviation (Halton): 1.235459444685999
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2330a8e8d54988d748a900e0fa71de6a9254cf3a63ae29f31f3cf9d99c5c0aae.png" src="_images/2330a8e8d54988d748a900e0fa71de6a9254cf3a63ae29f31f3cf9d99c5c0aae.png" />
-<img alt="_images/d05f5860ee4466d5c228014b34cdcd874c5e8eb5ad29e545c7959c861170f3b6.png" src="_images/d05f5860ee4466d5c228014b34cdcd874c5e8eb5ad29e545c7959c861170f3b6.png" />
-<img alt="_images/d92d671e4aa5e9983ae8f084b855b81169f3f6ee01bd06c04ffce94554ee0cba.png" src="_images/d92d671e4aa5e9983ae8f084b855b81169f3f6ee01bd06c04ffce94554ee0cba.png" />
-<img alt="_images/a9713413d70cd1bf98b3bb01d326f9aa6179b168ad18bfbb4301a4d58ab8a1ba.png" src="_images/a9713413d70cd1bf98b3bb01d326f9aa6179b168ad18bfbb4301a4d58ab8a1ba.png" />
+<img alt="_images/d92429131944ae9ed135c477033ceb659db8c1fa03db3978f402ebc4ab17857a.png" src="_images/d92429131944ae9ed135c477033ceb659db8c1fa03db3978f402ebc4ab17857a.png" />
+<img alt="_images/bf50d4d96df17d659c1ad93b343286f47dc46e01e5dc7b7569f751e62abe2d56.png" src="_images/bf50d4d96df17d659c1ad93b343286f47dc46e01e5dc7b7569f751e62abe2d56.png" />
+<img alt="_images/7425e3a13b5feef676dc63fa63dde0b339a2abf3402730c7228c1a85717d73bb.png" src="_images/7425e3a13b5feef676dc63fa63dde0b339a2abf3402730c7228c1a85717d73bb.png" />
+<img alt="_images/dd5765b330cd98876b433214c642912e2ac365e416fd52dd88590e1a294b69b5.png" src="_images/dd5765b330cd98876b433214c642912e2ac365e416fd52dd88590e1a294b69b5.png" />
 </div>
 </div>
 <p>Notice that as the number of samples increase, the <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span> also converge to the value obtained from MCS in the previous block of code. The above convergence plots show the benefit of using LHS and Halton sequences to sample the distribution as compared to using random sampling. MCS performed using LHS and Halton sequences tends to converge faster to the known values of <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span>. This can be deduced from the quick reduction in the relative change of the mean and standard deviation that is brought by using the LHS and Halton sequence sampling method. It is also deduced from the variation of mean and standard deviation with the number of samples as the values converge to those obtained from performing MCS using a large number of samples. This means a lower number of samples must be drawn from the distribution and evaluated to calculate the statistics. This reduces the computational cost of performing the uncertainty analysis.</p>
@@ -637,9 +636,9 @@ Estimated standard deviation (Halton): 1.235459444685999
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">samples</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-    <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">f_random_</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;True&#39;</span><span class="p">)</span>
-    <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">F_random</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Random&#39;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">f_random_</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span><span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;True&#39;</span><span class="p">)</span>
     <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">F_lhs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;LHS&#39;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">F_random</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Random&#39;</span><span class="p">)</span>
     <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">F_halton</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Halton&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Probability density&quot;</span><span class="p">)</span>
@@ -649,11 +648,16 @@ Estimated standard deviation (Halton): 1.235459444685999
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/fa2fc6b2bbfe6fe54820b0e00111fd43a9241bb7d66740455d5ca2bfc5c98c06.png" src="_images/fa2fc6b2bbfe6fe54820b0e00111fd43a9241bb7d66740455d5ca2bfc5c98c06.png" />
-<img alt="_images/ceefa257e19541361aee3dd0aaf5c644a3721c27afac2034259713a41c64a2a2.png" src="_images/ceefa257e19541361aee3dd0aaf5c644a3721c27afac2034259713a41c64a2a2.png" />
-<img alt="_images/417bebaae09bd2c4a854a88dff2980c93e3824f3dddb54bf4f52943b38f5349c.png" src="_images/417bebaae09bd2c4a854a88dff2980c93e3824f3dddb54bf4f52943b38f5349c.png" />
-<img alt="_images/f251b4a66115bbc12c9a2b4c5a49f54476019fa7a60d75658fac798138f2f152.png" src="_images/f251b4a66115bbc12c9a2b4c5a49f54476019fa7a60d75658fac798138f2f152.png" />
-<img alt="_images/27fcd7b09b5b59da11f147282535b813ab8c19c95f1b746db0095ec06ac1ea5b.png" src="_images/27fcd7b09b5b59da11f147282535b813ab8c19c95f1b746db0095ec06ac1ea5b.png" />
+<img alt="_images/8d1aa1eb0038119cd1f3a6121e78258cc18fceaeec911e32147a4184201bb77e.png" src="_images/8d1aa1eb0038119cd1f3a6121e78258cc18fceaeec911e32147a4184201bb77e.png" />
+<img alt="_images/0628d4135b2d97a2980544f5bddbd89819e4b547afabb9dc04b3d4ea259003f4.png" src="_images/0628d4135b2d97a2980544f5bddbd89819e4b547afabb9dc04b3d4ea259003f4.png" />
+<img alt="_images/b0742de8d00cdd8c27df6d31943e2eb38f90505ab8df4c5734c762913b53e04e.png" src="_images/b0742de8d00cdd8c27df6d31943e2eb38f90505ab8df4c5734c762913b53e04e.png" />
+<img alt="_images/d61e6a2552532f82e46ea0464e52a321f27e105789187d5195eadb367de02111.png" src="_images/d61e6a2552532f82e46ea0464e52a321f27e105789187d5195eadb367de02111.png" />
+<img alt="_images/757e944bc598d30893bf56d0bff85134207aa8ec044fec5fc2eaab65fc739187.png" src="_images/757e944bc598d30893bf56d0bff85134207aa8ec044fec5fc2eaab65fc739187.png" />
+<img alt="_images/2d6518706158c57c5f9f1220ee2f03a3d4883616bf85dc279f01c530cb758524.png" src="_images/2d6518706158c57c5f9f1220ee2f03a3d4883616bf85dc279f01c530cb758524.png" />
+<img alt="_images/da8a23b2c667f27a910cfd33db33ea79788b6ab7ea6e5bf7fcb09f9b5f7dcedc.png" src="_images/da8a23b2c667f27a910cfd33db33ea79788b6ab7ea6e5bf7fcb09f9b5f7dcedc.png" />
+<img alt="_images/cc615bb7b034bdac17c1d45c0977c0605e1bb09bdef0d0f9d95392e89d730862.png" src="_images/cc615bb7b034bdac17c1d45c0977c0605e1bb09bdef0d0f9d95392e89d730862.png" />
+<img alt="_images/106607c6d5c0f5ca57ceae21bdd2cceaa6adaa17a8486000c347f04939869bce.png" src="_images/106607c6d5c0f5ca57ceae21bdd2cceaa6adaa17a8486000c347f04939869bce.png" />
+<img alt="_images/b9663c84adf5bb04974bb0e812ec3ea505d51dc1d78cfc5f45fc93d4c0f9fd8a.png" src="_images/b9663c84adf5bb04974bb0e812ec3ea505d51dc1d78cfc5f45fc93d4c0f9fd8a.png" />
 </div>
 </div>
 </section>
@@ -681,7 +685,7 @@ Estimated standard deviation (Halton): 1.235459444685999
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated reliability (true): 0.991622
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated reliability (true): 0.991637
 </pre></div>
 </div>
 </div>
@@ -690,7 +694,7 @@ Estimated standard deviation (Halton): 1.235459444685999
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining different samples sizes for MCS</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
 <span class="c1"># Storing reliabilities</span>
 <span class="n">r_lhs</span> <span class="o">=</span> <span class="p">[]</span>
@@ -740,7 +744,7 @@ Estimated standard deviation (Halton): 1.235459444685999
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/96f4c34deb4d2479967f4bf2b40f8c7076f74d8dc88e54d1d8640bbf016020e5.png" src="_images/96f4c34deb4d2479967f4bf2b40f8c7076f74d8dc88e54d1d8640bbf016020e5.png" />
+<img alt="_images/17232e7473533dcad9ec054534f862711253404c36549e6f9bcb7c6f52943401.png" src="_images/17232e7473533dcad9ec054534f862711253404c36549e6f9bcb7c6f52943401.png" />
 </div>
 </div>
 </section>
