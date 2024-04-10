@@ -372,8 +372,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculation-of-statistics-mean-and-standard-deviation-of-objective-function">Calculation of statistics (mean and standard deviation) of objective function</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reliability-of-a-constraint">Reliability of a constraint</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculation-of-statistics-mean-and-standard-deviation-of-objective-function">Calculation of statistics (mean and standard deviation) of objective function</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mcs-method-for-a-large-number-of-samples">MCS method for a large number of samples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convergence-of-the-mcs-method">Convergence of the MCS method</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-of-feasibility-of-a-constraint">Probability of feasibility of a constraint</a></li>
 </ul>
             </nav>
         </div>
@@ -410,6 +414,7 @@ document.write(`
 </div>
 <section id="calculation-of-statistics-mean-and-standard-deviation-of-objective-function">
 <h2>Calculation of statistics (mean and standard deviation) of objective function<a class="headerlink" href="#calculation-of-statistics-mean-and-standard-deviation-of-objective-function" title="Permalink to this heading">#</a></h2>
+<p>This subsection will discuss the calculation of the statistics of the objective function based on the uncertain design variables. At the start, the general idea of the MCS method will be demonstrated where a large number of samples will be drawn from the distributions of the random variables using random sampling and Halton sequences. The objective function statistics and distribution will be calculated based on the samples that are generated the value of the objective function for those samples. However, when using the MCS method it is also important to determine the minimum number of samples that can accurately obtain the statistics of a model to reduce computational cost. This is done by varying the number of samples from small to large values and observing the change in the mean and standard deviation. The minimum number of samples for which there is no significant change in the estimated mean and standard deviation from the previous number of samples used can be used to obtain the statistics of the objective function. Typically, one would start the analysis by performing the convergence of the MCS method to find the minimum number of samples.</p>
 <p>The next block of code defines the objective function and constraint of the problem.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -434,6 +439,8 @@ document.write(`
 </div>
 </div>
 </div>
+<section id="mcs-method-for-a-large-number-of-samples">
+<h3>MCS method for a large number of samples<a class="headerlink" href="#mcs-method-for-a-large-number-of-samples" title="Permalink to this heading">#</a></h3>
 <p>The first demonstration of MCS is with <strong>random sampling</strong>. The block of code below defines random variables for <span class="math notranslate nohighlight">\(x_2\)</span> and <span class="math notranslate nohighlight">\(x_3\)</span>, and performs MCS with 1,000,000 random samples for computing mean, standard deviation, and the output distribution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -467,7 +474,7 @@ Estimated standard deviation (true): 1.2359362998688583
 </div>
 </div>
 <p>From the above MCS with random sampling, the <span class="math notranslate nohighlight">\(\mu\)</span> is 6.13 and <span class="math notranslate nohighlight">\(\sigma\)</span> is 1.23. This distribution is slightly asymmetric and has a longer right tail.</p>
-<p>In the second demonstration of MCS, the samples from the distribution will be drawn according to <strong>Halton sequences</strong>. In the context of sampling distributions, Halton sequences generated on a unit hypercube represent probabilities of the occurrence of a realization of a random design variable or parameter. These probabilities can then be transformed into the realizations of the random design variable or parameter using the inverse CDF function of the distribution of the random design variable or parameter. In this way, samples can be drawn from the distributions of the uncertain variables and parameters and MCS can be performed.</p>
+<p>In the second demonstration of MCS, the samples from the distribution will be drawn according to <strong>Halton sequences</strong>. In the context of sampling distributions, Halton sequences generated on a unit hypercube (values are generated between the bounds of 0 and 1) represent probabilities of the occurrence of a realization of a random design variable or parameter. These probabilities can then be transformed into the realizations of the random design variable or parameter using the inverse CDF function of the distribution of the random design variable or parameter. In this way, samples can be drawn from the distributions of the uncertain variables and parameters and MCS can be performed.</p>
 <p>The block of code below demonstrates this approach of using Halton sequences to perform MCS. Like the previous example of random sampling, the mean, standard deviation and output distribution are computed using 1,000,000 samples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -505,6 +512,9 @@ Estimated standard deviation (Halton): 1.235459444685999
 </div>
 </div>
 <p>The <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span> obtained using Halton sequences closely matches the values obtained using random sampling. The output distribution is also a good match for the one obtained using random sampling.</p>
+</section>
+<section id="convergence-of-the-mcs-method">
+<h3>Convergence of the MCS method<a class="headerlink" href="#convergence-of-the-mcs-method" title="Permalink to this heading">#</a></h3>
 <p>Now, MCS will be performed using <strong>random sampling</strong>, <strong>Latin Hypercube sampling (LHS)</strong> and <strong>Halton sequences</strong> using a varied number of samples drawn from the distribution. The previous analysis used a fixed number of samples to perform the MCS but in the following analysis, the number of samples used for the MCS will be varied and the statistics will be calculated at every number of samples. In this case, LHS and Halton sequences are used to generate samples between the bounds of 0 and 1. As mentioned previously, these values are treated as probabilities and the inverse CDF of the random variables is used to draw samples from the distribution based on the values of these probabilities.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -661,15 +671,14 @@ Estimated standard deviation (Halton): 1.235459444685999
 </div>
 </div>
 </section>
-<section id="reliability-of-a-constraint">
-<h2>Reliability of a constraint<a class="headerlink" href="#reliability-of-a-constraint" title="Permalink to this heading">#</a></h2>
-<p>When working with uncertainty in design variables or parameters for an optimization problem, the reliability of a constraint being satisfied is defined as</p>
-<div class="math notranslate nohighlight">
-\[r = \text{Pr}(g(\textbf{x}) \leq 0)\]</div>
-<p>The reliability of the constraint used as an example in this section can be calculated using MCS. The distributions of the uncertain variables can be sampled using the methods shown previously and for each sample, the value of the constraint can be calculated. Once all the samples are evaluated, the required probability can be calculated by simply dividing the number of samples that satisfy the constraint by the total number of samples.</p>
+</section>
+<section id="probability-of-feasibility-of-a-constraint">
+<h2>Probability of feasibility of a constraint<a class="headerlink" href="#probability-of-feasibility-of-a-constraint" title="Permalink to this heading">#</a></h2>
+<p>When working with uncertainty in design variables or parameters for an optimization problem, the probability of feasibility of a constraint
+is of interest to a designer. The probability of feasibility of the constraint used as an example in this section can be calculated using MCS. The distributions of the uncertain variables can be sampled using the methods shown previously and for each sample, the value of the constraint can be calculated. Once all the samples are evaluated, the required probability can be calculated by simply dividing the number of samples that satisfy the constraint by the total number of samples.</p>
 <div class="math notranslate nohighlight">
 \[\text{Pr}(g(\textbf{x}) \leq 0) \approx \frac{\text{number of feasible samples}}{\text{total number of samples}}\]</div>
-<p>Similar to the previous section, the next block of code uses random sampling and a large number of MCS samples to calculate the true reliability of the constraint.</p>
+<p>Similar to the previous section, the next block of code uses random sampling and a large number of MCS samples to calculate the true probability of feasibility of the constraint.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_samples</span> <span class="o">=</span> <span class="mi">1000000</span>
@@ -680,12 +689,12 @@ Estimated standard deviation (Halton): 1.235459444685999
 
 <span class="n">g_random_</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated reliability (true): </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">g_random_</span><span class="p">[</span><span class="n">g_random_</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">num_samples</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated probability of feasibility (true): </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">g_random_</span><span class="p">[</span><span class="n">g_random_</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">num_samples</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated reliability (true): 0.991697
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated probability of feasibility (true): 0.991489
 </pre></div>
 </div>
 </div>
@@ -697,9 +706,9 @@ Estimated standard deviation (Halton): 1.235459444685999
 <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
 <span class="c1"># Storing reliabilities</span>
-<span class="n">r_lhs</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">r_halton</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">r_random</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">p_lhs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">p_halton</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">p_random</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
 
@@ -709,7 +718,7 @@ Estimated standard deviation (Halton): 1.235459444685999
     <span class="n">x3_lhs</span> <span class="o">=</span> <span class="n">rv_x3</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">x_lhs</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">x1</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">g_lhs</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2_lhs</span><span class="p">,</span> <span class="n">x3_lhs</span><span class="p">)</span>
-    <span class="n">r_lhs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">g_lhs</span><span class="p">[</span><span class="n">g_lhs</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">sample</span><span class="p">)</span>
+    <span class="n">p_lhs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">g_lhs</span><span class="p">[</span><span class="n">g_lhs</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">sample</span><span class="p">)</span>
 
     <span class="c1"># Halton sampling</span>
     <span class="n">x_halton</span> <span class="o">=</span> <span class="n">halton_sampler</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="n">sample</span><span class="p">)</span>
@@ -718,13 +727,13 @@ Estimated standard deviation (Halton): 1.235459444685999
     <span class="n">x2_halton</span> <span class="o">=</span> <span class="n">rv_x2</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">x_halton</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">x3_halton</span> <span class="o">=</span> <span class="n">rv_x3</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">x_halton</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">g_halton</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2_halton</span><span class="p">,</span> <span class="n">x3_halton</span><span class="p">)</span>
-    <span class="n">r_halton</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">g_halton</span><span class="p">[</span><span class="n">g_halton</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">sample</span><span class="p">)</span>
+    <span class="n">p_halton</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">g_halton</span><span class="p">[</span><span class="n">g_halton</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">sample</span><span class="p">)</span>
     
     <span class="c1"># Random sampling</span>
     <span class="n">x2</span> <span class="o">=</span> <span class="n">rv_x2</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">sample</span><span class="p">)</span>
     <span class="n">x3</span> <span class="o">=</span> <span class="n">rv_x3</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">sample</span><span class="p">)</span>
     <span class="n">g_random</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">)</span>
-    <span class="n">r_random</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">g_random</span><span class="p">[</span><span class="n">g_random</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">sample</span><span class="p">)</span>
+    <span class="n">p_random</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">g_random</span><span class="p">[</span><span class="n">g_random</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">sample</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -737,14 +746,14 @@ Estimated standard deviation (Halton): 1.235459444685999
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">r_halton</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Halton&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Reliability&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Probability of Feasibility&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Number of samples&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4bf51dc3180b5457956f39238ef29b1cd08dd0cd51c20667053b4d5cf33bd2b0.png" src="_images/4bf51dc3180b5457956f39238ef29b1cd08dd0cd51c20667053b4d5cf33bd2b0.png" />
+<img alt="_images/47b48f17a317fd0a1f2451abdf6df31ff382cc762bd90efd1a3f75892a3e5d6a.png" src="_images/47b48f17a317fd0a1f2451abdf6df31ff382cc762bd90efd1a3f75892a3e5d6a.png" />
 </div>
 </div>
 </section>
@@ -804,8 +813,12 @@ Estimated standard deviation (Halton): 1.235459444685999
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculation-of-statistics-mean-and-standard-deviation-of-objective-function">Calculation of statistics (mean and standard deviation) of objective function</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reliability-of-a-constraint">Reliability of a constraint</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculation-of-statistics-mean-and-standard-deviation-of-objective-function">Calculation of statistics (mean and standard deviation) of objective function</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mcs-method-for-a-large-number-of-samples">MCS method for a large number of samples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convergence-of-the-mcs-method">Convergence of the MCS method</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-of-feasibility-of-a-constraint">Probability of feasibility of a constraint</a></li>
 </ul>
   </nav></div>
 
