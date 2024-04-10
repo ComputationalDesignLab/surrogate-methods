@@ -435,58 +435,98 @@ document.write(`
 </div>
 </div>
 </div>
-<p>The first demonstration of MCS is with <strong>random sampling</strong>. The block of code below defines random variables for <span class="math notranslate nohighlight">\(x_2\)</span> and <span class="math notranslate nohighlight">\(x_3\)</span>, and performs MCS with 500,000 random samples for computing mean, standard deviation, and the output distribution.</p>
+<p>The first demonstration of MCS is with <strong>random sampling</strong>. The block of code below defines random variables for <span class="math notranslate nohighlight">\(x_2\)</span> and <span class="math notranslate nohighlight">\(x_3\)</span>, and performs MCS with 1,000,000 random samples for computing mean, standard deviation, and the output distribution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining random variables</span>
 <span class="n">rv_x2</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.06</span><span class="p">)</span>
 <span class="n">rv_x3</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
-<span class="n">num_samples</span> <span class="o">=</span> <span class="mi">500000</span>
+<span class="n">num_samples</span> <span class="o">=</span> <span class="mi">1000000</span>
 
 <span class="n">x1</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">x2</span> <span class="o">=</span> <span class="n">rv_x2</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">num_samples</span><span class="p">)</span>
 <span class="n">x3</span> <span class="o">=</span> <span class="n">rv_x3</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">num_samples</span><span class="p">)</span>
 
-<span class="n">f</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">)</span>
+<span class="n">f_random_</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">)</span>
 
-<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">f_random_</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Probability density&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$Y$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Number of samples: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num_samples</span><span class="p">))</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated mean (true): </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">f</span><span class="p">)))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated standard deviation (true): </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">f</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated mean (true): </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">f_random_</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated standard deviation (true): </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">f_random_</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated mean (true): 6.125690561704386
-Estimated standard deviation (true): 1.2361330425932058
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated mean (true): 6.124968409992113
+Estimated standard deviation (true): 1.2355302750837531
 </pre></div>
 </div>
-<img alt="_images/ac51ccd9041a5dd08de094d0185a1d3da81132ac593fa1fe02fc729947a8e29d.png" src="_images/ac51ccd9041a5dd08de094d0185a1d3da81132ac593fa1fe02fc729947a8e29d.png" />
+<img alt="_images/a06cfbc8d2e274eb1ce00197f81199711e0dd75517a881283272dd4382281105.png" src="_images/a06cfbc8d2e274eb1ce00197f81199711e0dd75517a881283272dd4382281105.png" />
 </div>
 </div>
 <p>From the above MCS with random sampling, the <span class="math notranslate nohighlight">\(\mu\)</span> is 6.13 and <span class="math notranslate nohighlight">\(\sigma\)</span> is 1.23. This distribution is slightly asymmetric and has a longer right tail.</p>
-<p>Now, MCS will be performed using <strong>random sampling</strong>, <strong>Latin Hypercube sampling (LHS)</strong> and <strong>Halton sequences</strong>. The previous analysis used a fixed number of samples to perform the MCS but in the following analysis, the number of samples used for the MCS will be varied and the statistics will be calculated at every number of samples. In this case, LHS and Halton sequences are used to generate samples between the bounds of 0 and 1. These values are treated as probabilities and the inverse CDF of the random variables is used to draw samples from the distribution based on the values of these probabilities.</p>
+<p>In the second demonstration of MCS, the samples from the distribution will be drawn according to <strong>Halton sequences</strong>. In the context of sampling distributions, Halton sequences generated on a unit hypercube represent probabilities of the occurrence of a realization of a random design variable or parameter. These probabilities can then be transformed into the realizations of the random design variable or parameter using the inverse CDF function of the distribution of the random design variable or parameter. In this way, samples can be drawn from the distributions of the uncertain variables and parameters and MCS can be performed.</p>
+<p>The block of code below demonstrates this approach of using Halton sequences to perform MCS. Like the previous example of random sampling, the mean, standard deviation and output distribution are computed using 1,000,000 samples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the Halton sampler</span>
+<span class="n">halton_sampler</span> <span class="o">=</span> <span class="n">Halton</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">scramble</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> 
+<span class="c1"># scramble is set to false to avoid Owen scrambling which is used to create non-deterministic Halton sequences</span>
+
+<span class="n">num_samples</span> <span class="o">=</span> <span class="mi">1000000</span>
+
+<span class="c1"># Generating halton sequence samples and transforming them according to the distributions of the random variables</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">x_halton</span> <span class="o">=</span> <span class="n">halton_sampler</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="n">num_samples</span><span class="p">)</span>
+<span class="n">x_halton</span> <span class="o">=</span> <span class="n">x_halton</span><span class="p">[</span><span class="mi">1</span><span class="p">:,:]</span> <span class="c1"># Dropping the first element [0,0] of the Halton sequence since inverse CDF of 0 will be inf</span>
+<span class="n">x2_halton</span> <span class="o">=</span> <span class="n">rv_x2</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">x_halton</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">x3_halton</span> <span class="o">=</span> <span class="n">rv_x3</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">x_halton</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">f_halton</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2_halton</span><span class="p">,</span> <span class="n">x3_halton</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">f_halton</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Probability density&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$Y$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Number of samples: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num_samples</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated mean (Halton): </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">f_halton</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated standard deviation (Halton): </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">f_halton</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated mean (Halton): 6.12716999446928
+Estimated standard deviation (Halton): 1.235459444685999
+</pre></div>
+</div>
+<img alt="_images/22fde220066ea49c3a417afa7210b50e8c539fa935419e2043c596c314298017.png" src="_images/22fde220066ea49c3a417afa7210b50e8c539fa935419e2043c596c314298017.png" />
+</div>
+</div>
+<p>The <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span> obtained using Halton sequences closely matches the values obtained using random sampling. The output distribution is also a good match for the one obtained using random sampling.</p>
+<p>Now, MCS will be performed using <strong>random sampling</strong>, <strong>Latin Hypercube sampling (LHS)</strong> and <strong>Halton sequences</strong> using a varied number of samples drawn from the distribution. The previous analysis used a fixed number of samples to perform the MCS but in the following analysis, the number of samples used for the MCS will be varied and the statistics will be calculated at every number of samples. In this case, LHS and Halton sequences are used to generate samples between the bounds of 0 and 1. As mentioned previously, these values are treated as probabilities and the inverse CDF of the random variables is used to draw samples from the distribution based on the values of these probabilities.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining different samples sizes for MCS</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
 <span class="c1"># Defining the LHS sampler</span>
 <span class="n">lhs_sampler</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">]]),</span> <span class="n">criterion</span><span class="o">=</span><span class="s2">&quot;ese&quot;</span><span class="p">)</span>
 
-<span class="c1"># Defining the Halton sampler</span>
-<span class="n">halton_sampler</span> <span class="o">=</span> <span class="n">Halton</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">scramble</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> 
-<span class="c1"># scramble is set to false to avoid Owen scrambling which is used to create non-deterministic Halton sequences</span>
-
+<span class="c1"># Storing statistics</span>
 <span class="n">mean_lhs</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">sigma_lhs</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">mean_halton</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">sigma_halton</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">mean_random</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">sigma_random</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Storing the function values</span>
+<span class="n">F_lhs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">F_random</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">F_halton</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
 
@@ -498,14 +538,18 @@ Estimated standard deviation (true): 1.2361330425932058
     <span class="n">f_lhs</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2_lhs</span><span class="p">,</span> <span class="n">x3_lhs</span><span class="p">)</span>
     <span class="n">mean_lhs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">f_lhs</span><span class="p">))</span>
     <span class="n">sigma_lhs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">f_lhs</span><span class="p">))</span>
+    <span class="n">F_lhs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f_lhs</span><span class="p">)</span>
 
     <span class="c1"># Halton sampling</span>
     <span class="n">x_halton</span> <span class="o">=</span> <span class="n">halton_sampler</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="n">sample</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sample</span> <span class="o">==</span> <span class="n">samples</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">x_halton</span> <span class="o">=</span> <span class="n">x_halton</span><span class="p">[</span><span class="mi">1</span><span class="p">:,:]</span> <span class="c1"># Dropping the first element [0,0] of the Halton sequence since inverse CDF of 0 will be inf</span>
     <span class="n">x2_halton</span> <span class="o">=</span> <span class="n">rv_x2</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">x_halton</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">x3_halton</span> <span class="o">=</span> <span class="n">rv_x3</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">x_halton</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">f_halton</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2_halton</span><span class="p">,</span> <span class="n">x3_halton</span><span class="p">)</span>
     <span class="n">mean_halton</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">f_halton</span><span class="p">))</span>
     <span class="n">sigma_halton</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">f_halton</span><span class="p">))</span>
+    <span class="n">F_halton</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f_halton</span><span class="p">)</span>
     
     <span class="c1"># Random sampling</span>
     <span class="n">x2</span> <span class="o">=</span> <span class="n">rv_x2</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">sample</span><span class="p">)</span>
@@ -513,10 +557,12 @@ Estimated standard deviation (true): 1.2361330425932058
     <span class="n">f_random</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">)</span>
     <span class="n">mean_random</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">f_random</span><span class="p">))</span>
     <span class="n">sigma_random</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">f_random</span><span class="p">))</span>
+    <span class="n">F_random</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f_random</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>The next block of code plots the convergence history of the MCS with different number of samples. The convergence history plots the convergence of the mean and standard deviation versus the number of samples used in the MCS. The relative change in the mean and standard deviation versus the number of samples is also plotted. A tolerance for the relative change in the statistics can be used to determine when the MCS has converged. This can be used to determine the number of MCS samples required to accurately determine the statistics of the objective function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
@@ -579,20 +625,124 @@ Estimated standard deviation (true): 1.2361330425932058
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_966168/3685018735.py:31: RuntimeWarning: invalid value encountered in scalar divide
-  conv_mean_halton[i] = np.abs(mean_halton[i+1] - mean_halton[i]) / np.abs(mean_halton[0])
+<img alt="_images/2330a8e8d54988d748a900e0fa71de6a9254cf3a63ae29f31f3cf9d99c5c0aae.png" src="_images/2330a8e8d54988d748a900e0fa71de6a9254cf3a63ae29f31f3cf9d99c5c0aae.png" />
+<img alt="_images/d05f5860ee4466d5c228014b34cdcd874c5e8eb5ad29e545c7959c861170f3b6.png" src="_images/d05f5860ee4466d5c228014b34cdcd874c5e8eb5ad29e545c7959c861170f3b6.png" />
+<img alt="_images/d92d671e4aa5e9983ae8f084b855b81169f3f6ee01bd06c04ffce94554ee0cba.png" src="_images/d92d671e4aa5e9983ae8f084b855b81169f3f6ee01bd06c04ffce94554ee0cba.png" />
+<img alt="_images/a9713413d70cd1bf98b3bb01d326f9aa6179b168ad18bfbb4301a4d58ab8a1ba.png" src="_images/a9713413d70cd1bf98b3bb01d326f9aa6179b168ad18bfbb4301a4d58ab8a1ba.png" />
+</div>
+</div>
+<p>Notice that as the number of samples increase, the <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span> also converge to the value obtained from MCS in the previous block of code. The above convergence plots show the benefit of using LHS and Halton sequences to sample the distribution as compared to using random sampling. MCS performed using LHS and Halton sequences tends to converge faster to the known values of <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span>. This can be deduced from the quick reduction in the relative change of the mean and standard deviation that is brought by using the LHS and Halton sequence sampling method. It is also deduced from the variation of mean and standard deviation with the number of samples as the values converge to those obtained from performing MCS using a large number of samples. This means a lower number of samples must be drawn from the distribution and evaluated to calculate the statistics. This reduces the computational cost of performing the uncertainty analysis.</p>
+<p>A similar convergence history can also be plotted for the output distribution of the objective function. This is done in the next code block. This convergence history shows that the output distribution closely matches the true distribution as the number of samples increases. Here, the distribution obtained using random sampling and <span class="math notranslate nohighlight">\(10^6\)</span> MCS samples in an earlier code block is treated as the true distribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">samples</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">f_random_</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;True&#39;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">F_random</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Random&#39;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">F_lhs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;LHS&#39;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">F_halton</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Halton&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Probability density&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$Y$&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Number of samples: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">samples</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
 </pre></div>
 </div>
-<img alt="_images/9a6258d5062e35c3573dbbda47559c72f80faaf9e480a06d05732ebf20a8fcd1.png" src="_images/9a6258d5062e35c3573dbbda47559c72f80faaf9e480a06d05732ebf20a8fcd1.png" />
-<img alt="_images/a597ab7f9ea441f4faf81a875189cf593c5c5068a0c2acb9f7fbaf6230c89a9c.png" src="_images/a597ab7f9ea441f4faf81a875189cf593c5c5068a0c2acb9f7fbaf6230c89a9c.png" />
-<img alt="_images/d69268c727a031c05a2edabab2830a6c471313ab846c95294ff9e590c1652162.png" src="_images/d69268c727a031c05a2edabab2830a6c471313ab846c95294ff9e590c1652162.png" />
-<img alt="_images/ed8c5bd5424a04cbd6643256fa430d7cff21eef51f4c2519328839f46f0cb4df.png" src="_images/ed8c5bd5424a04cbd6643256fa430d7cff21eef51f4c2519328839f46f0cb4df.png" />
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/fa2fc6b2bbfe6fe54820b0e00111fd43a9241bb7d66740455d5ca2bfc5c98c06.png" src="_images/fa2fc6b2bbfe6fe54820b0e00111fd43a9241bb7d66740455d5ca2bfc5c98c06.png" />
+<img alt="_images/ceefa257e19541361aee3dd0aaf5c644a3721c27afac2034259713a41c64a2a2.png" src="_images/ceefa257e19541361aee3dd0aaf5c644a3721c27afac2034259713a41c64a2a2.png" />
+<img alt="_images/417bebaae09bd2c4a854a88dff2980c93e3824f3dddb54bf4f52943b38f5349c.png" src="_images/417bebaae09bd2c4a854a88dff2980c93e3824f3dddb54bf4f52943b38f5349c.png" />
+<img alt="_images/f251b4a66115bbc12c9a2b4c5a49f54476019fa7a60d75658fac798138f2f152.png" src="_images/f251b4a66115bbc12c9a2b4c5a49f54476019fa7a60d75658fac798138f2f152.png" />
+<img alt="_images/27fcd7b09b5b59da11f147282535b813ab8c19c95f1b746db0095ec06ac1ea5b.png" src="_images/27fcd7b09b5b59da11f147282535b813ab8c19c95f1b746db0095ec06ac1ea5b.png" />
 </div>
 </div>
-<p>Notice that as the number of samples increase, the <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span> also converge to the value obtained from MCS in previous block.</p>
 </section>
 <section id="reliability-of-a-constraint">
 <h2>Reliability of a constraint<a class="headerlink" href="#reliability-of-a-constraint" title="Permalink to this heading">#</a></h2>
+<p>When working with uncertainty in design variables or parameters for an optimization problem, the reliability of a constraint being satisfied is defined as</p>
+<div class="math notranslate nohighlight">
+\[r = \text{Pr}(g(\textbf{x}) \leq 0)\]</div>
+<p>The reliability of the constraint used as an example in this section can be calculated using MCS. The distributions of the uncertain variables can be sampled using the methods shown previously and for each sample, the value of the constraint can be calculated. Once all the samples are evaluated, the required probability can be calculated by simply dividing the number of samples that satisfy the constraint by the total number of samples.</p>
+<div class="math notranslate nohighlight">
+\[\text{Pr}(g(\textbf{x}) \leq 0) \approx \frac{\text{number of feasible samples}}{\text{total number of samples}}\]</div>
+<p>Similar to the previous section, the next block of code uses random sampling and a large number of MCS samples to calculate the true reliability of the constraint.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_samples</span> <span class="o">=</span> <span class="mi">1000000</span>
+
+<span class="n">x1</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">rv_x2</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">num_samples</span><span class="p">)</span>
+<span class="n">x3</span> <span class="o">=</span> <span class="n">rv_x3</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">num_samples</span><span class="p">)</span>
+
+<span class="n">g_random_</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated reliability (true): </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">g_random_</span><span class="p">[</span><span class="n">g_random_</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">num_samples</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated reliability (true): 0.991622
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next block of code uses the LHS and Halton sequence sampling methods along with random sampling to calculate the reliability of the constraint. The number of samples used for MCS is varied and the variation of the reliability with number of samples is plotted to visualize the convergence.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining different samples sizes for MCS</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="c1"># Storing reliabilities</span>
+<span class="n">r_lhs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">r_halton</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">r_random</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
+
+    <span class="c1"># LHS sampling</span>
+    <span class="n">x_lhs</span> <span class="o">=</span> <span class="n">lhs_sampler</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+    <span class="n">x2_lhs</span> <span class="o">=</span> <span class="n">rv_x2</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">x_lhs</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">x3_lhs</span> <span class="o">=</span> <span class="n">rv_x3</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">x_lhs</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">g_lhs</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2_lhs</span><span class="p">,</span> <span class="n">x3_lhs</span><span class="p">)</span>
+    <span class="n">r_lhs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">g_lhs</span><span class="p">[</span><span class="n">g_lhs</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">sample</span><span class="p">)</span>
+
+    <span class="c1"># Halton sampling</span>
+    <span class="n">x_halton</span> <span class="o">=</span> <span class="n">halton_sampler</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="n">sample</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sample</span> <span class="o">==</span> <span class="n">samples</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">x_halton</span> <span class="o">=</span> <span class="n">x_halton</span><span class="p">[</span><span class="mi">1</span><span class="p">:,:]</span> <span class="c1"># Dropping the first element [0,0] of the Halton sequence since inverse CDF of 0 will be inf</span>
+    <span class="n">x2_halton</span> <span class="o">=</span> <span class="n">rv_x2</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">x_halton</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">x3_halton</span> <span class="o">=</span> <span class="n">rv_x3</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">x_halton</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">g_halton</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2_halton</span><span class="p">,</span> <span class="n">x3_halton</span><span class="p">)</span>
+    <span class="n">r_halton</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">g_halton</span><span class="p">[</span><span class="n">g_halton</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">sample</span><span class="p">)</span>
+    
+    <span class="c1"># Random sampling</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">rv_x2</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">sample</span><span class="p">)</span>
+    <span class="n">x3</span> <span class="o">=</span> <span class="n">rv_x3</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">sample</span><span class="p">)</span>
+    <span class="n">g_random</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">)</span>
+    <span class="n">r_random</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">g_random</span><span class="p">[</span><span class="n">g_random</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">sample</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">r_lhs</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;LHS&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">r_random</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Random&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">r_halton</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Halton&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Reliability&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Number of samples&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/96f4c34deb4d2479967f4bf2b40f8c7076f74d8dc88e54d1d8640bbf016020e5.png" src="_images/96f4c34deb4d2479967f4bf2b40f8c7076f74d8dc88e54d1d8640bbf016020e5.png" />
+</div>
+</div>
 </section>
 </section>
 
