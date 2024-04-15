@@ -1,0 +1,876 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Robust Design &#8212; AAE 590 Surrogate Methods</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'opt_under_unc/robust_design';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Reliability-based Design" href="rel_based_design.html" />
+    <link rel="prev" title="Optimization under uncertainty" href="intro_ouu.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">AAE 590 Surrogate Methods</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources.html">Python and Jupyter notebook resources</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../review_nm/intro.html">Review of Numerical Methods and Probability</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../review_nm/error.html">Error estimation for iterative method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../review_nm/num_diff.html">Numerical Differentiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../review_nm/uniform.html">Uniform Distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../review_nm/norm.html">Normal Distribution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../prob_form.html">Problem Formulation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../local_opt/intro.html">Local Optimization</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../local_opt/unconst.html">Unconstrained Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../local_opt/const.html">Constrained Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../global_opt/intro.html">Global Optimization</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../global_opt/multi.html">Multistart Gradient-based Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../global_opt/pso.html">Particle Swarm Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../global_opt/de.html">Differential Evolution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../doe.html">Sampling Plans</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../basic_sm/intro.html">Basic Surrogate Models</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basic_sm/ls_regression.html">Linear Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basic_sm/poly.html">Polynomial Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basic_sm/rbf.html">Radial Basis Function Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../krg.html">Gaussian Process based Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../seq_sampling/intro.html">Sequential Sampling</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../seq_sampling/exploitation.html">Exploitation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../seq_sampling/exploration.html">Exploration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../seq_sampling/lcb.html">Lower Confidence Bound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../seq_sampling/pi.html">Probability of Improvement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../seq_sampling/ei.html">Expected Improvement</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../const_seq_sampling/intro.html">Constrained Sequential Sampling</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../const_seq_sampling/const_exploit.html">Constrained Exploitation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../const_seq_sampling/const_explor.html">Constrained Exploration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../const_seq_sampling/const_ei.html">Constrained Expected Improvement</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sens_analysis/intro.html">Sensitivity Analysis</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../sens_analysis/local.html">Local Sensitivity Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sens_analysis/global.html">Global Sensitivity Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../dim_reduction/intro.html">Dimensionality Reduction</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dim_reduction/dim_red_methods.html">Dimensionality Reduction Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dim_reduction/seq_sampling.html">Sequential Sampling using Dimensionality Reduction</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../engineering_design.html">Engineering Modeling and Design Optimization</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../multi_objective/intro_moo.html">Multiobjective Optimization</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../multi_objective/multi_objective_optimization.html">Multiobjective optimization using differential evolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../multi_objective/krg_multi_objective.html">Multiobjective optimization using Kriging models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../uncertainty_analysis.html">Uncertainty Analysis</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro_ouu.html">Optimization under uncertainty</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Robust Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rel_based_design.html">Reliability-based Design</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/opt_under_unc/robust_design.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Robust Design</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deterministic-optimization">Deterministic Optimization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-stochastic-function-output">Plotting stochastic function output</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimizing-mu-f">Minimizing <span class="math notranslate nohighlight">\(\mu_f\)</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minimizing-sigma-f">Minimizing <span class="math notranslate nohighlight">\(\sigma_f\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimizing-both-mu-f-and-sigma-f">Minimizing both <span class="math notranslate nohighlight">\(\mu_f\)</span> and <span class="math notranslate nohighlight">\(\sigma_f\)</span></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="robust-design">
+<h1>Robust Design<a class="headerlink" href="#robust-design" title="Permalink to this heading">#</a></h1>
+<p>Robust design optimization considers the average performance of a system with random design variables or parameters. The optimization aims to produce a robust design i.e., a design with performance that is less sensitive to inherent variability of the design variables and parameters of the system. Possible objective functions for the optimization could be the mean and standard deviation of the objective function. Minimizing the mean is usually the preferred formulation as although low variability may be desired, minimizing the standard deviation of the objective offers no incentive to the optimizer to improve the mean performance of the system. Another possible formulation is to use multiobjective optimization to find the tradeoff between minimizing the mean and standard deviation of the objective function or even using a linear combination of the two quantities as the objective of the optimization.</p>
+<p>To illustrate the implementation of robust design the following unconstrained optimization problem will be used,</p>
+<div class="math notranslate nohighlight">
+\[
+    f(x) = e^{x/2} + 0.2x^6 - 0.2x^5 - 0.75x^4 + x^2
+\]</div>
+<div class="math notranslate nohighlight">
+\[-1.2 \leq x \leq 2.0\]</div>
+<p>Robust design methodologies will be applied to this function and the results will be analyzed. The first block of code below imports some of the required packages.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The block of code below defines the function for the optimization problem and plots the function within the given range.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the function</span>
+<span class="n">function_1</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.2</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">6</span> <span class="o">-</span> <span class="mf">0.2</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">5</span> <span class="o">-</span> <span class="mf">0.75</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">4</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="c1"># Bounds</span>
+<span class="n">x_lb</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.2</span>
+<span class="n">x_ub</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="c1"># Number of plotting points</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="c1"># Generating x points</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x_lb</span><span class="p">,</span> <span class="n">x_ub</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span>
+
+<span class="c1"># Computing function values at those x</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">function_1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># Plotting</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$f(x)$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Function&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Function&#39;)
+</pre></div>
+</div>
+<img alt="../_images/7ce60c91730527da843b714c4d217f39be5c84aa6c64234786c626cb97448db9.png" src="../_images/7ce60c91730527da843b714c4d217f39be5c84aa6c64234786c626cb97448db9.png" />
+</div>
+</div>
+<section id="deterministic-optimization">
+<h2>Deterministic Optimization<a class="headerlink" href="#deterministic-optimization" title="Permalink to this heading">#</a></h2>
+<p>Initially, let us assume that the design variable of the problem is deterministic and find the global minimum of the function. BFGS will be used for optimization here. Since there are two local minima, the final answer of the deterministic optimization will depend on starting point. The below block of code performs the optimization.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Optimization settings</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="mf">1.2</span>
+<span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;BFGS&quot;</span>
+<span class="n">jac</span> <span class="o">=</span> <span class="s2">&quot;2-point&quot;</span>
+<span class="n">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;disp&quot;</span><span class="p">:</span> <span class="kc">True</span>
+<span class="p">}</span>
+
+<span class="c1"># Optimizing the function - Deterministic</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">function_1</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">jac</span><span class="o">=</span><span class="n">jac</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+
+<span class="c1"># Printing the results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Optimum: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">fun</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Optimum obtained at: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.841127
+         Iterations: 4
+         Function evaluations: 16
+         Gradient evaluations: 8
+Optimum: 0.8411270325019435
+Optimum obtained at: [1.83413727]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Therefore, the deterministic global minimum of the problem is: <span class="math notranslate nohighlight">\(f^* = 0.8411\)</span> at <span class="math notranslate nohighlight">\(x^* = 1.834\)</span>.</p>
+<section id="plotting-stochastic-function-output">
+<h3>Plotting stochastic function output<a class="headerlink" href="#plotting-stochastic-function-output" title="Permalink to this heading">#</a></h3>
+<p>Now, let <span class="math notranslate nohighlight">\(x\)</span> be a <em>normal distribution with <span class="math notranslate nohighlight">\(\sigma = 0.2\)</span></em>, this will make <span class="math notranslate nohighlight">\(f(x)\)</span> also stochastic. The block of code below plots the variation of mean and standard deviation of the function <span class="math notranslate nohighlight">\(f\)</span> with respect to <span class="math notranslate nohighlight">\(x\)</span>. It also plots the combined variation. You can change the weight and see how the combined objective changes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Few parameters</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">mcs_itr</span> <span class="o">=</span> <span class="mi">500000</span>
+
+<span class="c1"># Initializing arrays</span>
+<span class="n">f_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+<span class="n">f_sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+
+<span class="c1"># Performing mcs to compute mean and sigma</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">samples</span><span class="p">):</span>
+    
+    <span class="c1"># Define normal random variable at given x</span>
+    <span class="n">rv</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">scale</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span>
+    
+    <span class="c1"># Compute function values at randomly generated inputs</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">function_1</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">mcs_itr</span><span class="p">))</span>
+    
+    <span class="c1"># Compute mean and standard deviation of f</span>
+    <span class="n">f_mean</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+    <span class="n">f_sigma</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+
+<span class="c1"># Plotting mean and standard deviation of function</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;f(x)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f_mean</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\mu_f(x)$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$f$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f_sigma</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$\sigma_f$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+
+<span class="c1"># Plotting combined mean and standard deviation</span>
+<span class="c1"># std is multiplied by 10 for scaling</span>
+<span class="c1"># w - weight</span>
+<span class="n">w</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;f(x)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="o">*</span><span class="n">f_mean</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">w</span><span class="p">)</span><span class="o">*</span><span class="mi">10</span><span class="o">*</span><span class="n">f_sigma</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\mu_f + \sigma_f$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$f$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x179b57fa0&gt;
+</pre></div>
+</div>
+<img alt="../_images/0c361256086080bab7d6abe9e2d4d3b4336542a09e5b13cf5d9eb1621f72cf75.png" src="../_images/0c361256086080bab7d6abe9e2d4d3b4336542a09e5b13cf5d9eb1621f72cf75.png" />
+<img alt="../_images/546089731843e73bea19cddd4a28322c8596cf4281498fe977ac697f3f34a498.png" src="../_images/546089731843e73bea19cddd4a28322c8596cf4281498fe977ac697f3f34a498.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="minimizing-mu-f">
+<h2>Minimizing <span class="math notranslate nohighlight">\(\mu_f\)</span><a class="headerlink" href="#minimizing-mu-f" title="Permalink to this heading">#</a></h2>
+<p>Firstly, <span class="math notranslate nohighlight">\(\mu_f\)</span> is used as the objective. So, optimization problem statement is</p>
+<div class="math notranslate nohighlight">
+\[
+    \min_{x} \mu_f(x)
+\]</div>
+<p>Based on the variation of <span class="math notranslate nohighlight">\(\mu_f\)</span>, the global minimum appears to be at a different <span class="math notranslate nohighlight">\(x\)</span> and will depend on the starting point. The block of code below defines the function for computing <span class="math notranslate nohighlight">\(\mu_f\)</span>. At any given <span class="math notranslate nohighlight">\(x\)</span>, MCS is performed to compute the mean of <span class="math notranslate nohighlight">\(f\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Few parameters</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">mcs_itr</span> <span class="o">=</span> <span class="mi">500000</span>
+
+<span class="c1"># Objective function</span>
+<span class="k">def</span> <span class="nf">robust_obj_mean</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    
+    <span class="c1"># Create a random variable located at the given x</span>
+    <span class="n">rv</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span>
+    
+    <span class="c1"># Compute function value at various randomly generated points</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">function_1</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">mcs_itr</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since MCS is performed for each input <span class="math notranslate nohighlight">\(x\)</span> in the above function, there is some randomness involved which makes gradient computation harder. To optimize <span class="math notranslate nohighlight">\(\mu_f\)</span>, differential evolution is used since it doesn’t rely on gradients. Since <code class="docutils literal notranslate"><span class="pre">pymoo</span></code> will be used, the relevant packages will be imported in the next code block.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pymoo.core.problem</span> <span class="kn">import</span> <span class="n">ElementwiseProblem</span>
+<span class="kn">from</span> <span class="nn">pymoo.algorithms.soo.nonconvex.de</span> <span class="kn">import</span> <span class="n">DE</span>
+<span class="kn">from</span> <span class="nn">pymoo.termination.default</span> <span class="kn">import</span> <span class="n">DefaultSingleObjectiveTermination</span>
+<span class="kn">from</span> <span class="nn">pymoo.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+<span class="kn">from</span> <span class="nn">pymoo.config</span> <span class="kn">import</span> <span class="n">Config</span>
+<span class="n">Config</span><span class="o">.</span><span class="n">warnings</span><span class="p">[</span><span class="s1">&#39;not_compiled&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="c1"># Defining a generic differential evolution problem</span>
+<span class="k">class</span> <span class="nc">RobustDesign</span><span class="p">(</span><span class="n">ElementwiseProblem</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_var</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_obj</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_constr</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">xl</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.2</span><span class="p">]),</span> <span class="n">xu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">function</span> <span class="o">=</span> <span class="n">function</span>
+
+    <span class="k">def</span> <span class="nf">_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">problem</span> <span class="o">=</span> <span class="n">RobustDesign</span><span class="p">(</span><span class="n">function</span><span class="o">=</span><span class="n">robust_obj_mean</span><span class="p">)</span>
+
+<span class="n">algorithm</span> <span class="o">=</span> <span class="n">DE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">dither</span><span class="o">=</span><span class="s2">&quot;vector&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">termination</span> <span class="o">=</span> <span class="n">DefaultSingleObjectiveTermination</span><span class="p">(</span>
+    <span class="n">xtol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span>
+    <span class="n">cvtol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span>
+    <span class="n">ftol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span>
+    <span class="n">period</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">n_max_gen</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+    <span class="n">n_max_evals</span><span class="o">=</span><span class="mi">100000</span>
+<span class="p">)</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">termination</span><span class="o">=</span><span class="n">termination</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+               <span class="n">save_history</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best solution found: </span><span class="se">\n</span><span class="s2">X = </span><span class="si">%s</span><span class="se">\n</span><span class="s2">F = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">F</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best solution found: 
+X = [-0.28126161]
+F = [0.97519447]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The minimum obtained from this stochastic optimization is <span class="math notranslate nohighlight">\(0.975\)</span> at <span class="math notranslate nohighlight">\(x = -0.278\)</span>. Also, this optimum is different from the deterministic optimization.</p>
+<section id="minimizing-sigma-f">
+<h3>Minimizing <span class="math notranslate nohighlight">\(\sigma_f\)</span><a class="headerlink" href="#minimizing-sigma-f" title="Permalink to this heading">#</a></h3>
+<p>Now, let the objective be <span class="math notranslate nohighlight">\(\sigma_f\)</span>. So, optimization problem statement will be</p>
+<div class="math notranslate nohighlight">
+\[
+    \min_{x} \sigma_f(x)
+\]</div>
+<p>The block of code below defines the robust objective which computes the standard deviation of <span class="math notranslate nohighlight">\(f\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Few parameters</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">mcs_itr</span> <span class="o">=</span> <span class="mi">500000</span>
+
+<span class="c1"># Objective function</span>
+<span class="k">def</span> <span class="nf">robust_obj_sigma</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    
+    <span class="c1"># Create random located at the given x</span>
+    <span class="n">rv</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span>
+    
+    <span class="c1"># Compute function value at various randomly generated points</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">function_1</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">mcs_itr</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To optimize <span class="math notranslate nohighlight">\(\sigma_f\)</span>, differential evolution is used for the reason explained earlier. The optimization is performed in the following code block.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">problem</span> <span class="o">=</span> <span class="n">RobustDesign</span><span class="p">(</span><span class="n">function</span><span class="o">=</span><span class="n">robust_obj_sigma</span><span class="p">)</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">termination</span><span class="o">=</span><span class="n">termination</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+               <span class="n">save_history</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best solution found: </span><span class="se">\n</span><span class="s2">X = </span><span class="si">%s</span><span class="se">\n</span><span class="s2">F = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">F</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean function value at optimum: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">robust_obj_mean</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">X</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best solution found: 
+X = [-0.30179105]
+F = [0.04368645]
+Mean function value at optimum: 0.9760152775929745
+</pre></div>
+</div>
+</div>
+</div>
+<p>The optimum obtained in this case only minimizes the standard deviation of <span class="math notranslate nohighlight">\(f\)</span> with respect to the uncertainty in <span class="math notranslate nohighlight">\(x\)</span> but doesn’t necessarily minimize the mean value of the function itself.</p>
+</section>
+</section>
+<section id="minimizing-both-mu-f-and-sigma-f">
+<h2>Minimizing both <span class="math notranslate nohighlight">\(\mu_f\)</span> and <span class="math notranslate nohighlight">\(\sigma_f\)</span><a class="headerlink" href="#minimizing-both-mu-f-and-sigma-f" title="Permalink to this heading">#</a></h2>
+<p>Now, let the objective be <span class="math notranslate nohighlight">\(w\mu_f + (1-w)10\sigma_f\)</span>. Here, <span class="math notranslate nohighlight">\(w\)</span> is the weight given to both the objectives and <span class="math notranslate nohighlight">\(10\)</span> is the scaling factor for <span class="math notranslate nohighlight">\(\sigma_f\)</span>. So, optimization problem statement will be</p>
+<div class="math notranslate nohighlight">
+\[
+    \min_{x} w\mu_f + (1-w)10\sigma_f
+\]</div>
+<p>The block of code below defines the robust objective which computes the standard deviation of <span class="math notranslate nohighlight">\(f\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Few parameters</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">mcs_itr</span> <span class="o">=</span> <span class="mi">500000</span>
+<span class="n">weight</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+<span class="c1"># Objective function</span>
+<span class="k">def</span> <span class="nf">robust_obj_combined</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    
+    <span class="c1"># Create a random variable located at the given x</span>
+    <span class="n">rv</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span>
+    
+    <span class="c1"># Compute function value at various randomly generated points</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">function_1</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">mcs_itr</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">weight</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">+</span> <span class="n">weight</span><span class="o">*</span><span class="mi">10</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To optimize combined objective, differential evolution is used for the reason explained earlier. Here, the weight parameter <span class="math notranslate nohighlight">\(w\)</span> is kept as <span class="math notranslate nohighlight">\(0.5\)</span> to give roughly equal weights to the mean and standard deviation. You can change the value of the weight and see how the optimum changes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">problem</span> <span class="o">=</span> <span class="n">RobustDesign</span><span class="p">(</span><span class="n">function</span><span class="o">=</span><span class="n">robust_obj_combined</span><span class="p">)</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">termination</span><span class="o">=</span><span class="n">termination</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+               <span class="n">save_history</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best solution found: </span><span class="se">\n</span><span class="s2">X = </span><span class="si">%s</span><span class="se">\n</span><span class="s2">F = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">F</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean function value at optimum: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">robust_obj_mean</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">X</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best solution found: 
+X = [-0.30445152]
+F = [0.70650679]
+Mean function value at optimum: 0.9760742817931409
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./opt_under_unc"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro_ouu.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Optimization under uncertainty</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="rel_based_design.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Reliability-based Design</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deterministic-optimization">Deterministic Optimization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-stochastic-function-output">Plotting stochastic function output</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimizing-mu-f">Minimizing <span class="math notranslate nohighlight">\(\mu_f\)</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minimizing-sigma-f">Minimizing <span class="math notranslate nohighlight">\(\sigma_f\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimizing-both-mu-f-and-sigma-f">Minimizing both <span class="math notranslate nohighlight">\(\mu_f\)</span> and <span class="math notranslate nohighlight">\(\sigma_f\)</span></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Leifur Leifsson (leifur[at]purdue.edu)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
