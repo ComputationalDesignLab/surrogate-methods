@@ -551,11 +551,11 @@ Optimum obtained at: [1.83413727]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fb609457eb0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fa67ee04b80&gt;
 </pre></div>
 </div>
-<img alt="../_images/f399109bb0494dd01cb2a17921ff2aac31fc36575390c9cfabf49d816545339b.png" src="../_images/f399109bb0494dd01cb2a17921ff2aac31fc36575390c9cfabf49d816545339b.png" />
-<img alt="../_images/0be544ed24cf95b3345fa25889df159c3149d4ef2abfe8432d242253fadf7109.png" src="../_images/0be544ed24cf95b3345fa25889df159c3149d4ef2abfe8432d242253fadf7109.png" />
+<img alt="../_images/a8cf26d078785f0f1e55b0a7d658542fa772cbc9869eee26e95f9b8b8ee5ed16.png" src="../_images/a8cf26d078785f0f1e55b0a7d658542fa772cbc9869eee26e95f9b8b8ee5ed16.png" />
+<img alt="../_images/5f6ee505c4395fd588cdefc10d2c5412952294e976602d454ea15a96a0a47889.png" src="../_images/5f6ee505c4395fd588cdefc10d2c5412952294e976602d454ea15a96a0a47889.png" />
 </div>
 </div>
 </section>
@@ -565,9 +565,11 @@ Optimum obtained at: [1.83413727]
 <p>Firstly, <span class="math notranslate nohighlight">\(\mu_f\)</span> is used as the objective. So, optimization problem statement is</p>
 <div class="math notranslate nohighlight">
 \[
-    \min_{x} \mu_f(x)
+    \min_{x} \mu_f(x)  
 \]</div>
-<p>Based on the variation of <span class="math notranslate nohighlight">\(\mu_f\)</span>, the global minimum appears to be at a different <span class="math notranslate nohighlight">\(x\)</span> and will depend on the starting point. The block of code below defines the function for computing <span class="math notranslate nohighlight">\(\mu_f\)</span>. At any given <span class="math notranslate nohighlight">\(x\)</span>, MCS is performed to compute the mean of <span class="math notranslate nohighlight">\(f\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[-1.2+3\sigma \leq x \leq 2.0-3\sigma\]</div>
+<p>The bounds of the problem are also modified to account for the uncertainty in <span class="math notranslate nohighlight">\(x\)</span>. This formulation of the bounds is the worst-case formulation where the uncertainty in <span class="math notranslate nohighlight">\(x\)</span> increases the lower bound and decreses the upper bound, effectively shrinking the design space by the maximum possible amount with the given uncertainty.  Based on the variation of <span class="math notranslate nohighlight">\(\mu_f\)</span>, the global minimum appears to be at a different <span class="math notranslate nohighlight">\(x\)</span> and will depend on the starting point. The block of code below defines the function for computing <span class="math notranslate nohighlight">\(\mu_f\)</span>. At any given <span class="math notranslate nohighlight">\(x\)</span>, MCS is performed to compute the mean of <span class="math notranslate nohighlight">\(f\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Few parameters</span>
@@ -602,7 +604,7 @@ Optimum obtained at: [1.83413727]
 <span class="k">class</span> <span class="nc">RobustDesign</span><span class="p">(</span><span class="n">ElementwiseProblem</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_var</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_obj</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_constr</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">xl</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.2</span><span class="p">]),</span> <span class="n">xu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">]))</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_var</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_obj</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_constr</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">xl</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.2</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">sigma</span><span class="p">]),</span> <span class="n">xu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">sigma</span><span class="p">]))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">function</span> <span class="o">=</span> <span class="n">function</span>
 
     <span class="k">def</span> <span class="nf">_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -635,20 +637,22 @@ Optimum obtained at: [1.83413727]
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best solution found: 
-X = [-0.27625916]
-F = [0.97516973]
+X = [-0.27624889]
+F = [0.97512942]
 </pre></div>
 </div>
 </div>
 </div>
-<p>The minimum obtained from this stochastic optimization is <span class="math notranslate nohighlight">\(0.975\)</span> at <span class="math notranslate nohighlight">\(x = -0.278\)</span>. Also, this optimum is different from the deterministic optimization.</p>
+<p>The minimum obtained from this stochastic optimization is <span class="math notranslate nohighlight">\(0.975\)</span> at <span class="math notranslate nohighlight">\(x = -0.276\)</span>. Also, this optimum is different from the deterministic optimization.</p>
 <section id="minimizing-sigma-f">
 <h3>Minimizing <span class="math notranslate nohighlight">\(\sigma_f\)</span><a class="headerlink" href="#minimizing-sigma-f" title="Permalink to this heading">#</a></h3>
-<p>Now, let the objective be <span class="math notranslate nohighlight">\(\sigma_f\)</span>. So, optimization problem statement will be</p>
+<p>Now, let the objective be <span class="math notranslate nohighlight">\(\sigma_f\)</span> subject to the worst case bounds formulation. So, optimization problem statement will be</p>
 <div class="math notranslate nohighlight">
 \[
     \min_{x} \sigma_f(x)
 \]</div>
+<div class="math notranslate nohighlight">
+\[-1.2+3\sigma \leq x \leq 2.0-3\sigma\]</div>
 <p>The block of code below defines the robust objective which computes the standard deviation of <span class="math notranslate nohighlight">\(f\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -685,9 +689,9 @@ F = [0.97516973]
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best solution found: 
-X = [-0.30865179]
-F = [0.04360004]
-Mean function value at optimum: 0.9761954853344265
+X = [-0.3111779]
+F = [0.04370631]
+Mean function value at optimum: 0.9763742488704997
 </pre></div>
 </div>
 </div>
@@ -697,11 +701,13 @@ Mean function value at optimum: 0.9761954853344265
 </section>
 <section id="minimizing-both-mu-f-and-sigma-f">
 <h2>Minimizing both <span class="math notranslate nohighlight">\(\mu_f\)</span> and <span class="math notranslate nohighlight">\(\sigma_f\)</span><a class="headerlink" href="#minimizing-both-mu-f-and-sigma-f" title="Permalink to this heading">#</a></h2>
-<p>Now, let the objective be <span class="math notranslate nohighlight">\(w\mu_f + (1-w)10\sigma_f\)</span>. Here, <span class="math notranslate nohighlight">\(w\)</span> is the weight given to both the objectives and <span class="math notranslate nohighlight">\(10\)</span> is the scaling factor for <span class="math notranslate nohighlight">\(\sigma_f\)</span>. So, optimization problem statement will be</p>
+<p>Now, let the objective be <span class="math notranslate nohighlight">\(w\mu_f + (1-w)10\sigma_f\)</span> subject to the worst case bounds formulation. Here, <span class="math notranslate nohighlight">\(w\)</span> is the weight given to both the objectives and <span class="math notranslate nohighlight">\(10\)</span> is the scaling factor for <span class="math notranslate nohighlight">\(\sigma_f\)</span>. So, optimization problem statement will be</p>
 <div class="math notranslate nohighlight">
 \[
     \min_{x} w\mu_f + (1-w)10\sigma_f
 \]</div>
+<div class="math notranslate nohighlight">
+\[-1.2+3\sigma \leq x \leq 2.0-3\sigma\]</div>
 <p>The block of code below defines the robust objective which computes the standard deviation of <span class="math notranslate nohighlight">\(f\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -734,18 +740,21 @@ Mean function value at optimum: 0.9761954853344265
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best solution found: </span><span class="se">\n</span><span class="s2">X = </span><span class="si">%s</span><span class="se">\n</span><span class="s2">F = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">F</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean function value at optimum: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">robust_obj_mean</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">X</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Standard Deviation value at optimum: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">robust_obj_sigma</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">X</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best solution found: 
-X = [-0.30685712]
-F = [0.70618365]
-Mean function value at optimum: 0.9760520441710593
+X = [-0.30631225]
+F = [0.7062154]
+Mean function value at optimum: 0.976070506648156
+Standard Deviation value at optimum: 0.04400107139597103
 </pre></div>
 </div>
 </div>
 </div>
+<p>Minimizing a combination of the mean and standard deviation picks a point that reduces the variability of the function while also reducing the mean value of the function.</p>
 </section>
 </section>
 
