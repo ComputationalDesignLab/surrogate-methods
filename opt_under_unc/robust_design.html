@@ -453,7 +453,7 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Function&#39;)
 </pre></div>
 </div>
-<img alt="../_images/303fbd4d766da082f4d8c9bf4c610a15125a28cac9bcf9408993bf43d39092d7.png" src="../_images/303fbd4d766da082f4d8c9bf4c610a15125a28cac9bcf9408993bf43d39092d7.png" />
+<img alt="../_images/7ce60c91730527da843b714c4d217f39be5c84aa6c64234786c626cb97448db9.png" src="../_images/7ce60c91730527da843b714c4d217f39be5c84aa6c64234786c626cb97448db9.png" />
 </div>
 </div>
 <section id="deterministic-optimization">
@@ -522,6 +522,7 @@ Optimum obtained at: [1.83413727]
 
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;f(x)&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f_mean</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\mu_f(x)$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mf">1.834</span><span class="p">,</span> <span class="mf">0.8411</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Deterministic Optimum&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$f$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
@@ -529,6 +530,7 @@ Optimum obtained at: [1.83413727]
 
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;f(x)&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f_sigma</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\sigma_f(x)$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mf">1.834</span><span class="p">,</span> <span class="mf">0.8411</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Deterministic Optimum&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$\sigma_f$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
@@ -543,6 +545,7 @@ Optimum obtained at: [1.83413727]
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;f(x)&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="o">*</span><span class="n">f_mean</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">w</span><span class="p">)</span><span class="o">*</span><span class="mi">10</span><span class="o">*</span><span class="n">f_sigma</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\mu_f + \sigma_f$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mf">1.834</span><span class="p">,</span> <span class="mf">0.8411</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Deterministic Optimum&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$f$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
@@ -551,11 +554,11 @@ Optimum obtained at: [1.83413727]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fa67ee04b80&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x14f201f10&gt;
 </pre></div>
 </div>
-<img alt="../_images/a8cf26d078785f0f1e55b0a7d658542fa772cbc9869eee26e95f9b8b8ee5ed16.png" src="../_images/a8cf26d078785f0f1e55b0a7d658542fa772cbc9869eee26e95f9b8b8ee5ed16.png" />
-<img alt="../_images/5f6ee505c4395fd588cdefc10d2c5412952294e976602d454ea15a96a0a47889.png" src="../_images/5f6ee505c4395fd588cdefc10d2c5412952294e976602d454ea15a96a0a47889.png" />
+<img alt="../_images/b1082f8055f3fda42420ab156a43cfec2ec624c7ff9605f79cb8a573f4f2dc06.png" src="../_images/b1082f8055f3fda42420ab156a43cfec2ec624c7ff9605f79cb8a573f4f2dc06.png" />
+<img alt="../_images/ec73c6e14d9ce9a8cc63d12830f8414dd0eda564f237f6e96192c044acb82f2c.png" src="../_images/ec73c6e14d9ce9a8cc63d12830f8414dd0eda564f237f6e96192c044acb82f2c.png" />
 </div>
 </div>
 </section>
@@ -637,10 +640,32 @@ Optimum obtained at: [1.83413727]
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best solution found: 
-X = [-0.27624889]
-F = [0.97512942]
+X = [-0.28001789]
+F = [0.9752364]
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;f(x)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f_mean</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\mu_f(x)$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">F</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Robust Optimum&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mf">1.834</span><span class="p">,</span> <span class="mf">0.8411</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Deterministic Optimum&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$f$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x15c2d1cd0&gt;
+</pre></div>
+</div>
+<img alt="../_images/9bb8c62fbdf4797f4709053369fa8229c14eeef28a0a074f8a92086199d44aa5.png" src="../_images/9bb8c62fbdf4797f4709053369fa8229c14eeef28a0a074f8a92086199d44aa5.png" />
 </div>
 </div>
 <p>The minimum obtained from this stochastic optimization is <span class="math notranslate nohighlight">\(0.975\)</span> at <span class="math notranslate nohighlight">\(x = -0.276\)</span>. Also, this optimum is different from the deterministic optimization.</p>
@@ -689,11 +714,30 @@ F = [0.97512942]
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best solution found: 
-X = [-0.3111779]
-F = [0.04370631]
-Mean function value at optimum: 0.9763742488704997
+X = [-0.30630986]
+F = [0.04358597]
+Mean function value at optimum: 0.9761364136049435
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;f(x)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f_sigma</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\sigma_f(x)$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">F</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Robust Optimum&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mf">1.834</span><span class="p">,</span> <span class="mf">0.8411</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Deterministic Optimum&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$\sigma_f$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/630947b5982801b74547d97c5bb7b97da83ff4b21d7d791c9c655336b3212912.png" src="../_images/630947b5982801b74547d97c5bb7b97da83ff4b21d7d791c9c655336b3212912.png" />
 </div>
 </div>
 <p>The optimum obtained in this case only minimizes the standard deviation of <span class="math notranslate nohighlight">\(f\)</span> with respect to the uncertainty in <span class="math notranslate nohighlight">\(x\)</span> but doesn’t necessarily minimize the mean value of the function itself.</p>
@@ -746,12 +790,33 @@ Mean function value at optimum: 0.9763742488704997
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best solution found: 
-X = [-0.30631225]
-F = [0.7062154]
-Mean function value at optimum: 0.976070506648156
-Standard Deviation value at optimum: 0.04400107139597103
+X = [-0.30325819]
+F = [0.7064183]
+Mean function value at optimum: 0.9760212709228356
+Standard Deviation value at optimum: 0.04396908402442853
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;f(x)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="o">*</span><span class="n">f_mean</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">w</span><span class="p">)</span><span class="o">*</span><span class="mi">10</span><span class="o">*</span><span class="n">f_sigma</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\mu_f + \sigma_f$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">F</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Robust Optimum&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mf">1.834</span><span class="p">,</span> <span class="mf">0.8411</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Deterministic Optimum&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$f$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x15c348880&gt;
+</pre></div>
+</div>
+<img alt="../_images/f5731962995733d4f8d4bb422c1ea413880a9167027d564a42cdb0c0623b0ac1.png" src="../_images/f5731962995733d4f8d4bb422c1ea413880a9167027d564a42cdb0c0623b0ac1.png" />
 </div>
 </div>
 <p>Minimizing a combination of the mean and standard deviation picks a point that reduces the variability of the function while also reducing the mean value of the function.</p>
