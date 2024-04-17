@@ -402,6 +402,8 @@ document.write(`
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Ellipse</span>
+<span class="kn">import</span> <span class="nn">matplotlib.transforms</span> <span class="k">as</span> <span class="nn">transforms</span>
 <span class="kn">from</span> <span class="nn">pymoo.core.problem</span> <span class="kn">import</span> <span class="n">ElementwiseProblem</span>
 <span class="kn">from</span> <span class="nn">pymoo.algorithms.soo.nonconvex.de</span> <span class="kn">import</span> <span class="n">DE</span>
 <span class="kn">from</span> <span class="nn">pymoo.termination.default</span> <span class="kn">import</span> <span class="n">DefaultSingleObjectiveTermination</span>
@@ -464,7 +466,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f875fbaca30&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fdbdb4c0d00&gt;
 </pre></div>
 </div>
 <img alt="../_images/f8455246c519d73ffbe2ab16c3fb81b95f516f138e95c2764d9c405219efd1f8.png" src="../_images/f8455246c519d73ffbe2ab16c3fb81b95f516f138e95c2764d9c405219efd1f8.png" />
@@ -503,9 +505,9 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reliability of g1: 0.492017
-Reliability of g2: 0.498383
-Total reliability: 0.245212908511 (assuming both the constraints are independent)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reliability of g1: 0.492011
+Reliability of g2: 0.497175
+Total reliability: 0.24461556892499997 (assuming both the constraints are independent)
 </pre></div>
 </div>
 </div>
@@ -606,8 +608,8 @@ Total reliability: 0.245212908511 (assuming both the constraints are independent
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best solution found: 
-X = [1.15638485 1.65062763]
-F = [-2.89159413]
+X = [1.15289794 1.64385884]
+F = [-2.89113414]
 </pre></div>
 </div>
 </div>
@@ -632,14 +634,14 @@ F = [-2.89159413]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reliability of g1: 0.989742
-Reliability of g2: 0.990025
-Total reliability: 0.97986932355 (assuming both the constraints are independent)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reliability of g1: 0.989906
+Reliability of g2: 0.990959
+Total reliability: 0.980956259854 (assuming both the constraints are independent)
 </pre></div>
 </div>
 </div>
 </div>
-<p>So, the design point is much more reliable as compared to deterministic optimum. But the optimum value is also increased. The block of code below plots the design space with both the deterministic and reliable optimum.</p>
+<p>So, the design point is much more reliable as compared to deterministic optimum. But the optimum value is also increased. The block of code below plots the design space with both the deterministic and reliable optimum. The plot also shows the uncertainty ellipse around the reliable optimum. The uncertainty ellipse essentially shows the spread of 99% of the possible values of the uncertain design variables. The shape of the ellipse shows that the probability of constraint violation is greatly reduced after accounting for the uncertainty in the design variables. This ellipse would change to a circle if the standard deviation of both the design variables was the same.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining x and y values</span>
@@ -654,6 +656,23 @@ Total reliability: 0.97986932355 (assuming both the constraints are independent)
 <span class="n">Z</span> <span class="o">=</span> <span class="n">function_2</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
 <span class="n">g1</span> <span class="o">=</span> <span class="n">constraint_1</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
 <span class="n">g2</span> <span class="o">=</span> <span class="n">constraint_2</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+
+<span class="c1"># Calculating quantities for plotting uncertainty ellipse</span>
+<span class="n">n_std</span> <span class="o">=</span> <span class="mf">3.0</span>
+<span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+<span class="n">pearson</span> <span class="o">=</span> <span class="n">cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">cov</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">ell_radius_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">pearson</span><span class="p">)</span>
+<span class="n">ell_radius_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pearson</span><span class="p">)</span>
+<span class="n">ellipse</span> <span class="o">=</span> <span class="n">Ellipse</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">width</span><span class="o">=</span><span class="n">ell_radius_x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">ell_radius_y</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">facecolor</span> <span class="o">=</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">antialiased</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="n">scale_x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">n_std</span>
+<span class="n">mean_x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+<span class="n">scale_x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cov</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">n_std</span>
+<span class="n">mean_x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+
+<span class="n">transf</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Affine2D</span><span class="p">()</span> \
+    <span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">scale_x1</span><span class="p">,</span> <span class="n">scale_x2</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">mean_x1</span><span class="p">,</span> <span class="n">mean_x2</span><span class="p">)</span>
 
 <span class="c1"># Plotting the filled contours</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
@@ -674,6 +693,10 @@ Total reliability: 0.97986932355 (assuming both the constraints are independent)
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">det_opt_x1</span><span class="p">,</span> <span class="n">det_opt_x2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Deterministic optimum&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">rel_opt_x1</span><span class="p">,</span> <span class="n">rel_opt_x2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;99</span><span class="si">% r</span><span class="s2">eliable optimum&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
+<span class="c1"># Plotting uncertainty ellipse</span>
+<span class="n">ellipse</span><span class="o">.</span><span class="n">set_transform</span><span class="p">(</span><span class="n">transf</span> <span class="o">+</span> <span class="n">ax</span><span class="o">.</span><span class="n">transData</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">ellipse</span><span class="p">)</span>
+
 <span class="c1"># Asthetics</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
@@ -682,10 +705,10 @@ Total reliability: 0.97986932355 (assuming both the constraints are independent)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f875254c130&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fdbcc46b640&gt;
 </pre></div>
 </div>
-<img alt="../_images/6423b0596c4c6a3080c4fd84551ca43e51c9ab394bc01b76911a431ce81a0e61.png" src="../_images/6423b0596c4c6a3080c4fd84551ca43e51c9ab394bc01b76911a431ce81a0e61.png" />
+<img alt="../_images/5b0620ec282c1c293654c056ff09e9357ad0a6a21034f78f2745c2f4b6f52224.png" src="../_images/5b0620ec282c1c293654c056ff09e9357ad0a6a21034f78f2745c2f4b6f52224.png" />
 </div>
 </div>
 <p>The reliability value can be changed to see how the optimum point changes.</p>
