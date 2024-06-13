@@ -3,9 +3,7 @@
 > **_NOTE:_** This section assumes that you have already installed python and jupyter notebook
 on your system. If not, please refer to the [setup](../setup.md) section.
 
-All the assignments and homework in this course involve programming using
-python in jupyter notebooks. If you are already familiar with python and jupyter notebooks, 
-you can skip this section. If not, then you can start with following resources:
+If you are new to python and jupyter notebooks, the following are a few resources for learning more about them:
 
 Resources for learning python:
 + https://www.youtube.com/watch?v=kqtD5dpn9C8
