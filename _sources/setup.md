@@ -1,10 +1,10 @@
 # Computing environment setup
 
-The goal of this section is to create a computing environment on your computer for this class.
+The goal of this section is to create a computing environment on your computer to run and use the code given in the jupyter-book.
 Follow the steps below to setup anaconda, create an environment, and install some initial
 packages in the new environment. If you already have Anaconda or know any other method
 which suits your needs in a better manner, then you are free to use that. **The end goal is to have
-a working computing environment for this class**.
+a working computing environment to use along with the jupyter-book**.
 
 > **_NOTE:_** This guide assumes that you are using Windows OS. If you are using another OS, then the
 steps will be very similar but there might be more usage of terminal commands.
