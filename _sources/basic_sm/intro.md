@@ -1,6 +1,6 @@
 # Basic Surrogate Models
 
-This section provides implementation for the concepts covered in the class for basic surrogate models. As discussed in the lecture, one of the ways to create a model of $y(x)$ is by considering a linearly weighted combination of basis functions. Mathematically, this can be represented as:
+This section provides implementation for concepts related to basic surrogate models. As discussed in the lecture, one of the ways to create a model of $y(x)$ is by considering a linearly weighted combination of basis functions. Mathematically, this can be represented as:
 
 $$
     y(x) \sim \hat{y}(x) = \mathbf{w}^T\pmb{\psi} = \sum w_i \psi_i(x)
