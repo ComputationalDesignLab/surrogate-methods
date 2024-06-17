@@ -1,5 +1,5 @@
 # Introduction
-This jupyter-book provides python implementation for various concepts and algorithms related to **surrogate modeling** and **surrogate-based optimization**. The jupyter-book has been created by the **Computational Design (CODE) Laboratory** led by **Prof. Leifur Leifsson** at **Purdue University**. This jupyter-book is intended to be used as a starting point for new users of surrogate methods to implement the concepts and algorithms for their own work uisng open source codes. The creation of this jupyter-book is funded partly by the National Science Foundation (NSF) award number 2223732. 
+This jupyter-book provides python implementation for various concepts and algorithms related to **surrogate modeling** and **surrogate-based optimization**. The jupyter-book has been created by the **Computational Design (CODE) Laboratory** led by **Prof. Leifur Leifsson** at **Purdue University**. This jupyter-book is intended to be used as a starting point for new users of surrogate methods to implement the concepts and algorithms for their own work using open source codes. The creation of this jupyter-book is funded partly by the National Science Foundation (NSF) award number 2223732. 
 
 <div style="width:100%; margin: auto;">
 
