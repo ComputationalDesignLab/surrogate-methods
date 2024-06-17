@@ -3,7 +3,7 @@ This jupyter-book provides python implementation for various concepts and algori
 
 <div style="width:50%; margin: auto;">
 
-![logos](images/logos.png) 
+![logos](images/logos.png)
 </div>
 
 ## Expected learning outcomes
