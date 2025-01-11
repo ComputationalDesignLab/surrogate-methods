@@ -19,15 +19,15 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
@@ -38,9 +38,9 @@
     <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -76,7 +76,7 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
 
@@ -119,12 +119,20 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <header>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
   
+  </header>
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -388,12 +396,12 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="computing-environment-setup">
 <h1>Computing environment setup<a class="headerlink" href="#computing-environment-setup" title="Permalink to this heading">#</a></h1>
 <p>The goal of this section is to create a computing environment on your computer to run and use the code given in the jupyter-book.
-Follow the steps below to setup anaconda, create an environment, and install some initial
+Follow below steps for setting up anaconda, creating an environment, and installing some initial
 packages in the new environment. If you already have Anaconda or know any other method
 which suits your needs in a better manner, then you are free to use that. <strong>The end goal is to have
 a working computing environment to use along with the jupyter-book</strong>.</p>
@@ -405,7 +413,7 @@ steps will be very similar but there might be more usage of terminal commands.</
 <h2>Step 1: Downloading and installing anaconda<a class="headerlink" href="#step-1-downloading-and-installing-anaconda" title="Permalink to this heading">#</a></h2>
 <p>You can skip this step if you already have Anaconda (or miniconda) installed.</p>
 <ol class="arabic simple">
-<li><p>Download anaconda from <a class="reference external" href="https://www.anaconda.com/">https://www.anaconda.com/</a>.</p></li>
+<li><p>Download anaconda from <a class="reference external" href="https://www.anaconda.com/download/success">https://www.anaconda.com/download/success</a>.</p></li>
 <li><p>Open the installer and follow the instructions.</p></li>
 <li><p>For “Installation Type”, you can select “All Users” if you are installing it on your PC.</p></li>
 <li><p>In “Advanced Installation Options”, no need to change anything. Stick to default
@@ -419,10 +427,10 @@ computing environment using Anaconda Navigator as well. Some useful tutorials fo
 Navigator can be found <a class="reference external" href="https://docs.anaconda.com/navigator/tutorials/">here</a>. It is highly recommend
 going through these tutorials if you choose to use Navigator to setup the environment.</p>
 <p>Another alternative for creating a computing environment is to use miniconda which is a minimal
-installation of Anaconda containing only conda, Python and a few other useful packages such as
+installation of Anaconda containing only conda, python and a few other useful packages such as
 pip. Instructions for installation of miniconda will not be covered in this guide and can be found <a class="reference external" href="https://docs.conda.io/projects/miniconda/en/latest/">here</a>. If you want to know more, there is also a
-comparison between Anaconda and miniconda given <a class="reference external" href="https://docs.conda.io/projects/conda/en/stable/user-guide/install/download.html#anaconda-or-miniconda">here</a>.
-In general, it is recommended to use Anaconda if you are new to conda or Python. If
+comparison between Anaconda and miniconda given <a class="reference external" href="https://docs.anaconda.com/distro-or-miniconda/">here</a>.
+In general, it is recommended to use Anaconda if you are new to conda or python. If
 you have installed miniconda, it will also come with an Anaconda Prompt and a procedure like
 the one outlined in the below steps can be used to set up the computing environment.</p>
 </section>
@@ -436,7 +444,7 @@ anaconda, it created a base environment in which it installed several packages. 
 the base environment is activated when Anaconda is launched.</p>
 <p><img alt="Entry screen" src="_images/entry.png" /></p>
 </li>
-<li><p>Type in <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">list</span></code> and press enter to run this command. You will see the list of packages
+<li><p>Type <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">list</span></code> and press enter to run this command. You will see the list of packages
 installed in the base environment.</p>
 <p><img alt="Conda list" src="_images/conda_list.png" /></p>
 <p>It is recommended to create a new environment for each project to avoid package
@@ -449,17 +457,17 @@ only be one environment called <code class="docutils literal notranslate"><span 
 <li><p>To create a new env, run the command: <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-n</span> <span class="pre">ENVNAME</span> <span class="pre">python=3.9</span></code>. Replace
 ENVNAME with whatever name you want to give to the new environment. The
 <code class="docutils literal notranslate"><span class="pre">python=3.9</span></code> after the environment name tells conda what version of python to install.
-We will be using python version 3.9 for this class.</p>
+We will be using python version 3.9 in this book.</p>
 <p><img alt="Conda create" src="_images/conda_create.png" /></p>
 <p>Once the environment is successfully created, you will see the following in the command
 prompt on your screen.</p>
 <p><img alt="Conda create success" src="_images/conda_create_success.png" /></p>
-<p>You can run conda env list again and see that your newly created env is there. For the
+<p>You can run conda env list again and see that your newly created environment is there. For the
 example shown below, the name of the environment was set to surrogate_methods.</p>
 <p><img alt="Conda create env list" src="_images/conda_create_env_list.png" /></p>
 </li>
-<li><p>To activate the newly created env, run <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">ENVNAME</span></code>. Replace ENVNAME with
-your chosen environment name. You will see that the <code class="docutils literal notranslate"><span class="pre">(base)</span></code> before the command
+<li><p>To activate the newly created environment, run <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">ENVNAME</span></code>. Replace ENVNAME with
+your environment name. You will see that the <code class="docutils literal notranslate"><span class="pre">(base)</span></code> before the command
 prompt will change to the <code class="docutils literal notranslate"><span class="pre">ENVNAME</span></code>.</p>
 <p><img alt="Conda activate" src="_images/conda_activate.png" /></p>
 <p>If you run <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">list</span></code> now, then it will show the list of installed packages in the newly
@@ -470,14 +478,14 @@ to the <code class="docutils literal notranslate"><span class="pre">base</span><
 </section>
 <section id="step-3-installing-packages">
 <h2>Step 3: Installing packages<a class="headerlink" href="#step-3-installing-packages" title="Permalink to this heading">#</a></h2>
-<p>In this step, you will install some basic packages which you will need during the initial part of the
-class. You will install many other packages as the semester progresses.</p>
+<p>In this step, you will install some basic packages which you will need for first few sections.
+You will install many other packages as you go through the book.</p>
 <ol class="arabic">
 <li><p>Open Anaconda Prompt. Again, make sure that you use the run as administrator option
 when opening Anaconda Prompt. Activate the environment which you created in the last
 step.</p>
 <blockquote>
-<div><p><strong><em>NOTE:</em></strong> <code class="docutils literal notranslate"><span class="pre">pip</span></code> will be the main installer we will be using in this class. We will not be using
+<div><p><strong><em>NOTE:</em></strong> <code class="docutils literal notranslate"><span class="pre">pip</span></code> will be the main installer we will be using in this book. We will not be using
 conda to install any package. conda is just used as an environment manager.</p>
 </div></blockquote>
 <p>After activating the environment, you can run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">list</span></code> to see the packages installed using
@@ -487,23 +495,21 @@ pip within the activated environment.</p>
 <div><p><strong><em>NOTE:</em></strong> It is okay if your list is not exactly same as above.</p>
 </div></blockquote>
 </li>
-<li><p>Install Numpy (if it is not pre-installed) by running: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">numpy</span></code>. If you want to install
-a specific version of a package, the version must be mentioned while running the pip command.
-This can be done by running <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">numpy==1.23.5</span></code>. There is no specific version for numpy in this class.
-After installing any package, always run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">list</span></code> and see if the package is listed there or not, also check the
-version if you explicitly mentioned version while installing.</p></li>
-<li><p>Install SciPy by running: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">scipy</span></code>.</p></li>
-<li><p>Install Matplotlib by running: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">matplotlib</span></code>.</p></li>
-<li><p>Install Jupyter Notebook by running: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">notebook</span></code>.</p>
+<li><p>Install Numpy by running: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">numpy==1.23.5</span></code>. The number at the end indicates specific
+version of the package which we want to install. After installing any package, always run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">list</span></code>
+and see if the package is listed there or not, also ensure that the version of the package is
+same as mentioned in the install command.</p></li>
+<li><p>Install SciPy by running: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">scipy==1.13.1</span></code>.</p></li>
+<li><p>Install Matplotlib by running: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">matplotlib==3.9.1</span></code>.</p></li>
+<li><p>Install Jupyter Notebook by running: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">notebook==7.2.1</span></code>.</p>
 <blockquote>
 <div><p><strong><em>NOTE:</em></strong> This will install a lot of dependencies that are required for Jupyter Notebook.</p>
 </div></blockquote>
-<p>Jupyter Notebook is a computing platform that will be used extensively in this class.
-Now, your computing environment should be ready. In future, whenever you are asked to install
-a new package, you should install it using pip within this environment only.</p>
+<p>Jupyter Notebook is a computing platform that can be used to write and execute various code
+snippets described in this book.</p>
 </li>
 </ol>
-<p>Now, your computing environment should be ready. In future, whenever you are asked to install
+<p>Your computing environment should be ready now. In the following sections, whenever you are asked to install
 a new package, you should install it using pip within this environment only.</p>
 </section>
 </section>
@@ -565,6 +571,7 @@ a new package, you should install it using pip within this environment only.</p>
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
@@ -598,7 +605,7 @@ By Leifur Leifsson (leifur[at]purdue.edu)
 
   <p class="copyright">
     
-      © Copyright 2024.
+      © Copyright 2025.
       <br/>
     
   </p>
@@ -622,8 +629,8 @@ By Leifur Leifsson (leifur[at]purdue.edu)
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script src="_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
 
   <footer class="bd-footer">
   </footer>

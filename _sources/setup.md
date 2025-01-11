@@ -1,7 +1,7 @@
 # Computing environment setup
 
 The goal of this section is to create a computing environment on your computer to run and use the code given in the jupyter-book.
-Follow the steps below to setup anaconda, create an environment, and install some initial
+Follow below steps for setting up anaconda, creating an environment, and installing some initial
 packages in the new environment. If you already have Anaconda or know any other method
 which suits your needs in a better manner, then you are free to use that. **The end goal is to have
 a working computing environment to use along with the jupyter-book**.
@@ -13,7 +13,7 @@ steps will be very similar but there might be more usage of terminal commands.
 
 You can skip this step if you already have Anaconda (or miniconda) installed.
 
-1. Download anaconda from https://www.anaconda.com/.
+1. Download anaconda from https://www.anaconda.com/download/success.
 
 2. Open the installer and follow the instructions.
 
@@ -31,10 +31,10 @@ Navigator can be found [here](https://docs.anaconda.com/navigator/tutorials/). I
 going through these tutorials if you choose to use Navigator to setup the environment.
 
 Another alternative for creating a computing environment is to use miniconda which is a minimal
-installation of Anaconda containing only conda, Python and a few other useful packages such as
+installation of Anaconda containing only conda, python and a few other useful packages such as
 pip. Instructions for installation of miniconda will not be covered in this guide and can be found [here](https://docs.conda.io/projects/miniconda/en/latest/). If you want to know more, there is also a 
-comparison between Anaconda and miniconda given [here](https://docs.conda.io/projects/conda/en/stable/user-guide/install/download.html#anaconda-or-miniconda). 
-In general, it is recommended to use Anaconda if you are new to conda or Python. If
+comparison between Anaconda and miniconda given [here](https://docs.anaconda.com/distro-or-miniconda/). 
+In general, it is recommended to use Anaconda if you are new to conda or python. If
 you have installed miniconda, it will also come with an Anaconda Prompt and a procedure like
 the one outlined in the below steps can be used to set up the computing environment.
 
@@ -48,7 +48,7 @@ the one outlined in the below steps can be used to set up the computing environm
 
     ![Entry screen](images/entry.png)
 
-2. Type in ``conda list`` and press enter to run this command. You will see the list of packages
+2. Type ``conda list`` and press enter to run this command. You will see the list of packages
     installed in the base environment.
 
     ![Conda list](images/conda_list.png)
@@ -65,7 +65,7 @@ the one outlined in the below steps can be used to set up the computing environm
 3. To create a new env, run the command: ``conda create -n ENVNAME python=3.9``. Replace
     ENVNAME with whatever name you want to give to the new environment. The
     ``python=3.9`` after the environment name tells conda what version of python to install.
-    We will be using python version 3.9 for this class.
+    We will be using python version 3.9 in this book.
 
     ![Conda create](images/conda_create.png)
 
@@ -74,13 +74,13 @@ the one outlined in the below steps can be used to set up the computing environm
 
     ![Conda create success](images/conda_create_success.png)
 
-    You can run conda env list again and see that your newly created env is there. For the
+    You can run conda env list again and see that your newly created environment is there. For the
     example shown below, the name of the environment was set to surrogate_methods.
 
     ![Conda create env list](images/conda_create_env_list.png)
 
-4. To activate the newly created env, run ``conda activate ENVNAME``. Replace ENVNAME with
-    your chosen environment name. You will see that the ``(base)`` before the command
+4. To activate the newly created environment, run ``conda activate ENVNAME``. Replace ENVNAME with
+    your environment name. You will see that the ``(base)`` before the command
     prompt will change to the ``ENVNAME``.
 
     ![Conda activate](images/conda_activate.png)
@@ -91,14 +91,14 @@ the one outlined in the below steps can be used to set up the computing environm
 
 ## Step 3: Installing packages
 
-In this step, you will install some basic packages which you will need during the initial part of the
-class. You will install many other packages as the semester progresses.
+In this step, you will install some basic packages which you will need for first few sections.
+You will install many other packages as you go through the book.
 
 1. Open Anaconda Prompt. Again, make sure that you use the run as administrator option
     when opening Anaconda Prompt. Activate the environment which you created in the last
     step.
 
-    > **_NOTE:_** ``pip`` will be the main installer we will be using in this class. We will not be using
+    > **_NOTE:_** ``pip`` will be the main installer we will be using in this book. We will not be using
     conda to install any package. conda is just used as an environment manager.
 
     After activating the environment, you can run ``pip list`` to see the packages installed using
@@ -108,23 +108,21 @@ class. You will install many other packages as the semester progresses.
 
     > **_NOTE:_** It is okay if your list is not exactly same as above.
 
-2. Install Numpy (if it is not pre-installed) by running: ``pip install numpy``. If you want to install
-    a specific version of a package, the version must be mentioned while running the pip command. 
-    This can be done by running ``pip install numpy==1.23.5``. There is no specific version for numpy in this class.
-    After installing any package, always run ``pip list`` and see if the package is listed there or not, also check the
-    version if you explicitly mentioned version while installing.
+2. Install Numpy by running: ``pip install numpy==1.23.5``. The number at the end indicates specific
+    version of the package which we want to install. After installing any package, always run ``pip list``
+    and see if the package is listed there or not, also ensure that the version of the package is 
+    same as mentioned in the install command.
 
-3. Install SciPy by running: ``pip install scipy``.
+3. Install SciPy by running: ``pip install scipy==1.13.1``.
 
-4. Install Matplotlib by running: ``pip install matplotlib``.
+4. Install Matplotlib by running: ``pip install matplotlib==3.9.1``.
 
-5. Install Jupyter Notebook by running: ``pip install notebook``.
+5. Install Jupyter Notebook by running: ``pip install notebook==7.2.1``.
 
     > **_NOTE:_** This will install a lot of dependencies that are required for Jupyter Notebook. 
     
-    Jupyter Notebook is a computing platform that will be used extensively in this class.
-    Now, your computing environment should be ready. In future, whenever you are asked to install
-    a new package, you should install it using pip within this environment only.
+    Jupyter Notebook is a computing platform that can be used to write and execute various code
+    snippets described in this book.
 
-Now, your computing environment should be ready. In future, whenever you are asked to install
+Your computing environment should be ready now. In the following sections, whenever you are asked to install
 a new package, you should install it using pip within this environment only.

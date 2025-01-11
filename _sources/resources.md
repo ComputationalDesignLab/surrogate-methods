@@ -1,7 +1,7 @@
 # Python and Jupyter notebook resources
 
 > **_NOTE:_** This section assumes that you have already installed python and jupyter notebook
-on your system. If not, please refer to the [setup](../setup.md) section.
+on your system. If not, please refer to the [setup](setup.md) section.
 
 If you are new to python and jupyter notebooks, the following are a few resources for learning more about them:
 
