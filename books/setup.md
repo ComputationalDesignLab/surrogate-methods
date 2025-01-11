@@ -31,10 +31,10 @@ Navigator can be found [here](https://docs.anaconda.com/navigator/tutorials/). I
 going through these tutorials if you choose to use Navigator to setup the environment.
 
 Another alternative for creating a computing environment is to use miniconda which is a minimal
-installation of Anaconda containing only conda, Python and a few other useful packages such as
+installation of Anaconda containing only conda, python and a few other useful packages such as
 pip. Instructions for installation of miniconda will not be covered in this guide and can be found [here](https://docs.conda.io/projects/miniconda/en/latest/). If you want to know more, there is also a 
 comparison between Anaconda and miniconda given [here](https://docs.anaconda.com/distro-or-miniconda/). 
-In general, it is recommended to use Anaconda if you are new to conda or Python. If
+In general, it is recommended to use Anaconda if you are new to conda or python. If
 you have installed miniconda, it will also come with an Anaconda Prompt and a procedure like
 the one outlined in the below steps can be used to set up the computing environment.
 
@@ -79,7 +79,7 @@ the one outlined in the below steps can be used to set up the computing environm
 
     ![Conda create env list](images/conda_create_env_list.png)
 
-4. To activate the newly created env, run ``conda activate ENVNAME``. Replace ENVNAME with
+4. To activate the newly created environment, run ``conda activate ENVNAME``. Replace ENVNAME with
     your environment name. You will see that the ``(base)`` before the command
     prompt will change to the ``ENVNAME``.
 
@@ -91,14 +91,14 @@ the one outlined in the below steps can be used to set up the computing environm
 
 ## Step 3: Installing packages
 
-In this step, you will install some basic packages which you will need during the first few lectures.
-You will install many other packages as the semester progresses.
+In this step, you will install some basic packages which you will need for first few sections.
+You will install many other packages as you go through the book.
 
 1. Open Anaconda Prompt. Again, make sure that you use the run as administrator option
     when opening Anaconda Prompt. Activate the environment which you created in the last
     step.
 
-    > **_NOTE:_** ``pip`` will be the main installer we will be using in this class. We will not be using
+    > **_NOTE:_** ``pip`` will be the main installer we will be using in this book. We will not be using
     conda to install any package. conda is just used as an environment manager.
 
     After activating the environment, you can run ``pip list`` to see the packages installed using
@@ -121,7 +121,8 @@ You will install many other packages as the semester progresses.
 
     > **_NOTE:_** This will install a lot of dependencies that are required for Jupyter Notebook. 
     
-    Jupyter Notebook is a computing platform that will be used extensively in this class.
+    Jupyter Notebook is a computing platform that can be used to write and execute various code
+    snippets described in this book.
 
-Now, your computing environment should be ready. In future, whenever you are asked to install
+Your computing environment should be ready now. In the following sections, whenever you are asked to install
 a new package, you should install it using pip within this environment only.
