@@ -115,7 +115,7 @@ You will install many other packages as you go through the book.
 
 3. Install SciPy by running: ``pip install scipy==1.13.1``.
 
-4. Install Matplotlib by running: ``pip install matplotlib==3.9.1``.
+4. Install Matplotlib by running: ``pip install matplotlib==3.9.4``.
 
 5. Install Jupyter Notebook by running: ``pip install notebook==7.2.1``.
 
