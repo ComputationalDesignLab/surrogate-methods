@@ -3,9 +3,9 @@ root: index
 chapters:
   - file: setup
   - file: python_basics/intro
-  sections:
-    - file: python_basics/python_basics
-    - file: python_basics/resources
+    sections:
+      - file: python_basics/python_basics
+      - file: python_basics/resources
   - file: review_nm/intro
     sections:
     - file: review_nm/error
