@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Basic Surrogate Models &#8212; Surrogate Methods</title>
+    <title>Basics of Python Programming &#8212; Surrogate Methods</title>
   
   
   
@@ -60,13 +60,9 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'basic_sm/intro';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'python_basics/intro';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Linear Model" href="ls_regression.html" />
-    <link rel="prev" title="Sampling Plans" href="../doe.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -118,6 +114,8 @@
       
       
       
+        
+      
       <dialog id="pst-primary-sidebar-modal"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
@@ -164,7 +162,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../review_nm/intro.html">Review of Numerical Methods and Probability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../review_nm/error.html">Error estimation for iterative method</a></li>
@@ -186,10 +184,10 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../doe.html">Sampling Plans</a></li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Basic Surrogate Models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="ls_regression.html">Linear Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="poly.html">Polynomial Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rbf.html">Radial Basis Function Model</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../basic_sm/intro.html">Basic Surrogate Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basic_sm/ls_regression.html">Linear Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basic_sm/poly.html">Polynomial Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basic_sm/rbf.html">Radial Basis Function Model</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../krg.html">Gaussian Process based Models</a></li>
@@ -288,7 +286,7 @@
       
       
       
-      <li><a href="../_sources/basic_sm/intro.md" target="_blank"
+      <li><a href="../_sources/python_basics/intro.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -362,7 +360,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Basic Surrogate Models</h1>
+    <h1>Basics of Python Programming</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -376,32 +374,14 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="basic-surrogate-models">
-<h1>Basic Surrogate Models<a class="headerlink" href="#basic-surrogate-models" title="Link to this heading">#</a></h1>
-<p>This section provides implementation for concepts related to basic surrogate models. As discussed in the lecture, one of the ways to create a model of <span class="math notranslate nohighlight">\(y(x)\)</span> is by considering a linearly weighted combination of basis functions. Mathematically, this can be represented as:</p>
-<div class="math notranslate nohighlight">
-\[
-    y(x) \sim \hat{y}(x) = \mathbf{w}^T\pmb{\psi} = \sum w_i \psi_i(x)
-\]</div>
-<p>where <span class="math notranslate nohighlight">\(\mathbf{\pmb{\psi}}\)</span> is the vector of basis functions and <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> is the vector of weights. The model is linear in terms of weights <span class="math notranslate nohighlight">\(w_i\)</span> but basis function <span class="math notranslate nohighlight">\(\psi_i(x)\)</span> can be non-linear. For example, the basis functions vector <span class="math notranslate nohighlight">\(\pmb{\psi}\)</span> can be <span class="math notranslate nohighlight">\([1 \text{  } x \text{  } x^2 \text{  } \sin(x) \text{  } e^{x}]^T\)</span>. The weights <span class="math notranslate nohighlight">\(w_i\)</span> are determined by minimizing the sum of squared differences between the predictions and actual values. The weights obtained after minimization are given by (refer lecture notes for derivation):</p>
-<div class="math notranslate nohighlight">
-\[
-    \mathbf{w} = (\Psi^T\Psi)^{-1}\Psi^T\mathbf{y} = \Psi^{\dagger}\mathbf{y}
-\]</div>
-<p>where <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is the vector of target values and <span class="math notranslate nohighlight">\(\Psi^{\dagger}\)</span> is the (Moore-Penrose) pseudo-inverse of <span class="math notranslate nohighlight">\(\Psi\)</span> matrix. The pseudo-inverse will be regular inverse if <span class="math notranslate nohighlight">\(\Psi\)</span> is invertible. The performance of the model can be evaluated using the mean squared error (MSE) which is given by:</p>
-<div class="math notranslate nohighlight">
-\[
-    \text{RMSE} = \sqrt{ \frac{1}{N}\sum_{i=1}^{N} (y_i - \hat{y}_i)^2 }
-\]</div>
-<p>where <span class="math notranslate nohighlight">\(N\)</span> is the number of data points, <span class="math notranslate nohighlight">\(y_i\)</span> and <span class="math notranslate nohighlight">\(\hat{y}_i\)</span> are the true and predicted values respectively.</p>
-<p>In this section, following models are covered:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="basics-of-python-programming">
+<h1>Basics of Python Programming<a class="headerlink" href="#basics-of-python-programming" title="Link to this heading">#</a></h1>
+<p>This section provides a few implementation examples of basic Python syntax, data types, loops, functions and plotting. This serves as an introduction to Python for novice users and a refresher for established users of Python. This tutorial section is directed towards important prerequisite material that will be important in understanding other sections of this jupyter-book. This section is split into the following sub-sections:</p>
 <ol class="arabic simple">
-<li><p>Linear model</p></li>
-<li><p>Polynomial model</p></li>
-<li><p>Radial basis function model</p></li>
+<li><p>Basic programming in Python</p></li>
+<li><p>Basic plotting in Python</p></li>
+<li><p>Python and Jupyter Notebook resources</p></li>
 </ol>
-<div class="toctree-wrapper compound">
-</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -417,7 +397,7 @@
         },
         kernelOptions: {
             name: "python3",
-            path: "./basic_sm"
+            path: "./python_basics"
         },
         predefinedOutput: true
     }
@@ -434,24 +414,6 @@
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="../doe.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Sampling Plans</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="ls_regression.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Linear Model</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
