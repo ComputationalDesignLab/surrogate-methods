@@ -2,7 +2,7 @@ title: "Surrogate Methods"
 execute:
   execute_notebooks: "off"
 author: "Leifur Leifsson (leifur[at]purdue.edu)"
-copyright: "2024"
+copyright: "2025"
 repository:
   url: "https://github.com/ComputationalDesignLab/surrogate-methods"
   path_to_book: "books"
