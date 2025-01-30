@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Unconstrained Optimization &#8212; Surrogate Methods</title>
   
@@ -19,49 +18,45 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
-  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'local_opt/unconst';</script>
@@ -81,7 +76,6 @@ const thebe_selector_output = ".output, .cell_output"
   <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>
@@ -121,20 +115,15 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
-
-  <header>
   
-    <div class="bd-header navbar navbar-expand-lg bd-navbar">
-    </div>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
-  </header>
 
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -162,7 +151,18 @@ const thebe_selector_output = ".output, .cell_output"
     <p class="title logo__title">Surrogate Methods</p>
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -400,7 +400,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="unconstrained-optimization">
-<h1>Unconstrained Optimization<a class="headerlink" href="#unconstrained-optimization" title="Permalink to this heading">#</a></h1>
+<h1>Unconstrained Optimization<a class="headerlink" href="#unconstrained-optimization" title="Link to this heading">#</a></h1>
 <p>This section provides implementations for concepts related to local <em>unconstrained</em> optimization. We will be using <code class="docutils literal notranslate"><span class="pre">scipy.optimize</span></code> module for minimizing an example function. Going through the following documentation will help in understanding the code:</p>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize">Scipy minimize</a></p></li>
@@ -445,8 +445,6 @@ document.write(`
     <span class="n">x2</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span>
-
-    <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
     
     <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,)</span>
@@ -507,7 +505,7 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: title={&#39;center&#39;: &#39;Bean Function&#39;}, xlabel=&#39;$x_1$&#39;, ylabel=&#39;$x_2$&#39;&gt;
 </pre></div>
 </div>
-<img alt="../_images/09219b933410b94c48f8635a0b9c177ab6aa3f3149c4f4d559057683ea0a16d7.png" src="../_images/09219b933410b94c48f8635a0b9c177ab6aa3f3149c4f4d559057683ea0a16d7.png" />
+<img alt="../_images/c2b60c3641598c1d08f912dc6427f612d3a5b621485d24a5c89c47e8b2d3c9f4.png" src="../_images/c2b60c3641598c1d08f912dc6427f612d3a5b621485d24a5c89c47e8b2d3c9f4.png" />
 </div>
 </div>
 <p><strong>Question</strong>: Use <em>Conjugate Gradient</em> and <em>BFGS</em> method for solving following optimization problem:</p>
@@ -567,6 +565,7 @@ document.write(`
     <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Final point&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history</span><span class="p">[</span><span class="s2">&quot;x1&quot;</span><span class="p">],</span> <span class="n">history</span><span class="p">[</span><span class="s2">&quot;x2&quot;</span><span class="p">],</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Path&quot;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Path of optimizer - &quot;</span> <span class="o">+</span> <span class="n">method</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -593,9 +592,7 @@ document.write(`
 <span class="n">history</span><span class="p">[</span><span class="s2">&quot;f&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">bean_function</span><span class="p">(</span><span class="n">x0</span><span class="p">)]</span>
 
 <span class="c1"># Solver options</span>
-<span class="n">options</span> <span class="o">=</span><span class="p">{</span>
-    <span class="s2">&quot;disp&quot;</span><span class="p">:</span> <span class="kc">True</span>
-<span class="p">}</span>
+<span class="n">options</span> <span class="o">=</span><span class="p">{</span><span class="s2">&quot;disp&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
 
 <span class="c1"># Minimize the function</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">bean_function</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">jac</span><span class="o">=</span><span class="n">jac</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">bean_callback</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
@@ -619,8 +616,8 @@ Value of x1 at optimum: 1.2134116592747848
 Value of x2 at optimum: 0.8241226173724079
 </pre></div>
 </div>
-<img alt="../_images/8484bd742d9f593fcf1916e2ad8e52366f21b9620fca75b4d8a1d56e611200e0.png" src="../_images/8484bd742d9f593fcf1916e2ad8e52366f21b9620fca75b4d8a1d56e611200e0.png" />
-<img alt="../_images/760e2adf1449b8a681d2642f89c38b9919eca4fb787996b12e4885cfcc0d326f.png" src="../_images/760e2adf1449b8a681d2642f89c38b9919eca4fb787996b12e4885cfcc0d326f.png" />
+<img alt="../_images/a06d1b1879cd9a3b9e41c722af58e8f28fae00da64f1edce6f2b46020cc454d8.png" src="../_images/a06d1b1879cd9a3b9e41c722af58e8f28fae00da64f1edce6f2b46020cc454d8.png" />
+<img alt="../_images/77e21401579b2cdbcd7d8473364826c6f309a3ed412378b1da8d4efc906e3086.png" src="../_images/77e21401579b2cdbcd7d8473364826c6f309a3ed412378b1da8d4efc906e3086.png" />
 </div>
 </div>
 <blockquote>
@@ -649,9 +646,7 @@ Value of x2 at optimum: 0.8241226173724079
 <span class="n">history</span><span class="p">[</span><span class="s2">&quot;f&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">bean_function</span><span class="p">(</span><span class="n">x0</span><span class="p">)]</span>
 
 <span class="c1"># Solver options</span>
-<span class="n">options</span> <span class="o">=</span><span class="p">{</span>
-    <span class="s2">&quot;disp&quot;</span><span class="p">:</span> <span class="kc">True</span>
-<span class="p">}</span>
+<span class="n">options</span> <span class="o">=</span><span class="p">{</span><span class="s2">&quot;disp&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
 
 <span class="c1"># Minimize the function</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">bean_function</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">jac</span><span class="o">=</span><span class="n">jac</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">bean_callback</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
@@ -675,8 +670,8 @@ Value of x1 at optimum: 1.2134128900699837
 Value of x2 at optimum: 0.8241227928676157
 </pre></div>
 </div>
-<img alt="../_images/b1af0f049968c034ab53e50db5c12ae2b86a11dc5753059390a5c7c7fcb1f675.png" src="../_images/b1af0f049968c034ab53e50db5c12ae2b86a11dc5753059390a5c7c7fcb1f675.png" />
-<img alt="../_images/44934d1e15eab36c0de60fad79b515d5c66771d4b129525c3f1eed605ecd0b95.png" src="../_images/44934d1e15eab36c0de60fad79b515d5c66771d4b129525c3f1eed605ecd0b95.png" />
+<img alt="../_images/81e98cada09a781b62f87aa11d6f9c5c7b3098ad24bff1dccadffad801166a30.png" src="../_images/81e98cada09a781b62f87aa11d6f9c5c7b3098ad24bff1dccadffad801166a30.png" />
+<img alt="../_images/b9cfc9927f75db5156fceaf17140245d3b62c09ffac1cd406e16a9c64aee95af.png" src="../_images/b9cfc9927f75db5156fceaf17140245d3b62c09ffac1cd406e16a9c64aee95af.png" />
 </div>
 </div>
 <blockquote>
@@ -684,7 +679,7 @@ Value of x2 at optimum: 0.8241227928676157
 </div></blockquote>
 <p><strong>Few comments</strong>:</p>
 <ul class="simple">
-<li><p>The number of iterartions taken by CG is more than BFGS when all other settings are same.</p></li>
+<li><p>The number of iterations taken by CG is more than BFGS when all other settings are same.</p></li>
 <li><p>Function evaluations is greater than number of iterations since gradient is evaluated using finite difference. You can also provide python function which outputs analytical gradient values to optimizer which will decrease the function evaluations.</p></li>
 <li><p>When you change <code class="docutils literal notranslate"><span class="pre">jac</span></code> to “3-point”, you will notice that number of function evaluations increases since central difference requries more function evaluations.</p></li>
 <li><p>You can also use other methods like <em>Newton-CG</em>, but you will need to give exact values of gradient vector and it will compute hessian matrix using finite difference techniques.</p></li>
@@ -791,8 +786,8 @@ By Leifur Leifsson (leifur[at]purdue.edu)
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>

@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Sequential Sampling using Dimensionality Reduction &#8212; Surrogate Methods</title>
   
@@ -19,49 +18,45 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
-  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'dim_reduction/seq_sampling';</script>
@@ -81,7 +76,6 @@ const thebe_selector_output = ".output, .cell_output"
   <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>
@@ -121,20 +115,15 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
-
-  <header>
   
-    <div class="bd-header navbar navbar-expand-lg bd-navbar">
-    </div>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
-  </header>
 
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -162,7 +151,18 @@ const thebe_selector_output = ".output, .cell_output"
     <p class="title logo__title">Surrogate Methods</p>
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -412,7 +412,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="sequential-sampling-using-dimensionality-reduction">
-<h1>Sequential Sampling using Dimensionality Reduction<a class="headerlink" href="#sequential-sampling-using-dimensionality-reduction" title="Permalink to this heading">#</a></h1>
+<h1>Sequential Sampling using Dimensionality Reduction<a class="headerlink" href="#sequential-sampling-using-dimensionality-reduction" title="Link to this heading">#</a></h1>
 <p>This section provides an example implementation of the usage of dimensionality reduction along with expected improvement (EI) to perform exploration and exploitation of a high-dimensional function. The dimensionality reduction methods used in this section are principal component analysis (PCA) and kernel principal component analysis. The example problem used to demonstrate sequential sampling using dimensionality reduction is the 10-dimensional Styblinski-Tang function. The problem statement can be written as</p>
 <div class="math notranslate nohighlight">
 \[f(\textbf{x}) = \frac{1}{2} \sum_{i=1}^{10} (x_i^4 - 16x_i^2 + 5x_i)\]</div>
@@ -476,7 +476,7 @@ document.write(`
 </div>
 </div>
 <section id="sequential-sampling-using-expected-improvement-ei">
-<h2>Sequential Sampling using Expected Improvement (EI)<a class="headerlink" href="#sequential-sampling-using-expected-improvement-ei" title="Permalink to this heading">#</a></h2>
+<h2>Sequential Sampling using Expected Improvement (EI)<a class="headerlink" href="#sequential-sampling-using-expected-improvement-ei" title="Link to this heading">#</a></h2>
 <p>The blocks of code below will perform sequential sampling using the standard EI that was demonstrated in the Sequential Sampling section of the Jupyter Book. The random state for the generation of initial samples is fixed since the results obtained using EI will be compared to those obtained using the dimensionality reduction methods and therefore, it is important for each of the algorithms to start with the same initial samples. However, the results can still vary if the sequential sampling is re-run since the seed for differential evolution has not been set. For a fair comparison, the convergence criterion of the sampling is set as the maximum number of iterations. This is so that EI and the other methods will run for the same number of iterations and perform the same number of infills. In the end, the best objective value can be compared to compare the performance of the algorithms. As you will observe, it is also quite difficult for the max EI to meet the convergence criteria for a high-dimensional function. In such cases, the aim is to obtain the best possible value of the objective function in the shortest amount of sampling iterations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -799,7 +799,7 @@ f*: -253.5774800946036
 <p>The results of EI show that the sequential sampling algorithm is not able to find the global optimum of the function even after the addition of 45 infill samples. This is demonstrative of the difficulty of optimizing high-dimensional functions using surrogate-based methods. However, the algorithm is able to decrease the best observed value of the function from aporoximately -150 to approximately -253. Now, the same problem will be solved using dimensionality reduction methods to demonstrate the improvements that can be seen while optimizing high-dimensional functions.</p>
 </section>
 <section id="sequential-sampling-using-pricinpal-component-analysis-and-ei-pca-ei">
-<h2>Sequential Sampling using Pricinpal Component Analysis and EI (PCA-EI)<a class="headerlink" href="#sequential-sampling-using-pricinpal-component-analysis-and-ei-pca-ei" title="Permalink to this heading">#</a></h2>
+<h2>Sequential Sampling using Pricinpal Component Analysis and EI (PCA-EI)<a class="headerlink" href="#sequential-sampling-using-pricinpal-component-analysis-and-ei-pca-ei" title="Link to this heading">#</a></h2>
 <p>The blocks of code below will demonstrate the use of PCA along with EI to optimize the function using sequential sampling. The main idea here is to reduce the dimensionality of the input data from 10 to 5 using PCA. The 5 principal components obtained in this manner will be the new design variables for the problem. The kriging model will use the principal components as the input data and the original function values as the output data. Essentially, this means that we will be solving a new optimization problem that has lower dimensionality than the original 10-dimensional problem. In this case, the optimization problem statement for maximizing EI has to be redefined as</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\underset{\xi}{\max} \text{PEI}(\xi) = \begin{cases} 
@@ -1205,7 +1205,7 @@ f*: -266.59429227358214
 <p>The above comparison of the best observed function values shows that sequential sampling using PCA provides a benefit over standard EI. It can reduce the best observed function value to approximately -266 which is a greater reduction than standard EI within the same number of maximum iterations. It can also be seen that in this particular run, PCA-EI also reduces the objective function quicker than standard EI. PCA-EI can produce a great reduction in the best observed function value as soon as 10 iterations while it can take standard EI 15 iterations to produce a comparable reduction in the best observed function value.</p>
 </section>
 <section id="sequential-sampling-using-kernel-pca-and-ei-kpca-ei">
-<h2>Sequential Sampling using Kernel PCA and EI (KPCA-EI)<a class="headerlink" href="#sequential-sampling-using-kernel-pca-and-ei-kpca-ei" title="Permalink to this heading">#</a></h2>
+<h2>Sequential Sampling using Kernel PCA and EI (KPCA-EI)<a class="headerlink" href="#sequential-sampling-using-kernel-pca-and-ei-kpca-ei" title="Link to this heading">#</a></h2>
 <p>The blocks of code below will demonstrate the use of Kernel PCA along with EI to optimize the function using sequential sampling. The idea is the same as PCA-EI and the dimensionality of the problem is reduced from 10 to 5 in this case as well. Penalized EI is used to find the new infill point and the parameters of the sampling are identical to those used for EI and PCA-EI. The difference lies in using Kernel PCA as a dimensionality reduction technique. Kernel PCA is a non-linear dimensionality reduction technique often performing better than PCA. However, it is important to correctly choose the hyperparameters of the Kernel PCA algorithm to ensure the best possible performance. Out of these, the most important hyperparameter is the choice of the kernel and other hyperparameters depend on which kernel is chosen for the algorithm. For this demonstration here, the hyperparameters are chosen as the default values with the kernel choice being the cosine kernel. In general, a procedure such as cross-validation can be used to find the best hyperparameters.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1638,8 +1638,8 @@ By Leifur Leifsson (leifur[at]purdue.edu)
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>

@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Basic programming in Python and Jupyter Notebooks &#8212; Surrogate Methods</title>
   
@@ -19,49 +18,45 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
-  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'python_basics/python_basics';</script>
@@ -81,7 +76,6 @@ const thebe_selector_output = ".output, .cell_output"
   <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>
@@ -121,20 +115,15 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
-
-  <header>
   
-    <div class="bd-header navbar navbar-expand-lg bd-navbar">
-    </div>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
-  </header>
 
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -162,7 +151,18 @@ const thebe_selector_output = ".output, .cell_output"
     <p class="title logo__title">Surrogate Methods</p>
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -422,7 +422,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="basic-programming-in-python-and-jupyter-notebooks">
-<h1>Basic programming in Python and Jupyter Notebooks<a class="headerlink" href="#basic-programming-in-python-and-jupyter-notebooks" title="Permalink to this heading">#</a></h1>
+<h1>Basic programming in Python and Jupyter Notebooks<a class="headerlink" href="#basic-programming-in-python-and-jupyter-notebooks" title="Link to this heading">#</a></h1>
 <p>This is a tutorial on important Python libraries such as basic data types, Numpy, function definitions and creation of loops.</p>
 <p>In Python, the first step is always to import libraries that are will be relevant to the code that you will be writing. This usually forms the first few lines of a Python script and libraries can be imported using the <code class="docutils literal notranslate"><span class="pre">import</span></code> keyword. Sometimes you will also use the statement <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">package</span> <span class="pre">import</span> <span class="pre">method</span></code>. This is a way to import a specific function from one of the packages. Packages can also be assigned aliases when importing them to make them easier to reference in the code. This can be done by using the import statement <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">package</span> <span class="pre">as</span> <span class="pre">alias</span></code>.</p>
 <div class="cell docutils container">
@@ -444,10 +444,10 @@ document.write(`
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="basic-data-types-in-python">
-<h1>Basic data types in Python<a class="headerlink" href="#basic-data-types-in-python" title="Permalink to this heading">#</a></h1>
+<h1>Basic data types in Python<a class="headerlink" href="#basic-data-types-in-python" title="Link to this heading">#</a></h1>
 <p>There are a few ways to store data in Python that we will be using in this jupyter-book. Python uses all of the common data types such as integers, floating point numbers and strings. Some data types that are unique in Python and which we will be using in this jupyter-book are tuples, lists, and dictionaries.</p>
 <section id="tuples">
-<h2>Tuples<a class="headerlink" href="#tuples" title="Permalink to this heading">#</a></h2>
+<h2>Tuples<a class="headerlink" href="#tuples" title="Link to this heading">#</a></h2>
 <p>Tuples are data types that are defined using round brackets () and the elements of tuples can be any other data type such as integers, floating point numbers or even other tuples. A tuple is an ordered collection of elements that cannot be changed i.e., you cannot modify a tuple once it is defined.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -512,7 +512,7 @@ document.write(`
 </div>
 </section>
 <section id="lists">
-<h2>Lists<a class="headerlink" href="#lists" title="Permalink to this heading">#</a></h2>
+<h2>Lists<a class="headerlink" href="#lists" title="Link to this heading">#</a></h2>
 <p>Lists are also collections of any other data type of Python. However, the difference between lists and tuples is that lists can be modified i.e., elements can be changed or removed and new elements can be added.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -571,7 +571,7 @@ document.write(`
 </div>
 </section>
 <section id="dictionaries">
-<h2>Dictionaries<a class="headerlink" href="#dictionaries" title="Permalink to this heading">#</a></h2>
+<h2>Dictionaries<a class="headerlink" href="#dictionaries" title="Link to this heading">#</a></h2>
 <p>Dictionaries are data structures within Python that store data in key: value pairs. The values or data can be accessed using the keys and the data can be any other data type of Python. The keys must be unique and cannot be changed once defined. The associated values can be changed after the dictionary is defined.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -621,7 +621,7 @@ Value associated with array: [1 2 3]
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="numpy-library">
-<h1>Numpy library<a class="headerlink" href="#numpy-library" title="Permalink to this heading">#</a></h1>
+<h1>Numpy library<a class="headerlink" href="#numpy-library" title="Link to this heading">#</a></h1>
 <p>A library for scientific computation in Python which is very similar to MATLAB. The basic unit for computation in Numpy is a numpy array (also called an ndarray) which is the analogue of an array used in MATLAB. We will be using this library in almost every section of the jupyter-book.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -815,7 +815,7 @@ New shape of b: (1, 4)
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="if-statements">
-<h1>If statements<a class="headerlink" href="#if-statements" title="Permalink to this heading">#</a></h1>
+<h1>If statements<a class="headerlink" href="#if-statements" title="Link to this heading">#</a></h1>
 <p>An “if statement” in Python is written using the <code class="docutils literal notranslate"><span class="pre">if</span></code> keyword. The “if statement” evaluates the written Python statements only if a condition is true. A few examples of “if statements” are shown below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -868,7 +868,7 @@ New shape of b: (1, 4)
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="for-loops">
-<h1>For loops<a class="headerlink" href="#for-loops" title="Permalink to this heading">#</a></h1>
+<h1>For loops<a class="headerlink" href="#for-loops" title="Link to this heading">#</a></h1>
 <p>A <code class="docutils literal notranslate"><span class="pre">for</span></code> loop is used to iterate over a sequence of items defined by a data type such as a list, tuple or array. The loop contains a set of statements that perform operations on each element present in the iterable data type such as lists.</p>
 <p>One important method for defining <code class="docutils literal notranslate"><span class="pre">for</span></code> loops in Python, especially in the case of iterating through a list of integers, is the <code class="docutils literal notranslate"><span class="pre">range</span></code> function. Using <code class="docutils literal notranslate"><span class="pre">range(n)</span></code> defines an iterable list of integers starting from 0 and ending at n-1 which can be used within the statements of the <code class="docutils literal notranslate"><span class="pre">for</span></code> loop. The start, end and increment of the list of integers can also be specified in the <code class="docutils literal notranslate"><span class="pre">range</span></code> function. For example, to generate a list of numbers starting at 2, ending at 6 with an increment of 2 can be written as <code class="docutils literal notranslate"><span class="pre">range(2,8,2)</span></code>. Here, the actual end mentioned in the statement will not be included in the list so the list will stop at 6 and not at 8.</p>
 <div class="cell docutils container">
@@ -909,7 +909,7 @@ Boeing 777
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="while-loops">
-<h1>While loops<a class="headerlink" href="#while-loops" title="Permalink to this heading">#</a></h1>
+<h1>While loops<a class="headerlink" href="#while-loops" title="Link to this heading">#</a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">while</span></code> loop can be used to execute a set of statements as long as a given condition is true. This condition can be defined using standard boolean operations and statements.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -952,7 +952,7 @@ Boeing 777
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="defining-functions-in-python">
-<h1>Defining functions in Python<a class="headerlink" href="#defining-functions-in-python" title="Permalink to this heading">#</a></h1>
+<h1>Defining functions in Python<a class="headerlink" href="#defining-functions-in-python" title="Link to this heading">#</a></h1>
 <p>Functions are a very important part of every programming language since we are able to define smaller and resuable blocks of code that can be incorporated in larger and more complicated programs. You can pass parameters to a function as an input and the function can return data as an output. A function is defined using the <code class="docutils literal notranslate"><span class="pre">def</span></code> keyword in Python.</p>
 <p>In the example below, we will write a set of Python functions to calculate the derivate of the function</p>
 <div class="math notranslate nohighlight">
@@ -1152,8 +1152,8 @@ By Leifur Leifsson (leifur[at]purdue.edu)
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>
