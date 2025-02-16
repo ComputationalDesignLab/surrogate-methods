@@ -1,12 +1,13 @@
 
+
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Dimensionality Reduction Methods &#8212; Surrogate Methods</title>
   
@@ -18,45 +19,49 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
-  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
 
-    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js?v=f930bc37"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'dim_reduction/dim_red_methods';</script>
@@ -76,6 +81,7 @@
   <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
+
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>
@@ -115,15 +121,20 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <header>
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar">
-    </header>
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
   
+  </header>
 
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
       
+      
+        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -151,18 +162,7 @@
     <p class="title logo__title">Surrogate Methods</p>
   
 </a></div>
-        <div class="sidebar-primary-item">
-
- <script>
- document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -413,7 +413,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="dimensionality-reduction-methods">
-<h1>Dimensionality Reduction Methods<a class="headerlink" href="#dimensionality-reduction-methods" title="Link to this heading">#</a></h1>
+<h1>Dimensionality Reduction Methods<a class="headerlink" href="#dimensionality-reduction-methods" title="Permalink to this heading">#</a></h1>
 <p>This section demonstrates the use of dimensionality reduction methods on various datasets to show the workings of each of the methods. The methods used in this section include Principal Component Analysis (PCA) and Kernel PCA. PCA is a linear dimensionality reduction method that is often applicable to very simple datasets and Kernel PCA is a nonlinear dimensionality reduction method that has a wider range of applicability. In the dimensionality reduction problems shown here, the main aim is to discover the intrinsic structure that is present within the data and represent that structure in a lower dimension than the original data.</p>
 <p>To start off, the block of code below will import the required packages for this section.</p>
 <div class="cell docutils container">
@@ -430,7 +430,7 @@ document.write(`
 </div>
 </div>
 <section id="gaussian-clusters-dataset">
-<h2>Gaussian Clusters Dataset<a class="headerlink" href="#gaussian-clusters-dataset" title="Link to this heading">#</a></h2>
+<h2>Gaussian Clusters Dataset<a class="headerlink" href="#gaussian-clusters-dataset" title="Permalink to this heading">#</a></h2>
 <p>The first dataset is the Gaussian clusters dataset that consists of two clusters of points in two dimensions. The block of code below will plot this dataset for a 1000 samples and fixed random state. The red and blue coloured points represent the two clusters. The aim of dimensionality reduction is to represent the structure of the data within a single dimension. The structure to look for in this data is that there are two separable clusters in the data which must be visible in the single dimension.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -502,7 +502,7 @@ document.write(`
 <p>The above plot shows that Kernel PCA is able to separate the two clusters of the original data set as represented by a clear separation between the red and blue coloured points. This shows that Kernel PCA is able to discover the intrinsic structure of the data set and separate the two clusters originally present in the data.</p>
 </section>
 <section id="concentric-circles-dataset">
-<h2>Concentric Circles Dataset<a class="headerlink" href="#concentric-circles-dataset" title="Link to this heading">#</a></h2>
+<h2>Concentric Circles Dataset<a class="headerlink" href="#concentric-circles-dataset" title="Permalink to this heading">#</a></h2>
 <p>The second data set used in this section is the concentric circles dataset. This is a noisy dataset that represents points within two concentric circles. Similar to the half-moon dataset, the intrinsic structure of the dataset is the two distinct circular regions present within the dataset that must be separated when the data is reduced to a single dimension. The block of code below generates 1000 samples from the noisy dataset and plots the samples in two dimensions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -570,7 +570,7 @@ document.write(`
 <p>Kernel PCA is able to separate the points from the two circles in the single principal component and therefore, can represent the intrinsic structure of the dataset within a single dimension. In general, both of these datasets have an intrinsic nonlinear that can be best represented using Kernel PCA rather than PCA. PCA will be more effective in simpler cases where the data has an intrinsic linear structure. It is, therefore, important to analyze the data that is being used to understand if there is an intrinsic structure to the data that is well-suited to a dimensionality reduction method.</p>
 </section>
 <section id="swiss-roll-dataset">
-<h2>Swiss Roll Dataset<a class="headerlink" href="#swiss-roll-dataset" title="Link to this heading">#</a></h2>
+<h2>Swiss Roll Dataset<a class="headerlink" href="#swiss-roll-dataset" title="Permalink to this heading">#</a></h2>
 <p>The final dataset is the swiss roll dataset that consists of points in three dimensions that form the shape of a swiss roll. The intrinsic structure within the data is that the swiss roll is actually a two dimensional plane that has been rolled into the shape of a swiss roll. A successful dimensionality reduction would be able to represent the two dimensional plane using two principal components. The block of code below generates 1500 samples from the dataset and creates a three dimensional scatter plot of the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -653,7 +653,7 @@ document.write(`
 <p>The above plot of the principal components shows that Kernel PCA could partially unravel the roll in the dataset and represent it in two dimensions. A full unraveling into a two dimensional plane would be taking the edges with the yellow coloured and purple coloured points and pulling them apart to create a two dimensional plane. However, Kernel PCA can only unravel it to the point that it appears similar to a circle in two dimensions. This shows that while Kernel PCA is a nonlinear method, it may not be well-suited for all nonlinear problems and in this case, a different dimensionality reduction method is required to fully represent the intrinsic structure of the swiss roll dataset. Examples of dimensionality reduction methods that could prove more effective in this case are isometric mapping (IsoMap) and locally linear embedding (LLE).</p>
 </section>
 <section id="choosing-the-number-of-principal-components-for-pca">
-<h2>Choosing the number of principal components for PCA<a class="headerlink" href="#choosing-the-number-of-principal-components-for-pca" title="Link to this heading">#</a></h2>
+<h2>Choosing the number of principal components for PCA<a class="headerlink" href="#choosing-the-number-of-principal-components-for-pca" title="Permalink to this heading">#</a></h2>
 <p>In the datasets shown above, the choice of principal components can seem trivial since the datasets are two or three-dimensional and there are few possibilities for the number of principal components. However, choosing the exact number of principal components can be a challenge in datasets with much higher dimensionality. To correctly choose the principal components, it is necessary to calculate the cumulative ratio of the total variance that is explained by each of the principal components. This cumulative explained variance ratio can be calculated as</p>
 <div class="math notranslate nohighlight">
 \[\frac{\sum_{i=1}^d \lambda_i}{\sum_{j=1}^n \lambda_j},\]</div>
@@ -821,8 +821,8 @@ By Leifur Leifsson (leifur[at]purdue.edu)
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
 
   <footer class="bd-footer">
   </footer>
