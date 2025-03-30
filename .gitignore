@@ -2,3 +2,4 @@ books/_build
 books/.ipynb_checkpoints
 .DS_store
 books/.DS_store
+books/*/.ipynb_checkpoints
