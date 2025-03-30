@@ -42,6 +42,7 @@ chapters:
     - file: const_seq_sampling/const_exploit
     - file: const_seq_sampling/const_explor
     - file: const_seq_sampling/const_ei
+    - file: const_seq_sampling/prob_feas
   - file: sens_analysis/intro
     sections:
     - file: sens_analysis/local
