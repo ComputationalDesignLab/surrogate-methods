@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Basic plotting in Python &#8212; Surrogate Methods</title>
   
@@ -15,53 +14,49 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
-  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'python_basics/plotting';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -76,28 +71,23 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -120,19 +110,19 @@ const thebe_selector_output = ".output, .cell_output"
 </form></div>
   </div>
 
-  <header>
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <div class="bd-header navbar navbar-expand-lg bd-navbar">
-    </div>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
-  </header>
 
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -149,6 +139,8 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="sidebar-primary-item">
 
   
+    
+  
 
 <a class="navbar-brand logo" href="../index.html">
   
@@ -160,7 +152,18 @@ const thebe_selector_output = ".output, .cell_output"
     <p class="title logo__title">Surrogate Methods</p>
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -172,7 +175,7 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Basics of Python Programming</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Basics of Python Programming</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
 
 
@@ -183,71 +186,71 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Basic plotting in Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="resources.html">Python and Jupyter notebook resources</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../review_nm/intro.html">Review of Numerical Methods and Probability</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../review_nm/intro.html">Review of Numerical Methods and Probability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../review_nm/error.html">Error estimation for iterative method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../review_nm/num_diff.html">Numerical Differentiation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../review_nm/uniform.html">Uniform Distribution</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../review_nm/norm.html">Normal Distribution</a></li>
 </ul>
-</li>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../prob_form.html">Problem Formulation</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../local_opt/intro.html">Local Optimization</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../local_opt/intro.html">Local Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../local_opt/unconst.html">Unconstrained Optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../local_opt/const.html">Constrained Optimization</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../global_opt/intro.html">Global Optimization</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../global_opt/intro.html">Global Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../global_opt/multi.html">Multistart Gradient-based Optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../global_opt/pso.html">Particle Swarm Optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../global_opt/de.html">Differential Evolution</a></li>
 </ul>
-</li>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../doe.html">Sampling Plans</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../basic_sm/intro.html">Basic Surrogate Models</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../basic_sm/intro.html">Basic Surrogate Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basic_sm/ls_regression.html">Linear Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basic_sm/poly.html">Polynomial Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basic_sm/rbf.html">Radial Basis Function Model</a></li>
 </ul>
-</li>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../krg.html">Gaussian Process based Models</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../seq_sampling/intro.html">Sequential Sampling</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../seq_sampling/intro.html">Sequential Sampling</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../seq_sampling/exploitation.html">Exploitation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../seq_sampling/exploration.html">Exploration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../seq_sampling/lcb.html">Lower Confidence Bound</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../seq_sampling/pi.html">Probability of Improvement</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../seq_sampling/ei.html">Expected Improvement</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../const_seq_sampling/intro.html">Constrained Sequential Sampling</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../const_seq_sampling/intro.html">Constrained Sequential Sampling</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../const_seq_sampling/const_exploit.html">Constrained Exploitation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../const_seq_sampling/const_explor.html">Constrained Exploration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../const_seq_sampling/const_ei.html">Constrained Expected Improvement</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../const_seq_sampling/prob_feas.html">Probability of Feasibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../const_seq_sampling/prob_feas.html">Constrained Expected Improvement with Probability of Feasibility</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../sens_analysis/intro.html">Sensitivity Analysis</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sens_analysis/intro.html">Sensitivity Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../sens_analysis/local.html">Local Sensitivity Analysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../sens_analysis/global.html">Global Sensitivity Analysis</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../dim_reduction/intro.html">Dimensionality Reduction</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../dim_reduction/intro.html">Dimensionality Reduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../dim_reduction/dim_red_methods.html">Dimensionality Reduction Methods</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../dim_reduction/seq_sampling.html">Sequential Sampling using Dimensionality Reduction</a></li>
 </ul>
-</li>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../engineering_design.html">Engineering Modeling and Design Optimization</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../multi_objective/intro_moo.html">Multiobjective Optimization</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../multi_objective/intro_moo.html">Multiobjective Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../multi_objective/multi_objective_optimization.html">Multiobjective optimization using differential evolution</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../multi_objective/krg_multi_objective.html">Multiobjective optimization using Kriging models</a></li>
 </ul>
-</li>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../uncertainty_analysis.html">Uncertainty Analysis</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../opt_under_unc/intro_ouu.html">Optimization under uncertainty</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../opt_under_unc/intro_ouu.html">Optimization under uncertainty</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../opt_under_unc/robust_design.html">Robust Design</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../opt_under_unc/rel_based_design.html">Reliability-based Design</a></li>
 </ul>
-</li>
+</details></li>
 </ul>
 
     </div>
@@ -263,7 +266,7 @@ const thebe_selector_output = ".output, .cell_output"
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -272,14 +275,14 @@ const thebe_selector_output = ".output, .cell_output"
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -357,10 +360,10 @@ const thebe_selector_output = ".output, .cell_output"
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
@@ -368,14 +371,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -415,7 +418,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="basic-plotting-in-python">
-<h1>Basic plotting in Python<a class="headerlink" href="#basic-plotting-in-python" title="Permalink to this heading">#</a></h1>
+<h1>Basic plotting in Python<a class="headerlink" href="#basic-plotting-in-python" title="Link to this heading">#</a></h1>
 <p>This section provides a basic tutorial for plotting in Python. The <a class="reference external" href="https://matplotlib.org/"><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a> is the main package used in python for plotting. This section describes following type of plots:</p>
 <ol class="arabic simple">
 <li><p>Simple plots</p></li>
@@ -444,7 +447,7 @@ document.write(`
 </div>
 </div>
 <section id="simple-plot">
-<h2>Simple plot<a class="headerlink" href="#simple-plot" title="Permalink to this heading">#</a></h2>
+<h2>Simple plot<a class="headerlink" href="#simple-plot" title="Link to this heading">#</a></h2>
 <p>The <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html"><code class="docutils literal notranslate"><span class="pre">subplots</span></code></a> function from matplotlib is one of the simple ways to create a plot. This function doesn’t have any mandatory arguments and returns two items: a <code class="docutils literal notranslate"><span class="pre">figure</span></code> object and <code class="docutils literal notranslate"><span class="pre">axes</span></code> object. The <code class="docutils literal notranslate"><span class="pre">figure</span></code> object controls the entire canvas on which figure is created while <code class="docutils literal notranslate"><span class="pre">axes</span></code> object defines individual plots. The <code class="docutils literal notranslate"><span class="pre">figure</span></code> object can contain multiple <code class="docutils literal notranslate"><span class="pre">axes</span></code> objects, especially when working with multiple subplots.</p>
 <p>The <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html"><code class="docutils literal notranslate"><span class="pre">plot</span></code></a> function from <code class="docutils literal notranslate"><span class="pre">axes</span></code> object can be used to create a simple line plot. The first argument of <code class="docutils literal notranslate"><span class="pre">plot</span></code> function is <code class="docutils literal notranslate"><span class="pre">x</span></code> data and second argument is <code class="docutils literal notranslate"><span class="pre">y</span></code> data. The third argument is used to define line color and style. The <code class="docutils literal notranslate"><span class="pre">plot</span></code> function can be called in different ways and also accepts a lot of other arguments, please refer documentation for more details.</p>
 <p>Following code plots f and g with respect to x. Read the comments along the code for more information.</p>
@@ -468,7 +471,7 @@ document.write(`
 </div>
 </section>
 <section id="subplots">
-<h2>Subplots<a class="headerlink" href="#subplots" title="Permalink to this heading">#</a></h2>
+<h2>Subplots<a class="headerlink" href="#subplots" title="Link to this heading">#</a></h2>
 <p>This subsection will discuss how to create multiple plots within same figure in matplotlib. A simple way to create multiple subplots is to define grid structure with desired number of rows and columns, each grid cell will contain a separate plot. While calling <code class="docutils literal notranslate"><span class="pre">subplots</span></code> function, the number of rows and columns can be provided as first and second argument, respectively. The default value for both arguments is 1. The <code class="docutils literal notranslate"><span class="pre">axes</span></code> object returned by the <code class="docutils literal notranslate"><span class="pre">subplots</span></code> function is a numpy array, if number of rows or columns is more than one. Below code creates two subplots, one for f and other for g.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -498,7 +501,7 @@ document.write(`
 </div>
 </section>
 <section id="scatter-plot">
-<h2>Scatter plot<a class="headerlink" href="#scatter-plot" title="Permalink to this heading">#</a></h2>
+<h2>Scatter plot<a class="headerlink" href="#scatter-plot" title="Link to this heading">#</a></h2>
 <p>Matplotlib can be used to create scatter plots as well. The <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.scatter.html"><code class="docutils literal notranslate"><span class="pre">scatter</span></code></a> function from <code class="docutils literal notranslate"><span class="pre">axes</span></code> object is used for creating scatter plots. The first argument is <code class="docutils literal notranslate"><span class="pre">x</span></code> data while second argument is <code class="docutils literal notranslate"><span class="pre">y</span></code> data. The <code class="docutils literal notranslate"><span class="pre">marker</span></code> argument defines the type of marker (such as square, circle, etc) used in the plot. The <code class="docutils literal notranslate"><span class="pre">s</span></code> argument controls the size of marker while <code class="docutils literal notranslate"><span class="pre">c</span></code> defines color of the marker. There are many other arguments which can be passed to <code class="docutils literal notranslate"><span class="pre">scatter</span></code> function, refer documentation for more details.</p>
 <p>Below block of code creates a simple data which is then used for creating a scatter plot.</p>
 <div class="cell docutils container">
@@ -527,7 +530,7 @@ document.write(`
 </div>
 </section>
 <section id="contour-plot">
-<h2>Contour plot<a class="headerlink" href="#contour-plot" title="Permalink to this heading">#</a></h2>
+<h2>Contour plot<a class="headerlink" href="#contour-plot" title="Link to this heading">#</a></h2>
 <p>Matplotlib can be used for creating contour plot also. Typically, there are two types of contour plots: filled contour plot and line contour plot.</p>
 <p>The <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.contourf.html"><code class="docutils literal notranslate"><span class="pre">contourf</span></code></a> function from <code class="docutils literal notranslate"><span class="pre">axes</span></code> object is used to create a filled contour plot. The first three inputs to <code class="docutils literal notranslate"><span class="pre">contourf</span></code> function are <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, and <code class="docutils literal notranslate"><span class="pre">z</span></code> data. Note that all the three inputs are usually 2D numpy array and should be of the same size. The <code class="docutils literal notranslate"><span class="pre">contourf</span></code> function also has an optional <code class="docutils literal notranslate"><span class="pre">levels</span></code> argument which decides the number and location of contour regions. If <code class="docutils literal notranslate"><span class="pre">levels</span></code> argument is not provided, then appropriate number of levels is determined automatically.</p>
 <p>Below code defines a simple 2D function and generates plotting data.</p>
@@ -605,7 +608,7 @@ document.write(`
 </div>
 </div>
 <section id="contour-lines">
-<h3>Contour lines<a class="headerlink" href="#contour-lines" title="Permalink to this heading">#</a></h3>
+<h3>Contour lines<a class="headerlink" href="#contour-lines" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Contour levels are evaluated in logscale since the difference</span>
@@ -666,7 +669,7 @@ document.write(`
               
               
               
-                <footer class="prev-next-footer">
+                <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -758,8 +761,8 @@ By Leifur Leifsson (leifur[at]purdue.edu)
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
