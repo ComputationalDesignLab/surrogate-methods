@@ -2,9 +2,11 @@ title: "Surrogate Methods"
 execute:
   execute_notebooks: "off"
 author: "Leifur Leifsson (leifur[at]purdue.edu)"
-copyright: "2025"
+copyright: "2026"
 repository:
   url: "https://github.com/ComputationalDesignLab/surrogate-methods"
   path_to_book: "books"
+html:
+  use_repository_button: true
 launch_buttons:
   notebook_interface: "jupyterlab"
