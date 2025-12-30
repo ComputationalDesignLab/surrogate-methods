@@ -7,57 +7,57 @@ chapters:
       - file: python_basics/python_basics
       - file: python_basics/plotting
       - file: python_basics/resources
-  - file: review_nm/intro
-    sections:
-    - file: review_nm/error
-    - file: review_nm/num_diff
-    - file: review_nm/uniform
-    - file: review_nm/norm
-  - file: prob_form
-  - file: local_opt/intro
-    sections:
-    - file: local_opt/unconst
-    - file: local_opt/const
-  - file: global_opt/intro
-    sections:
-    - file: global_opt/multi
-    - file: global_opt/pso
-    - file: global_opt/de
-  - file: doe
-  - file: basic_sm/intro
-    sections:
-    - file: basic_sm/ls_regression
-    - file: basic_sm/poly
-    - file: basic_sm/rbf
-  - file: krg
-  - file: seq_sampling/intro
-    sections:
-    - file: seq_sampling/exploitation
-    - file: seq_sampling/exploration
-    - file: seq_sampling/lcb
-    - file: seq_sampling/pi
-    - file: seq_sampling/ei
-  - file: const_seq_sampling/intro
-    sections:
-    - file: const_seq_sampling/const_exploit
-    - file: const_seq_sampling/const_explor
-    - file: const_seq_sampling/const_ei
-    - file: const_seq_sampling/prob_feas
-  - file: sens_analysis/intro
-    sections:
-    - file: sens_analysis/local
-    - file: sens_analysis/global
-  - file: dim_reduction/intro
-    sections:
-    - file: dim_reduction/dim_red_methods
-    - file: dim_reduction/seq_sampling
-  - file: engineering_design  
-  - file: multi_objective/intro_moo
-    sections:
-    - file: multi_objective/multi_objective_optimization
-    - file: multi_objective/krg_multi_objective
-  - file: uncertainty_analysis
-  - file: opt_under_unc/intro_ouu
-    sections:
-    - file: opt_under_unc/robust_design
-    - file: opt_under_unc/rel_based_design
+  # - file: review_nm/intro
+  #   sections:
+  #   - file: review_nm/error
+  #   - file: review_nm/num_diff
+  #   - file: review_nm/uniform
+  #   - file: review_nm/norm
+  # - file: prob_form
+  # - file: local_opt/intro
+  #   sections:
+  #   - file: local_opt/unconst
+  #   - file: local_opt/const
+  # - file: global_opt/intro
+  #   sections:
+  #   - file: global_opt/multi
+  #   - file: global_opt/pso
+  #   - file: global_opt/de
+  # - file: doe
+  # - file: basic_sm/intro
+  #   sections:
+  #   - file: basic_sm/ls_regression
+  #   - file: basic_sm/poly
+  #   - file: basic_sm/rbf
+  # - file: krg
+  # - file: seq_sampling/intro
+  #   sections:
+  #   - file: seq_sampling/exploitation
+  #   - file: seq_sampling/exploration
+  #   - file: seq_sampling/lcb
+  #   - file: seq_sampling/pi
+  #   - file: seq_sampling/ei
+  # - file: const_seq_sampling/intro
+  #   sections:
+  #   - file: const_seq_sampling/const_exploit
+  #   - file: const_seq_sampling/const_explor
+  #   - file: const_seq_sampling/const_ei
+  #   - file: const_seq_sampling/prob_feas
+  # - file: sens_analysis/intro
+  #   sections:
+  #   - file: sens_analysis/local
+  #   - file: sens_analysis/global
+  # - file: dim_reduction/intro
+  #   sections:
+  #   - file: dim_reduction/dim_red_methods
+  #   - file: dim_reduction/seq_sampling
+  # - file: engineering_design  
+  # - file: multi_objective/intro_moo
+  #   sections:
+  #   - file: multi_objective/multi_objective_optimization
+  #   - file: multi_objective/krg_multi_objective
+  # - file: uncertainty_analysis
+  # - file: opt_under_unc/intro_ouu
+  #   sections:
+  #   - file: opt_under_unc/robust_design
+  #   - file: opt_under_unc/rel_based_design
