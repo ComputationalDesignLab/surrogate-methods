@@ -1,3 +1,4 @@
+.vscode
 books/_build
 books/.ipynb_checkpoints
 .DS_store
