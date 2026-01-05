@@ -13,3 +13,9 @@ After going through this jupyter-book, the reader will:
 + Be able to implement basic algorithms of surrogate methods in Python
 + Be able to use surrogate algorithms to solve basic engineering modeling and design optimization problems
 
+## Contributors
+
+Following people have contributed to this book:
+
++ Pavankumar Koratikere
++ Abhijnan Dikshit
