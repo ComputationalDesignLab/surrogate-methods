@@ -28,13 +28,13 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -179,6 +179,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Basics of Python Programming</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Basic programming in Python and Jupyter Notebooks</a></li>
+
 
 
 
@@ -360,6 +361,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-library">Numpy library</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch-tensors">PyTorch tensors</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#if-statements">If statements</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#for-loops">For loops</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#while-loops">While loops</a></li>
@@ -383,16 +385,19 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Some standard import statements</span>
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy</span>
 
 <span class="c1"># Importing a specific function from a package</span>
-<span class="kn">from</span> <span class="nn">scipy.io</span> <span class="kn">import</span> <span class="n">loadmat</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">loadmat</span>
 
 <span class="c1"># Importing a package and assigning an alias to it</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="c1"># Now numpy functions can be accessed through np</span>
+
+<span class="c1"># Importing torch for tensor computations</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 </pre></div>
 </div>
 </div>
@@ -456,7 +461,7 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">46</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">48</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Tuples cannot be changed</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">atuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># This will give an error</span>
 
@@ -577,7 +582,7 @@ Value associated with array: [1 2 3]
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="numpy-library">
 <h1>Numpy library<a class="headerlink" href="#numpy-library" title="Link to this heading">#</a></h1>
-<p>A library for scientific computation in Python which is very similar to MATLAB. The basic unit for computation in Numpy is a numpy array (also called an ndarray) which is the analogue of an array used in MATLAB. We will be using this library in almost every section of the jupyter-book.</p>
+<p>A library for scientific computation in Python which is very similar to MATLAB. The basic unit for computation in Numpy is a numpy array (also called an ndarray) which is the analogue of an array used in MATLAB. We will be frequently using this library within this jupyter book.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining a numpy array</span>
@@ -658,14 +663,14 @@ Value associated with array: [1 2 3]
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating a evenly spaced array very similar to linspace in MATLAB</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating an evenly spaced array very similar to linspace in MATLAB</span>
 <span class="n">linear_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Linearly spaced array:&quot;</span><span class="p">,</span> <span class="n">linear_array</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Evenly spaced array:&quot;</span><span class="p">,</span> <span class="n">linear_array</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Linearly spaced array: [0.   0.25 0.5  0.75 1.  ]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Evenly spaced array: [0.   0.25 0.5  0.75 1.  ]
 </pre></div>
 </div>
 </div>
@@ -721,7 +726,9 @@ Last shape element of a: 3
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This can be done by using -1 for one of the dimensions in the shape definition.</span>
+<span class="c1"># If -1 is used then the dimension will match the remaining number of total elements in the array. </span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New shape of a:&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New shape of a:&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
@@ -760,10 +767,418 @@ New shape of b: (1, 4)
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">65</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">67</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># This will give an error because there are only 4 elements in b</span>
 
 <span class="ne">ValueError</span>: cannot reshape array of size 4 into shape (1,5)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pytorch-tensors">
+<h1>PyTorch tensors<a class="headerlink" href="#pytorch-tensors" title="Link to this heading">#</a></h1>
+<p>A PyTorch tensor is the analogue of a numpy array for the PyTorch framework, which is a very popular library for machine learning and creating surrogate models. Tensors are multi-dimensional arrays that are the basic unit of computation for the PyTorch framework. These will be used extensively in the class for creating models and other computations. Tensors provide the user with the capability of performing computations on a Graphical Processing Unit (GPU) which can significantly accelerate computations. Here, we will cover some basic computations using PyTorch tensors. Further details are given within comments in the code blocks.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating a new 1D tensor array</span>
+<span class="n">a_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1D tensor:&quot;</span><span class="p">,</span> <span class="n">a_tensor</span><span class="p">)</span>
+
+<span class="c1"># Creating a new 2D tensor array</span>
+<span class="n">b_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2D tensor:&quot;</span><span class="p">,</span> <span class="n">b_tensor</span><span class="p">)</span>
+
+<span class="c1"># It is also possible to create a 3D tensor</span>
+<span class="n">c_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]],</span> <span class="p">[[</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">6.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">7.0</span><span class="p">,</span><span class="mf">8.0</span><span class="p">]]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;3D tensor:&quot;</span><span class="p">,</span> <span class="n">c_tensor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1D tensor: tensor([1., 2., 3.])
+2D tensor: tensor([[1., 2.],
+        [3., 4.]])
+3D tensor: tensor([[[1., 2.],
+         [3., 4.]],
+
+        [[5., 6.],
+         [7., 8.]]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Acessing the dimension of the tensor</span>
+<span class="c1"># Here, we are printing the values using a f string which is useful for printing strings and variables</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dimension of a_tensor: </span><span class="si">{</span><span class="n">a_tensor</span><span class="o">.</span><span class="n">ndim</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dimension of b_tensor: </span><span class="si">{</span><span class="n">b_tensor</span><span class="o">.</span><span class="n">ndim</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dimension of c_tensor: </span><span class="si">{</span><span class="n">c_tensor</span><span class="o">.</span><span class="n">ndim</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dimension of a_tensor: 1
+Dimension of b_tensor: 2
+Dimension of c_tensor: 3
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Accessing the shape of the tensor. Think of this as matrix dimensions if 2D or vector length if 1D</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of a_tensor: </span><span class="si">{</span><span class="n">a_tensor</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of b_tensor: </span><span class="si">{</span><span class="n">b_tensor</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of c_tensor: </span><span class="si">{</span><span class="n">c_tensor</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># The above returns a torch.Size array which can be indexed like a regular array</span>
+<span class="c1"># Indexing shape of b_tensor</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;First index of b_tensor shape: </span><span class="si">{</span><span class="n">b_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Second index of b_tensor shape: </span><span class="si">{</span><span class="n">b_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of a_tensor: torch.Size([3])
+Shape of b_tensor: torch.Size([2, 2])
+Shape of c_tensor: torch.Size([2, 2, 2])
+First index of b_tensor shape: 2
+Second index of b_tensor shape: 2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The size method associated with a tensor can also be called to obtain the shape of the tensor array</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Size of a_tensor: </span><span class="si">{</span><span class="n">a_tensor</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Size of b_tensor: </span><span class="si">{</span><span class="n">b_tensor</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Size of c_tensor: </span><span class="si">{</span><span class="n">c_tensor</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Size of a_tensor: torch.Size([3])
+Size of b_tensor: torch.Size([2, 2])
+Size of c_tensor: torch.Size([2, 2, 2])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Some standard tensors such as a tensor with all zeros or all ones can also be defined as follows</span>
+<span class="c1"># The numbers in the parentheses define the shape of the array, similar to the Numpy library</span>
+<span class="n">zero_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># 1D array of zeros</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;1D array of zeros: </span><span class="si">{</span><span class="n">zero_tensor</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">ones_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span> <span class="c1"># 2D array of ones</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;2D array of ones: </span><span class="si">{</span><span class="n">ones_tensor</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1D array of zeros: tensor([0., 0., 0., 0., 0.])
+2D array of ones: tensor([[1., 1.],
+        [1., 1.],
+        [1., 1.],
+        [1., 1.],
+        [1., 1.]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># It is also possible to create an evenly spaced tensor array using torch.linspace similar to MATLAB and Numpy</span>
+<span class="n">linear_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Evenly spaced tensor: </span><span class="si">{</span><span class="n">linear_tensor</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Evenly spaced tensor: tensor([0.0000, 0.0526, 0.1053, 0.1579, 0.2105, 0.2632, 0.3158, 0.3684, 0.4211,
+        0.4737, 0.5263, 0.5789, 0.6316, 0.6842, 0.7368, 0.7895, 0.8421, 0.8947,
+        0.9474, 1.0000])
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can index tensor arrays in a manner that is similar to indexing Numpy arrays. The next code block demonstrates examples of indexing different types of tensor arrays.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Indexing a 1D tensor array</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;First element of a_tensor: </span><span class="si">{</span><span class="n">a_tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Second element of a_tensor: </span><span class="si">{</span><span class="n">a_tensor</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>First element of a_tensor: 1.0
+Second element of a_tensor: 2.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Indexing a 2D array</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Element of b_tensor in first row and first column: </span><span class="si">{</span><span class="n">b_tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Element of b_tensor in second row and first column: </span><span class="si">{</span><span class="n">b_tensor</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># It is important to note that the above will return a 0-dim tensor which is essentially the representation of a single value within PyTorch</span>
+<span class="c1"># To recover the single value from the tensor it is necessary to use the item method</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Value of element of b_tensor in first row and first column: </span><span class="si">{</span><span class="n">b_tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Value of element of b_tensor in second row and first column: </span><span class="si">{</span><span class="n">b_tensor</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Element of b_tensor in first row and first column: 1.0
+Element of b_tensor in second row and first column: 3.0
+Value of element of b_tensor in first row and first column: 1.0
+Value of element of b_tensor in second row and first column: 3.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Indexing a 3D array and extracting the value using the item method</span>
+<span class="c1"># The term depth in this case is used to indicate the third dimension of the array</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Element of c_tensor in first row, first column and first position along depth: </span><span class="si">{</span><span class="n">c_tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Element of c_tensor in second row, first column and second along the depth: </span><span class="si">{</span><span class="n">c_tensor</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Element of c_tensor in first row, first column and first position along depth: 1.0
+Element of c_tensor in second row, first column and second along the depth: 6.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Just like the Numpy library, it is also important to know how to reshape tensor arrays in case it is needed for building models or using tensors with other libraries.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reshaping aTensor from shape torch.Size([3]) to torch.Size([1,3])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of a_tensor: </span><span class="si">{</span><span class="n">a_tensor</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">a_tensor_reshaped_1</span> <span class="o">=</span> <span class="n">a_tensor</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;New shape of a_tensor: </span><span class="si">{</span><span class="n">a_tensor_reshaped_1</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># This can also be done by using -1 for one of the dimensions in the shape definition.</span>
+<span class="c1"># If -1 is used then the dimension will match the remaining number of total elements in the array. </span>
+<span class="n">a_tensor_reshaped_2</span> <span class="o">=</span> <span class="n">a_tensor</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;New shape of a_tensor: </span><span class="si">{</span><span class="n">a_tensor_reshaped_2</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of a_tensor: torch.Size([3])
+New shape of a_tensor: torch.Size([1, 3])
+New shape of a_tensor: torch.Size([1, 3])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reshaping b_tensor from shape torch.Size([2,2]) to torch.Size([1,4])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of b_tensor: </span><span class="si">{</span><span class="n">b_tensor</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">b_tensor_reshaped</span> <span class="o">=</span> <span class="n">b_tensor</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;New shape of b_tensor: </span><span class="si">{</span><span class="n">b_tensor_reshaped</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of b_tensor: torch.Size([2, 2])
+New shape of b_tensor: torch.Size([1, 4])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reshaping c_tensor from shape torch.Size([2,2,2]) to torch.Size([2,4])</span>
+<span class="c1"># This can be done using -1 or using 4 as the dimension size</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of c_tensor: </span><span class="si">{</span><span class="n">c_tensor</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">c_tensor_reshaped_1</span> <span class="o">=</span> <span class="n">c_tensor</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;New shape of c_tensor: </span><span class="si">{</span><span class="n">c_tensor_reshaped_1</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">c_tensor_reshaped_2</span> <span class="o">=</span> <span class="n">c_tensor</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;New shape of c_tensor: </span><span class="si">{</span><span class="n">c_tensor_reshaped_2</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of c_tensor: torch.Size([2, 2, 2])
+New shape of c_tensor: torch.Size([2, 4])
+New shape of c_tensor: torch.Size([2, 4])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c_tensor_reshaped_3</span> <span class="o">=</span> <span class="n">c_tensor</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span> <span class="c1"># This will give an error as there not enough elements in c_tensor to support this reshape</span>
+<span class="c1"># c_tensor has 6 elements but the above reshape requires 8 elements</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">RuntimeError</span><span class="g g-Whitespace">                              </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">80</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">c_tensor_reshaped_3</span> <span class="o">=</span> <span class="n">c_tensor</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span> <span class="c1"># This will give an error as there not enough elements in c_tensor to support this reshape</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1"># c_tensor has 6 elements but the above reshape requires 8 elements</span>
+
+<span class="ne">RuntimeError</span>: shape &#39;[2, 6]&#39; is invalid for input of size 8
+</pre></div>
+</div>
+</div>
+</div>
+<p>On occasion, it is necessary to convert between Numpy arrays and PyTorch tensors to use data stored within arrays with particular libraries or for the purposes of plotting. If a conversion between Numpy arrays and PyTorch tensors is required, the following blocks of code provide examples for that.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Converting a numpy array to a torch tensor array</span>
+<span class="n">array_numpy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">2.0</span><span class="p">,</span><span class="mf">3.0</span><span class="p">],[</span><span class="mf">4.0</span><span class="p">,</span><span class="mf">6.0</span><span class="p">,</span><span class="mf">8.0</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Numpy array: </span><span class="si">{</span><span class="n">array_numpy</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Two examples of methods to convert numpy array to tensor</span>
+<span class="n">array_tensor_1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">array_numpy</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tensor conversion 1: </span><span class="si">{</span><span class="n">array_tensor_1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">array_tensor_2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">array_numpy</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tensor conversion 2: </span><span class="si">{</span><span class="n">array_tensor_2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Numpy array: [[1. 2. 3.]
+ [4. 6. 8.]]
+Tensor conversion 1: tensor([[1., 2., 3.],
+        [4., 6., 8.]], dtype=torch.float64)
+Tensor conversion 2: tensor([[1., 2., 3.],
+        [4., 6., 8.]], dtype=torch.float64)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Converting torch tensor array to numpy array</span>
+<span class="n">array_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">2.0</span><span class="p">,</span><span class="mf">3.0</span><span class="p">],[</span><span class="mf">4.0</span><span class="p">,</span><span class="mf">6.0</span><span class="p">,</span><span class="mf">8.0</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tensor array: </span><span class="si">{</span><span class="n">array_tensor</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">array_numpy</span> <span class="o">=</span> <span class="n">array_tensor</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Numpy array: </span><span class="si">{</span><span class="n">array_numpy</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tensor array: tensor([[1., 2., 3.],
+        [4., 6., 8.]])
+Numpy array: [[1. 2. 3.]
+ [4. 6. 8.]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Tensor computations can be performed both on a CPU as well as a GPU. However, using a GPU can be beneficial due to the acceleration that GPU tensor computations can provide. To indicate whether a GPU or CPU should be used for the computations, it is necessary to specify the <code class="docutils literal notranslate"><span class="pre">device</span></code> for a tensor array. It is also sometimes necessary to transfer a tensor hosted on the GPU to the CPU or vice versa for other computations or plotting purposes. This transfer is also necessary before converting the tensor to numpy if that is required.</p>
+<p>Additionally, you may have noticed the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> being printed for a tensor. The <code class="docutils literal notranslate"><span class="pre">dtype</span></code> indicates the floating point precision for the tensor array. <code class="docutils literal notranslate"><span class="pre">torch.float32</span></code> indicates 32-bit or single precision and <code class="docutils literal notranslate"><span class="pre">torch.float64</span></code> indicates 64-bit or double precision. The following code blocks provide examples on specifying the <code class="docutils literal notranslate"><span class="pre">device</span></code> and <code class="docutils literal notranslate"><span class="pre">dtype</span></code> for a tensor array.</p>
+<p>The first code block demonstrates how to check if a GPU is available for tensor computations. If a dedicated GPU with CUDA is not available on your machine, then this will show False. Otherwise, it should show true.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Checking to see if GPU is available</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining a tensor with explicitly mentioned device and dtype</span>
+<span class="n">d_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span><span class="mf">4.0</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span> <span class="c1"># &quot;cpu&quot; indicates that the CPU is being used for computations</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;d_tensor dtype: </span><span class="si">{</span><span class="n">d_tensor</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;d_tensor device: </span><span class="si">{</span><span class="n">d_tensor</span><span class="o">.</span><span class="n">device</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">e_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span><span class="mf">4.0</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span> <span class="c1"># &quot;cuda&quot; indicates that the GPU is being used for computations</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;e_tensor dtype: </span><span class="si">{</span><span class="n">e_tensor</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;e_tensor device: </span><span class="si">{</span><span class="n">e_tensor</span><span class="o">.</span><span class="n">device</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Another method for changing dtype and device</span>
+<span class="n">f_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span><span class="mf">4.0</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="n">f_tensor</span> <span class="o">=</span> <span class="n">f_tensor</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;f_tensor dtype: </span><span class="si">{</span><span class="n">f_tensor</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;f_tensor device: </span><span class="si">{</span><span class="n">f_tensor</span><span class="o">.</span><span class="n">device</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># It is also possible to use the to() method to set the dtype and device of one tensor the same as another tensor</span>
+<span class="n">g_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span><span class="mf">4.0</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+<span class="n">g_tensor</span> <span class="o">=</span> <span class="n">f_tensor</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">e_tensor</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;g_tensor dtype: </span><span class="si">{</span><span class="n">g_tensor</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;g_tensor device: </span><span class="si">{</span><span class="n">g_tensor</span><span class="o">.</span><span class="n">device</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># g_tensor has same dtype and device as e_tensor even though the original definition is different</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>d_tensor dtype: torch.float32
+d_tensor device: cpu
+e_tensor dtype: torch.float64
+e_tensor device: cuda:0
+f_tensor dtype: torch.float32
+f_tensor device: cuda:0
+g_tensor dtype: torch.float64
+g_tensor device: cuda:0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Transferring a GPU tensor to the CPU</span>
+<span class="n">e_tensor_cpu</span> <span class="o">=</span> <span class="n">e_tensor</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tensor device: </span><span class="si">{</span><span class="n">e_tensor_cpu</span><span class="o">.</span><span class="n">device</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Device has been converted to cpu</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tensor device: cpu
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Converting to numpy can only be done after the tensor is transferred to the CPU</span>
+<span class="n">e_tensor_numpy</span> <span class="o">=</span> <span class="n">e_tensor</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;e_tensor data type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">e_tensor</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># tensor has been converted to numpy</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;e_tensor_numpy data type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">e_tensor_numpy</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># tensor has been converted to numpy</span>
+
+<span class="c1"># The below code line will give an error since the tensor has not been transferred to the cpu first</span>
+<span class="n">e_tensor_numpy</span> <span class="o">=</span> <span class="n">e_tensor</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>e_tensor data type: &lt;class &#39;torch.Tensor&#39;&gt;
+e_tensor_numpy data type: &lt;class &#39;numpy.ndarray&#39;&gt;
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">86</span><span class="p">],</span> <span class="n">line</span> <span class="mi">7</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;e_tensor_numpy data type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">e_tensor_numpy</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># tensor has been converted to numpy</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="c1"># The below code line will give an error since the tensor has not been transferred to the cpu first</span>
+<span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">e_tensor_numpy</span> <span class="o">=</span> <span class="n">e_tensor</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+<span class="ne">TypeError</span>: can&#39;t convert cuda:0 device type tensor to numpy. Use Tensor.cpu() to copy the tensor to host memory first.
 </pre></div>
 </div>
 </div>
@@ -918,10 +1333,9 @@ Boeing 777
 <p>To measure the difference between the true derivative and the approximation of the central difference, we will use the relative error which can be expressed as:</p>
 <div class="math notranslate nohighlight">
 \[\text{Relative Error} = \frac{\text{true value} - \text{approximation}}{\text{true value}}\]</div>
-<p>This will also be covered in more detail in the section on review of numerical methods of this jupyter-book.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">true_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">true_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function which returns value of desired function at input x.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -929,7 +1343,7 @@ Boeing 777
 
     <span class="k">return</span> <span class="n">value</span>
 
-<span class="k">def</span> <span class="nf">true_derivative</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">true_derivative</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns true derivative of function at input x.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -937,7 +1351,7 @@ Boeing 777
 
     <span class="k">return</span> <span class="n">value</span> 
 
-<span class="k">def</span> <span class="nf">central_diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">func</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">central_diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">func</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function for computing central difference.</span>
 <span class="sd">        Input:</span>
@@ -1054,6 +1468,7 @@ Relative error: -0.09589041095890413
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-library">Numpy library</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch-tensors">PyTorch tensors</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#if-statements">If statements</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#for-loops">For loops</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#while-loops">While loops</a></li>
