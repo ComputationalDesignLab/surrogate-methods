@@ -5,6 +5,7 @@ chapters:
   - file: python_basics/intro
     sections:
       - file: python_basics/python_basics
+      - file: python_basics/torch_basics
       - file: python_basics/plotting
       - file: python_basics/resources
   # - file: review_nm/intro
