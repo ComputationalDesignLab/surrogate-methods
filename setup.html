@@ -52,7 +52,7 @@
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
@@ -354,6 +354,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-downloading-and-installing-miniconda">Step 1: Downloading and installing miniconda</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-creating-a-new-environment">Step 2: Creating a new environment</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-installing-packages">Step 3: Installing packages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-jupyter-notebook-to-pdf">Converting Jupyter Notebook to PDF</a></li>
 </ul>
             </nav>
         </div>
@@ -367,14 +368,13 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="computing-environment-setup">
 <h1>Computing environment setup<a class="headerlink" href="#computing-environment-setup" title="Link to this heading">#</a></h1>
-<p>The goal of this section is to create a computing environment on your computer so that you can run the python scripts and code snippets required for this course. Follow below steps to set up miniconda, create an environment, and install packages in the new environment. If you already have miniconda/anaconda or know any other method which suits your needs in a better manner, then you are free to use that. <strong>The end goal is to have a working computing environment that can be used for this course</strong>.</p>
+<p>The goal of this section is to create a computing environment on your computer so that you can run the python scripts and code snippets required for this course. Follow below steps to set up miniconda, create an environment, and install packages in that environment. If you already have miniconda/anaconda or know any other method which suits your needs in a better manner, then you are free to use that. <strong>The end goal is to have a working computing environment that can be used for this course</strong>.</p>
 <blockquote>
 <div><p><strong><em>NOTE:</em></strong> This guide assumes that you are using Windows OS. If you are using another OS, then the steps will be very similar but there might be more usage of terminal commands.</p>
 </div></blockquote>
 <section id="step-1-downloading-and-installing-miniconda">
 <h2>Step 1: Downloading and installing miniconda<a class="headerlink" href="#step-1-downloading-and-installing-miniconda" title="Link to this heading">#</a></h2>
-<p>In this course, we will using conda as an environment manager. Conda is a package and environment management system that allows you to create isolated environments for different projects and manage packages within those environments. There are primarily two ways to get conda - anaconda and miniconda. Anaconda is a distribution of python and conda which comes with a lot of pre-installed packages. Miniconda, on the other hand, is a minimal installation of Anaconda containing only conda, python and a few other useful packages such as pip. If you want to know more, there is also a comparison between Anaconda and miniconda given <a class="reference external" href="https://docs.anaconda.com/distro-or-miniconda/">here</a>. In this course, we will use miniconda to set up our computing environment. However, if you want to use anaconda, you can follow similar instructions as given below.</p>
-<p>You can skip these steps if you already have miniconda (or anaconda) installed.</p>
+<p>In this course, we will using conda as an environment manager. Conda is a package and environment management system that allows you to create isolated environments for different projects and manage packages within those environments. There are primarily two ways to get conda - anaconda and miniconda. Anaconda is a distribution of python and conda which comes with a lot of pre-installed packages. Miniconda, on the other hand, is a minimal installation of Anaconda containing only conda, python and a few other useful packages such as pip. If you want to know more, there is also a comparison between Anaconda and miniconda given <a class="reference external" href="https://docs.anaconda.com/distro-or-miniconda/">here</a>. In this course, we will use miniconda to set up our computing environment. However, if you want to use anaconda, you can follow similar instructions as given below. You can skip below steps if you already have miniconda (or anaconda) installed.</p>
 <ol class="arabic simple">
 <li><p>Download miniconda from <a class="reference external" href="https://www.anaconda.com/download/success">https://www.anaconda.com/download/success</a>. Make sure to select the correct operating system (if not auto-selected).</p></li>
 <li><p>Open the installer and follow the GUI instructions to install miniconda.</p></li>
@@ -385,39 +385,46 @@ document.write(`
 </section>
 <section id="step-2-creating-a-new-environment">
 <h2>Step 2: Creating a new environment<a class="headerlink" href="#step-2-creating-a-new-environment" title="Link to this heading">#</a></h2>
-<p>The process to setup an environment and install packages is the same for both anaconda and miniconda. So, it does not matter which one you installed in previous step. In this step, we will create a new environment using conda for this course.</p>
+<p>The process to setup an environment and install packages is the same for both anaconda and miniconda. So, it does not matter which one you installed in previous step. We will create a new environment using conda for this course.</p>
 <ol class="arabic">
 <li><p>Open the Anaconda Prompt by searching for it in the start menu. You will see a black screen with a command prompt. You will also see <code class="docutils literal notranslate"><span class="pre">(base)</span></code> written before the command prompt. When you installed miniconda, it created a base environment in which it installed some packages. By default, the base environment is activated when the prompt is launched.</p>
 <figure class="align-center">
-<a class="reference internal image-reference" href="_images/entry.png"><img alt="entry screen" src="_images/entry.png" style="width: 100%;" /></a>
+<a class="reference internal image-reference" href="_images/entry.png"><img alt="entry screen" src="_images/entry.png" style="width: 100%;" />
+</a>
 </figure>
 </li>
 <li><p>Type <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">list</span></code> and press enter to run this command. You will see the list of packages installed in the base environment.</p>
 <figure class="align-center">
-<a class="reference internal image-reference" href="_images/conda_list.png"><img alt="conda list" src="_images/conda_list.png" style="width: 100%;" /></a>
+<a class="reference internal image-reference" href="_images/conda_list.png"><img alt="conda list" src="_images/conda_list.png" style="width: 100%;" />
+</a>
 </figure>
 <p>It is recommended to create a new environment for each project to avoid package dependency issues. To check the existing environments, you can run <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">list</span></code>.</p>
 <figure class="align-center">
-<a class="reference internal image-reference" href="_images/conda_env_list.png"><img alt="conda env list" src="_images/conda_env_list.png" style="width: 60%;" /></a>
+<a class="reference internal image-reference" href="_images/conda_env_list.png"><img alt="conda env list" src="_images/conda_env_list.png" style="width: 60%;" />
+</a>
 </figure>
 <p>It will show the list of environments and the active environment will have a “*” mark in front of it. If you just installed miniconda or never created an environment, then there will only be one environment called <code class="docutils literal notranslate"><span class="pre">base</span></code>.</p>
 </li>
-<li><p>To create a new env, run the command: <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-n</span> <span class="pre">ENVNAME</span> <span class="pre">python=3.12</span></code>. Replace ENVNAME with whatever name you want to give to the new environment. The <code class="docutils literal notranslate"><span class="pre">python=3.12</span></code> after the environment name tells conda what version of python to install. We will be using python version 3.12 in this book. If the prompt asks you to accept the terms of service from different channels, then accept it by typing <code class="docutils literal notranslate"><span class="pre">a</span></code> and pressing enter.</p>
+<li><p>To create a new env, run the command: <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-n</span> <span class="pre">ENVNAME</span> <span class="pre">python=3.12</span></code>. Replace ENVNAME with whatever name you want to give to the new environment. The <code class="docutils literal notranslate"><span class="pre">python=3.12</span></code> after the environment name tells conda what version of python to install. We will be using python version 3.12 in this course. If the prompt asks you to accept the terms of service from different channels, then accept it by typing <code class="docutils literal notranslate"><span class="pre">a</span></code> and pressing enter.</p>
 <figure class="align-center">
-<a class="reference internal image-reference" href="_images/conda_create.png"><img alt="conda list" src="_images/conda_create.png" style="width: 100%;" /></a>
+<a class="reference internal image-reference" href="_images/conda_create.png"><img alt="conda list" src="_images/conda_create.png" style="width: 100%;" />
+</a>
 </figure>
 <p>Once the environment is successfully created, you will see the following in the command prompt on your screen.</p>
 <figure class="align-center">
-<a class="reference internal image-reference" href="_images/conda_create_success.png"><img alt="conda list" src="_images/conda_create_success.png" style="width: 55%;" /></a>
+<a class="reference internal image-reference" href="_images/conda_create_success.png"><img alt="conda list" src="_images/conda_create_success.png" style="width: 55%;" />
+</a>
 </figure>
-<p>You can run conda env list again and see that your newly created environment is there. For the example shown below, the name of the environment was set to surrogate_methods.</p>
+<p>You can run conda env list again and see that your newly created environment is there. For the example shown below, the name of the environment was set to <code class="docutils literal notranslate"><span class="pre">surrogate_methods</span></code>.</p>
 <figure class="align-center">
-<a class="reference internal image-reference" href="_images/conda_create_env_list.png"><img alt="conda list" src="_images/conda_create_env_list.png" style="width: 95%;" /></a>
+<a class="reference internal image-reference" href="_images/conda_create_env_list.png"><img alt="conda list" src="_images/conda_create_env_list.png" style="width: 95%;" />
+</a>
 </figure>
 </li>
 <li><p>To activate the newly created environment, run <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">ENVNAME</span></code>. Replace ENVNAME with your environment name. You will see that the <code class="docutils literal notranslate"><span class="pre">(base)</span></code> before the command prompt will change to the <code class="docutils literal notranslate"><span class="pre">ENVNAME</span></code>.</p>
 <figure class="align-center">
-<a class="reference internal image-reference" href="_images/conda_activate.png"><img alt="conda list" src="_images/conda_activate.png" style="width: 70%;" /></a>
+<a class="reference internal image-reference" href="_images/conda_activate.png"><img alt="conda list" src="_images/conda_activate.png" style="width: 70%;" />
+</a>
 </figure>
 <p>If you run <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">list</span></code> now, then it will show the list of installed packages in the newly created environment. Note that the number of packages will be very less when compared to the <code class="docutils literal notranslate"><span class="pre">base</span></code> environment. You will have to install the packages as and when needed.</p>
 </li>
@@ -429,29 +436,49 @@ document.write(`
 <ol class="arabic">
 <li><p>Open Anaconda Prompt. Activate the environment which you created in the last step.</p>
 <blockquote>
-<div><p><strong><em>NOTE:</em></strong> <code class="docutils literal notranslate"><span class="pre">pip</span></code> will be the main installer we will be using in this book. We will not be using
-conda to install any package. conda is just used as an environment manager.</p>
+<div><p><strong><em>NOTE:</em></strong> <code class="docutils literal notranslate"><span class="pre">pip</span></code> will be the main installer we will be using in this course. We will not be using conda to install any package. conda is just used as an environment manager.</p>
 </div></blockquote>
-<p>After activating the environment, you can run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">list</span></code> to see the packages installed using
-pip within the activated environment.</p>
+<p>After activating the environment, you can run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">list</span></code> to see the packages installed using pip within the current environment.</p>
 <figure class="align-center">
-<a class="reference internal image-reference" href="_images/pip_list.png"><img alt="conda list" src="_images/pip_list.png" style="width: 55%;" /></a>
+<a class="reference internal image-reference" href="_images/pip_list.png"><img alt="conda list" src="_images/pip_list.png" style="width: 55%;" />
+</a>
 </figure>
 <blockquote>
 <div><p><strong><em>NOTE:</em></strong> It is okay if your list is not exactly same as above.</p>
 </div></blockquote>
 </li>
-<li><p>Install Matplotlib by running: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">matplotlib</span></code>.</p></li>
-<li><p>Install Jupyter Notebook by running: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">notebook</span></code>.</p>
+<li><p>The first package which you will install is <code class="docutils literal notranslate"><span class="pre">scimlstudio</span></code>. This is a Python package that provides various surrogate models you will be using in this course. It is actively developed by CODE Lab and is available <a class="reference external" href="https://github.com/ComputationalDesignLab/scimlstudio">here</a>. To install this package, download the zip file for the latest release of this package from <a class="reference external" href="https://github.com/ComputationalDesignLab/scimlstudio/releases">here</a>. Once downloaded, unzip the file and navigate to the root folder as shown in below:</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/cd_sciml.png"><img alt="conda list" src="_images/cd_sciml.png" style="width: 65%;" />
+</a>
+</figure>
+<p>In the above image, the zip file is downloaded and unzipped in the <code class="docutils literal notranslate"><span class="pre">Downloads</span></code> folder. Then, <code class="docutils literal notranslate"><span class="pre">cd</span></code> command is used to navigate to the root folder. Once you are in the root folder, run the command <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">.</span></code> to install the pacakge. Make sure to include the dot after install. Once installed, you can run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">list</span></code> again and see that the scimlstudio package is now installed in your environment.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/pip_list_sciml.png"><img alt="conda list" src="_images/pip_list_sciml.png" style="width: 80%;" />
+</a>
+</figure>
+<p>Since <code class="docutils literal notranslate"><span class="pre">scimlstudio</span></code> is under active development, you will need to repeat the above steps to install the latest version of the package whenever required during the course. Note that <a class="reference external" href="https://pytorch.org/">torch</a> is also installed in the above image since it is a dependency for scimlstudio. All the models which you will use in this course are based on PyTorch.</p>
+</li>
+<li><p>Next, install <a class="reference external" href="https://jupyter-notebook.readthedocs.io/en/stable/">Jupyter Notebook</a> by running: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">notebook</span></code></p>
 <blockquote>
 <div><p><strong><em>NOTE:</em></strong> This will install a lot of dependencies that are required for Jupyter Notebook.</p>
 </div></blockquote>
-<p>Jupyter Notebook is a computing platform that can be used to write and execute various code
-snippets described in this book.</p>
+<p>Jupyter Notebook is used to create a sharable document that combines computer code, plain language descriptions, math equations, and visualizations. You will be using it in this course to run code snippets described in this book and to create your homework solutions.</p>
 </li>
+<li><p>Install Matplotlib by running: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">matplotlib</span></code>. Matplotlib is a plotting library for Python which you will use to create visualizations in your notebook.</p></li>
 </ol>
-<p>Your computing environment should be ready now. In the following sections, whenever you are asked to install
-a new package, you should install it using pip within this environment only.</p>
+<p>Your computing environment should be ready now. In the following sections, whenever you are asked to install a new package, you should install it using pip within this environment only.</p>
+</section>
+<section id="converting-jupyter-notebook-to-pdf">
+<h2>Converting Jupyter Notebook to PDF<a class="headerlink" href="#converting-jupyter-notebook-to-pdf" title="Link to this heading">#</a></h2>
+<p>As mentioned earlier, you will be using Jupyter Notebook to create your homework solutions. You will be required to submit your homework solutions in PDF format on gradescope. There are many ways to convert a Jupyter Notebook to PDF. One of the easiest ways is to use the built-in funtionality of the notebook. To do this, follow below steps:</p>
+<ol class="arabic simple">
+<li><p>Open your notebook and click on <code class="docutils literal notranslate"><span class="pre">File</span></code> in the top left corner.</p></li>
+<li><p>In the dropdown menu, click on <code class="docutils literal notranslate"><span class="pre">Save</span> <span class="pre">and</span> <span class="pre">Export</span> <span class="pre">Notebook</span> <span class="pre">as</span></code>.</p></li>
+<li><p>You will see many options in the pop-up menu. Click on <code class="docutils literal notranslate"><span class="pre">HTML</span></code> option which will download the notebook in HTML format.</p></li>
+<li><p>Open this HTML file in your browser. You can print the file and save it as PDF.</p></li>
+</ol>
+<p>You can also directly convert the notebook to PDF by clicking on <code class="docutils literal notranslate"><span class="pre">PDF</span></code> in the pop-up menu. However, this method requires you to have a TeX distribution installed on your computer which can be a bit tricky to set up. If you want to go with this method, then the instructions given <a class="reference external" href="https://nbconvert.readthedocs.io/en/latest/install.html#installing-tex">here</a> can be useful. But, the first method of converting to HTML and then to PDF is much easier and does not require any additional setup.</p>
 </section>
 </section>
 
@@ -522,6 +549,7 @@ a new package, you should install it using pip within this environment only.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-downloading-and-installing-miniconda">Step 1: Downloading and installing miniconda</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-creating-a-new-environment">Step 2: Creating a new environment</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-installing-packages">Step 3: Installing packages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-jupyter-notebook-to-pdf">Converting Jupyter Notebook to PDF</a></li>
 </ul>
   </nav></div>
 
