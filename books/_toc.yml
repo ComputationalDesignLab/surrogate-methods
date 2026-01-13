@@ -8,6 +8,7 @@ chapters:
       - file: python_basics/torch_basics
       - file: python_basics/plotting
       - file: python_basics/resources
+  - file: doe
   # - file: review_nm/intro
   #   sections:
   #   - file: review_nm/error
