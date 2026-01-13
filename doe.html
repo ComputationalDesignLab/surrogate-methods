@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -52,7 +52,7 @@
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
@@ -62,6 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'doe';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Python and Jupyter notebook resources" href="python_basics/resources.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -124,8 +125,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -175,7 +174,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="setup.html">Computing environment setup</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
@@ -190,6 +189,7 @@
 <li class="toctree-l2"><a class="reference internal" href="python_basics/resources.html">Python and Jupyter notebook resources</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Sampling Plans</a></li>
 </ul>
 
     </div>
@@ -371,38 +371,40 @@ document.write(`
 <h1>Sampling Plans<a class="headerlink" href="#sampling-plans" title="Link to this heading">#</a></h1>
 <p>This section provides implementation for concepts related to sampling plans. Following topics are covered in this section:</p>
 <ol class="arabic simple">
-<li><p>Full Factorial Sampling</p></li>
-<li><p>Latin Hypercube Sampling</p></li>
+<li><p>Full factorial sampling</p></li>
+<li><p>Latin hypercube sampling</p></li>
 <li><p>Halton sequences</p></li>
 </ol>
+<p>Refer to the lecture notes for more details about sampling plans.</p>
 <blockquote>
-<div><p><strong><em>NOTE:</em></strong> You need to install <a class="reference external" href="https://smt.readthedocs.io/en/latest/">smt</a> which is a python-based surrogate modeling toolbox. It provides various surrogate modeling techniques, along with different sampling plans. Activate the environment you created in anaconda prompt and install smt using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">smt</span></code>.</p>
+<div><p><strong><em>NOTE:</em></strong> You need to install <a class="reference external" href="https://pydoe3.readthedocs.io/en/latest/">pyDOE3</a> which is a python-based library for creating sampling plans. Open anaconda prompt and activate the environment you created for this class, and install pyDOE3 using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pyDOE3</span></code>.</p>
 </div></blockquote>
 <p>Below block of code imports required packages:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.spatial.distance</span><span class="w"> </span><span class="kn">import</span> <span class="n">pdist</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">smt.sampling_methods</span><span class="w"> </span><span class="kn">import</span> <span class="n">FullFactorial</span><span class="p">,</span> <span class="n">LHS</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats.qmc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Halton</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyDOE3</span><span class="w"> </span><span class="kn">import</span> <span class="n">fullfact</span><span class="p">,</span> <span class="n">lhs</span><span class="p">,</span> <span class="n">halton_sequence</span>
 </pre></div>
 </div>
 </div>
 </div>
 <section id="full-factorial-sampling">
 <h2>Full Factorial Sampling<a class="headerlink" href="#full-factorial-sampling" title="Link to this heading">#</a></h2>
-<p>First, we will look at full factorial sampling. You can read about how to use <code class="docutils literal notranslate"><span class="pre">smt</span></code> for generating full-factorial samples in the <a class="reference external" href="https://smt.readthedocs.io/en/latest/_src_docs/sampling_methods/full_factorial.html">documentation</a>. Below block of code generates full-factorial samples for <em>two</em> dimensional design space and plots it. Read comments for more details.</p>
+<p>First, we will look at full factorial sampling. You can read about how to use <code class="docutils literal notranslate"><span class="pre">pyDOE3</span></code> for generating full-factorial samples in their <a class="reference external" href="https://pydoe3.readthedocs.io/en/latest/reference/factorial/">documentation</a>. Below block of code generates full-factorial samples for <em>two</em> dimensional design space and plots it. Read comments in the code block for more details.</p>
 <blockquote>
-<div><p><strong>NOTE:</strong> When generating full-factorial samples, the number of samples grows exponentially with the number of input parameters. For example, if you have 3 input parameters, each with 3 levels, then the total number of samples will be 3^3 = 27. This can quickly become infeasible for large number of input parameters or levels.</p>
+<div><p><strong>NOTE:</strong> When generating full-factorial samples, the number of samples grow exponentially with the number of input parameters. For example, if you have 3 input parameters, each with 3 levels, then the total number of samples will be 3^3 = 27. This can quickly become infeasible for large number of input parameters or levels. Here, level refers to the number of samples along a specific input parameter.</p>
 </div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xlimits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">15.0</span><span class="p">]])</span> <span class="c1"># limits for x and y</span>
-<span class="n">sampling</span> <span class="o">=</span> <span class="n">FullFactorial</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">xlimits</span><span class="p">)</span> <span class="c1"># Instantiating the FullFactorial class</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span> <span class="c1"># number of factors in each dimension</span>
 
-<span class="n">num</span> <span class="o">=</span> <span class="mi">49</span> <span class="c1"># Number of samples to generate, each dimension will have 7 levels</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">sampling</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="c1"># Generating DOE</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">fullfact</span><span class="p">(</span><span class="n">levels</span><span class="p">)</span> <span class="c1"># generating the design matrix</span>
 
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="p">(</span><span class="n">levels</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># converting the matrix to sampling plan within unit hypercube</span>
+
+<span class="c1"># plotting</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
@@ -412,161 +414,160 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ebcc0eb6865912694cd22fbde82371f37dd8834fb80cbb907599b3960da06dc2.png" src="_images/ebcc0eb6865912694cd22fbde82371f37dd8834fb80cbb907599b3960da06dc2.png" />
+<img alt="_images/de14ad4cfd005f52f63cdc15a098cfbfad75a9afe3802092c8858b8ebbb1153b.png" src="_images/de14ad4cfd005f52f63cdc15a098cfbfad75a9afe3802092c8858b8ebbb1153b.png" />
 </div>
 </div>
-<p>As you can see, samples are generated in a grid-like fashion.</p>
+<p>The samples are generated in a grid-like fashion. As defined in the code, there are 6 and 5 levels (samples) along <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span> dimension, respectively.</p>
 <blockquote>
-<div><p><strong>NOTE:</strong> Typically, the number of samples generated by full-factorial samples is a square number such as 4, 9, 16, 25, etc. However, it is not necessary to generate perfect square samples. For example, you can change <code class="docutils literal notranslate"><span class="pre">num</span></code> to 46 and you will see following result:</p>
+<div><p><strong>NOTE:</strong> <code class="docutils literal notranslate"><span class="pre">fullfact</span></code> function returns a design matrix which is not the final sampling plan. As described in the code, you need to perform one more step to obtain sampling plan within unit hypercube space.</p>
 </div></blockquote>
+<p>Below code block scales the samples generated in previous block to a given design space:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num</span> <span class="o">=</span> <span class="mi">46</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="c1"># lower bound</span>
 
-<span class="n">x</span> <span class="o">=</span> <span class="n">sampling</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="c1"># Generating DOE</span>
+<span class="n">ub</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">])</span> <span class="c1"># upper bound</span>
 
+<span class="n">x_scaled</span> <span class="o">=</span> <span class="n">lb</span> <span class="o">+</span> <span class="p">(</span><span class="n">ub</span> <span class="o">-</span> <span class="n">lb</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span> <span class="c1"># scale the samples</span>
+
+<span class="c1"># plotting</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_scaled</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x_scaled</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="n">lb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">right</span><span class="o">=</span><span class="n">ub</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="n">lb</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">top</span><span class="o">=</span><span class="n">ub</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ff76ff5ba7a421a382f4bf917741c104dbdb16e6ca762b99a25bbc8c709075e0.png" src="_images/ff76ff5ba7a421a382f4bf917741c104dbdb16e6ca762b99a25bbc8c709075e0.png" />
+<img alt="_images/df6546b0a5d4b3e3ef77258a39599af07417799ee116c38c39cfd2f28be48cad.png" src="_images/df6546b0a5d4b3e3ef77258a39599af07417799ee116c38c39cfd2f28be48cad.png" />
 </div>
 </div>
-<p>Now, you can see that samples generated are not in a perfect grid-like fashion since <code class="docutils literal notranslate"><span class="pre">num</span></code> is not a square number.</p>
+<p>Now, you can see that samples are scaled to given bounds instead of unit square.</p>
 </section>
 <section id="latin-hypercube-sampling">
 <h2>Latin Hypercube Sampling<a class="headerlink" href="#latin-hypercube-sampling" title="Link to this heading">#</a></h2>
-<p>Now, we will look into latin hypercube sampling. You can read about how to use <code class="docutils literal notranslate"><span class="pre">smt</span></code> for generating LH samples in the <a class="reference external" href="https://smt.readthedocs.io/en/latest/_src_docs/sampling_methods/lhs.html">documentation</a>. The process to generate samples is similar to what is described for full-factorial samples but with one additional step. You need to set criterion based on which samples are distributed in design space. Options of interest are:</p>
+<p>Now, we will look into latin hypercube (LH) sampling. You can read about how to use <code class="docutils literal notranslate"><span class="pre">pyDOE3</span></code> for generating LH samples in their <a class="reference external" href="https://pydoe3.readthedocs.io/en/latest/reference/randomized/#latin-hypercube">documentation</a>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">lhs</span></code> function has a bunch of arguments, some of which are listed below:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>: number of dimensions</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">samples</span></code>: (optional, default=n) number of samples to generate</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">criterion</span></code>: (optional, default=”c”) method used to generate LH samples</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iterations</span></code>: (optional, default=100) number of iterations to perform while maximizing the distance criterion</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">seed</span></code>: (optional, int) used to fix the randomness while generating samples for reproducibility</p></li>
+</ol>
+<p>Following are some options for <code class="docutils literal notranslate"><span class="pre">criterion</span></code> argument:</p>
 <ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">center</span></code> or <code class="docutils literal notranslate"><span class="pre">c</span></code> (default) - center of the strata</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">maximin</span></code> or <code class="docutils literal notranslate"><span class="pre">m</span></code> - maximize the minimum distance between samples (based on heuristics, no optimization is performed)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">centermaximin</span></code> or <code class="docutils literal notranslate"><span class="pre">cm</span></code> - combination of <code class="docutils literal notranslate"><span class="pre">c</span></code> and <code class="docutils literal notranslate"><span class="pre">maximin</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ese</span></code> - minimizing the <span class="math notranslate nohighlight">\(\phi_p\)</span> metric (described below) using enhanced stochastic evolution algorithm</p></li>
 </ol>
-<p>Goodness of a sampling plan can be measured using an extension of maximin distance criterion proposed by <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/037837589400035T">Morris et al. (1995)</a>. For a sampling plan, all the pairwise distance between samples are calculated and sorted to get a distance list (<span class="math notranslate nohighlight">\(d_1\)</span>, <span class="math notranslate nohighlight">\(d_2\)</span>, …, <span class="math notranslate nohighlight">\(d_s\)</span>) and  index list (<span class="math notranslate nohighlight">\(J_1\)</span>, <span class="math notranslate nohighlight">\(J_2\)</span>, …, <span class="math notranslate nohighlight">\(J_s\)</span>), where <span class="math notranslate nohighlight">\(d_i\)</span>’s are distinct distance values with <span class="math notranslate nohighlight">\(d_1 &lt; d_2 &lt; \dots &lt; d_s\)</span>, <span class="math notranslate nohighlight">\(J_i\)</span>’s are the number of pairs of samples with distance <span class="math notranslate nohighlight">\(d_i\)</span>. Then, maximin distance criterion by Morris et al. is calculated using the following formula:</p>
+<p>Goodness of a sampling plan can be measured using an extension of <strong>maximin distance</strong> criterion proposed by <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/037837589400035T">Morris et al. (1995)</a>. For a sampling plan, all the pairwise distance between samples are calculated and sorted to get a distance list (<span class="math notranslate nohighlight">\(d_1\)</span>, <span class="math notranslate nohighlight">\(d_2\)</span>, …, <span class="math notranslate nohighlight">\(d_s\)</span>) and  index list (<span class="math notranslate nohighlight">\(J_1\)</span>, <span class="math notranslate nohighlight">\(J_2\)</span>, …, <span class="math notranslate nohighlight">\(J_s\)</span>), where <span class="math notranslate nohighlight">\(d_i\)</span>’s are distinct distance values with <span class="math notranslate nohighlight">\(d_1 &lt; d_2 &lt; \dots &lt; d_s\)</span>, <span class="math notranslate nohighlight">\(J_i\)</span>’s are the number of pairs of samples with distance <span class="math notranslate nohighlight">\(d_i\)</span>. Then, maximin distance criterion by Morris et al. is calculated using the following formula:</p>
 <div class="math notranslate nohighlight">
 \[  
     \phi_p = \Bigg [ \sum_{i=1}^{s} J_i d_i^{-p} \Bigg ]^{1/p}
 \]</div>
 <p>where, <span class="math notranslate nohighlight">\(p\)</span> is a positive integer. Smaller the value of <span class="math notranslate nohighlight">\(\phi_p\)</span>, more space-filling the sampling plan.</p>
-<p>Below block of code generates LH samples for <em>two</em> dimensional design space, plots it, and computes <span class="math notranslate nohighlight">\(\phi_p\)</span> value. Read comments for more details.</p>
+<p>Below block of code generates LH samples for <em>two</em> dimensional design space, plots it, and computes <span class="math notranslate nohighlight">\(\phi_p\)</span> value. Read comments in the code block for more details.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xlimits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">15.0</span><span class="p">]])</span> <span class="c1"># limits for x and y</span>
-<span class="n">criterion</span> <span class="o">=</span> <span class="s2">&quot;c&quot;</span> <span class="c1"># Sampling criterion</span>
-<span class="n">random_state</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Fixing random state for reproducibility and comparison</span>
-<span class="n">sampling</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">xlimits</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="n">criterion</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span> <span class="c1"># Instantiating the LHS class</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">criterion</span> <span class="o">=</span> <span class="s2">&quot;c&quot;</span>
+<span class="n">iterations</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mi">10</span>
 
-<span class="n">num</span> <span class="o">=</span> <span class="mi">15</span> <span class="c1"># Number of samples to generate, each dimension will be divided into 15 strata</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">sampling</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="c1"># Generating DOE</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">lhs</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="n">criterion</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="n">iterations</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
-<span class="n">phi_p</span> <span class="o">=</span> <span class="n">sampling</span><span class="o">.</span><span class="n">_PhiP</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># Calculating the phi_p value</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;phi_p value: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">phi_p</span><span class="p">))</span>
+<span class="n">phi_p</span> <span class="o">=</span> <span class="p">((</span><span class="n">pdist</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">p</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">p</span><span class="p">)</span> <span class="c1"># compute maximin criterion</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="c1"># plotting</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">num</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="n">num</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">samples</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">samples</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;LHS plan, criterion: </span><span class="si">{</span><span class="n">criterion</span><span class="si">}</span><span class="s2">, iterations: </span><span class="si">{</span><span class="n">iterations</span><span class="si">}</span><span class="s2">, phi_p: </span><span class="si">{</span><span class="n">phi_p</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>phi_p value: 0.7900654411297857
-</pre></div>
-</div>
-<img alt="_images/312ff5a808cb0e04e88ec84bea96a1d5575b27ed306c0da23925404faf134c21.png" src="_images/312ff5a808cb0e04e88ec84bea96a1d5575b27ed306c0da23925404faf134c21.png" />
+<img alt="_images/8b99272f0111d0817152e7dec14950f28aa8827dec2290c8d3ee973b560c4ff4.png" src="_images/8b99272f0111d0817152e7dec14950f28aa8827dec2290c8d3ee973b560c4ff4.png" />
 </div>
 </div>
-<p>Here, the samples are distributed in a more random fashion as compared to full-factorial samples. <span class="math notranslate nohighlight">\(\phi_p\)</span> for the sampling plan is 0.79. In the next block, criterion is set to <code class="docutils literal notranslate"><span class="pre">cm</span></code>:</p>
+<p>Here, the samples are distributed in a more random fashion as compared to full-factorial samples. Note that samples are generated within unit hypercube, you will have to scale the generated sampling plan to desired bounds (shown in full factorial sampling section). In the next block, criterion is set to <code class="docutils literal notranslate"><span class="pre">cm</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">criterion</span> <span class="o">=</span> <span class="s2">&quot;cm&quot;</span> <span class="c1"># Sampling criterion</span>
-<span class="n">random_state</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Fixing random state for comparison</span>
-<span class="n">sampling</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">xlimits</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="n">criterion</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span> <span class="c1"># Instantiating the LHS class</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">criterion</span> <span class="o">=</span> <span class="s2">&quot;cm&quot;</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">iterations</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mi">10</span>
 
-<span class="n">num</span> <span class="o">=</span> <span class="mi">15</span> <span class="c1"># Number of samples to generate, each dimension will be divided into 15 strata</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">sampling</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="c1"># Generating DOE</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">lhs</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="n">criterion</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="n">iterations</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> 
 
-<span class="n">phi_p</span> <span class="o">=</span> <span class="n">sampling</span><span class="o">.</span><span class="n">_PhiP</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># Calculating the phi_p value</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;phi_p value: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">phi_p</span><span class="p">))</span>
+<span class="n">phi_p</span> <span class="o">=</span> <span class="p">((</span><span class="n">pdist</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">p</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">p</span><span class="p">)</span> <span class="c1"># compute maximin criterion</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="c1"># plotting</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">num</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="n">num</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">samples</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">samples</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;LHS plan, criterion: </span><span class="si">{</span><span class="n">criterion</span><span class="si">}</span><span class="s2">, iterations: </span><span class="si">{</span><span class="n">iterations</span><span class="si">}</span><span class="s2">, phi_p: </span><span class="si">{</span><span class="n">phi_p</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>phi_p value: 0.7094603158576284
-</pre></div>
-</div>
-<img alt="_images/fa24cc932d2b19f40051bc8bc04f21f72b0900f9d9132cdffbc875724083af3f.png" src="_images/fa24cc932d2b19f40051bc8bc04f21f72b0900f9d9132cdffbc875724083af3f.png" />
+<img alt="_images/732d6a4d368415c3542b194092a6e0e4808eb3cf9f56645e50bd4a099401ed4a.png" src="_images/732d6a4d368415c3542b194092a6e0e4808eb3cf9f56645e50bd4a099401ed4a.png" />
 </div>
 </div>
-<p>Now, the samples are spread out more since <code class="docutils literal notranslate"><span class="pre">cm</span></code> criterion is using heuristics to maximize the minimum distance between samples. Accordingly, the <span class="math notranslate nohighlight">\(\phi_p\)</span> value is reduced to 0.71. In the next block, criterion is set to <code class="docutils literal notranslate"><span class="pre">ese</span></code>:</p>
+<p>Now, the samples are spread out more since <code class="docutils literal notranslate"><span class="pre">cm</span></code> criterion is using heuristics to maximize the minimum distance between samples. Accordingly, the <span class="math notranslate nohighlight">\(\phi_p\)</span> value is reduced. In the next block, number of iterations is increased to 1000.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">criterion</span> <span class="o">=</span> <span class="s2">&quot;ese&quot;</span> <span class="c1"># Sampling criterion</span>
-<span class="n">random_state</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Fixing random state for comparison</span>
-<span class="n">sampling</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">xlimits</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="n">criterion</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span> <span class="c1"># Instantiating the LHS class</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">criterion</span> <span class="o">=</span> <span class="s2">&quot;cm&quot;</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">iterations</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mi">10</span>
 
-<span class="n">num</span> <span class="o">=</span> <span class="mi">15</span> <span class="c1"># Number of samples to generate, each dimension will be divided into 15 strata</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">sampling</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="c1"># Generating DOE</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">lhs</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="n">criterion</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="n">iterations</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
-<span class="n">phi_p</span> <span class="o">=</span> <span class="n">sampling</span><span class="o">.</span><span class="n">_PhiP</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># Calculating the phi_p value</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;phi_p value: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">phi_p</span><span class="p">))</span>
+<span class="n">phi_p</span> <span class="o">=</span> <span class="p">((</span><span class="n">pdist</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">p</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">p</span><span class="p">)</span> <span class="c1"># compute maximin criterion</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="c1"># plotting</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">num</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="n">num</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">samples</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">samples</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;LHS plan, criterion: </span><span class="si">{</span><span class="n">criterion</span><span class="si">}</span><span class="s2">, iterations: </span><span class="si">{</span><span class="n">iterations</span><span class="si">}</span><span class="s2">, phi_p: </span><span class="si">{</span><span class="n">phi_p</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>phi_p value: 0.3453512854915221
-</pre></div>
-</div>
-<img alt="_images/812a36085ca0a25837a9249e97f30c1cc17a8f097bbf8fa3cfe8876718cb135d.png" src="_images/812a36085ca0a25837a9249e97f30c1cc17a8f097bbf8fa3cfe8876718cb135d.png" />
+<img alt="_images/cbb195f42d327599b0a61fa534882e1dc42eafad4dfbcad14448997e51257156.png" src="_images/cbb195f42d327599b0a61fa534882e1dc42eafad4dfbcad14448997e51257156.png" />
 </div>
 </div>
-<p>Now, the samples are even more spread out as compared to <code class="docutils literal notranslate"><span class="pre">cm</span></code> criterion. The <span class="math notranslate nohighlight">\(\phi_p\)</span> value is reduced to 0.35 from 0.71 for <code class="docutils literal notranslate"><span class="pre">cm</span></code> criterion which is a significant improvement. You can read more about how <code class="docutils literal notranslate"><span class="pre">ese</span></code> is used to minimize <span class="math notranslate nohighlight">\(\phi_p\)</span> in this <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S0378375804001922">paper</a>.</p>
+<p>Now, the samples are even more spread out as compared to <code class="docutils literal notranslate"><span class="pre">cm</span></code> criterion with 100 iterations. The <span class="math notranslate nohighlight">\(\phi_p\)</span> value is reduced further. Note that you should NOT use a very high value for iteration argument since it will take longer to generate samples.</p>
 </section>
 <section id="halton-sequence">
 <h2>Halton sequence<a class="headerlink" href="#halton-sequence" title="Link to this heading">#</a></h2>
-<p>Now, we will look at Halton sequence. We will be using <code class="docutils literal notranslate"><span class="pre">scipy</span></code> library for working with Halton sequence, refer <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.qmc.Halton.html">documentation</a> for more details.</p>
-<p>The process to generate samples using Halton sequence is quite straightforward. First step is to initialize the <code class="docutils literal notranslate"><span class="pre">Halton</span></code> class (which was imported at the start of this section) with the dimension of the problem and other optional arguments to create a sampler object. After initialization, use the <code class="docutils literal notranslate"><span class="pre">random</span></code> method from the sampler object to generate desired number of samples.</p>
-<p>Below block of code generates 15 samples using Halton sequence within two dimensional space and plots it.</p>
+<p>Now, we will look at Halton sequence. It is one of the low discrepancy sequences you will come across in this class, along with Sobol’ seqeunce. There are many python packages that generate these sequences. In this demonstration, <code class="docutils literal notranslate"><span class="pre">pyDOE3</span></code> is used, refer to their <a class="reference external" href="https://pydoe3.readthedocs.io/en/latest/reference/low_discrepancy_sequences/">documentation</a> for more details.</p>
+<p>Below block of code generates 15 samples using Halton sequence within two dimensional space and plots it. Refer to the comments in the code block for more details.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate samples</span>
-<span class="n">d</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="n">num</span> <span class="o">=</span> <span class="mi">15</span>
-<span class="n">sampler</span> <span class="o">=</span> <span class="n">Halton</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">scramble</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dimension</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># number of dimensions</span>
+<span class="n">num_points</span> <span class="o">=</span> <span class="mi">15</span> <span class="c1"># number of points to generate</span>
 
-<span class="c1"># Plot samples</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">halton_sequence</span><span class="p">(</span><span class="n">num_points</span><span class="o">=</span><span class="n">num_points</span><span class="p">,</span> <span class="n">dimension</span><span class="o">=</span><span class="n">dimension</span><span class="p">)</span> <span class="c1"># generate sequence of points</span>
+
+<span class="c1"># plotting</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
@@ -576,19 +577,16 @@ document.write(`
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 
 <span class="c1"># Annotate sample number</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,:])</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_points</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e97ee76c1a3897a999e060a75931eb781547c6c79751975466b9637aa47029f2.png" src="_images/e97ee76c1a3897a999e060a75931eb781547c6c79751975466b9637aa47029f2.png" />
+<img alt="_images/7e56210f0f7e157d1129f4cbb86ea2c9e64f533ddbd47fe59fcfaae5150c8616.png" src="_images/7e56210f0f7e157d1129f4cbb86ea2c9e64f533ddbd47fe59fcfaae5150c8616.png" />
 </div>
 </div>
-<blockquote>
-<div><p><strong><em>NOTE:</em></strong> The <code class="docutils literal notranslate"><span class="pre">Halton</span></code> class in the scipy library always generates samples in the unit hypercube.</p>
-</div></blockquote>
-<p>Similar to maximin distance criterion, the quality of samples from a low-discrepancy sequence can be checked by computing the discrepancy criterion. You can compute discrepancy using <code class="docutils literal notranslate"><span class="pre">scipy</span></code> library, refer <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.qmc.discrepancy.html">documentation</a> for more details.</p>
+<p>Note the number corresponding to each point in the above plot. It shows the order in which samples are generated. The first point is at (0.0,0.0), second point is at (0.5,0.33), and so on. This sequence is same everytime samples are generated unless scrambling is used. Also, the <code class="docutils literal notranslate"><span class="pre">halton_sequence</span></code> function always generates samples in the unit hypercube. You will have to scale the samples to desired bounds, if required. This concludes the sampling plan section. <code class="docutils literal notranslate"><span class="pre">pyDOE3</span></code> has many other sampling methods, feel free to check them out.</p>
 </section>
 </section>
 
@@ -622,6 +620,15 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="python_basics/resources.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Python and Jupyter notebook resources</p>
+      </div>
+    </a>
 </div>
                 </footer>
               
