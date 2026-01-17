@@ -9,23 +9,6 @@ chapters:
       - file: python_basics/plotting
       - file: python_basics/resources
   - file: doe
-  # - file: review_nm/intro
-  #   sections:
-  #   - file: review_nm/error
-  #   - file: review_nm/num_diff
-  #   - file: review_nm/uniform
-  #   - file: review_nm/norm
-  # - file: prob_form
-  # - file: local_opt/intro
-  #   sections:
-  #   - file: local_opt/unconst
-  #   - file: local_opt/const
-  # - file: global_opt/intro
-  #   sections:
-  #   - file: global_opt/multi
-  #   - file: global_opt/pso
-  #   - file: global_opt/de
-  # - file: doe
   # - file: basic_sm/intro
   #   sections:
   #   - file: basic_sm/ls_regression
