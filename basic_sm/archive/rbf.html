@@ -1,0 +1,772 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Radial Basis Function Model &#8212; Surrogate Methods</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'basic_sm/archive/rbf';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Surrogate Methods</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../setup.html">Computing environment setup</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../python_basics/intro.html">Basics of Python Programming</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../python_basics/torch_basics.html">Basics of PyTorch tensor computations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python_basics/plotting.html">Basic plotting in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python_basics/resources.html">Python and Jupyter notebook resources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../doe.html">Sampling Plans</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../intro.html">Basic Surrogate Models</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../poly.html">Polynomial Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rbf.html">Radial Basis Function Model</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/ComputationalDesignLab/surrogate-methods" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/basic_sm/archive/rbf.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Radial Basis Function Model</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="radial-basis-function-model">
+<h1>Radial Basis Function Model<a class="headerlink" href="#radial-basis-function-model" title="Link to this heading">#</a></h1>
+<p>This section provides implementation for concepts related to radial basis function (RBF) model. In these models, a specific type of basis functions is used which computes similarity between inputs and a set of reference points in the design space. Let <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> be the input vector, <span class="math notranslate nohighlight">\(\mathbf{c}_i\)</span> be the <span class="math notranslate nohighlight">\(i^{th}\)</span> reference point vector, and <span class="math notranslate nohighlight">\(r_i\)</span> be the euclidean distance between <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{c}_i\)</span> i.e. <span class="math notranslate nohighlight">\(|| \mathbf{x} - \mathbf{c}_i ||_2\)</span>. Then, the basis function vector will be:</p>
+<div class="math notranslate nohighlight">
+\[
+    \pmb{\psi} = [ \psi_1(r_1) \quad  \cdots \quad \psi_i(r_i) \quad \cdots \quad \psi_n(r_n)]^T
+\]</div>
+<p>The reference points are typically training points which implies that number of functions in basis vector will be equal to the number of training points. There are many possible options for <span class="math notranslate nohighlight">\(\psi_i(r_i)\)</span> such as:</p>
+<ul class="simple">
+<li><p>Linear: <span class="math notranslate nohighlight">\(\psi_i(r_i) = r_i\)</span></p></li>
+<li><p>Cubic: <span class="math notranslate nohighlight">\(\psi_i(r_i) = r_i^3\)</span></p></li>
+<li><p>Thin-plate spline: <span class="math notranslate nohighlight">\(\psi_i(r_i) = r_i^2 \log(r_i)\)</span></p></li>
+<li><p>Gaussian: <span class="math notranslate nohighlight">\(\psi_i(r_i) = \exp (- r_i^2/\sigma^2 )\)</span></p></li>
+<li><p>Multiquadric: <span class="math notranslate nohighlight">\(\psi_i(r_i) = \sqrt{r_i^2 + \sigma^2}\)</span></p></li>
+</ul>
+<p>where <span class="math notranslate nohighlight">\(\sigma\)</span> is a scaling factor. In this section, only gaussian basis function is used.</p>
+<blockquote>
+<div><p><strong><em>NOTE</em></strong>: The radial basis function model is an interpolating model i.e. the model passes through all the data points. This is very useful when there is no noise in the data but will over-fit easily when there is noise in the data.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">smt</span></code> is used for creating RBF models, please refer <a class="reference external" href="https://smt.readthedocs.io/en/latest/_src_docs/surrogate_models/rbf.html">documentation</a> for more details. Below block of code imports required packages:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">smt.surrogate_models</span> <span class="kn">import</span> <span class="n">RBF</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+
+<span class="n">random_state</span> <span class="o">=</span> <span class="mi">25</span> <span class="c1"># fixes the seed for consistent results</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this notebook, we will be using forrester function (given below) to demonstrate RBF.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+y(x) = (6x - 2)^2sin(12x-4) \\
+0 \leq x \leq 1
+\end{split}\]</div>
+<p>Below block of code defines this function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">forrester</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">12</span><span class="o">*</span><span class="n">x</span><span class="o">-</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below block of code defines various variables for the 1d function, and generates training and testing data. Note that unlike polynomial models, training and testing data are generated separately.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Bounds</span>
+<span class="n">xlower</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">xupper</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># Number of training and testing points</span>
+<span class="n">num_training_pts</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">num_testing_pts</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="c1"># Generating training data</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xlower</span><span class="p">,</span> <span class="n">xupper</span><span class="p">,</span> <span class="n">num_training_pts</span><span class="p">)</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">forrester</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span>
+
+<span class="c1"># Generating testing data</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xlower</span><span class="p">,</span> <span class="n">xupper</span><span class="p">,</span> <span class="n">num_testing_pts</span><span class="p">)</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">forrester</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below block of code fits a RBF to the generated training data. The parameter <code class="docutils literal notranslate"><span class="pre">d0</span></code> controls the value of <span class="math notranslate nohighlight">\(\sigma\)</span> in gaussian RBF.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fitting the RBF</span>
+<span class="n">sm</span> <span class="o">=</span> <span class="n">RBF</span><span class="p">(</span><span class="n">d0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">poly_degree</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Psi matrix: </span><span class="se">\n</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sm</span><span class="o">.</span><span class="n">mtx</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Weights: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sm</span><span class="o">.</span><span class="n">sol</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]))</span>
+
+<span class="c1"># Predict at test values</span>
+<span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+
+<span class="c1"># Plotting</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training data&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="s1">&#39;b--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;True function&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Prediction&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="n">xlower</span><span class="p">,</span> <span class="n">xupper</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Psi matrix: 
+[[1.         0.77880078 0.36787944]
+ [0.77880078 1.         0.77880078]
+ [0.36787944 0.77880078 1.        ]]
+
+Weights: [ 46.19950846 -86.82440861  66.4528    ]
+</pre></div>
+</div>
+<img alt="../../_images/549fbefff34cc358c4de8f659ed5662c5a48f1f17226d6e1ea61b188052f9200.png" src="../../_images/549fbefff34cc358c4de8f659ed5662c5a48f1f17226d6e1ea61b188052f9200.png" />
+</div>
+</div>
+<p>The <span class="math notranslate nohighlight">\(\Psi\)</span> is a <span class="math notranslate nohighlight">\(3 \times 3\)</span> symmetric matrix since there are three training points. Each diagonal element represents similarity of a training point with itself whereas off-diagonal elements represent similarity between two training points. Since we are using gaussian RBF, the diagonal elements are 1. Below block of code defines a function to calculate the value of <span class="math notranslate nohighlight">\(\sigma\)</span> using cross-validation. Read comments in the code for more details.</p>
+<blockquote>
+<div><p><strong><em>NOTE</em></strong>: This method of cross-validation is slightly different from simple or k-fold cross validation described in previous section. There is no need to split training data into k-fold since testing data is already provided.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_sigma</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function finds the best sigma for a RBF model by fitting the model to the training data and</span>
+<span class="sd">    evaluating it on testing data. The best sigma is the one that achieves minimum normalized RMSE.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x_train : numpy array</span>
+<span class="sd">        Training data x values</span>
+<span class="sd">    y_train : numpy array</span>
+<span class="sd">        Training data y values</span>
+<span class="sd">    x_test : numpy array</span>
+<span class="sd">        Testing data x values</span>
+<span class="sd">    y_test : numpy array</span>
+<span class="sd">        Testing data y values</span>
+<span class="sd">    sigmas : numpy array</span>
+<span class="sd">        Sigmas to be tested</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    best_sigma : float</span>
+<span class="sd">        Best sigma value</span>
+<span class="sd">    metric : list</span>
+<span class="sd">        List of NRMSE values for each sigma</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Initializing normalized RMSE list</span>
+    <span class="n">metric</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Fitting various polynomials</span>
+    <span class="k">for</span> <span class="n">sigma</span> <span class="ow">in</span> <span class="n">sigmas</span><span class="p">:</span>
+
+        <span class="c1"># Fit the RBF to current fold</span>
+        <span class="n">sm</span> <span class="o">=</span> <span class="n">RBF</span><span class="p">(</span><span class="n">d0</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">poly_degree</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">sm</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+        <span class="n">sm</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+        <span class="c1"># Predict at test values</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+
+        <span class="c1"># Adding all the rmse to calculate average later</span>
+        <span class="n">nrmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">ptp</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
+            
+        <span class="c1"># Calculating average nrmse</span>
+        <span class="n">metric</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nrmse</span><span class="p">)</span>
+
+    <span class="n">best_sigma</span> <span class="o">=</span> <span class="n">sigmas</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">metric</span><span class="p">)]</span>
+
+    <span class="k">return</span> <span class="n">best_sigma</span><span class="p">,</span> <span class="n">metric</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below block of code uses above function to compute the best value of sigma.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating 1d numpy array which contains sigmas</span>
+<span class="c1"># Note that it is logspace since values vary from 0.01 to 100</span>
+<span class="n">sigmas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">best_sigma</span><span class="p">,</span> <span class="n">test_metric</span> <span class="o">=</span> <span class="n">find_sigma</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best sigma value found: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">best_sigma</span><span class="p">))</span>
+
+<span class="c1"># Plotting the NRMSE</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sigmas</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">test_metric</span><span class="p">),</span> <span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">best_sigma</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">test_metric</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Best sigma&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="n">sigmas</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sigmas</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\sigma$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Normalized RMSE&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Variation of NRMSE with $\sigma$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best sigma value found: 0.08497534359086446
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Variation of NRMSE with $\\sigma$&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/0da8910f66a99a644a4cd9af60a43b80562bfcb1642daff2ca091d2331efc8cf.png" src="../../_images/0da8910f66a99a644a4cd9af60a43b80562bfcb1642daff2ca091d2331efc8cf.png" />
+</div>
+</div>
+<p>Based on the plot, there a specific value of <span class="math notranslate nohighlight">\(\sigma\)</span> for which the rmse is minimum. Next block of code fits RBF model for this value of <span class="math notranslate nohighlight">\(\sigma\)</span> and plots the model prediction.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fitting the RBF</span>
+<span class="c1"># d0 is the sigma which controls the spread</span>
+<span class="c1"># of gaussian basis function</span>
+<span class="n">sm</span> <span class="o">=</span> <span class="n">RBF</span><span class="p">(</span><span class="n">d0</span><span class="o">=</span><span class="n">best_sigma</span><span class="p">,</span> <span class="n">poly_degree</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+<span class="c1"># Predict at test values</span>
+<span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+
+<span class="c1"># Plotted the predict values</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="s2">&quot;ro&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training data&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="s2">&quot;b--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;True function&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">,</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Prediction&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="n">xlower</span><span class="p">,</span> <span class="n">xupper</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/33bd4a78ae9ca21efce03d2b514cd8bb3f40f87ef7546e60cffaaee597125ad1.png" src="../../_images/33bd4a78ae9ca21efce03d2b514cd8bb3f40f87ef7546e60cffaaee597125ad1.png" />
+</div>
+</div>
+<p>This prediction with best <span class="math notranslate nohighlight">\(\sigma\)</span> is very different from the earlier prediction using <span class="math notranslate nohighlight">\(\sigma = 1.0\)</span> which shows the importance of setting hyperparameters correctly. Now, number of samples will be increased to see when model prediction is good. This method is also known as one-shot sampling. More efficient way to obtain good fit is to use sequential sampling which will be discussed in future sections. Below block of code fits RBF on different sample sizes, plots the fit, and computes normalized rmse.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating array of training sample sizes</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+
+<span class="c1"># Initializing nrmse list</span>
+<span class="n">nrmse</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">sigmas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Fitting with different sample size</span>
+<span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
+    
+    <span class="n">x_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xlower</span><span class="p">,</span> <span class="n">xupper</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+    <span class="n">y_train</span> <span class="o">=</span> <span class="n">forrester</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span>
+    
+    <span class="n">best_sigma</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">find_sigma</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best sigma value for </span><span class="si">{}</span><span class="s2"> samples: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">best_sigma</span><span class="p">))</span>
+    
+    <span class="c1"># Fitting the RBF</span>
+    <span class="c1"># d0 is the sigma which controls the spread</span>
+    <span class="c1"># of gaussian basis function</span>
+    <span class="n">sm</span> <span class="o">=</span> <span class="n">RBF</span><span class="p">(</span><span class="n">d0</span><span class="o">=</span><span class="n">best_sigma</span><span class="p">,</span> <span class="n">poly_degree</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+    
+    <span class="c1"># Predict at test values</span>
+    <span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,)</span>
+
+    <span class="c1"># Calculating average nrmse</span>
+    <span class="n">nrmse</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">ptp</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span> <span class="p">)</span>
+    
+    <span class="c1"># Plotting prediction</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="s2">&quot;ro&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training data&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="s2">&quot;b--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;True function&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">,</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Prediction&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">((</span><span class="n">xlower</span><span class="p">,</span> <span class="n">xupper</span><span class="p">))</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">y_test_pred</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">y_test</span><span class="p">),</span> <span class="s1">&#39;ko&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Prediction&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;True values&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Number of samples: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sample</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best sigma value for 3 samples: 0.08497534359086446
+Best sigma value for 4 samples: 0.093260334688322
+Best sigma value for 5 samples: 0.10235310218990264
+Best sigma value for 6 samples: 0.1484968262254465
+Best sigma value for 7 samples: 0.1788649529057435
+Best sigma value for 8 samples: 0.1788649529057435
+Best sigma value for 9 samples: 0.37649358067924693
+</pre></div>
+</div>
+<img alt="../../_images/5950fe52f2b4bc7710eb25d82613999339790894c9b08a078c9cc10891460cb6.png" src="../../_images/5950fe52f2b4bc7710eb25d82613999339790894c9b08a078c9cc10891460cb6.png" />
+<img alt="../../_images/13fa214b892e8d3c67699781a54a2456eadfd31cf46c5988ea7199b5f02f111f.png" src="../../_images/13fa214b892e8d3c67699781a54a2456eadfd31cf46c5988ea7199b5f02f111f.png" />
+<img alt="../../_images/f66239095825ccd44c75a5cda3e2baa8f406c3634dba88aac8d87958f09bea66.png" src="../../_images/f66239095825ccd44c75a5cda3e2baa8f406c3634dba88aac8d87958f09bea66.png" />
+<img alt="../../_images/cd664a1343afe6555283d2227c3594836faeb934d96d060c4110d11e198d8091.png" src="../../_images/cd664a1343afe6555283d2227c3594836faeb934d96d060c4110d11e198d8091.png" />
+<img alt="../../_images/52c4c9cda41278bbd6d12f78b49ebdc270f7e2095890cfdaf81ca49258dec039.png" src="../../_images/52c4c9cda41278bbd6d12f78b49ebdc270f7e2095890cfdaf81ca49258dec039.png" />
+<img alt="../../_images/72b220b3d91e054bd6230ba6e38b6293fbdd96aaa306ed25ce697fdd9c1b1c54.png" src="../../_images/72b220b3d91e054bd6230ba6e38b6293fbdd96aaa306ed25ce697fdd9c1b1c54.png" />
+<img alt="../../_images/6e8a0cde9a80088333474ee25882cd20d9782de7848801a14171350ff8c8d654.png" src="../../_images/6e8a0cde9a80088333474ee25882cd20d9782de7848801a14171350ff8c8d654.png" />
+</div>
+</div>
+<p>As the number of samples increase, the model prediction becomes better. Also, note that the value of best <span class="math notranslate nohighlight">\(\sigma\)</span> changes with number of samples. So, it is important to change the hyperparameters when model is retrained with different data. Below block of code plots the normalized rmse as a function of number of samples. The nrmse decreases as the number of samples increase since prediction improves.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting NMRSE</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nrmse</span><span class="p">),</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">((</span><span class="n">samples</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">samples</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Number of samples&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Normalized RMSE&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/2f686cd7d7f108b775ff9a991c2bd32fc5ea20f79951e053bdfec623990623ea.png" src="../../_images/2f686cd7d7f108b775ff9a991c2bd32fc5ea20f79951e053bdfec623990623ea.png" />
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./basic_sm/archive"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By CODE Lab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
