@@ -9,12 +9,10 @@ chapters:
       - file: python_basics/plotting
       - file: python_basics/resources
   - file: doe
-  - file: poly
-  # - file: basic_sm/intro
-  #   sections:
-  #   - file: basic_sm/ls_regression
-  #   - file: basic_sm/poly
-  #   - file: basic_sm/rbf
+  - file: basic_sm/intro
+    sections:
+    - file: basic_sm/poly
+    - file: basic_sm/rbf
   # - file: krg
   # - file: seq_sampling/intro
   #   sections:
