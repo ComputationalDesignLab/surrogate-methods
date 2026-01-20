@@ -23,4 +23,6 @@ where $N$ is the number of data points, $y_i$ and $\hat{y}_i$ are the true and p
 In this section, following models are covered:
 
 1. Polynomial models
-3. Radial basis function models
+2. Radial basis function models
+3. Gaussian process regression models
+4. Neural network models
