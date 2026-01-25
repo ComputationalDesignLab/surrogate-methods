@@ -167,29 +167,36 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../index.html">
-                    Introduction
+                    Surrogate Methods
                 </a>
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../python_basics/intro.html">Basics of Python Programming</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../introduction.html">Surrogate Methods</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../python_basics/intro.html">Basics of Python Programming</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
 
 
 
 
 
 
-<li class="toctree-l2"><a class="reference internal" href="../python_basics/torch_basics.html">Basics of PyTorch tensor computations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../python_basics/plotting.html">Basic plotting in Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../python_basics/resources.html">Python and Jupyter notebook resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python_basics/torch_basics.html">Basics of PyTorch tensor computations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python_basics/plotting.html">Basic plotting in Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python_basics/resources.html">Python and Jupyter notebook resources</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../doe.html">Sampling Plans</a></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Basic Surrogate Models</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="poly.html">Polynomial Model</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Radial Basis Function Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../modeling_intro.html">Modeling</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../doe.html">Sampling Plans</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_handling.html">Data Handling</a></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">Basic Surrogate Models</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="poly.html">Polynomial Model</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Radial Basis Function Model</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -524,22 +531,22 @@ Inverse Multiquadric Weights: tensor([[ 0.1937],
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scimlstudio.utils.evaluation_metrics</span> <span class="kn">import</span> <span class="n">evaluate_scalar</span> <span class="c1"># importing to calculate nrmse metric</span>
 
-<span class="k">def</span> <span class="nf">find_sigma</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">find_sigma</span><span class="p">(</span><span class="n">x_train</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">y_train</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">x_test</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">y_test</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This function finds the best sigma for a RBF model by fitting the model to the training data and</span>
 <span class="sd">        evaluating it on testing data. The best sigma is the one that achieves minimum normalized RMSE.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        x_train : numpy array</span>
+<span class="sd">        x_train : tensor array</span>
 <span class="sd">            Training data x values</span>
-<span class="sd">        y_train : numpy array</span>
+<span class="sd">        y_train : tensor array</span>
 <span class="sd">            Training data y values</span>
-<span class="sd">        x_test : numpy array</span>
+<span class="sd">        x_test : tensor array</span>
 <span class="sd">            Testing data x values</span>
-<span class="sd">        y_test : numpy array</span>
+<span class="sd">        y_test : tensor array</span>
 <span class="sd">            Testing data y values</span>
-<span class="sd">        sigmas : numpy array</span>
+<span class="sd">        sigmas : tensor array</span>
 <span class="sd">            Sigmas to be tested</span>
 
 <span class="sd">        Returns</span>
