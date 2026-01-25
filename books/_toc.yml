@@ -1,18 +1,23 @@
 format: jb-book
 root: index
 chapters:
-  - file: setup
-  - file: python_basics/intro
+  - file: index
     sections:
-      - file: python_basics/python_basics
-      - file: python_basics/torch_basics
-      - file: python_basics/plotting
-      - file: python_basics/resources
-  - file: doe
-  - file: basic_sm/intro
+      - file: setup
+      - file: python_basics/intro
+        sections:
+          - file: python_basics/python_basics
+          - file: python_basics/torch_basics
+          - file: python_basics/plotting
+          - file: python_basics/resources
+  - file: modeling_intro
     sections:
-    - file: basic_sm/poly
-    - file: basic_sm/rbf
+      - file: doe
+      - file: data_handling
+      - file: basic_sm/intro
+        sections:
+          - file: basic_sm/poly
+          - file: basic_sm/rbf
   # - file: krg
   # - file: seq_sampling/intro
   #   sections:
