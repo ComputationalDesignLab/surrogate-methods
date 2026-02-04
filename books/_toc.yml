@@ -18,7 +18,7 @@ chapters:
         sections:
           - file: basic_sm/poly
           - file: basic_sm/rbf
-          - file: gp_models
+      - file: gp_models
   # - file: seq_sampling/intro
   #   sections:
   #   - file: seq_sampling/exploitation
