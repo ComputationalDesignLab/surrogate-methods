@@ -18,7 +18,7 @@ $$\mu_{f|D}(x) = \mu(x) + K(x,X)K(X,X)^{-1}(f-\mu(X))$$
 
 and
 
-$$K_{f|D}(x, x') = K(x, x') - K(x, X)K(X,X)^{-1}K(X,x')$$,
+$$K_{f|D}(x, x') = K(x, x') - K(x, X)K(X,X)^{-1}K(X,x'),$$
 
 $D$ represents the training data set of the model. If the data contains observation noise, then the only change required in the above posterior distribution is to change the mean and covariance function to
 
@@ -26,7 +26,7 @@ $$\mu_{f|D}(x) = \mu(x) + K(x,X)(K(X,X)+\sigma_n^2 I)^{-1}(f-\mu(X))$$
 
 and
 
-$$K_{f|D}(x, x') = K(x, x')+\sigma_n^2 I - K(x, X)(K(X,X)+\sigma_n^2 I)^{-1}K(X,x')$$, 
+$$K_{f|D}(x, x') = K(x, x')+\sigma_n^2 I - K(x, X)(K(X,X)+\sigma_n^2 I)^{-1}K(X,x'),$$
 
 where $\sigma_n^2$ represents the observation noise present in the data. 
 
