@@ -62,7 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'gp_models/gp_intro';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Constructing and Implementing GP Models" href="gp_models.html" />
+    <link rel="next" title="Modeling a Function using GP Models" href="gp_models.html" />
     <link rel="prev" title="Radial Basis Function Model" href="../basic_sm/rbf.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -199,8 +199,8 @@
 </ul>
 </li>
 <li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">Gaussian Process (GP) Models</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="gp_models.html">Constructing and Implementing GP Models</a></li>
-<li class="toctree-l3"><a class="reference internal" href="gp_models_with_noise.html">Constructing and Implementing GP Models with Observation Noise</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gp_models.html">Modeling a Function using GP Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gp_models_with_noise.html">Modeling a Noisy Function using GP Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../nn_models.html">Neural Network (NN) Models</a></li>
@@ -383,9 +383,13 @@ document.write(`
 <div class="math notranslate nohighlight">
 \[p(f_*|X_*, D) = N(f_*; \mu_{f|D}(X_*), K_{f|D}(X_*,X_*)),\]</div>
 <p>where</p>
-<p>$<span class="math notranslate nohighlight">\(\mu_{f|D}(x) = \mu(x) + K(x,X)K(X,X)^{-1}(f-\mu(X)) \text{and} K_{f|D}(x, x') = K(x, x') - K(x, X)K(X,X)^{-1}K(X,x')\)</span>$.</p>
-<p>If the data contains observation noise, then the only change required in the above posterior distribution is to change the mean and covariance function to</p>
-<p>$<span class="math notranslate nohighlight">\(\mu_{f|D}(x) = \mu(x) + K(x,X)(K(X,X)+\sigma_n^2 I)^{-1}(f-\mu(X)) \text{and} K_{f|D}(x, x') = K(x, x')+\sigma_n^2 I - K(x, X)(K(X,X)+\sigma_n^2 I)^{-1}K(X,x')\)</span>$,</p>
+<div class="math notranslate nohighlight">
+\[\mu_{f|D}(x) = \mu(x) + K(x,X)K(X,X)^{-1}(f-\mu(X))\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}K_{f|D}(x, x') = K(x, x') - K(x, X)K(X,X)^{-1}K(X,x')$$.\\If the data contains observation noise, then the only change required in the above posterior distribution is to change the mean and covariance function to\\$$\mu_{f|D}(x) = \mu(x) + K(x,X)(K(X,X)+\sigma_n^2 I)^{-1}(f-\mu(X))\end{aligned}\end{align} \]</div>
+<p>and</p>
+<p>$<span class="math notranslate nohighlight">\(K_{f|D}(x, x') = K(x, x')+\sigma_n^2 I - K(x, X)(K(X,X)+\sigma_n^2 I)^{-1}K(X,x')\)</span>$,</p>
 <p>where <span class="math notranslate nohighlight">\(\sigma_n^2\)</span> represents the observation noise present in the data.</p>
 <blockquote>
 <div><p><strong><em>NOTE</em></strong>: A few notes for this section. Make sure to go through these before proceeding to run the code for this section.</p>
@@ -443,7 +447,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Constructing and Implementing GP Models</p>
+        <p class="prev-next-title">Modeling a Function using GP Models</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
