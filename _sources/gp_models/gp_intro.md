@@ -28,7 +28,7 @@ and
 
 $K_{f|D}(x, x') = K(x, x')+\sigma_n^2 I - K(x, X)(K(X,X)+\sigma_n^2 I)^{-1}K(X,x'),$
 
-where $\sigma_n^2$ represents the observation noise present in the data. 
+where $\sigma_n^2$ represents the variance of the observation noise present in the data. 
 
 > __*NOTE*__: A few notes for this section. Make sure to go through these before proceeding to run the code for this section.
 * This section requires the `gpytorch` and `botorch` packages. To install both of them, it is sufficient to run `pip install botorch` as `gpytorch` will be installed as a dependency while installing `botorch`.
