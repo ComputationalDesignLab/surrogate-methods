@@ -22,6 +22,7 @@ chapters:
         sections:
           - file: gp_models/gp_models
           - file: gp_models/gp_models_with_noise
+      - file: nn_models
   # - file: seq_sampling/intro
   #   sections:
   #   - file: seq_sampling/exploitation
