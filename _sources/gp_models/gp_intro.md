@@ -8,7 +8,7 @@ where $X$ represents the training data points, $\mu(X)$ represents the mean func
 
 $$p(f,f_*) = N(\begin{bmatrix} f \\ f_* \end{bmatrix}; \begin{bmatrix} \mu(X) \\ \mu(X_*) \end{bmatrix}, \begin{bmatrix} K(X,X) \quad K(X,X_*)\\ K(X_*,X) \quad K(X_*, X_*) \end{bmatrix}),$$
 
-wher $f_*$ are the testing function values. The posterior distribution can then be obtained by condition this multivariate Gaussian distribution on the known values of the data
+where $f_*$ are the testing function values. The posterior distribution can then be obtained by condition this multivariate Gaussian distribution on the known values of the data
 
 $$p(f_*|X_*, D) = N(f_*; \mu_{f|D}(X_*), K_{f|D}(X_*,X_*)),$$
 
@@ -20,7 +20,7 @@ and
 
 $K_{f|D}(x, x') = K(x, x') - K(x, X)K(X,X)^{-1}K(X,x'),$
 
-$D$ represents the training data set of the model. If the data contains observation noise, then the only change required in the above posterior distribution is to change the mean and covariance function to
+and $D$ represents the training data set of the model. If the data contains observation noise, then the only change required in the above posterior distribution is to change the mean and covariance function to
 
 $\mu_{f|D}(x) = \mu(x) + K(x,X)(K(X,X)+\sigma_n^2 I)^{-1}(f-\mu(X)),$
 
