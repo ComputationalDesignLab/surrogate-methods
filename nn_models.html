@@ -8,51 +8,51 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Neural Network (NN) Models &#8212; Surrogate Methods</title>
+    <title>Neural Network Models &#8212; Surrogate Methods</title>
   
   
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
-  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
@@ -72,27 +72,23 @@
 
   
   
-  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -114,8 +110,13 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
     </header>
   
 
@@ -139,6 +140,8 @@
         <div class="sidebar-primary-item">
 
   
+    
+  
 
 <a class="navbar-brand logo" href="index.html">
   
@@ -154,7 +157,7 @@
 
  <script>
  document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
     <span class="search-button__default-text">Search</span>
     <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -172,9 +175,9 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="introduction.html">Introduction</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="introduction.html">Introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="setup.html">Computing environment setup</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="python_basics/intro.html">Basics of Python Programming</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
 
 
@@ -186,25 +189,25 @@
 <li class="toctree-l3"><a class="reference internal" href="python_basics/plotting.html">Basic plotting in Python</a></li>
 <li class="toctree-l3"><a class="reference internal" href="python_basics/resources.html">Python and Jupyter notebook resources</a></li>
 </ul>
-</li>
+</details></li>
 </ul>
-</li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="modeling_intro.html">Modeling</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="modeling_intro.html">Modeling</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="doe.html">Sampling Plans</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_handling.html">Data Handling</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="basic_sm/intro.html">Basic Surrogate Models</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="basic_sm/intro.html">Basic Surrogate Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="basic_sm/poly.html">Polynomial Model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="basic_sm/rbf.html">Radial Basis Function Model</a></li>
 </ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="gp_models/gp_intro.html">Gaussian Process (GP) Models</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="gp_models/gp_intro.html">Gaussian Process Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="gp_models/gp_models.html">Modeling a Function using GP Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gp_models/gp_models_with_noise.html">Modeling a Noisy Function using GP Models</a></li>
 </ul>
-</li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Neural Network (NN) Models</a></li>
+</details></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Neural Network Models</a></li>
 </ul>
-</li>
+</details></li>
 </ul>
 
     </div>
@@ -220,7 +223,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -229,14 +232,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -329,10 +332,10 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
@@ -340,12 +343,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -356,11 +361,26 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Neural Network (NN) Models</h1>
+    <h1>Neural Network Models</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#toy-problem">Toy problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-nn-model">Define NN model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization">Initialization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-nn-model">Train NN model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predict">Predict</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parity-plots">Parity plots</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -370,27 +390,29 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="neural-network-nn-models">
-<h1>Neural Network (NN) Models<a class="headerlink" href="#neural-network-nn-models" title="Link to this heading">#</a></h1>
-<p>This section provides implementation for concepts related to neural network models. Remember to make sure that you have downloaded and installed the latest release of the <code class="docutils literal notranslate"><span class="pre">scimlstudio</span></code> package before running the code in this section.</p>
-<p>A neural network is a machine learning model inspired by the human brain, capable of approximating nonlinear functions through interconnected layers of computational units known as neurons. According to the universal approximation theorem, a NN model with a sufficient number of layers and neurons can represent almost any function. There are many different kinds of neural networks but in this section we will be focusing on fully-connected neural networks (shown below), where each neuron in a given layer is connected to every neuron in the preceding layer.</p>
-<a class="reference internal image-reference" href="_images/net.png"><img alt="_images/net.png" class="align-center" src="_images/net.png" style="width: 300px;" /></a>
+  <section class="tex2jax_ignore mathjax_ignore" id="neural-network-models">
+<h1>Neural Network Models<a class="headerlink" href="#neural-network-models" title="Link to this heading">#</a></h1>
+<p>This section provides implementation for concepts related to neural network models. Make sure that you have downloaded and installed the latest release of the <code class="docutils literal notranslate"><span class="pre">scimlstudio</span></code> package before running the code in this section.</p>
+<p>A neural network is a machine learning model inspired by the human brain, capable of approximating nonlinear functions through interconnected layers of computational units known as neurons. According to the universal approximation theorem, NN model with a sufficient number of layers and neurons can represent almost any function. There are many different kinds of neural networks but in this section we will be focusing on fully-connected neural networks (shown below), where each neuron in a given layer is connected to every neuron in the preceding layer.</p>
+<a class="reference internal image-reference" href="_images/net.png"><img alt="_images/net.png" class="align-center" src="_images/net.png" style="width: 350px;" />
+</a>
 <p>Specifically, each neuron computes a weighted combination of its inputs, followed by the application of a nonlinear activation function. Mathematically, hidden layers of the network can be represented by a recursive relation given as</p>
 <div class="math notranslate nohighlight">
 \[
-\begin{equation}
+\begin{equation*}
     \mathbf{z}_k = g ( \mathbf{W}_k \cdot \mathbf{z}_{k-1}  + \mathbf{b}_k ) \text{, } \forall \text{  } k \in \{1, \ldots, H \},
-\end{equation}
+\end{equation*}
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(\mathbf{z}_k\)</span> is the output of <span class="math notranslate nohighlight">\(k^{th}\)</span> layer, <span class="math notranslate nohighlight">\(\mathbf{z}_0\)</span> represents the input layer (i.e. design variable <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>) and <span class="math notranslate nohighlight">\(H\)</span> is the total number of hidden layers. The <span class="math notranslate nohighlight">\(\mathbf{W}_k\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}_k\)</span> are weight matrix and bias vector of <span class="math notranslate nohighlight">\(k^{th}\)</span> layer, respectively. The <span class="math notranslate nohighlight">\(g(\cdot)\)</span> is a nonlinear activation function which operates element-wise on given input vector and significantly effects the performance of neural network. Several activation functions have been introduced such as sigmoid, hyperbolic tan (tanh) and rectified linear unit (ReLU). All these activation functions are shown in below figure.</p>
-<a class="reference internal image-reference" href="_images/act_funcs.png"><img alt="_images/act_funcs.png" class="align-center" src="_images/act_funcs.png" style="width: 300px;" /></a>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{z}_k\)</span> is the output of <span class="math notranslate nohighlight">\(k^{th}\)</span> layer, <span class="math notranslate nohighlight">\(\mathbf{z}_0\)</span> represents the input layer (i.e. design variable <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>) and <span class="math notranslate nohighlight">\(H\)</span> is the total number of hidden layers. The <span class="math notranslate nohighlight">\(\mathbf{W}_k\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}_k\)</span> are weight matrix and bias vector of <span class="math notranslate nohighlight">\(k^{th}\)</span> layer, respectively. The <span class="math notranslate nohighlight">\(g(\cdot)\)</span> is a nonlinear activation function which operates element-wise on given input vector and significantly effects the performance of network. Several activation functions have been introduced such as sigmoid, hyperbolic tan (tanh) and rectified linear unit (ReLU). All these activation functions are shown in below figure.</p>
+<a class="reference internal image-reference" href="_images/act_funcs.png"><img alt="_images/act_funcs.png" class="align-center" src="_images/act_funcs.png" style="width: 350px;" />
+</a>
 <p>Mathematically, some of these activation functions are written as:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{gathered}
-    \text{Sigmoid: } g(z) = \frac{1}{1 + \exp(-z)} \\
-    \text{Tanh: } g(z) = \frac{\exp(z) - \exp(-z)} {\exp(z) + \exp(-z)} \\
-    \text{ReLU: } g(z) = \max(0, x) \\
+    \text{Sigmoid: } g(z) = \frac{1}{1 + \exp(-z)} \\ ~ \\
+    \text{Tanh: } g(z) = \frac{\exp(z) - \exp(-z)} {\exp(z) + \exp(-z)} \\ ~ \\
+    \text{ReLU: } g(z) = \max(0, x) \\ ~ \\
     \text{SiLU: } g(z) = \frac{z}{1 + \exp(-z)}
 \end{gathered}
 \end{split}\]</div>
@@ -401,7 +423,7 @@ document.write(`
     \hat{\mathbf{y}} = \mathbf{W}_{H+1} \cdot \mathbf{z}_{H}  + \mathbf{b}_{L+1},
 \end{equation}
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(\hat{\mathbf{y}} \in \)</span> is the output of the network. The weights and biases are together known as parameters of the network, <span class="math notranslate nohighlight">\(\pmb{\phi} = \{\mathbf{W}_k, \mathbf{b}_k\}_{k=1}^{H+1}\)</span>, and are computed by minimizing a loss function <span class="math notranslate nohighlight">\(\mathcal{L}(\pmb{\phi})\)</span>. Depending on the task, there are many different types of loss functions. For regression problems, we will mean squared error which captures the difference between true and approximated function for the given dataset <span class="math notranslate nohighlight">\(\mathcal{D} = \{(\mathbf{x}^{(1)},\mathbf{y}^{(1)}), \dots, (\mathbf{x}^{(N)},\mathbf{y}^{(N)}) \}\)</span>. Mathematically, it can be written as</p>
+<p>where <span class="math notranslate nohighlight">\(\hat{\mathbf{y}} \in \mathbb{R}^m\)</span> is the output of the network. The weights and biases are together known as parameters of the network, <span class="math notranslate nohighlight">\(\pmb{\phi} = \{\mathbf{W}_k, \mathbf{b}_k\}_{k=1}^{H+1}\)</span>, and are computed by minimizing a loss function <span class="math notranslate nohighlight">\(\mathcal{L}(\pmb{\phi})\)</span>. Depending on the task, there are many different types of loss function. For regression problems, we will use mean squared error which captures the difference between true and predicted output values for the given dataset <span class="math notranslate nohighlight">\(\mathcal{D} = \{(\mathbf{x}^{(1)},\mathbf{y}^{(1)}), \dots, (\mathbf{x}^{(N)},\mathbf{y}^{(N)}) \}\)</span>. Mathematically, it can be written as</p>
 <div class="math notranslate nohighlight">
 \[
 \begin{equation}
@@ -409,13 +431,19 @@ document.write(`
 \end{equation}
 \]</div>
 <p>Solving above problem is challenging due to the large number of parameters. Typically, a gradient descent optimization is performed where the gradient of loss function <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> with respect to <span class="math notranslate nohighlight">\(\pmb{\phi}\)</span> is computed using backpropagation algorithm. In this work, Adaptive Moments (ADAM) optimization algorithm is used to obtain <span class="math notranslate nohighlight">\(\pmb{\phi}^*\)</span>. Refer to lecture notes for more details about neural networks and how they are trained.</p>
+<blockquote>
+<div><p><strong>NOTE</strong>: Neural network model can be used for learning various kinds of data such as images, time series, mesh/graphs, etc. It can handle noisy data as well. It also works with different variable types, including continuous and discrete/categorical. You will have to choose an architecture that supports the data you want to use.</p>
+</div></blockquote>
+<blockquote>
+<div><p><strong>NOTE</strong>: Unlike gaussian process regression, neural network is not an interpolating model. Sometimes, it may appear that neural network prediction is interpolating through the training data but it is often not the case.</p>
+</div></blockquote>
 <p>Below code block imports required packages:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">scimlstudio.models</span> <span class="kn">import</span> <span class="n">FeedForwardNeuralNetwork</span>
-<span class="kn">from</span> <span class="nn">scimlstudio.utils</span> <span class="kn">import</span> <span class="n">Standardize</span><span class="p">,</span> <span class="n">evaluate_scalar</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scimlstudio.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">FeedForwardNeuralNetwork</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scimlstudio.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Standardize</span><span class="p">,</span> <span class="n">evaluate_scalar</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="c1"># defining the device and data types</span>
 <span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
@@ -426,13 +454,18 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pkoratik/miniconda3/envs/sm/lib/python3.12/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pavan/miniconda3/envs/sm/lib/python3.12/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
   from .autonotebook import tqdm as notebook_tqdm
 </pre></div>
 </div>
 </div>
 </div>
-<p>We will demonstrate neural networks using a mixed-integer function. Let’s train a neural network model to predict following function <a class="reference external" href="https://doi.org/10.1016/j.jcp.2022.111902">[Paros and Meng]</a>:</p>
+<blockquote>
+<div><p><strong>NOTE</strong>: Typically, it is sufficient to use <code class="docutils literal notranslate"><span class="pre">float32</span></code> data type while working with neural networks. PyTorch package works well for this data type and increasing it to <code class="docutils literal notranslate"><span class="pre">float64</span></code> might not provide additional benefits, while slowing down training/prediction process and consuming double the memory.</p>
+</div></blockquote>
+<section id="toy-problem">
+<h2>Toy problem<a class="headerlink" href="#toy-problem" title="Link to this heading">#</a></h2>
+<p>We will demonstrate neural networks using the following mixed-integer function:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 y(x,z) = \begin{cases}
@@ -443,10 +476,13 @@ y(x,z) = \begin{cases}
     x\Bigg[\cos(3.4\pi(x-1)) - \dfrac{x-1}{2}\Bigg], &amp; z = 2
 \end{cases},
 \end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\(x \in [0,1]\)</span> and <span class="math notranslate nohighlight">\(z \in {0, 1, 2}\)</span>.</p>
+<p>where <span class="math notranslate nohighlight">\(x \in [0,1]\)</span> and <span class="math notranslate nohighlight">\(z \in {0, 1, 2}\)</span>. Let’s define a function that can compute <span class="math notranslate nohighlight">\(y\)</span> for a given <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(z\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">test_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        `x` contains both continuous and discrete variable</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
@@ -458,112 +494,78 @@ y(x,z) = \begin{cases}
         <span class="n">x_tmp</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="n">z</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">y</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mf">3.6</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="n">x_tmp</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="n">x_tmp</span> <span class="o">-</span> <span class="mi">1</span> 
+            <span class="n">y</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mf">3.6</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="n">x_tmp</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="n">x_tmp</span> <span class="o">-</span> <span class="mi">1</span> 
         <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">y</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mf">1.1</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x_tmp</span><span class="p">))</span> <span class="o">-</span> <span class="n">x_tmp</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span>
+            <span class="n">y</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mf">1.1</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x_tmp</span><span class="p">))</span> <span class="o">-</span> <span class="n">x_tmp</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span>
         <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="n">y</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_tmp</span><span class="o">*</span><span class="p">(</span> <span class="n">torch</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mf">3.4</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="n">x_tmp</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="p">(</span><span class="n">x_tmp</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="p">)</span> 
+            <span class="n">y</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_tmp</span><span class="o">*</span><span class="p">(</span> <span class="n">torch</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mf">3.4</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="n">x_tmp</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="p">(</span><span class="n">x_tmp</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="p">)</span> 
 
     <span class="k">return</span> <span class="n">y</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Now, let’s create training and testing data. We are using only 4 points along each value of <span class="math notranslate nohighlight">\(z\)</span>. This results in 12 training points in total. Similarly, testing dataset contains 100 points along each <span class="math notranslate nohighlight">\(z\)</span>. Since this a toy function, testing data is much larger than training data. Typically, training data is larger than testing data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">30</span><span class="p">]))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([1, 2, 0, 1, 2, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 2, 2, 2, 2, 2, 2, 1,
-        1, 2, 0, 2, 1, 0])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># testing/plotting</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
-<span class="n">z</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor([[0.0000, 0.0000, 0.0000],
-         [0.1111, 0.1111, 0.1111],
-         [0.2222, 0.2222, 0.2222],
-         [0.3333, 0.3333, 0.3333],
-         [0.4444, 0.4444, 0.4444],
-         [0.5556, 0.5556, 0.5556],
-         [0.6667, 0.6667, 0.6667],
-         [0.7778, 0.7778, 0.7778],
-         [0.8889, 0.8889, 0.8889],
-         [1.0000, 1.0000, 1.0000]], device=&#39;cuda:0&#39;),
- tensor([[0., 1., 2.],
-         [0., 1., 2.],
-         [0., 1., 2.],
-         [0., 1., 2.],
-         [0., 1., 2.],
-         [0., 1., 2.],
-         [0., 1., 2.],
-         [0., 1., 2.],
-         [0., 1., 2.],
-         [0., 1., 2.]], device=&#39;cuda:0&#39;))
-</pre></div>
-</div>
-</div>
-</div>
-<p>We will demonstrate neural networks using couple of examples. Let’s train a neural network model to train to predict following function <a class="reference external" href="https://doi.org/10.1016/j.jcp.2022.111902">[Paros and Meng]</a>:
-$<span class="math notranslate nohighlight">\(
-y(x) = \begin{cases}
-    \frac{1}{2}[\sin^3(\pi x) - 1], &amp; -1 \leq x \leq 0 \\
-    \\
-    \frac{1}{2}[\sin^3(3\pi x) - 1], &amp; 0 \leq x \leq 1 
-\end{cases}
-\)</span>$</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">discontinuous_1d_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
-
-<span class="c1"># training</span>
-<span class="n">xtrain</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span> <span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">ytrain</span> <span class="o">=</span> <span class="n">discontinuous_1d_function</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># training</span>
+<span class="n">x_cont</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]:</span>
+    <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">x_cont</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">z</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">x_cont</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">,</span><span class="o">**</span><span class="n">args</span><span class="p">))</span> <span class="p">))</span>
+<span class="n">xtrain</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">ytrain</span> <span class="o">=</span> <span class="n">test_function</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
 
 <span class="c1"># testing/plotting</span>
-<span class="n">xtest</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span> <span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">ytest</span> <span class="o">=</span> <span class="n">discontinuous_1d_function</span><span class="p">(</span><span class="n">xtest</span><span class="p">)</span>
+<span class="n">x_cont</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]:</span>
+    <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">x_cont</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">z</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">x_cont</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">,</span><span class="o">**</span><span class="n">args</span><span class="p">))</span> <span class="p">))</span>
+<span class="n">xplot</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">yplot</span> <span class="o">=</span> <span class="n">test_function</span><span class="p">(</span><span class="n">xplot</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Next code block plots the training and testing data. Note that the solid lines are created using the testing data and scatter points denote training data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
-<span class="c1"># train points</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xtrain</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">ytrain</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">]</span>
 
-<span class="c1"># plotting</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xtest</span><span class="p">[</span><span class="n">xtest</span><span class="o">&lt;</span><span class="mf">0.0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">ytest</span><span class="p">[</span><span class="n">xtest</span><span class="o">&lt;</span><span class="mf">0.0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="s2">&quot;k-&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xtest</span><span class="p">[</span><span class="n">xtest</span><span class="o">&gt;=</span><span class="mf">0.0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">ytest</span><span class="p">[</span><span class="n">xtest</span><span class="o">&gt;=</span><span class="mf">0.0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="s2">&quot;k-&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 
-<span class="c1"># asthetics</span>
+<span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]:</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">xplot</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">z</span>
+    <span class="n">x_tmp</span> <span class="o">=</span> <span class="n">xplot</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_tmp</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">yplot</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c</span><span class="p">[</span><span class="n">z</span><span class="p">]</span><span class="si">}</span><span class="s2">-&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;$z=</span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
+
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">xtrain</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">z</span>
+    <span class="n">x_tmp</span> <span class="o">=</span> <span class="n">xtrain</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_tmp</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">ytrain</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c</span><span class="p">[</span><span class="n">z</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$y$&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="n">xtest</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">right</span><span class="o">=</span><span class="n">xtest</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;True function&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;True function with training data&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/85bf06600aee705cc473bb1a2e5519f003aa51513de3f389d8b52e4b71daad1e.png" src="_images/85bf06600aee705cc473bb1a2e5519f003aa51513de3f389d8b52e4b71daad1e.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;True function with training data&#39;)
+</pre></div>
+</div>
+<img alt="_images/cc6d5b5ae8f9d64bf21a2af3abd4efdd0668c7165204c323cf5bf4e10f971c0e.png" src="_images/cc6d5b5ae8f9d64bf21a2af3abd4efdd0668c7165204c323cf5bf4e10f971c0e.png" />
 </div>
 </div>
-<p>We will using <code class="docutils literal notranslate"><span class="pre">FeedForwardNeuralNetwork</span></code> class from <code class="docutils literal notranslate"><span class="pre">scimlstudio</span></code> package for creating a fully-connected neural network. This class can be used to create any sort of feed-forward model, such as multi-layer perceptron and convolutional neural network, for a supervised learning task.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">FeedForwardNeuralNetwork</span></code> class take following arguments during initialization:</p>
+</section>
+<section id="define-nn-model">
+<h2>Define NN model<a class="headerlink" href="#define-nn-model" title="Link to this heading">#</a></h2>
+<p>We will use <code class="docutils literal notranslate"><span class="pre">FeedForwardNeuralNetwork</span></code> class from <code class="docutils literal notranslate"><span class="pre">scimlstudio</span></code> package for creating a fully-connected neural network. This class can be used to create any sort of feed-forward model, such as multi-layer perceptron and convolutional neural network, for a supervised learning task.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">FeedForwardNeuralNetwork</span></code> class takes following arguments during initialization:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">x_train</span></code>: a 2D torch tensor representing input training data</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">y_train</span></code>: a 2D torch tensor representing the output data</p></li>
@@ -571,76 +573,251 @@ y(x) = \begin{cases}
 <li><p><code class="docutils literal notranslate"><span class="pre">input_transform</span></code>: an instance of <code class="docutils literal notranslate"><span class="pre">Normalize</span></code> or <code class="docutils literal notranslate"><span class="pre">Standardize</span></code> class used for input scaling, default = None</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">output_transform</span></code>: an instance of <code class="docutils literal notranslate"><span class="pre">Normalize</span></code> or <code class="docutils literal notranslate"><span class="pre">Standardize</span></code> class used for output scaling, default = None</p></li>
 </ul>
+<p>First, let’s define network architecture using the <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Sequential.html"><code class="docutils literal notranslate"><span class="pre">Sequential</span></code></a> class. To initialize this class, you need to pass instances of various modules in the order you want to process the data. Here, module refers to various classes provided by torch package for performing computation on the data. Let’s define a simple network to illustrate how this class works. The network will consist of two hidden layers with SiLU activation function, where each layer consists of 32 neurons. Below code block defines this network:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">network</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">xtrain</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">xtrain</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">32</span><span class="p">),</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">SiLU</span><span class="p">(),</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">SiLU</span><span class="p">(),</span>
-    <span class="c1"># torch.nn.Linear(100, 100),</span>
-    <span class="c1"># torch.nn.SiLU(),</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
 <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Notice how the class is initialized. It uses two different modules - <code class="docutils literal notranslate"><span class="pre">Linear</span></code> and <code class="docutils literal notranslate"><span class="pre">SiLU</span></code>. The <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Linear.html"><code class="docutils literal notranslate"><span class="pre">Linear</span></code></a> module primarily takes two arguments - input size and output size. Essentially, <code class="docutils literal notranslate"><span class="pre">Linear</span></code> module takes input <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and performs a linear transformation:</p>
+<div class="math notranslate nohighlight">
+\[
+    \mathbf{z} = W\mathbf{x} + \mathbf{b},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(W\)</span> is the weight matrix (size is based on output and input size) and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> is the bias. The <code class="docutils literal notranslate"><span class="pre">SiLU</span></code> module represents your activation function. It takes an input and applies a nonlinear function elementwise. You can check <a class="reference external" href="https://docs.pytorch.org/docs/stable/nn.html#non-linear-activations-weighted-sum-nonlinearity">here</a> the list of various activation functions available in torch. You can also write your own activation function.</p>
+<section id="initialization">
+<h3>Initialization<a class="headerlink" href="#initialization" title="Link to this heading">#</a></h3>
+<p>It has been shown that the performance of the network can be improved if the weights within in a particular layer are initialized based on the number of inputs and outputs and the type of activation function. Read more about weight initialization from following papers:</p>
+<p>[1] <a class="reference external" href="https://proceedings.mlr.press/v9/glorot10a">X. Glort, and Y. Bengio. Understanding the difficulty of training deep feedforward neural networks. International Conference on Artificial Intelligence and Statistics, 2010</a></p>
+<p>[2] <a class="reference external" href="https://proceedings.mlr.press/v9/glorot10a">K. He, X. Zhang, S. Ren, J. Sun. Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification</a></p>
+<p>You can check <a class="reference external" href="https://docs.pytorch.org/docs/stable/nn.init.html">here</a> various initilization methods available in torch. Below code block initializes the network weight using glorot (or xavier) normal initialization, and the network biases are initialized to zero. The xavier normal method initializes weights in a layer by randomly sampling from <span class="math notranslate nohighlight">\(\mathcal{N}(0,\sigma^2)\)</span>, where standard deviation is computed as</p>
+<div class="math notranslate nohighlight">
+\[
+    \sigma = \text{gain} \sqrt{ \dfrac{2}{\text{input size} + \text{output size}} }.
+\]</div>
+<p>Note that here we are only setting the starting point for the network parameters, which will be later updated during network training.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">init_weights</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function for initializing the weights using glorot (or xavier) normal initialization</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">):</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">xavier_normal_</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">weight</span><span class="p">)</span> <span class="c1"># change this for other init methods</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">fill_</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+
+<span class="c1"># initial weights</span>
+<span class="n">network</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">init_weights</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we can define the <code class="docutils literal notranslate"><span class="pre">FeedForwardNeuralNetwork</span></code> class with <code class="docutils literal notranslate"><span class="pre">Sequential</span></code> class object. In below block, input and output transform are also defined.</p>
+<blockquote>
+<div><p><strong>NOTE</strong>: It is very important to scale (either standardize or normalize) the data while working with neural networks. This makes it easier for the network to learn from the data. For regression problems, input and output data is usually standardized to zero mean and unit variance.</p>
+</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">input_transform</span> <span class="o">=</span> <span class="n">Standardize</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
 <span class="n">output_transform</span> <span class="o">=</span> <span class="n">Standardize</span><span class="p">(</span><span class="n">ytrain</span><span class="p">)</span>
 
+<span class="c1"># initialize the model class</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">FeedForwardNeuralNetwork</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">,</span> <span class="n">network</span><span class="p">,</span> <span class="n">input_transform</span><span class="p">,</span> <span class="n">output_transform</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+</section>
+<section id="train-nn-model">
+<h2>Train NN model<a class="headerlink" href="#train-nn-model" title="Link to this heading">#</a></h2>
+<p>Now, we can train the network using the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method from the <code class="docutils literal notranslate"><span class="pre">FeedForwardNeuralNetwork</span></code> class object created in previous code block. This method takes following arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">optimizer</span></code>: an object from torch.optim module to optimize the network parameters</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">loss_func</span></code>: an object from torch.nn.Module.loss module to compute the loss during training</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">batch_size</span></code>: batch size to use during training, default = 1</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">epochs</span></code>: number of epochs to train the network, default = 100</p></li>
+</ul>
+<p>Below code block defines these arguments and trains the model. In this demonstration, we are using <a class="reference external" href="https://arxiv.org/abs/1412.6980"><code class="docutils literal notranslate"><span class="pre">Adam</span></code></a> method to optimize the network parameters. You can check <a class="reference external" href="https://docs.pytorch.org/docs/stable/optim.html#algorithms">here</a> the list of optimizers available in torch. While initializing the <code class="docutils literal notranslate"><span class="pre">Adam</span></code> class, we need to provide the varaibles to be optimized i.e. the model parameters. You can access the network parameters using the <code class="docutils literal notranslate"><span class="pre">parameters</span></code> variable from the <code class="docutils literal notranslate"><span class="pre">FeedForwardNeuralNetwork</span></code> class object. You can also get these parameters using <code class="docutils literal notranslate"><span class="pre">parameters()</span></code> method from the <code class="docutils literal notranslate"><span class="pre">Sequential</span></code> class object. The learning rate for optimization is also set to 0.01. Refer to the <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.optim.Adam.html#torch.optim.Adam">documentation</a> for a detailed list of arguments accepted by <code class="docutils literal notranslate"><span class="pre">Adam</span></code> class. When it comes to network training, it is also important that you understand the difference between mini-batching and epochs. Refer to lecture notes for more details.</p>
+<p>Feel free to change arguments defined below and see how it affects the network training and prediction</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span> <span class="c1"># adam optimizer</span>
 
-<span class="n">loss_func</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
+<span class="n">loss_func</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span> <span class="c1"># mean squared error loss function</span>
 
-<span class="n">batch_size</span> <span class="o">=</span> <span class="n">xtrain</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="c1"># since the training data is small, we are using entire data</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="n">xtrain</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 
 
-<span class="n">epochs</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">100</span> <span class="c1"># number of epochs</span>
 
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">loss_func</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span><span class="n">epochs</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">loss_func</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span><span class="n">epochs</span><span class="p">)</span> <span class="c1"># call the fit method</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>For real-world problems, training a network is not a trivial problem. You will often run into <a class="reference external" href="https://en.wikipedia.org/wiki/Overfitting">underfitting/overfitting</a> issues. There are many hyperparameters that govern the network performance and finding good values for them is often difficult. You may have to use various tools, such as <a class="reference external" href="https://en.wikipedia.org/wiki/Learning_curve_(machine_learning)">learning curves</a> and hyperparameter <a class="reference external" href="https://www.geeksforgeeks.org/machine-learning/hyperparameter-tuning/">tuning/optimization</a>, for setting these hyperparameters.</p>
+</section>
+<section id="predict">
+<h2>Predict<a class="headerlink" href="#predict" title="Link to this heading">#</a></h2>
+<p>Once the network is trained, we can do predictions using it. You can use <code class="docutils literal notranslate"><span class="pre">predict</span></code> method from the <code class="docutils literal notranslate"><span class="pre">FeedForwardNeuralNetwork</span></code> class object for doing predictions. Below code evaluates network on the testing data and plots it:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ytest_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xtest</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yplot_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xplot</span><span class="p">)</span> <span class="c1"># predict</span>
 
-<span class="c1"># testing plotting</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xtest</span><span class="p">[</span><span class="n">xtest</span><span class="o">&lt;</span><span class="mf">0.0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">ytest</span><span class="p">[</span><span class="n">xtest</span><span class="o">&lt;</span><span class="mf">0.0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="s2">&quot;k--&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xtest</span><span class="p">[</span><span class="n">xtest</span><span class="o">&gt;=</span><span class="mf">0.0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">ytest</span><span class="p">[</span><span class="n">xtest</span><span class="o">&gt;=</span><span class="mf">0.0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="s2">&quot;k--&quot;</span><span class="p">)</span>
+<span class="c1"># plot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
-<span class="c1"># train points</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xtrain</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">ytrain</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">]</span> <span class="c1"># colors</span>
 
-<span class="c1"># pred plotting</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xtest</span><span class="p">[</span><span class="n">xtest</span><span class="o">&lt;</span><span class="mf">0.0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">ytest_pred</span><span class="p">[</span><span class="n">xtest</span><span class="o">&lt;</span><span class="mf">0.0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xtest</span><span class="p">[</span><span class="n">xtest</span><span class="o">&gt;=</span><span class="mf">0.0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">ytest_pred</span><span class="p">[</span><span class="n">xtest</span><span class="o">&gt;=</span><span class="mf">0.0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<span class="c1"># each level plot</span>
+<span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]:</span>
 
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">xplot</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">z</span>
+    <span class="n">x_tmp</span> <span class="o">=</span> <span class="n">xplot</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># true</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_tmp</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">yplot</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c</span><span class="p">[</span><span class="n">z</span><span class="p">]</span><span class="si">}</span><span class="s2">--&quot;</span><span class="p">)</span>
+
+    <span class="c1"># prediction</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_tmp</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">yplot_pred</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c</span><span class="p">[</span><span class="n">z</span><span class="p">]</span><span class="si">}</span><span class="s2">-&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;$z=</span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
+
+    <span class="c1"># training points</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">xtrain</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">z</span>
+    <span class="n">x_tmp</span> <span class="o">=</span> <span class="n">xtrain</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_tmp</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">ytrain</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c</span><span class="p">[</span><span class="n">z</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$y$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;True (dashed line) vs Predicted (solid line)&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d43dc6ecb296ffbde5f941dae057df019526a467dffcb10846783986dc50cdc2.png" src="_images/d43dc6ecb296ffbde5f941dae057df019526a467dffcb10846783986dc50cdc2.png" />
+<img alt="_images/97a5c628db34a31ba9c4efc223bfc2e4fdc790c40053d3bd797a92c18e35fa7e.png" src="_images/97a5c628db34a31ba9c4efc223bfc2e4fdc790c40053d3bd797a92c18e35fa7e.png" />
 </div>
 </div>
+</section>
+<section id="parity-plots">
+<h2>Parity plots<a class="headerlink" href="#parity-plots" title="Link to this heading">#</a></h2>
+<p>Now, let’s increase the number of training points and see how the network prediction evolves, along with testing NRMSE. For each training set, we plot the network prediction and corresponding parity plot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># training variables</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span> <span class="c1"># adam optimizer</span>
+<span class="n">loss_func</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span> <span class="c1"># mean squared error loss function</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="n">xtrain</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># we are using entire data</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">500</span> <span class="c1"># number of epochs</span>
+
+<span class="c1"># loop variables</span>
+<span class="n">training_pts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span> <span class="c1"># points along each level</span>
+<span class="n">nrmse</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">pts</span> <span class="ow">in</span> <span class="n">training_pts</span><span class="p">:</span>
+
+    <span class="c1"># training data</span>
+    <span class="n">x_cont</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pts</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]:</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">x_cont</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">z</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">x_cont</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">,</span><span class="o">**</span><span class="n">args</span><span class="p">))</span> <span class="p">))</span>
+    <span class="n">xtrain</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">ytrain</span> <span class="o">=</span> <span class="n">test_function</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
+
+    <span class="c1"># data scaling</span>
+    <span class="n">input_transform</span> <span class="o">=</span> <span class="n">Standardize</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
+    <span class="n">output_transform</span> <span class="o">=</span> <span class="n">Standardize</span><span class="p">(</span><span class="n">ytrain</span><span class="p">)</span>
+
+    <span class="c1"># initialize the model class</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">FeedForwardNeuralNetwork</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">,</span> <span class="n">network</span><span class="p">,</span> <span class="n">input_transform</span><span class="p">,</span> <span class="n">output_transform</span><span class="p">)</span>
+
+    <span class="c1"># train the network</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">loss_func</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span><span class="n">epochs</span><span class="p">)</span>
+
+    <span class="c1"># predict</span>
+    <span class="n">yplot_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xplot</span><span class="p">)</span>
+
+    <span class="c1"># compute error</span>
+    <span class="n">metric</span> <span class="o">=</span> <span class="n">evaluate_scalar</span><span class="p">(</span><span class="n">yplot</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,),</span> <span class="n">yplot_pred</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,),</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;nrmse&quot;</span><span class="p">)</span>
+
+    <span class="c1"># append metric</span>
+    <span class="n">nrmse</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metric</span><span class="p">)</span>
+
+    <span class="c1"># plot</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+    <span class="c1"># each level plot</span>
+    <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]:</span>
+
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">xplot</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">z</span>
+        <span class="n">x_tmp</span> <span class="o">=</span> <span class="n">xplot</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># true</span>
+        <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_tmp</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">yplot</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c</span><span class="p">[</span><span class="n">z</span><span class="p">]</span><span class="si">}</span><span class="s2">--&quot;</span><span class="p">)</span>
+
+        <span class="c1"># prediction</span>
+        <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_tmp</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">yplot_pred</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c</span><span class="p">[</span><span class="n">z</span><span class="p">]</span><span class="si">}</span><span class="s2">-&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;$z=</span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
+
+        <span class="c1"># training points</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">xtrain</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">z</span>
+        <span class="n">x_tmp</span> <span class="o">=</span> <span class="n">xtrain</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_tmp</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">ytrain</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c</span><span class="p">[</span><span class="n">z</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$y$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;True (dashed line) vs Predicted (solid line)&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+    <span class="c1"># Parity plots</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">yplot_pred</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">yplot</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">facecolors</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Prediction&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;True values&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Samples: </span><span class="si">{</span><span class="n">pts</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/61ef4fe57a44a9425dbf1a06b2f1227db21b8739bef8b1a0783a83a77f2f0f7a.png" src="_images/61ef4fe57a44a9425dbf1a06b2f1227db21b8739bef8b1a0783a83a77f2f0f7a.png" />
+<img alt="_images/09d85b77ea83ea8b9c4f755a03d9c8d26bb5d8b377f22f27375cdbcc61e9df96.png" src="_images/09d85b77ea83ea8b9c4f755a03d9c8d26bb5d8b377f22f27375cdbcc61e9df96.png" />
+<img alt="_images/ee7659accc2447445bc122b78e1915ed0c1a4e776dfdb82fa1afb48234a63bef.png" src="_images/ee7659accc2447445bc122b78e1915ed0c1a4e776dfdb82fa1afb48234a63bef.png" />
+<img alt="_images/e303c0f09c7fe391fd879caf5a48aca8de7745f6c6c23a0d45c8a1a43a847adf.png" src="_images/e303c0f09c7fe391fd879caf5a48aca8de7745f6c6c23a0d45c8a1a43a847adf.png" />
+</div>
+</div>
+<p>Let’s plot NRMSE evolution as sample size is increased.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting NRMSE</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">training_pts</span><span class="p">,</span> <span class="n">nrmse</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">((</span><span class="n">training_pts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">training_pts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Number of samples (along each $z$)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Normalized RMSE&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/92d455fcf196dabccc5e14bb511773030dd0e578b5d59f43062756096f2f890c.png" src="_images/92d455fcf196dabccc5e14bb511773030dd0e578b5d59f43062756096f2f890c.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>NOTE</strong>: Neural network parameters are initialized randomly. Moreover, the training process involves randomness. Due to this, everytime you initialize and/or train the network, you will get different results.</p>
+</div></blockquote>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -670,7 +847,7 @@ y(x) = \begin{cases}
               
               
               
-                <footer class="prev-next-footer">
+                <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -689,7 +866,27 @@ y(x) = \begin{cases}
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"></div>
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#toy-problem">Toy problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-nn-model">Define NN model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization">Initialization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-nn-model">Train NN model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predict">Predict</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parity-plots">Parity plots</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
@@ -734,8 +931,8 @@ By CODE Lab
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
