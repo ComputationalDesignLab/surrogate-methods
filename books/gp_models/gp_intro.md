@@ -1,4 +1,4 @@
-# Gaussian Process Models
+# Gaussian Processes
 
 This section provides an implementation of Gaussian process (GP) models. A GP can be defined as a stochastic process where any finite collection of random variables has a multivariate Gaussian distribution. Regression models using the concept of GPs can be used to model nonlinear functions effectively and also provide a measure of uncertainty in predictions on previously unseen data points. The process of constructing the GP model starts with setting a GP prior on the unknown nonlinear function, $f$
 
