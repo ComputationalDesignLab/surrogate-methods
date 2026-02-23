@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Gaussian Process Models &#8212; Surrogate Methods</title>
+    <title>Gaussian Processes &#8212; Surrogate Methods</title>
   
   
   
@@ -201,12 +201,12 @@
 <li class="toctree-l3"><a class="reference internal" href="../basic_sm/rbf.html">Radial Basis Function Model</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">Gaussian Process Models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">Gaussian Processes</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="gp_models.html">Modeling a Function using GP Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gp_models_with_noise.html">Modeling a Noisy Function using GP Models</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2"><a class="reference internal" href="../nn_models.html">Neural Network Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nn_models.html">Neural Networks</a></li>
 </ul>
 </details></li>
 </ul>
@@ -360,7 +360,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Gaussian Process Models</h1>
+    <h1>Gaussian Processes</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -374,8 +374,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="gaussian-process-models">
-<h1>Gaussian Process Models<a class="headerlink" href="#gaussian-process-models" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="gaussian-processes">
+<h1>Gaussian Processes<a class="headerlink" href="#gaussian-processes" title="Link to this heading">#</a></h1>
 <p>This section provides an implementation of Gaussian process (GP) models. A GP can be defined as a stochastic process where any finite collection of random variables has a multivariate Gaussian distribution. Regression models using the concept of GPs can be used to model nonlinear functions effectively and also provide a measure of uncertainty in predictions on previously unseen data points. The process of constructing the GP model starts with setting a GP prior on the unknown nonlinear function, <span class="math notranslate nohighlight">\(f\)</span></p>
 <div class="math notranslate nohighlight">
 \[p(f|X) = N(f; \mu(X), K(X,X)),\]</div>
