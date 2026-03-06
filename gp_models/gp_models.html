@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="./" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Gaussian Process (GP) Regression Models &#8212; Surrogate Methods</title>
+    <title>Modeling a Function using GP Models &#8212; Surrogate Methods</title>
   
   
   
@@ -18,51 +18,52 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="_static/doctools.js?v=9a2dae69"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="_static/copybutton.js?v=f281be69"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'gp_models';</script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Radial Basis Function Model" href="basic_sm/rbf.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'gp_models/gp_models';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Modeling a Noisy Function using GP Models" href="gp_models_with_noise.html" />
+    <link rel="prev" title="Gaussian Processes" href="gp_intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -94,7 +95,7 @@
     <div class="search-button__overlay"></div>
     <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
-      action="search.html"
+      action="../search.html"
       method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
   <input type="search"
@@ -143,7 +144,7 @@
     
   
 
-<a class="navbar-brand logo" href="index.html">
+<a class="navbar-brand logo" href="../index.html">
   
   
   
@@ -169,38 +170,45 @@
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="index.html">
+                <a class="reference internal" href="../index.html">
                     Surrogate Methods
                 </a>
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="introduction.html">Introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="setup.html">Computing environment setup</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../introduction.html">Introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
 
 
 
 
 
 
-<li class="toctree-l3"><a class="reference internal" href="python_basics/torch_basics.html">Basics of PyTorch tensor computations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="python_basics/plotting.html">Basic plotting in Python</a></li>
-<li class="toctree-l3"><a class="reference internal" href="python_basics/resources.html">Python and Jupyter notebook resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python_basics/torch_basics.html">Basics of PyTorch tensor computations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python_basics/plotting.html">Basic plotting in Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python_basics/resources.html">Python and Jupyter notebook resources</a></li>
 </ul>
 </details></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="modeling_intro.html">Modeling</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="doe.html">Sampling Plans</a></li>
-<li class="toctree-l2"><a class="reference internal" href="data_handling.html">Data Handling</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="basic_sm/intro.html">Basic Surrogate Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="basic_sm/poly.html">Polynomial Model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="basic_sm/rbf.html">Radial Basis Function Model</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../modeling_intro.html">Modeling</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../doe.html">Sampling Plans</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_handling.html">Data Handling</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../basic_sm/intro.html">Basic Surrogate Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basic_sm/poly.html">Polynomial Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basic_sm/rbf.html">Radial Basis Function Model</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Gaussian Process (GP) Regression Models</a></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="gp_intro.html">Gaussian Processes</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Modeling a Function using GP Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gp_models_with_noise.html">Modeling a Noisy Function using GP Models</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../nn_models.html">Neural Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mf_nn_models.html">Multi-Fidelity Neural Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pod.html">Proper Orthogonal Decomposition</a></li>
 </ul>
 </details></li>
 </ul>
@@ -272,7 +280,7 @@
       
       
       
-      <li><a href="_sources/gp_models.ipynb" target="_blank"
+      <li><a href="../_sources/gp_models/gp_models.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -354,7 +362,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Gaussian Process (GP) Regression Models</h1>
+    <h1>Modeling a Function using GP Models</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -368,17 +376,9 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="gaussian-process-gp-regression-models">
-<h1>Gaussian Process (GP) Regression Models<a class="headerlink" href="#gaussian-process-gp-regression-models" title="Link to this heading">#</a></h1>
-<p>This section provides implementation for concepts related to gaussian process based models. The first block of code imports the required packages and methods:</p>
-<blockquote>
-<div><p><strong><em>NOTE</em></strong>: A few notes for this section. Make sure to go through these before proceeding to run the code for this section.</p>
-</div></blockquote>
-<ul class="simple">
-<li><p>This section requires the <code class="docutils literal notranslate"><span class="pre">gpytorch</span></code> and <code class="docutils literal notranslate"><span class="pre">botorch</span></code> packages. To install both of them, it is sufficient to run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">botorch</span></code> as <code class="docutils literal notranslate"><span class="pre">gpytorch</span></code> will be installed as a dependency while installing <code class="docutils literal notranslate"><span class="pre">botorch</span></code>.</p></li>
-<li><p>Remember to make sure that you have downloaded and installed the latest release of the <code class="docutils literal notranslate"><span class="pre">scimlstudio</span></code> package before running the code in this section.</p></li>
-<li><p>You may see a TqdmWarning when importing the packages. This can be safely ignored.</p></li>
-</ul>
+  <section class="tex2jax_ignore mathjax_ignore" id="modeling-a-function-using-gp-models">
+<h1>Modeling a Function using GP Models<a class="headerlink" href="#modeling-a-function-using-gp-models" title="Link to this heading">#</a></h1>
+<p>This section provides implementation for concepts related to Gaussian process based models. The first block of code imports the required packages and methods:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -436,7 +436,7 @@ y(x) = (6x - 2)^2\sin(12x-4) \\
 <blockquote>
 <div><p><strong><em>NOTE</em></strong>: The default likelihood and kernel functions are recent developments within GP model research that aim to improve the performance of GP models for high-dimensional problems. To learn more about these functions, refer to the original paper available <a class="reference external" href="https://arxiv.org/abs/2402.02229">here</a>. When using these functions, it is also recommended to normalize the input variables and standardize the output variables.</p>
 </div></blockquote>
-<p>The marginal log likelihood is used as a loss function to train the model. Adam, a gradient descent algorithm with momentum, is used to optimize the hyperparameters of the model based on the generated training data. Further details about the Adam optimization algorithm can be found in the original <a class="reference external" href="https://arxiv.org/abs/1412.6980">paper</a> and a simplified explaination of it can be found at this <a class="reference external" href="https://jamhuri.medium.com/understanding-the-adam-optimization-algorithm-a-deep-dive-into-the-formulas-3ac5fc5b7cd3">link</a>. Below block of code creates the model using <strong>radial basis (exponential)</strong> kernel function with dimension scaled prior and plots the prediction:</p>
+<p>The marginal log likelihood is used as a loss function to train the model. Adam, a gradient descent algorithm with momentum, is used to optimize the hyperparameters of the model based on the generated training data. Further details about the Adam optimization algorithm can be found in the original <a class="reference external" href="https://arxiv.org/abs/1412.6980">paper</a> and a simplified explaination of it can be found at this <a class="reference external" href="https://jamhuri.medium.com/understanding-the-adam-optimization-algorithm-a-deep-dive-into-the-formulas-3ac5fc5b7cd3">link</a>. Below block of code creates the model using <strong>radial basis (squared exponential)</strong> kernel function with dimension scaled prior and plots the prediction:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create model</span>
@@ -474,7 +474,7 @@ y(x) = (6x - 2)^2\sin(12x-4) \\
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimal lengthscale value: 0.12155060470104218
 </pre></div>
 </div>
-<img alt="_images/ce15d73d506127a7f9fd50ab30cabd900999fa219bfb22f168862182d470faa9.png" src="_images/ce15d73d506127a7f9fd50ab30cabd900999fa219bfb22f168862182d470faa9.png" />
+<img alt="../_images/ce15d73d506127a7f9fd50ab30cabd900999fa219bfb22f168862182d470faa9.png" src="../_images/ce15d73d506127a7f9fd50ab30cabd900999fa219bfb22f168862182d470faa9.png" />
 </div>
 </div>
 <p>Few important points to note:</p>
@@ -521,7 +521,7 @@ y(x) = (6x - 2)^2\sin(12x-4) \\
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimal lengthscale value: 0.11899595707654953
 </pre></div>
 </div>
-<img alt="_images/802402ac8ece9d5b6b37f045cb16e1fb9860dca7e639ed403fb2557b4cd8229b.png" src="_images/802402ac8ece9d5b6b37f045cb16e1fb9860dca7e639ed403fb2557b4cd8229b.png" />
+<img alt="../_images/802402ac8ece9d5b6b37f045cb16e1fb9860dca7e639ed403fb2557b4cd8229b.png" src="../_images/802402ac8ece9d5b6b37f045cb16e1fb9860dca7e639ed403fb2557b4cd8229b.png" />
 </div>
 </div>
 <p>Below block of code creates the model using the <strong>Rational Quadratic</strong> kernel function:</p>
@@ -562,7 +562,7 @@ y(x) = (6x - 2)^2\sin(12x-4) \\
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimal lengthscale value: 0.10978628695011139
 </pre></div>
 </div>
-<img alt="_images/58ad49992574fd18510a427c9835652ff94707ec9785cde7ed6c0f11ab228c77.png" src="_images/58ad49992574fd18510a427c9835652ff94707ec9785cde7ed6c0f11ab228c77.png" />
+<img alt="../_images/58ad49992574fd18510a427c9835652ff94707ec9785cde7ed6c0f11ab228c77.png" src="../_images/58ad49992574fd18510a427c9835652ff94707ec9785cde7ed6c0f11ab228c77.png" />
 </div>
 </div>
 <p>Note that mean prediction and uncertainty estimates are slightly different for different kernel functions and you need to experiment with different kernel functions to find the best model for your problem. Now, number of samples will be increased to see when model prediction is good. This method is also known as <strong>one-shot sampling</strong>. More efficient way to obtain good fit is to use sequential sampling which will be discussed in future sections. Below block of code fits the GP model with radial basis function kernel on different sample sizes, plots the fit, and computes normalized RMSE on testing data.</p>
@@ -632,14 +632,14 @@ Optimal lengthscale value for 9 samples: 0.16403114795684814
 Optimal lengthscale value for 10 samples: 0.15900515019893646
 </pre></div>
 </div>
-<img alt="_images/d6232fa9c399d740a18ae6ce1ac1940c449d3807c15c149772e4bab99a07b7b3.png" src="_images/d6232fa9c399d740a18ae6ce1ac1940c449d3807c15c149772e4bab99a07b7b3.png" />
-<img alt="_images/fbcf2942b55f49a356ae163d9d3ca3980f5aee44459280e1f966fcfd7555066c.png" src="_images/fbcf2942b55f49a356ae163d9d3ca3980f5aee44459280e1f966fcfd7555066c.png" />
-<img alt="_images/4fe47efb2ac8fb0f09b6d523dd34f26016c799f239a59170149043ff60ca3faf.png" src="_images/4fe47efb2ac8fb0f09b6d523dd34f26016c799f239a59170149043ff60ca3faf.png" />
-<img alt="_images/1e18fb5596e12965d473b18f2be05d5825c1ed0d4f5f5554b5f76120852b50fe.png" src="_images/1e18fb5596e12965d473b18f2be05d5825c1ed0d4f5f5554b5f76120852b50fe.png" />
-<img alt="_images/4a4aac63c511d48f397f9e8a744c10dd48aec70f2c6ec95cd5d5fe3f6437f6c4.png" src="_images/4a4aac63c511d48f397f9e8a744c10dd48aec70f2c6ec95cd5d5fe3f6437f6c4.png" />
-<img alt="_images/b0d54b9d7f98a43b639c309a66995ee813a91c09d63d962b3ea19b25563d65c3.png" src="_images/b0d54b9d7f98a43b639c309a66995ee813a91c09d63d962b3ea19b25563d65c3.png" />
-<img alt="_images/17138bbc9a43f05f75a3018d35434efd0d440f08128adf0d0aa910f5d6faee25.png" src="_images/17138bbc9a43f05f75a3018d35434efd0d440f08128adf0d0aa910f5d6faee25.png" />
-<img alt="_images/d6fe4600cc5d6c989e3adcd2014ac7fd4052cdc86810d8fed86ba4fc85e7ce21.png" src="_images/d6fe4600cc5d6c989e3adcd2014ac7fd4052cdc86810d8fed86ba4fc85e7ce21.png" />
+<img alt="../_images/d6232fa9c399d740a18ae6ce1ac1940c449d3807c15c149772e4bab99a07b7b3.png" src="../_images/d6232fa9c399d740a18ae6ce1ac1940c449d3807c15c149772e4bab99a07b7b3.png" />
+<img alt="../_images/fbcf2942b55f49a356ae163d9d3ca3980f5aee44459280e1f966fcfd7555066c.png" src="../_images/fbcf2942b55f49a356ae163d9d3ca3980f5aee44459280e1f966fcfd7555066c.png" />
+<img alt="../_images/4fe47efb2ac8fb0f09b6d523dd34f26016c799f239a59170149043ff60ca3faf.png" src="../_images/4fe47efb2ac8fb0f09b6d523dd34f26016c799f239a59170149043ff60ca3faf.png" />
+<img alt="../_images/1e18fb5596e12965d473b18f2be05d5825c1ed0d4f5f5554b5f76120852b50fe.png" src="../_images/1e18fb5596e12965d473b18f2be05d5825c1ed0d4f5f5554b5f76120852b50fe.png" />
+<img alt="../_images/4a4aac63c511d48f397f9e8a744c10dd48aec70f2c6ec95cd5d5fe3f6437f6c4.png" src="../_images/4a4aac63c511d48f397f9e8a744c10dd48aec70f2c6ec95cd5d5fe3f6437f6c4.png" />
+<img alt="../_images/b0d54b9d7f98a43b639c309a66995ee813a91c09d63d962b3ea19b25563d65c3.png" src="../_images/b0d54b9d7f98a43b639c309a66995ee813a91c09d63d962b3ea19b25563d65c3.png" />
+<img alt="../_images/17138bbc9a43f05f75a3018d35434efd0d440f08128adf0d0aa910f5d6faee25.png" src="../_images/17138bbc9a43f05f75a3018d35434efd0d440f08128adf0d0aa910f5d6faee25.png" />
+<img alt="../_images/d6fe4600cc5d6c989e3adcd2014ac7fd4052cdc86810d8fed86ba4fc85e7ce21.png" src="../_images/d6fe4600cc5d6c989e3adcd2014ac7fd4052cdc86810d8fed86ba4fc85e7ce21.png" />
 </div>
 </div>
 <p>As the number of samples increase, the model prediction becomes better. Also, the value of length scale will change with number of samples. So, it is important to refit the model for different data and find the optimal lengthscale. Below block of code plots the normalized RMSE (computed using testing data) as a function of number of samples. The nrmse decreases as the number of samples increase since prediction improves.</p>
@@ -660,7 +660,7 @@ Optimal lengthscale value for 10 samples: 0.15900515019893646
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Normalized RMSE&#39;)
 </pre></div>
 </div>
-<img alt="_images/eca9ac3e6794f3daf3911621d5bcfad84efb0880e00d8b0806cd1d01c5300fdf.png" src="_images/eca9ac3e6794f3daf3911621d5bcfad84efb0880e00d8b0806cd1d01c5300fdf.png" />
+<img alt="../_images/eca9ac3e6794f3daf3911621d5bcfad84efb0880e00d8b0806cd1d01c5300fdf.png" src="../_images/eca9ac3e6794f3daf3911621d5bcfad84efb0880e00d8b0806cd1d01c5300fdf.png" />
 </div>
 </div>
 </section>
@@ -678,7 +678,7 @@ Optimal lengthscale value for 10 samples: 0.15900515019893646
         },
         kernelOptions: {
             name: "python3",
-            path: "./."
+            path: "./gp_models"
         },
         predefinedOutput: true
     }
@@ -696,13 +696,22 @@ Optimal lengthscale value for 10 samples: 0.15900515019893646
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="basic_sm/rbf.html"
+       href="gp_intro.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Radial Basis Function Model</p>
+        <p class="prev-next-title">Gaussian Processes</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="gp_models_with_noise.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Modeling a Noisy Function using GP Models</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -754,8 +763,8 @@ By CODE Lab
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

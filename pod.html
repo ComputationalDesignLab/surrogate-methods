@@ -1,0 +1,868 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Proper Orthogonal Decomposition &#8212; Surrogate Methods</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'pod';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Multi-Fidelity Neural Networks" href="mf_nn_models.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Surrogate Methods</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Surrogate Methods
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="introduction.html">Introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="setup.html">Computing environment setup</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
+
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="python_basics/torch_basics.html">Basics of PyTorch tensor computations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_basics/plotting.html">Basic plotting in Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_basics/resources.html">Python and Jupyter notebook resources</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="modeling_intro.html">Modeling</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="doe.html">Sampling Plans</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_handling.html">Data Handling</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="basic_sm/intro.html">Basic Surrogate Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic_sm/poly.html">Polynomial Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic_sm/rbf.html">Radial Basis Function Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="gp_models/gp_intro.html">Gaussian Processes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="gp_models/gp_models.html">Modeling a Function using GP Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gp_models/gp_models_with_noise.html">Modeling a Noisy Function using GP Models</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="nn_models.html">Neural Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mf_nn_models.html">Multi-Fidelity Neural Networks</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Proper Orthogonal Decomposition</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/ComputationalDesignLab/surrogate-methods" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/pod.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Proper Orthogonal Decomposition</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-model-function">Environment Model Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-the-pod-model">Constructing the POD model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-the-pod-modes-for-the-emf">Plotting the POD modes for the EMF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reconstructing-the-emf-using-the-pod-modes">Reconstructing the EMF using the POD modes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#error-metrics">Error metrics</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="proper-orthogonal-decomposition">
+<h1>Proper Orthogonal Decomposition<a class="headerlink" href="#proper-orthogonal-decomposition" title="Link to this heading">#</a></h1>
+<p>This section demonstrates the implementation of proper orthogonal decomposition (POD) for dimensionality reduction and high-dimensional modeling. Make sure that you have downloaded and installed the latest release of the <code class="docutils literal notranslate"><span class="pre">scimlstudio</span></code> package before running the code in this section. The implementation given in this section is based on the following sources in the literature:</p>
+<p>[1] <a class="reference external" href="https://arc.aiaa.org/doi/10.2514/1.J061720">K. Decker, N. Iyengar, D. Rajaram, C. Perron, and D. Mavris, “Manifold Alignment-Based nonintrusive and nonlinear multifidelity Reduced-Order modeling,” AIAA Journal, vol. 61, no. 1, pp. 454–474, Oct. 2022</a></p>
+<p>[2] <a class="reference external" href="https://arc.aiaa.org/doi/10.2514/6.2020-3003">K. Decker, H. D. Schwartz, and D. Mavris, “Dimensionality reduction techniques applied to the design of hypersonic aerial systems,” in AIAA AVIATION 2020 FORUM, Virtual Conference, Jun. 2020</a></p>
+<p>[3] <a class="reference external" href="https://link.springer.com/rwe/10.1007/978-3-540-30299-5_22">H. Nobach, C. Tropea, C. Laurent, J. Bonnet, J. Delville, J. Lewalle, M. Farge, K. Schneider and R. Adrian, “Review of Some Fundamentals of Data Processing,” in Springer Handbook of Experimental Fluid Mechanics, 2007, pp. 1337–1398</a></p>
+<p>POD is a linear dimensionality reduction method that projects high-dimensional data, <span class="math notranslate nohighlight">\(x\in \mathbb{R}^n\)</span>, to a low-dimensional representation, <span class="math notranslate nohighlight">\(z\in \mathbb{R}^k\)</span>, where <span class="math notranslate nohighlight">\(k &lt;&lt; n\)</span>. The fact that POD is a linear dimensionality reduction method means that it is only able to capture the linear trends and features of the data but cannot capture nonlinear features in the data such as discontinuities. In engineering settings, POD can be useful in creating a low-dimensional projection of high-dimensional data to better facilitate the process of surrogate modeling.</p>
+<p>The main steps in the process of POD are given below. For this explaination, consider that <span class="math notranslate nohighlight">\(X \in \mathbb{R}^{n\times m}\)</span>, is a matrix where each column of the matrix represents the high-dimensional data of the system. For example, this could be the pressure field output from a fluids simulation or the stress field output from a structures simulation. <span class="math notranslate nohighlight">\(X\)</span> is also called the snapshot matrix in some sources within the literature. It is assumed that any data preprocessing steps such as standardization transforms or centering have already been performed on the data. There are a total of <span class="math notranslate nohighlight">\(p\)</span> instances of the high-dimensional data, typically drawn from sampling points generated from a design of experiments.</p>
+<ol class="arabic simple">
+<li><p><strong>Perform singular value decomposition (SVD) on the high-dimensional data:</strong> SVD is used to decompose the matrix <span class="math notranslate nohighlight">\(X\)</span> into three separate matrices as follows:
+$<span class="math notranslate nohighlight">\(X = U\Sigma V^T\)</span><span class="math notranslate nohighlight">\(
+where columns of \)</span>U \in \mathbb{R}^{n \times n}<span class="math notranslate nohighlight">\( contain the eigenvectors of \)</span>XX^T<span class="math notranslate nohighlight">\(, columns of \)</span>V \in \mathbb{R}^{m \times m}<span class="math notranslate nohighlight">\( contain the eignevectors of \)</span>X^TX<span class="math notranslate nohighlight">\(, and \)</span>\Sigma \in \mathbb{R}^{n\times m}<span class="math notranslate nohighlight">\( is a diagonal matrix containing the singular values of the matrix. The singular values, \)</span>\sigma_i<span class="math notranslate nohighlight">\(, are arranged in descending order such that \)</span>\sigma_1 \leq \sigma_2 \leq \dots \leq \sigma_r<span class="math notranslate nohighlight">\( along the diagonal and \)</span>r=\min(n,m)<span class="math notranslate nohighlight">\(. The columns of \)</span>U<span class="math notranslate nohighlight">\( form the POD modes of the matrix \)</span>X$.</p></li>
+<li><p><strong>Truncate the columns of <span class="math notranslate nohighlight">\(U\)</span> to obtain the POD modes:</strong> After obtaining the SVD of the matrix, the columns of <span class="math notranslate nohighlight">\(U\)</span> must be truncated since the full matrix <span class="math notranslate nohighlight">\(X\)</span> can be represented effectively using only a few POD modes. The truncation involves calculating the relative information criterion (RIC) and using the number of modes that can meet the threshold of RIC that is set by the user. A threshold of 0.9999 is a common choice for RIC. The RIC is a function of <span class="math notranslate nohighlight">\(k\)</span>, which is the number of POD modes that are retained in the truncation. The RIC can be written as follows:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\text{RIC}(k) = \frac{\sum_{i=1}^k \sigma_i^2}{\sum_{j=1}^n \sigma_j^2}\]</div>
+<p>Once the value of <span class="math notranslate nohighlight">\(k\)</span> is found using RIC, the first <span class="math notranslate nohighlight">\(k\)</span> columns of <span class="math notranslate nohighlight">\(U\)</span> are the representative POD modes for the data. The matrix with the first <span class="math notranslate nohighlight">\(k\)</span> columns of <span class="math notranslate nohighlight">\(U\)</span> is denoted as <span class="math notranslate nohighlight">\(U_k \in \mathbb{R}^{n\times k}\)</span>. Similarly, truncated forms of <span class="math notranslate nohighlight">\(\Sigma\)</span> and <span class="math notranslate nohighlight">\(V\)</span> can also be formed and denoted as <span class="math notranslate nohighlight">\(\Sigma_k \in \mathbb{R}^{k\times k}\)</span> and <span class="math notranslate nohighlight">\(V_k \in \mathbb{R}^{m \times k}\)</span>. Using these truncations, the original matrix can be approximated as</p>
+<div class="math notranslate nohighlight">
+\[X \approx U_k \Sigma_k V_k^T.\]</div>
+<ol class="arabic simple" start="3">
+<li><p><strong>Projection to low-dimensional representation:</strong> After the best truncation of the POD modes has been found, <span class="math notranslate nohighlight">\(X\)</span> can be projected to the low-dimensional representation <span class="math notranslate nohighlight">\(z\in \mathbb{R}^{p \times k}\)</span>. Multiplying the approximation equation by <span class="math notranslate nohighlight">\(U_k^T\)</span>,</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[U_k^T X \approx U_k^T U_k \Sigma_k V_k^T.\]</div>
+<p>Since <span class="math notranslate nohighlight">\(U_k\)</span> is a unitary matrix, <span class="math notranslate nohighlight">\(U_k^T = U_k^{-1}\)</span>. Substituting in the previous equation,</p>
+<div class="math notranslate nohighlight">
+\[U_k^T X \approx U_k^{-1} U_k \Sigma_k V_k^T\]</div>
+<div class="math notranslate nohighlight">
+\[U_k^T X \approx (U_k^{-1} U_k) \Sigma_k V_k^T\]</div>
+<div class="math notranslate nohighlight">
+\[U_k^T X \approx I \Sigma_k V_k^T\]</div>
+<div class="math notranslate nohighlight">
+\[U_k^T X \approx \Sigma_k V_k^T.\]</div>
+<p><span class="math notranslate nohighlight">\(U_k^T X \in \mathbb{R}^{k \times p}\)</span> is the projection of <span class="math notranslate nohighlight">\(X\)</span> to the low-dimensional representation of the matrix.</p>
+<div class="math notranslate nohighlight">
+\[z = (U_k^T X)^T\]</div>
+<ol class="arabic simple" start="4">
+<li><p><strong>Reconstruction from low-dimensional projection:</strong> If <span class="math notranslate nohighlight">\(z\)</span> is known for a new point within the input space of interest, then the high-dimensional output can be reconstructed using the following equation,</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\hat{X} = U_k z^T.\]</div>
+<p>If the process of projection and reconstruction are chained together, the POD model can be assessed like other surrogate models where the input to the model must match the output of the model. This form of modeling is called unsupervised learning where the focus is on transforming the data rather than predicting a specific output. The first block of code below imports the relevant packages.</p>
+<blockquote>
+<div><p><strong><em>NOTE</em></strong>: You may see some warnings when running the code in this section. These can be safely ignored.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scimlstudio.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">POD</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyDOE3</span><span class="w"> </span><span class="kn">import</span> <span class="n">lhs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scimlstudio.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Standardize</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scimlstudio.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">evaluate_vector</span>
+
+<span class="c1"># defining the device and data types</span>
+<span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;device&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cuda&#39;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;cpu&#39;</span><span class="p">),</span> <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="environment-model-function">
+<h2>Environment Model Function<a class="headerlink" href="#environment-model-function" title="Link to this heading">#</a></h2>
+<p>The use of POD will be demonstrated using the Environment Model Function (EMF) that can be described as follows:</p>
+<div class="math notranslate nohighlight">
+\[h(s,t|\textbf{x})= \frac{M}{\sqrt{4\pi Dt}}\text{exp}(\frac{-s^2}{4Dt}) + \frac{1_{t&gt;\tau}M}{\sqrt{4\pi D(t-\tau)}}\text{exp}(\frac{-(s-L)^2}{4D(t-\tau)}),\]</div>
+<p>where <span class="math notranslate nohighlight">\(\textbf{x} = [M,D,L,\tau]\)</span> is a vector of input variables for the function. <span class="math notranslate nohighlight">\((s,t)\)</span> are spatial and temporal coordinates that describe a 2D grid over which the EMF is evaluated. The following block of code defines the EMF. The EMF is evaluated on a 32 x 32 grid for <span class="math notranslate nohighlight">\((s,t)\)</span> which means that there are a total of 1024 values to model for the EMF over this grid. It is challenging to predict this function because the indicator function in the numerator of the second term introduces a discontinuity within the function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># defining the grid for the function</span>
+<span class="n">s_grid</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.50</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
+<span class="n">t_grid</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">15.0</span><span class="p">,</span> <span class="mf">60.0</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
+<span class="n">Sgrid</span><span class="p">,</span> <span class="n">Tgrid</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">s_grid</span><span class="p">,</span> <span class="n">t_grid</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">env_model_function</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x: torch.Tensor</span>
+<span class="sd">            2D tensor array with the inputs to the function</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        y: torch.Tensor</span>
+<span class="sd">            Values of the EMF evaluated for the given inputs</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># extracting values of variables</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">tau</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+
+    <span class="n">first_term</span> <span class="o">=</span> <span class="p">(</span><span class="n">M</span><span class="o">/</span><span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">D</span> <span class="o">*</span> <span class="n">Tgrid</span><span class="p">))</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">Sgrid</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">D</span><span class="o">*</span><span class="n">Tgrid</span><span class="p">))</span>
+    <span class="n">second_term</span> <span class="o">=</span> <span class="p">(</span><span class="n">M</span><span class="o">/</span><span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">D</span> <span class="o">*</span> <span class="p">(</span><span class="n">Tgrid</span> <span class="o">-</span> <span class="n">tau</span><span class="p">)))</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">((</span><span class="n">Sgrid</span> <span class="o">-</span> <span class="n">L</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">D</span><span class="o">*</span><span class="p">(</span><span class="n">Tgrid</span> <span class="o">-</span> <span class="n">tau</span><span class="p">)))</span>
+    <span class="n">second_term</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">second_term</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">first_term</span> <span class="o">+</span> <span class="n">second_term</span>
+
+    <span class="k">return</span> <span class="n">y</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/abhijnan/miniconda3/envs/surrogate_methods_sp26/lib/python3.12/site-packages/torch/functional.py:505: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /pytorch/aten/src/ATen/native/TensorShape.cpp:4317.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s create some training and testing data for the POD method. There are 50 training samples and 100 testing samples generated. Since there are 4 input variables for the function, Latin hypercube sampling (LHS) is used to generate the training and testing data for the POD method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># defining the bounds</span>
+<span class="n">l_bounds</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">30.01</span><span class="p">],</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
+<span class="n">u_bounds</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">13.0</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">30.295</span><span class="p">],</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
+
+<span class="c1"># training data generation</span>
+<span class="n">train_samples</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">lhs</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;cm&#39;</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
+<span class="n">train_samples</span> <span class="o">=</span> <span class="n">l_bounds</span> <span class="o">+</span> <span class="p">(</span><span class="n">u_bounds</span> <span class="o">-</span> <span class="n">l_bounds</span><span class="p">)</span> <span class="o">*</span> <span class="n">train_samples</span>
+<span class="n">xtrain</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">env_model_function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">train_samples</span><span class="p">])</span> <span class="c1"># this uses a 32x32 grid leading to a total of 1024 outputs</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of training data: </span><span class="si">{</span><span class="n">xtrain</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># testing data generation</span>
+<span class="n">test_samples</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">lhs</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;cm&#39;</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
+<span class="n">test_samples</span> <span class="o">=</span> <span class="n">l_bounds</span> <span class="o">+</span> <span class="p">(</span><span class="n">u_bounds</span> <span class="o">-</span> <span class="n">l_bounds</span><span class="p">)</span> <span class="o">*</span> <span class="n">test_samples</span>
+<span class="n">xtest</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">env_model_function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">test_samples</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of testing data: </span><span class="si">{</span><span class="n">xtest</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of training data: torch.Size([40, 32, 32])
+Shape of testing data: torch.Size([100, 32, 32])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, let’s plot some examples of the EMF for different samples from the training data. Each output is now actually distributed over a grid. So, we will plot contour plots for some samples in the training data. The discontinuity in the functions can also be visualized in the contour plots due to a sudden change of the function near <span class="math notranslate nohighlight">\(t=30\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+        <span class="n">contour</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">Sgrid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">Tgrid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">xtrain</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">levels</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span> 
+        <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e88ae442fab032ed06d29980327f4a76c4ff2a941d23260ba145b518829db574.png" src="_images/e88ae442fab032ed06d29980327f4a76c4ff2a941d23260ba145b518829db574.png" />
+</div>
+</div>
+</section>
+<section id="constructing-the-pod-model">
+<h2>Constructing the POD model<a class="headerlink" href="#constructing-the-pod-model" title="Link to this heading">#</a></h2>
+<p>Using <code class="docutils literal notranslate"><span class="pre">scimlstudio</span></code>, the <code class="docutils literal notranslate"><span class="pre">POD</span></code> class can be used to implement the method. This class has the following three required inputs:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s_train</span></code>: Snapshot or data matrix for the POD method. This must have dimensions <span class="math notranslate nohighlight">\(n \times p\)</span>, where <span class="math notranslate nohighlight">\(n\)</span> is the number of outputs for the grid and <span class="math notranslate nohighlight">\(p\)</span> is the number of samples in the matrix.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ric</span></code>: Relative information criterion for the model.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">snapshot_transform</span></code>: Data transform for the snapshot or data matrix. Typically, the matrix is only centered to have zero mean. However, standardizing the snapshot matrix can lead to better results and therefore, standardization is used here. It is important to note that the matrix provided to the transform class must have dimensions <span class="math notranslate nohighlight">\(p \times n\)</span>.</p></li>
+</ul>
+<p>The following block of code builds the POD model using standardization as the transform and with an RIC value of 0.9999. After the model is created and fitted, the singular values and RIC are plotted to demonstrate how the POD model learns information from the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># reshape the training data such that each column is the field and the number of columns </span>
+<span class="c1"># is the number of training samples</span>
+<span class="n">transform</span> <span class="o">=</span> <span class="n">Standardize</span><span class="p">(</span><span class="n">xtrain</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">pod</span> <span class="o">=</span> <span class="n">POD</span><span class="p">(</span><span class="n">s_train</span><span class="o">=</span><span class="n">xtrain</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mT</span><span class="p">,</span> <span class="n">ric</span><span class="o">=</span><span class="mf">0.9999</span><span class="p">,</span> <span class="n">snapshot_transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
+<span class="n">pod</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of modes to meet RIC value: </span><span class="si">{</span><span class="n">pod</span><span class="o">.</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># plotting the singular values of the POD model</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">xtrain</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">pod</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="s1">&#39;bo-&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Singular values&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Mode Index&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Singular Values of POD Modes&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of modes to meet RIC value: 14
+</pre></div>
+</div>
+<img alt="_images/3e324cd9931b56e56be1af1e01231e729cbc757012edd9eb13afa76e65f8dea5.png" src="_images/3e324cd9931b56e56be1af1e01231e729cbc757012edd9eb13afa76e65f8dea5.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plotting the ric values for the pod model</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">xtrain</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="p">[</span><span class="n">ric</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">ric</span> <span class="ow">in</span> <span class="n">pod</span><span class="o">.</span><span class="n">ric_list</span><span class="p">],</span> <span class="s1">&#39;ro-&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;RIC&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of Singular Values&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Relative Information Criterion&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">pod</span><span class="o">.</span><span class="n">ric</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;RIC Threshold&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/09e3f67e6767a1745d3abc0ee99ed15fbc0ca352597f2cf53413c52b7c519ae1.png" src="_images/09e3f67e6767a1745d3abc0ee99ed15fbc0ca352597f2cf53413c52b7c519ae1.png" />
+</div>
+</div>
+<p>From the plot of singular values and RIC shown above, most singular values are close to zero and only a few contribute to the information present in the snapshot matrix. Similarly, the plot of RIC demonstrates that only a few modes are required to meet the threshold of RIC specified. This fact is the reason that POD can project high-dimensional data to a low-dimensional representation.</p>
+</section>
+<section id="plotting-the-pod-modes-for-the-emf">
+<h2>Plotting the POD modes for the EMF<a class="headerlink" href="#plotting-the-pod-modes-for-the-emf" title="Link to this heading">#</a></h2>
+<p>Now that the POD modes of the EMF have been generated, we can plot the modes to visualize. Each POD modes is also a field of the same dimension as the original data and it can be plotted on the same grid. Typically, the POD modes will reveal spatial or temporal structures within the data that you are analyzing. In this case, we can see the dominant spatial structures of the EMF within the POD modes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plotting_modes</span> <span class="o">=</span> <span class="p">[[</span><span class="n">pod</span><span class="o">.</span><span class="n">modes</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">pod</span><span class="o">.</span><span class="n">modes</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="n">pod</span><span class="o">.</span><span class="n">modes</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span> <span class="n">pod</span><span class="o">.</span><span class="n">modes</span><span class="p">[:,</span><span class="mi">3</span><span class="p">]]]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+        <span class="n">contour</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">Sgrid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">Tgrid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">plotting_modes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span><span class="mi">32</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+                                   <span class="n">levels</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span> 
+        <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/22e687fdf43e68b2e59d897483e3422907e69f97eaae39adac9b578bdf5b3651.png" src="_images/22e687fdf43e68b2e59d897483e3422907e69f97eaae39adac9b578bdf5b3651.png" />
+</div>
+</div>
+</section>
+<section id="reconstructing-the-emf-using-the-pod-modes">
+<h2>Reconstructing the EMF using the POD modes<a class="headerlink" href="#reconstructing-the-emf-using-the-pod-modes" title="Link to this heading">#</a></h2>
+<p>Once the POD modes are generated, the data can also be projected to the low-dimensional space and then reconstructed. The projection can be done using the <code class="docutils literal notranslate"><span class="pre">encoding</span></code> method of the <code class="docutils literal notranslate"><span class="pre">POD</span></code> class and the reconstruction can be done from the low-dimensional coordinates using the <code class="docutils literal notranslate"><span class="pre">decoding</span></code> method of the <code class="docutils literal notranslate"><span class="pre">POD</span></code> class. This is demonstrated in the following code block:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Projecting to low-dimensional coordinates</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">pod</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">xtrain</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mT</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shape of projection:&quot;</span><span class="p">,</span> <span class="n">z</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="c1"># Reconstructing</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">pod</span><span class="o">.</span><span class="n">decoding</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shape of reconstruction:&quot;</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of projection: torch.Size([40, 14])
+Shape of reconstruction: torch.Size([40, 1024])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The above computations show that the original 1024 outputs can actually be compressed to a representation with only 15 outputs and it is far easier to model 15 outputs than 1024 outputs.</p>
+<p>As noted at the start, if the process of projection and reconstruction are chained together, the POD model can act as a surrogate model that reconstructs its input. This can be done using the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method in the <code class="docutils literal notranslate"><span class="pre">POD</span></code> class. This is demonstrated using the testing data generated earlier and the predictions are visualized. The absolute error between the predictions and the ground truth is also visualized to illustrate the distribution of error in the reconstruction of the POD model. It can be seen that the error is concentrated near <span class="math notranslate nohighlight">\(t=30\)</span> where the discontinuity in the function occurs. POD is a linear dimensionality reduction method and therefore, cannot effectively capture a nonlinearity such as a discontinuity. However, the method is accurate in other regions of he grid that do not have a discontinuity.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># using the predict method to reconstruct the EMF</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">pod</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xtest</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mT</span><span class="p">)</span>
+<span class="n">predictions_reshaped</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">mT</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">32</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plotting the reconstructions</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="n">contour</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">Sgrid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">Tgrid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">predictions_reshaped</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+                         <span class="n">levels</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span> 
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">)</span> 
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;POD Reconstruction&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">contour</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">Sgrid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">Tgrid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">xtest</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">-</span> <span class="n">predictions_reshaped</span><span class="p">[</span><span class="mi">10</span><span class="p">])</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+                         <span class="n">levels</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span> 
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Absolute Error&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/8987d44f754bd1e9133d8f59aaa70cecc6bc252e83c635219ef88557958e3398.png" src="_images/8987d44f754bd1e9133d8f59aaa70cecc6bc252e83c635219ef88557958e3398.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="n">contour</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">Sgrid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">Tgrid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">predictions_reshaped</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">levels</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span> 
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">)</span> 
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;POD Reconstruction&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">contour</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">Sgrid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">Tgrid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">xtest</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span> <span class="o">-</span> <span class="n">predictions_reshaped</span><span class="p">[</span><span class="mi">20</span><span class="p">])</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">levels</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span> 
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Absolute Error&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e529d3a9a76af82f13718c43f958bddb20229ebeea3c6ff7573154a086e2b6cd.png" src="_images/e529d3a9a76af82f13718c43f958bddb20229ebeea3c6ff7573154a086e2b6cd.png" />
+</div>
+</div>
+</section>
+<section id="error-metrics">
+<h2>Error metrics<a class="headerlink" href="#error-metrics" title="Link to this heading">#</a></h2>
+<p>While the absolute error plotted previously can elucidate the error in the reconstruction for a particular sample point, it is difficult to infer the overall reconstruction accuracy of the POD model using absolute error alone. This motivates the need for a different metric that can provide a sense of the overall accuracy of the POD model.</p>
+<p>In this case, we can calculate the normalized root mean squared error (NRMSE) for each grid point over which the field is evaluated. This NRMSE can be defined as
+$<span class="math notranslate nohighlight">\(\text{NRMSE}^{st} = \frac{1}{\max(y^{st})-\min(y^{st})}\sqrt{\frac{1}{N}\sum_{j=1}^N(\hat{y}^{st}_j-y^{st}_j)^2}\)</span>$</p>
+<p>where <span class="math notranslate nohighlight">\(st\)</span> indicates the NRMSE is being calculated at <span class="math notranslate nohighlight">\((s,t)\)</span>. <span class="math notranslate nohighlight">\(\hat{y}^{st}\)</span> represents the prediction of the model at <span class="math notranslate nohighlight">\((s,t)\)</span> and <span class="math notranslate nohighlight">\(y^{st}\)</span> represents the ground truth value at <span class="math notranslate nohighlight">\((s,t)\)</span>. Once the NRMSE is calculated at each grid point, it can be plotted as a contour plot to visualize the error of the reconstruction across all testing points over the grid. We can also use the mean NRMSE over the whole grid as a single aggregated value that represents the error in the reconstruction of the POD model. However, it is always best to plot the contours of the NRMSE as the aggregated value can be misleading when assessing the accuracy of the reconstruction.</p>
+<p>The next block of code calculates the NRMSE using the <code class="docutils literal notranslate"><span class="pre">evaluate_vector</span></code> function from <code class="docutils literal notranslate"><span class="pre">scimlstudio</span></code> and plots the NRMSE contours. It also shows that the error is accumulated near the location of the discontinuity in the function. Values of the function far from the discontinuity are well reconstructed by the POD method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># calculating the nrmse for each grid point</span>
+<span class="n">nrmse</span> <span class="o">=</span> <span class="n">evaluate_vector</span><span class="p">(</span><span class="n">true_values</span><span class="o">=</span><span class="n">xtest</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">predict_values</span><span class="o">=</span><span class="n">predictions</span><span class="o">.</span><span class="n">mT</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;nrmse&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average value of NRMSE across grid: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">nrmse</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># plotting the nrmse</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">contour</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">Sgrid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">Tgrid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">nrmse</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span><span class="mi">32</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">levels</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;NRMSE Contours&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average value of NRMSE across grid: 0.007113376632332802
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7a900ac62ab0&gt;
+</pre></div>
+</div>
+<img alt="_images/9d4c0698b50e2cfbe355a26074a25bccd5771b492306f1a34fd08460fba19f1e.png" src="_images/9d4c0698b50e2cfbe355a26074a25bccd5771b492306f1a34fd08460fba19f1e.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="mf_nn_models.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Multi-Fidelity Neural Networks</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-model-function">Environment Model Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-the-pod-model">Constructing the POD model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-the-pod-modes-for-the-emf">Plotting the POD modes for the EMF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reconstructing-the-emf-using-the-pod-modes">Reconstructing the EMF using the POD modes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#error-metrics">Error metrics</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By CODE Lab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
