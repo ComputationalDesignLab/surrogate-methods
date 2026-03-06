@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -208,6 +208,7 @@
 <li class="toctree-l2"><a class="reference internal" href="nn_models.html">Neural Networks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mf_nn_models.html">Multi-Fidelity Neural Networks</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Proper Orthogonal Decomposition</a></li>
+
 </ul>
 </details></li>
 </ul>
@@ -373,12 +374,17 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Proper Orthogonal Decomposition</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#theory">Theory</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-model-function">Environment Model Function</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-the-pod-model">Constructing the POD model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-the-pod-modes-for-the-emf">Plotting the POD modes for the EMF</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reconstructing-the-emf-using-the-pod-modes">Reconstructing the EMF using the POD modes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#error-metrics">Error metrics</a></li>
 </ul>
+</li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -395,12 +401,13 @@ document.write(`
 <p>[1] <a class="reference external" href="https://arc.aiaa.org/doi/10.2514/1.J061720">K. Decker, N. Iyengar, D. Rajaram, C. Perron, and D. Mavris, “Manifold Alignment-Based nonintrusive and nonlinear multifidelity Reduced-Order modeling,” AIAA Journal, vol. 61, no. 1, pp. 454–474, Oct. 2022</a></p>
 <p>[2] <a class="reference external" href="https://arc.aiaa.org/doi/10.2514/6.2020-3003">K. Decker, H. D. Schwartz, and D. Mavris, “Dimensionality reduction techniques applied to the design of hypersonic aerial systems,” in AIAA AVIATION 2020 FORUM, Virtual Conference, Jun. 2020</a></p>
 <p>[3] <a class="reference external" href="https://link.springer.com/rwe/10.1007/978-3-540-30299-5_22">H. Nobach, C. Tropea, C. Laurent, J. Bonnet, J. Delville, J. Lewalle, M. Farge, K. Schneider and R. Adrian, “Review of Some Fundamentals of Data Processing,” in Springer Handbook of Experimental Fluid Mechanics, 2007, pp. 1337–1398</a></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="theory">
+<h1>Theory<a class="headerlink" href="#theory" title="Link to this heading">#</a></h1>
 <p>POD is a linear dimensionality reduction method that projects high-dimensional data, <span class="math notranslate nohighlight">\(x\in \mathbb{R}^n\)</span>, to a low-dimensional representation, <span class="math notranslate nohighlight">\(z\in \mathbb{R}^k\)</span>, where <span class="math notranslate nohighlight">\(k &lt;&lt; n\)</span>. The fact that POD is a linear dimensionality reduction method means that it is only able to capture the linear trends and features of the data but cannot capture nonlinear features in the data such as discontinuities. In engineering settings, POD can be useful in creating a low-dimensional projection of high-dimensional data to better facilitate the process of surrogate modeling.</p>
 <p>The main steps in the process of POD are given below. For this explaination, consider that <span class="math notranslate nohighlight">\(X \in \mathbb{R}^{n\times m}\)</span>, is a matrix where each column of the matrix represents the high-dimensional data of the system. For example, this could be the pressure field output from a fluids simulation or the stress field output from a structures simulation. <span class="math notranslate nohighlight">\(X\)</span> is also called the snapshot matrix in some sources within the literature. It is assumed that any data preprocessing steps such as standardization transforms or centering have already been performed on the data. There are a total of <span class="math notranslate nohighlight">\(p\)</span> instances of the high-dimensional data, typically drawn from sampling points generated from a design of experiments.</p>
 <ol class="arabic simple">
-<li><p><strong>Perform singular value decomposition (SVD) on the high-dimensional data:</strong> SVD is used to decompose the matrix <span class="math notranslate nohighlight">\(X\)</span> into three separate matrices as follows:
-$<span class="math notranslate nohighlight">\(X = U\Sigma V^T\)</span><span class="math notranslate nohighlight">\(
-where columns of \)</span>U \in \mathbb{R}^{n \times n}<span class="math notranslate nohighlight">\( contain the eigenvectors of \)</span>XX^T<span class="math notranslate nohighlight">\(, columns of \)</span>V \in \mathbb{R}^{m \times m}<span class="math notranslate nohighlight">\( contain the eignevectors of \)</span>X^TX<span class="math notranslate nohighlight">\(, and \)</span>\Sigma \in \mathbb{R}^{n\times m}<span class="math notranslate nohighlight">\( is a diagonal matrix containing the singular values of the matrix. The singular values, \)</span>\sigma_i<span class="math notranslate nohighlight">\(, are arranged in descending order such that \)</span>\sigma_1 \leq \sigma_2 \leq \dots \leq \sigma_r<span class="math notranslate nohighlight">\( along the diagonal and \)</span>r=\min(n,m)<span class="math notranslate nohighlight">\(. The columns of \)</span>U<span class="math notranslate nohighlight">\( form the POD modes of the matrix \)</span>X$.</p></li>
+<li><p><strong>Perform singular value decomposition (SVD) on the high-dimensional data:</strong> SVD is used to decompose the matrix <span class="math notranslate nohighlight">\(X\)</span> into three separate matrices, <span class="math notranslate nohighlight">\(X = U\Sigma V^T\)</span>, where columns of <span class="math notranslate nohighlight">\(U \in \mathbb{R}^{n \times n}\)</span> contain the eigenvectors of <span class="math notranslate nohighlight">\(XX^T\)</span>, columns of <span class="math notranslate nohighlight">\(V \in \mathbb{R}^{m \times m}\)</span> contain the eignevectors of <span class="math notranslate nohighlight">\(X^TX\)</span>, and <span class="math notranslate nohighlight">\(\Sigma \in \mathbb{R}^{n\times m}\)</span> is a diagonal matrix containing the singular values of the matrix. The singular values, <span class="math notranslate nohighlight">\(\sigma_i\)</span>, are arranged in descending order such that <span class="math notranslate nohighlight">\(\sigma_1 \leq \sigma_2 \leq \dots \leq \sigma_r\)</span> along the diagonal and <span class="math notranslate nohighlight">\(r=\min(n,m)\)</span>. The columns of <span class="math notranslate nohighlight">\(U\)</span> form the POD modes of the matrix <span class="math notranslate nohighlight">\(X\)</span>.</p></li>
 <li><p><strong>Truncate the columns of <span class="math notranslate nohighlight">\(U\)</span> to obtain the POD modes:</strong> After obtaining the SVD of the matrix, the columns of <span class="math notranslate nohighlight">\(U\)</span> must be truncated since the full matrix <span class="math notranslate nohighlight">\(X\)</span> can be represented effectively using only a few POD modes. The truncation involves calculating the relative information criterion (RIC) and using the number of modes that can meet the threshold of RIC that is set by the user. A threshold of 0.9999 is a common choice for RIC. The RIC is a function of <span class="math notranslate nohighlight">\(k\)</span>, which is the number of POD modes that are retained in the truncation. The RIC can be written as follows:</p></li>
 </ol>
 <div class="math notranslate nohighlight">
@@ -451,7 +458,7 @@ where columns of \)</span>U \in \mathbb{R}^{n \times n}<span class="math notrans
 </div>
 <section id="environment-model-function">
 <h2>Environment Model Function<a class="headerlink" href="#environment-model-function" title="Link to this heading">#</a></h2>
-<p>The use of POD will be demonstrated using the Environment Model Function (EMF) that can be described as follows:</p>
+<p>The use of POD will be demonstrated using the <a class="reference external" href="https://www.sfu.ca/~ssurjano/environ.html">Environment Model Function (EMF)</a> that can be described as follows:</p>
 <div class="math notranslate nohighlight">
 \[h(s,t|\textbf{x})= \frac{M}{\sqrt{4\pi Dt}}\text{exp}(\frac{-s^2}{4Dt}) + \frac{1_{t&gt;\tau}M}{\sqrt{4\pi D(t-\tau)}}\text{exp}(\frac{-(s-L)^2}{4D(t-\tau)}),\]</div>
 <p>where <span class="math notranslate nohighlight">\(\textbf{x} = [M,D,L,\tau]\)</span> is a vector of input variables for the function. <span class="math notranslate nohighlight">\((s,t)\)</span> are spatial and temporal coordinates that describe a 2D grid over which the EMF is evaluated. The following block of code defines the EMF. The EMF is evaluated on a 32 x 32 grid for <span class="math notranslate nohighlight">\((s,t)\)</span> which means that there are a total of 1024 values to model for the EMF over this grid. It is challenging to predict this function because the indicator function in the numerator of the second term introduces a discontinuity within the function.</p>
@@ -491,14 +498,8 @@ where columns of \)</span>U \in \mathbb{R}^{n \times n}<span class="math notrans
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/abhijnan/miniconda3/envs/surrogate_methods_sp26/lib/python3.12/site-packages/torch/functional.py:505: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /pytorch/aten/src/ATen/native/TensorShape.cpp:4317.)
-  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
-</pre></div>
 </div>
-</div>
-</div>
-<p>Let’s create some training and testing data for the POD method. There are 50 training samples and 100 testing samples generated. Since there are 4 input variables for the function, Latin hypercube sampling (LHS) is used to generate the training and testing data for the POD method.</p>
+<p>Let’s create some training and testing data for the POD method. There are 40 training samples and 100 testing samples generated. Since there are 4 input variables for the function, Latin hypercube sampling (LHS) is used to generate the training and testing data for the POD method.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># defining the bounds</span>
@@ -545,7 +546,7 @@ Shape of testing data: torch.Size([100, 32, 32])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e88ae442fab032ed06d29980327f4a76c4ff2a941d23260ba145b518829db574.png" src="_images/e88ae442fab032ed06d29980327f4a76c4ff2a941d23260ba145b518829db574.png" />
+<img alt="_images/be00e0a92b8ca877a72ec1ec5a34449b30b34301a2dfa0486e824231e5a77771.png" src="_images/be00e0a92b8ca877a72ec1ec5a34449b30b34301a2dfa0486e824231e5a77771.png" />
 </div>
 </div>
 </section>
@@ -580,10 +581,10 @@ Shape of testing data: torch.Size([100, 32, 32])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of modes to meet RIC value: 14
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of modes to meet RIC value: 15
 </pre></div>
 </div>
-<img alt="_images/3e324cd9931b56e56be1af1e01231e729cbc757012edd9eb13afa76e65f8dea5.png" src="_images/3e324cd9931b56e56be1af1e01231e729cbc757012edd9eb13afa76e65f8dea5.png" />
+<img alt="_images/bbb20a5c31ef80f36b51d1d59b70224e6d18e1764ed2145febad300ca1032d0a.png" src="_images/bbb20a5c31ef80f36b51d1d59b70224e6d18e1764ed2145febad300ca1032d0a.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -601,7 +602,7 @@ Shape of testing data: torch.Size([100, 32, 32])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/09e3f67e6767a1745d3abc0ee99ed15fbc0ca352597f2cf53413c52b7c519ae1.png" src="_images/09e3f67e6767a1745d3abc0ee99ed15fbc0ca352597f2cf53413c52b7c519ae1.png" />
+<img alt="_images/d6ee66413bd6a280bacf9856fd278de6ebb60687a400a2efe10898cd35504ec6.png" src="_images/d6ee66413bd6a280bacf9856fd278de6ebb60687a400a2efe10898cd35504ec6.png" />
 </div>
 </div>
 <p>From the plot of singular values and RIC shown above, most singular values are close to zero and only a few contribute to the information present in the snapshot matrix. Similarly, the plot of RIC demonstrates that only a few modes are required to meet the threshold of RIC specified. This fact is the reason that POD can project high-dimensional data to a low-dimensional representation.</p>
@@ -613,7 +614,7 @@ Shape of testing data: torch.Size([100, 32, 32])
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">plotting_modes</span> <span class="o">=</span> <span class="p">[[</span><span class="n">pod</span><span class="o">.</span><span class="n">modes</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">pod</span><span class="o">.</span><span class="n">modes</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="n">pod</span><span class="o">.</span><span class="n">modes</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span> <span class="n">pod</span><span class="o">.</span><span class="n">modes</span><span class="p">[:,</span><span class="mi">3</span><span class="p">]]]</span>
-
+<span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
         <span class="n">contour</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">Sgrid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">Tgrid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">plotting_modes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span><span class="mi">32</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
@@ -622,14 +623,16 @@ Shape of testing data: torch.Size([100, 32, 32])
             <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span> 
         <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;POD Mode </span><span class="si">{</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
+        <span class="n">k</span><span class="o">+=</span><span class="mi">1</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/22e687fdf43e68b2e59d897483e3422907e69f97eaae39adac9b578bdf5b3651.png" src="_images/22e687fdf43e68b2e59d897483e3422907e69f97eaae39adac9b578bdf5b3651.png" />
+<img alt="_images/06bc00e41f6afcb640b9d5db822dcdb3db1f525fca67fbcf087c0f68b0cf143d.png" src="_images/06bc00e41f6afcb640b9d5db822dcdb3db1f525fca67fbcf087c0f68b0cf143d.png" />
 </div>
 </div>
 </section>
@@ -648,7 +651,7 @@ Shape of testing data: torch.Size([100, 32, 32])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of projection: torch.Size([40, 14])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of projection: torch.Size([40, 15])
 Shape of reconstruction: torch.Size([40, 1024])
 </pre></div>
 </div>
@@ -688,7 +691,7 @@ Shape of reconstruction: torch.Size([40, 1024])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8987d44f754bd1e9133d8f59aaa70cecc6bc252e83c635219ef88557958e3398.png" src="_images/8987d44f754bd1e9133d8f59aaa70cecc6bc252e83c635219ef88557958e3398.png" />
+<img alt="_images/1494b57dc9dad9a7eaf63afbe3ef6cab8ea3020f81dc53f351f3bd9eba2b80cb.png" src="_images/1494b57dc9dad9a7eaf63afbe3ef6cab8ea3020f81dc53f351f3bd9eba2b80cb.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -711,7 +714,7 @@ Shape of reconstruction: torch.Size([40, 1024])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e529d3a9a76af82f13718c43f958bddb20229ebeea3c6ff7573154a086e2b6cd.png" src="_images/e529d3a9a76af82f13718c43f958bddb20229ebeea3c6ff7573154a086e2b6cd.png" />
+<img alt="_images/8ddf7a027bd50c6cc46b1a134334cd6b2fd0e93f3d9810c10e18dc776d6ef5c3.png" src="_images/8ddf7a027bd50c6cc46b1a134334cd6b2fd0e93f3d9810c10e18dc776d6ef5c3.png" />
 </div>
 </div>
 </section>
@@ -739,13 +742,13 @@ $<span class="math notranslate nohighlight">\(\text{NRMSE}^{st} = \frac{1}{\max(
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average value of NRMSE across grid: 0.007113376632332802
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average value of NRMSE across grid: 0.00790669396519661
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7a900ac62ab0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7a9029a71400&gt;
 </pre></div>
 </div>
-<img alt="_images/9d4c0698b50e2cfbe355a26074a25bccd5771b492306f1a34fd08460fba19f1e.png" src="_images/9d4c0698b50e2cfbe355a26074a25bccd5771b492306f1a34fd08460fba19f1e.png" />
+<img alt="_images/0b85b5db106a07a15c4d05e5402e775079071989bc58a6c38365977f7e14afba.png" src="_images/0b85b5db106a07a15c4d05e5402e775079071989bc58a6c38365977f7e14afba.png" />
 </div>
 </div>
 </section>
@@ -806,12 +809,17 @@ $<span class="math notranslate nohighlight">\(\text{NRMSE}^{st} = \frac{1}{\max(
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Proper Orthogonal Decomposition</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#theory">Theory</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-model-function">Environment Model Function</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-the-pod-model">Constructing the POD model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-the-pod-modes-for-the-emf">Plotting the POD modes for the EMF</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reconstructing-the-emf-using-the-pod-modes">Reconstructing the EMF using the POD modes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#error-metrics">Error metrics</a></li>
 </ul>
+</li>
+</ul>
+
   </nav></div>
 
 </div></div>
