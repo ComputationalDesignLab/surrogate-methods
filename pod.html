@@ -208,7 +208,6 @@
 <li class="toctree-l2"><a class="reference internal" href="nn_models.html">Neural Networks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mf_nn_models.html">Multi-Fidelity Neural Networks</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Proper Orthogonal Decomposition</a></li>
-
 </ul>
 </details></li>
 </ul>
@@ -374,17 +373,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Proper Orthogonal Decomposition</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#theory">Theory</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#theory">Theory</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-model-function">Environment Model Function</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-the-pod-model">Constructing the POD model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-the-pod-modes-for-the-emf">Plotting the POD modes for the EMF</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reconstructing-the-emf-using-the-pod-modes">Reconstructing the EMF using the POD modes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#error-metrics">Error metrics</a></li>
 </ul>
-</li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -401,9 +396,8 @@ document.write(`
 <p>[1] <a class="reference external" href="https://arc.aiaa.org/doi/10.2514/1.J061720">K. Decker, N. Iyengar, D. Rajaram, C. Perron, and D. Mavris, “Manifold Alignment-Based nonintrusive and nonlinear multifidelity Reduced-Order modeling,” AIAA Journal, vol. 61, no. 1, pp. 454–474, Oct. 2022</a></p>
 <p>[2] <a class="reference external" href="https://arc.aiaa.org/doi/10.2514/6.2020-3003">K. Decker, H. D. Schwartz, and D. Mavris, “Dimensionality reduction techniques applied to the design of hypersonic aerial systems,” in AIAA AVIATION 2020 FORUM, Virtual Conference, Jun. 2020</a></p>
 <p>[3] <a class="reference external" href="https://link.springer.com/rwe/10.1007/978-3-540-30299-5_22">H. Nobach, C. Tropea, C. Laurent, J. Bonnet, J. Delville, J. Lewalle, M. Farge, K. Schneider and R. Adrian, “Review of Some Fundamentals of Data Processing,” in Springer Handbook of Experimental Fluid Mechanics, 2007, pp. 1337–1398</a></p>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="theory">
-<h1>Theory<a class="headerlink" href="#theory" title="Link to this heading">#</a></h1>
+<section id="theory">
+<h2>Theory<a class="headerlink" href="#theory" title="Link to this heading">#</a></h2>
 <p>POD is a linear dimensionality reduction method that projects high-dimensional data, <span class="math notranslate nohighlight">\(x\in \mathbb{R}^n\)</span>, to a low-dimensional representation, <span class="math notranslate nohighlight">\(z\in \mathbb{R}^k\)</span>, where <span class="math notranslate nohighlight">\(k &lt;&lt; n\)</span>. The fact that POD is a linear dimensionality reduction method means that it is only able to capture the linear trends and features of the data but cannot capture nonlinear features in the data such as discontinuities. In engineering settings, POD can be useful in creating a low-dimensional projection of high-dimensional data to better facilitate the process of surrogate modeling.</p>
 <p>The main steps in the process of POD are given below. For this explaination, consider that <span class="math notranslate nohighlight">\(X \in \mathbb{R}^{n\times m}\)</span>, is a matrix where each column of the matrix represents the high-dimensional data of the system. For example, this could be the pressure field output from a fluids simulation or the stress field output from a structures simulation. <span class="math notranslate nohighlight">\(X\)</span> is also called the snapshot matrix in some sources within the literature. It is assumed that any data preprocessing steps such as standardization transforms or centering have already been performed on the data. There are a total of <span class="math notranslate nohighlight">\(p\)</span> instances of the high-dimensional data, typically drawn from sampling points generated from a design of experiments.</p>
 <ol class="arabic simple">
@@ -456,6 +450,7 @@ document.write(`
 </div>
 </div>
 </div>
+</section>
 <section id="environment-model-function">
 <h2>Environment Model Function<a class="headerlink" href="#environment-model-function" title="Link to this heading">#</a></h2>
 <p>The use of POD will be demonstrated using the <a class="reference external" href="https://www.sfu.ca/~ssurjano/environ.html">Environment Model Function (EMF)</a> that can be described as follows:</p>
@@ -814,17 +809,13 @@ Shape of reconstruction: torch.Size([40, 1024])
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Proper Orthogonal Decomposition</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#theory">Theory</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#theory">Theory</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-model-function">Environment Model Function</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-the-pod-model">Constructing the POD model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-the-pod-modes-for-the-emf">Plotting the POD modes for the EMF</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reconstructing-the-emf-using-the-pod-modes">Reconstructing the EMF using the POD modes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#error-metrics">Error metrics</a></li>
 </ul>
-</li>
-</ul>
-
   </nav></div>
 
 </div></div>
