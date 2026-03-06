@@ -24,6 +24,7 @@ chapters:
           - file: gp_models/gp_models_with_noise
       - file: nn_models
       - file: mf_nn_models
+      - file: pod
   # - file: seq_sampling/intro
   #   sections:
   #   - file: seq_sampling/exploitation
