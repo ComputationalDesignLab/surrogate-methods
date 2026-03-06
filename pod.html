@@ -721,8 +721,13 @@ Shape of reconstruction: torch.Size([40, 1024])
 <section id="error-metrics">
 <h2>Error metrics<a class="headerlink" href="#error-metrics" title="Link to this heading">#</a></h2>
 <p>While the absolute error plotted previously can elucidate the error in the reconstruction for a particular sample point, it is difficult to infer the overall reconstruction accuracy of the POD model using absolute error alone. This motivates the need for a different metric that can provide a sense of the overall accuracy of the POD model.</p>
-<p>In this case, we can calculate the normalized root mean squared error (NRMSE) for each grid point over which the field is evaluated. This NRMSE can be defined as
-$<span class="math notranslate nohighlight">\(\text{NRMSE}^{st} = \frac{1}{\max(y^{st})-\min(y^{st})}\sqrt{\frac{1}{N}\sum_{j=1}^N(\hat{y}^{st}_j-y^{st}_j)^2}\)</span>$</p>
+<p>In this case, we can calculate the normalized root mean squared error (NRMSE) for each grid point over which the field is evaluated. This NRMSE can be defined as</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{gather*}
+\text{NRMSE}^{st} = \frac{1}{\max(y^{st})-\min(y^{st})}\sqrt{\frac{1}{N}\sum_{j=1}^N(\hat{y}^{st}_j-y^{st}_j)^2}
+\end{gather*}
+\]</div>
 <p>where <span class="math notranslate nohighlight">\(st\)</span> indicates the NRMSE is being calculated at <span class="math notranslate nohighlight">\((s,t)\)</span>. <span class="math notranslate nohighlight">\(\hat{y}^{st}\)</span> represents the prediction of the model at <span class="math notranslate nohighlight">\((s,t)\)</span> and <span class="math notranslate nohighlight">\(y^{st}\)</span> represents the ground truth value at <span class="math notranslate nohighlight">\((s,t)\)</span>. Once the NRMSE is calculated at each grid point, it can be plotted as a contour plot to visualize the error of the reconstruction across all testing points over the grid. We can also use the mean NRMSE over the whole grid as a single aggregated value that represents the error in the reconstruction of the POD model. However, it is always best to plot the contours of the NRMSE as the aggregated value can be misleading when assessing the accuracy of the reconstruction.</p>
 <p>The next block of code calculates the NRMSE using the <code class="docutils literal notranslate"><span class="pre">evaluate_vector</span></code> function from <code class="docutils literal notranslate"><span class="pre">scimlstudio</span></code> and plots the NRMSE contours. It also shows that the error is accumulated near the location of the discontinuity in the function. Values of the function far from the discontinuity are well reconstructed by the POD method.</p>
 <div class="cell docutils container">
