@@ -25,6 +25,7 @@ chapters:
       - file: nn_models
       - file: mf_nn_models
       - file: pod
+      - file: autoencoder
   # - file: seq_sampling/intro
   #   sections:
   #   - file: seq_sampling/exploitation
