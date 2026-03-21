@@ -391,7 +391,7 @@ document.write(`
 <h1>Autoencoder Neural Networks<a class="headerlink" href="#autoencoder-neural-networks" title="Link to this heading">#</a></h1>
 <p>This section provides examples for implementing autoencoder neural network models. Make sure that you have downloaded and installed the latest release of the <code class="docutils literal notranslate"><span class="pre">scimlstudio</span></code> package before running the code in this section.</p>
 <p>Autoencoders is a special type of neural network architecture that is used to project high-dimensional data onto a low-dimensional space, similar to the proper orthogonal decomposition (POD) method introduced in the <a class="reference external" href="https://computationaldesignlab.github.io/surrogate-methods/pod.html">previous section</a>. The difference between POD and autoencoders is that autoencoders use two neural networks to project and reconstruct high-dimensional data. Since neural networks with nonlinear activation functions are used, the projection of the data to the low-dimensional space happens in a nonlinear manner. Due to this, autoencoders can capture nonlinear behavior and trends in the high-dimensional data. This is possible to do using neural networks as they can easily predict an arbritrary number of outputs and use data with an arbritrary input dimensionality. A graphical representation of autoencoder neural networks is shown below.</p>
-<a class="reference internal image-reference" href="_images/autoencoder.png"><img alt="_images/autoencoder.png" class="align-center" src="_images/autoencoder.png" style="width: 450px;" /></a>
+<a class="reference internal image-reference" href="_images/autoencoder.png"><img alt="_images/autoencoder.png" class="align-center" src="_images/autoencoder.png" style="width: 350px;" /></a>
 <p>The encoder neural network, <span class="math notranslate nohighlight">\(f_{\theta}\)</span>, projects the high-dimensional data, <span class="math notranslate nohighlight">\(\textbf{X} \in \mathbb{R}^n\)</span>, to a set of latent variables, <span class="math notranslate nohighlight">\(\textbf{z} \in \mathbb{R}^m\)</span>, with <span class="math notranslate nohighlight">\(m &lt;&lt; n\)</span>. Here, the term latent variables is used to describe a set of variables that are not directly observable but represent important information about the data. The decoder neural network, <span class="math notranslate nohighlight">\(g_{\phi}\)</span>, uses the latent variables to reconstruct the high-dimensional data. Here, the subscript indicates the set of parameters that describe the neural network. This operation can be mathematically represented as follows.</p>
 <div class="math notranslate nohighlight">
 \[\hat{\textbf{X}} = g_{\phi}(f_{\theta}(\textbf{X}))\]</div>
@@ -423,12 +423,6 @@ document.write(`
 
 <span class="c1"># defining the device and data types</span>
 <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;device&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cuda&#39;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;cpu&#39;</span><span class="p">),</span> <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/gallifrey/miniconda3/envs/surrogate_methods_sp26/lib/python3.12/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
-  from .autonotebook import tqdm as notebook_tqdm
 </pre></div>
 </div>
 </div>
@@ -518,7 +512,7 @@ Shape of testing data: torch.Size([50, 32, 32])
 <li><p><code class="docutils literal notranslate"><span class="pre">x_train</span></code>: Data matrix for the autoencoder neural network. This must have dimensions <span class="math notranslate nohighlight">\(m \times n\)</span>, where <span class="math notranslate nohighlight">\(m\)</span> is the number of samples in the matrix and <span class="math notranslate nohighlight">\(n\)</span> is the number of outputs for the grid.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">encoder</span></code>: <code class="docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code> object that defines the encoder network for the autoencoder.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">decoder</span></code>: <code class="docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code> object that defines the decoder network for the autoencoder. In most cases, the architecture of the decoder is a mirror image of the encoder architecture. This leads to a symmetric autoencoder. However, you can also have an asymmetric autoencoder where the decoder architecture is not a mirror image of the encoder architecture.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">data_transform</span></code>: <code class="docutils literal notranslate"><span class="pre">Standardize</span></code> or <code class="docutils literal notranslate"><span class="pre">Normalize</span></code> transform object from <code class="docutils literal notranslate"><span class="pre">scimlstudio</span></code> for the data matrix. Standardizing the data matrix often leads to better results and therefore, standardization is used here. It is important to note that the matrix provided to the transform class must have dimensions <span class="math notranslate nohighlight">\(m \times n\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data_transform</span></code>: <code class="docutils literal notranslate"><span class="pre">Standardize</span></code> or <code class="docutils literal notranslate"><span class="pre">Normalize</span></code> transform object from <code class="docutils literal notranslate"><span class="pre">scimlstudio</span></code> for the data matrix. Standardization is used in this case for demonstrative purposes. In some cases, it is also possible that autoencoders can perform well without any data transformations. It is important to note that the matrix provided to the transform class must have dimensions <span class="math notranslate nohighlight">\(m \times n\)</span>.</p></li>
 </ul>
 <p>The following block of code builds the autoencoder model using standardization as the data transform. The network is initialized using the glorot normal initialization.</p>
 <div class="cell docutils container">
@@ -549,7 +543,6 @@ Shape of testing data: torch.Size([50, 32, 32])
     <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">SiLU</span><span class="p">(),</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="n">xtrain</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()</span>
 <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
 
 <span class="c1"># initializing the networks</span>
@@ -557,7 +550,7 @@ Shape of testing data: torch.Size([50, 32, 32])
 <span class="n">decoder</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">init_weights</span><span class="p">)</span>
 
 <span class="c1"># defining the data transform</span>
-<span class="n">data_transform</span> <span class="o">=</span> <span class="n">Normalize</span><span class="p">(</span><span class="n">xtrain</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">data_transform</span> <span class="o">=</span> <span class="n">Standardize</span><span class="p">(</span><span class="n">xtrain</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 
 <span class="c1"># defining the autoencoder</span>
 <span class="n">autoencoder</span> <span class="o">=</span> <span class="n">FeedForwardAutoencoder</span><span class="p">(</span><span class="n">x_train</span><span class="o">=</span><span class="n">xtrain</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">encoder</span><span class="o">=</span><span class="n">encoder</span><span class="p">,</span> <span class="n">decoder</span><span class="o">=</span><span class="n">decoder</span><span class="p">,</span> <span class="n">data_transform</span><span class="o">=</span><span class="n">data_transform</span><span class="p">)</span>
@@ -640,7 +633,7 @@ Shape of reconstruction: torch.Size([1000, 1024])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ed4a3ca88d1945e4cecfc9fa197d7fc5bc1bdf2372a84316db894bdbb82744b5.png" src="_images/ed4a3ca88d1945e4cecfc9fa197d7fc5bc1bdf2372a84316db894bdbb82744b5.png" />
+<img alt="_images/9aad133efbf1e56eeea2ea0f3bae03bae262a003bac66a419a057681109554d7.png" src="_images/9aad133efbf1e56eeea2ea0f3bae03bae262a003bac66a419a057681109554d7.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -663,7 +656,7 @@ Shape of reconstruction: torch.Size([1000, 1024])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/aa66b59a2be67c66d77aa919f49ab8d8273c1f8a7182ea93e30caa4571909081.png" src="_images/aa66b59a2be67c66d77aa919f49ab8d8273c1f8a7182ea93e30caa4571909081.png" />
+<img alt="_images/12599e1ebd3f1e9124673d2bf093f211421cda5772a07cce4078dc29d4c2c7b4.png" src="_images/12599e1ebd3f1e9124673d2bf093f211421cda5772a07cce4078dc29d4c2c7b4.png" />
 </div>
 </div>
 </section>
@@ -727,14 +720,14 @@ Shape of reconstruction: torch.Size([1000, 1024])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average value of NRMSE of autoencoder across grid: 0.004515938926488161
-Average value of NRMSE of POD across grid: 0.0027282414957880974
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average value of NRMSE of autoencoder across grid: 0.003651259932667017
+Average value of NRMSE of POD across grid: 0.003416782710701227
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x28df26960&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x29b5c0fe0&gt;
 </pre></div>
 </div>
-<img alt="_images/7f8d73bc9881dd7e6924fa3a04e681742dfe090ebcd404b0608ea8cb8ab87a38.png" src="_images/7f8d73bc9881dd7e6924fa3a04e681742dfe090ebcd404b0608ea8cb8ab87a38.png" />
+<img alt="_images/230001ca593356eba1b049d8db413ffa03b940d533dd1e4bf2aa0033b4c68a3c.png" src="_images/230001ca593356eba1b049d8db413ffa03b940d533dd1e4bf2aa0033b4c68a3c.png" />
 </div>
 </div>
 </section>
