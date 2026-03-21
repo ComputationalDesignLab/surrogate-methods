@@ -391,7 +391,7 @@ document.write(`
 <h1>Autoencoder Neural Networks<a class="headerlink" href="#autoencoder-neural-networks" title="Link to this heading">#</a></h1>
 <p>This section provides examples for implementing autoencoder neural network models. Make sure that you have downloaded and installed the latest release of the <code class="docutils literal notranslate"><span class="pre">scimlstudio</span></code> package before running the code in this section.</p>
 <p>Autoencoders is a special type of neural network architecture that is used to project high-dimensional data onto a low-dimensional space, similar to the proper orthogonal decomposition (POD) method introduced in the <a class="reference external" href="https://computationaldesignlab.github.io/surrogate-methods/pod.html">previous section</a>. The difference between POD and autoencoders is that autoencoders use two neural networks to project and reconstruct high-dimensional data. Since neural networks with nonlinear activation functions are used, the projection of the data to the low-dimensional space happens in a nonlinear manner. Due to this, autoencoders can capture nonlinear behavior and trends in the high-dimensional data. This is possible to do using neural networks as they can easily predict an arbritrary number of outputs and use data with an arbritrary input dimensionality. A graphical representation of autoencoder neural networks is shown below.</p>
-<a class="reference internal image-reference" href="_images/autoencoder.png"><img alt="_images/autoencoder.png" class="align-center" src="_images/autoencoder.png" style="width: 350px;" /></a>
+<a class="reference internal image-reference" href="_images/autoencoder.png"><img alt="_images/autoencoder.png" class="align-center" src="_images/autoencoder.png" style="width: 450px;" /></a>
 <p>The encoder neural network, <span class="math notranslate nohighlight">\(f_{\theta}\)</span>, projects the high-dimensional data, <span class="math notranslate nohighlight">\(\textbf{X} \in \mathbb{R}^n\)</span>, to a set of latent variables, <span class="math notranslate nohighlight">\(\textbf{z} \in \mathbb{R}^m\)</span>, with <span class="math notranslate nohighlight">\(m &lt;&lt; n\)</span>. Here, the term latent variables is used to describe a set of variables that are not directly observable but represent important information about the data. The decoder neural network, <span class="math notranslate nohighlight">\(g_{\phi}\)</span>, uses the latent variables to reconstruct the high-dimensional data. Here, the subscript indicates the set of parameters that describe the neural network. This operation can be mathematically represented as follows.</p>
 <div class="math notranslate nohighlight">
 \[\hat{\textbf{X}} = g_{\phi}(f_{\theta}(\textbf{X}))\]</div>
@@ -438,7 +438,7 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># defining the grid for the function</span>
 <span class="n">s_grid</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.50</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
 <span class="n">t_grid</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">15.0</span><span class="p">,</span> <span class="mf">60.0</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
-<span class="n">Sgrid</span><span class="p">,</span> <span class="n">Tgrid</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">s_grid</span><span class="p">,</span> <span class="n">t_grid</span><span class="p">)</span>
+<span class="n">Sgrid</span><span class="p">,</span> <span class="n">Tgrid</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">s_grid</span><span class="p">,</span> <span class="n">t_grid</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;ij&#39;</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">env_model_function</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -466,12 +466,6 @@ document.write(`
     <span class="n">y</span> <span class="o">=</span> <span class="n">first_term</span> <span class="o">+</span> <span class="n">second_term</span>
 
     <span class="k">return</span> <span class="n">y</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/gallifrey/miniconda3/envs/surrogate_methods_sp26/lib/python3.12/site-packages/torch/functional.py:505: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/aten/src/ATen/native/TensorShape.cpp:4319.)
-  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
 </pre></div>
 </div>
 </div>
@@ -633,7 +627,7 @@ Shape of reconstruction: torch.Size([1000, 1024])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9aad133efbf1e56eeea2ea0f3bae03bae262a003bac66a419a057681109554d7.png" src="_images/9aad133efbf1e56eeea2ea0f3bae03bae262a003bac66a419a057681109554d7.png" />
+<img alt="_images/f61abbdeeb5030c8f71ab2f1550065f3f131ea7ae27e3af10a1b88b7705c3371.png" src="_images/f61abbdeeb5030c8f71ab2f1550065f3f131ea7ae27e3af10a1b88b7705c3371.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -656,7 +650,7 @@ Shape of reconstruction: torch.Size([1000, 1024])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/12599e1ebd3f1e9124673d2bf093f211421cda5772a07cce4078dc29d4c2c7b4.png" src="_images/12599e1ebd3f1e9124673d2bf093f211421cda5772a07cce4078dc29d4c2c7b4.png" />
+<img alt="_images/60e297e9b47083f11e25d0d6469d0a7a8313422ac2b336fd045531333a2158ca.png" src="_images/60e297e9b47083f11e25d0d6469d0a7a8313422ac2b336fd045531333a2158ca.png" />
 </div>
 </div>
 </section>
@@ -720,14 +714,14 @@ Shape of reconstruction: torch.Size([1000, 1024])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average value of NRMSE of autoencoder across grid: 0.003651259932667017
-Average value of NRMSE of POD across grid: 0.003416782710701227
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average value of NRMSE of autoencoder across grid: 0.004092115443199873
+Average value of NRMSE of POD across grid: 0.0036731562577188015
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x29b5c0fe0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x29b176360&gt;
 </pre></div>
 </div>
-<img alt="_images/230001ca593356eba1b049d8db413ffa03b940d533dd1e4bf2aa0033b4c68a3c.png" src="_images/230001ca593356eba1b049d8db413ffa03b940d533dd1e4bf2aa0033b4c68a3c.png" />
+<img alt="_images/620fe1482d5a1e5d72a56f338921f095e827d1b1c6f4b30f0a79af0495aa3877.png" src="_images/620fe1482d5a1e5d72a56f338921f095e827d1b1c6f4b30f0a79af0495aa3877.png" />
 </div>
 </div>
 </section>
