@@ -372,6 +372,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#theory">Theory</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-model-function">Environment Model Function</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proper-orthogonal-decomposition-gaussian-process-models">Proper Orthogonal Decomposition + Gaussian Process models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#autoencoder-latent-space-nn-models">Autoencoder + Latent Space NN Models</a></li>
@@ -390,6 +391,8 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="multioutput-models">
 <h1>Multioutput Models<a class="headerlink" href="#multioutput-models" title="Link to this heading">#</a></h1>
 <p>This section provides examples for implementing concepts related to multioutput models. Make sure that you have downloaded and installed the latest release of the <code class="docutils literal notranslate"><span class="pre">scimlstudio</span></code> package before running the code in this section.</p>
+<section id="theory">
+<h2>Theory<a class="headerlink" href="#theory" title="Link to this heading">#</a></h2>
 <p>As described in the previous two sections, dimensionality reduction methods can be used to reduce the dimensionality of high-dimensional field outputs and represent them using only a few latent variables. These sections also showed how to reconstruct the high-dimensional data using the methods. However, reconstruction involved providing the methods with a high-dimensional field output. In predictive modeling, we are interested in predicting the high-dimensional outputs and we do not have access to the high-dimensional field output in reality. We want to create a multioutput model that uses a set of input variables to predict the high-dimensional field outputs. This can be done by combining the dimensionality reduction methods with interpolation and regression models, such as Gaussian process (GP) and neural network (NN) models, to create a multioutput surrogate model. A graphical overview of such a surrogate model is shown below.</p>
 <a class="reference internal image-reference" href="_images/nirom.png"><img alt="_images/nirom.png" class="align-center" src="_images/nirom.png" style="width: 450px;" /></a>
 <p>The models described above are known as non-intrusive reduced order models (NIROMs). They are a common method for creating multioutput models to predict very high-dimensional outputs. NIROMs can be formulated mathematically as follows.</p>
@@ -430,6 +433,7 @@ document.write(`
 </div>
 </div>
 </div>
+</section>
 <section id="environment-model-function">
 <h2>Environment Model Function<a class="headerlink" href="#environment-model-function" title="Link to this heading">#</a></h2>
 <p>The NIROM method will be demonstrated using the <a class="reference external" href="https://www.sfu.ca/~ssurjano/environ.html">Environment Model Function (EMF)</a> that can be described as follows:</p>
@@ -877,6 +881,7 @@ Average value of NRMSE of POD + GP model across grid: 0.008524742908775806
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#theory">Theory</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-model-function">Environment Model Function</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proper-orthogonal-decomposition-gaussian-process-models">Proper Orthogonal Decomposition + Gaussian Process models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#autoencoder-latent-space-nn-models">Autoencoder + Latent Space NN Models</a></li>

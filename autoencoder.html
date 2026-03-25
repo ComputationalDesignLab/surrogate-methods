@@ -373,6 +373,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#theory">Theory</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-model-function">Environment Model Function</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-the-autoencoder-neural-network">Constructing the autoencoder neural network</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-the-autoencoder-neural-networks">Training the autoencoder neural networks</a></li>
@@ -392,6 +393,8 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="autoencoder-neural-networks">
 <h1>Autoencoder Neural Networks<a class="headerlink" href="#autoencoder-neural-networks" title="Link to this heading">#</a></h1>
 <p>This section provides examples for implementing autoencoder neural network models. Make sure that you have downloaded and installed the latest release of the <code class="docutils literal notranslate"><span class="pre">scimlstudio</span></code> package before running the code in this section.</p>
+<section id="theory">
+<h2>Theory<a class="headerlink" href="#theory" title="Link to this heading">#</a></h2>
 <p>Autoencoders is a special type of neural network architecture that is used to project high-dimensional data onto a low-dimensional space, similar to the proper orthogonal decomposition (POD) method introduced in the <a class="reference external" href="https://computationaldesignlab.github.io/surrogate-methods/pod.html">previous section</a>. The difference between POD and autoencoders is that autoencoders use two neural networks to project and reconstruct high-dimensional data. Since neural networks with nonlinear activation functions are used, the projection of the data to the low-dimensional space happens in a nonlinear manner. Due to this, autoencoders can capture nonlinear behavior and trends in the high-dimensional data. This is possible to do using neural networks as they can easily predict an arbritrary number of outputs and use data with an arbritrary input dimensionality. A graphical representation of autoencoder neural networks is shown below.</p>
 <a class="reference internal image-reference" href="_images/autoencoder.png"><img alt="_images/autoencoder.png" class="align-center" src="_images/autoencoder.png" style="width: 450px;" /></a>
 <p>The encoder neural network, <span class="math notranslate nohighlight">\(f_{\theta}\)</span>, projects the high-dimensional data, <span class="math notranslate nohighlight">\(\textbf{X} \in \mathbb{R}^n\)</span>, to a set of latent variables, <span class="math notranslate nohighlight">\(\textbf{z} \in \mathbb{R}^m\)</span>, with <span class="math notranslate nohighlight">\(m &lt;&lt; n\)</span>. Here, the term latent variables is used to describe a set of variables that are not directly observable but represent important information about the data. The decoder neural network, <span class="math notranslate nohighlight">\(g_{\phi}\)</span>, uses the latent variables to reconstruct the high-dimensional data. Here, the subscript indicates the set of parameters that describe the neural network. This operation can be mathematically represented as follows.</p>
@@ -429,6 +432,7 @@ document.write(`
 </div>
 </div>
 </div>
+</section>
 <section id="environment-model-function">
 <h2>Environment Model Function<a class="headerlink" href="#environment-model-function" title="Link to this heading">#</a></h2>
 <p>The use of autoencoder neural networks will be demonstrated using the <a class="reference external" href="https://www.sfu.ca/~ssurjano/environ.html">Environment Model Function (EMF)</a> that can be described as follows:</p>
@@ -793,6 +797,7 @@ Average value of NRMSE of POD across grid: 0.0036731562577188015
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#theory">Theory</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-model-function">Environment Model Function</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-the-autoencoder-neural-network">Constructing the autoencoder neural network</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-the-autoencoder-neural-networks">Training the autoencoder neural networks</a></li>
