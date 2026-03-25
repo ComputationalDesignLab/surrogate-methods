@@ -399,13 +399,13 @@ document.write(`
 <p>Each dimensionality reduction method has an encoding process, <span class="math notranslate nohighlight">\(f:\mathbb{R}^n \rightarrow \mathbb{R}^k\)</span>, that projects the high-dimensional data to a low-dimensional space, and a decoding process, <span class="math notranslate nohighlight">\(g:\mathbb{R}^k \rightarrow \mathbb{R}^n\)</span>, that uses the latent variables to reconstruct the high-dimensional prediction. Consider that we have a modeling problem with an input training dataset, <span class="math notranslate nohighlight">\(\textbf{X} \in \mathbb{R}^{m \times d}\)</span>, and a corresponding output training dataset, <span class="math notranslate nohighlight">\(\textbf{Y} \in \mathbb{R}^{m \times n}\)</span>. First, we fit the dimensionality reduction method to the output training dataset, <span class="math notranslate nohighlight">\(Y\)</span>. Next, we can generate the latent variables for <span class="math notranslate nohighlight">\(Y\)</span> using the encoding function,</p>
 <div class="math notranslate nohighlight">
 \[\textbf{z} = f(\textbf{Y}),\]</div>
-<p>where <span class="math notranslate nohighlight">\(\textbf{z} \in \mathbb{R}^{m \times k}\)</span> are the set of latent variables obtained for <span class="math notranslate nohighlight">\(Y\)</span>. In order to predict the high-dimensional field output for a new set of inputs, <span class="math notranslate nohighlight">\(\textbf{X}^* \in \mathbb{R}^{p \times d}\)</span>, we must know the latent variables corresponding to these set of inputs. We must create a way to predict the latent variables for this new set of inputs. This is where we use interpolation or regression models to create a mapping, <span class="math notranslate nohighlight">\(h: \mathbb{R}^d \rightarrow \mathbb{R}^k\)</span>, that provides a prediction of the latent variables for a new set of inputs.</p>
+<p>where <span class="math notranslate nohighlight">\(\textbf{z} \in \mathbb{R}^{m \times k}\)</span> are the set of latent variables obtained for <span class="math notranslate nohighlight">\(Y\)</span>. In order to predict the high-dimensional field output for a new set of inputs, <span class="math notranslate nohighlight">\(\textbf{X}' \in \mathbb{R}^{p \times d}\)</span>, we must know the latent variables corresponding to these set of inputs. We must create a way to predict the latent variables for this new set of inputs. This is where we use interpolation or regression models to create a mapping, <span class="math notranslate nohighlight">\(h: \mathbb{R}^d \rightarrow \mathbb{R}^k\)</span>, that provides a prediction of the latent variables for a new set of inputs.</p>
 <p>To do this, we have to train GP or NN models with <span class="math notranslate nohighlight">\(\textbf{X}\)</span> as the input dataset and <span class="math notranslate nohighlight">\(\textbf{z}\)</span> as the output data set. The GP or NN model will act as the mapping <span class="math notranslate nohighlight">\(h\)</span> between the inputs and the latent variables. While the latent variables are multi-dimensional, the dimensionality is much smaller than the original output dimensionality and therefore, it is much easier to predict the latent space using surrogate models such as NN or GP models than it is to predict the original high-dimensional outputs. Since the latent variable space is multi-dimensional, multiple independent GP models will be trained, one for each latent variable, if GP models are used. Now that we have this mapping, we can generate a prediction of the latent variables using the mapping,</p>
 <div class="math notranslate nohighlight">
-\[\textbf{z}^* = h(\textbf{X}^*).\]</div>
+\[\textbf{z}' = h(\textbf{X}').\]</div>
 <p>After the prediction of the latent variables is obtained, the high-dimensional field output prediction can be obtained using the decoding process as</p>
 <div class="math notranslate nohighlight">
-\[\textbf{Y}^* = g(\textbf{z}^*).\]</div>
+\[\textbf{Y}' = g(\textbf{z}').\]</div>
 <p>This is the overall mathematical process of constructing a NIROM. In this section, we will demonstrate how to create such surrogate models using the <code class="docutils literal notranslate"><span class="pre">scimlstudio</span></code> package. The first block of code will import the relevant packages for constructing these models. To learn more about such surrogate models, you can read the publications below.</p>
 <p>[1] <a class="reference external" href="https://arc.aiaa.org/doi/10.2514/6.2020-3003">K. Decker, H. D. Schwartz, and D. Mavris, “Dimensionality reduction techniques applied to the design of hypersonic aerial systems,” in AIAA AVIATION 2020 FORUM, Virtual Conference, Jun. 2020</a></p>
 <p>[2] <a class="reference external" href="https://onlinelibrary.wiley.com/doi/full/10.1002/nme.7072">Halder, Rakesh, Krzysztof J. Fidkowski, and Kevin J. Maki. “Non‐intrusive reduced‐order modeling using convolutional autoencoders.” International Journal for Numerical Methods in Engineering 123.21 (2022).</a></p>
@@ -538,12 +538,12 @@ Shape of testing data: torch.Size([50, 4])
 </div>
 <p>Now, that the complete model has been trained, the next code block demonstrates how to generate predictions for the testing data using the list of GP models and the decoding process of POD. The high-dimensional field output prediction is then obtained by stacking the mean predictions from the GP models and using the decoding function from the POD class to generate the field output prediction. Mathematically, this can be written as,</p>
 <div class="math notranslate nohighlight">
-\[\textbf{Y}^* = U_k \mathbb{E}[\textbf{z}^*],\]</div>
-<p>where <span class="math notranslate nohighlight">\(U_k\)</span> are the POD modes and <span class="math notranslate nohighlight">\(\mathbb{E}[\textbf{z}^*]\)</span> represents the mean prediction of the latent variables obtained from the GP models.</p>
+\[\textbf{Y}' = U_k \mathbb{E}[\textbf{z}']^T,\]</div>
+<p>where <span class="math notranslate nohighlight">\(U_k\)</span> are the POD modes and <span class="math notranslate nohighlight">\(\mathbb{E}[\textbf{z}']\)</span> represents the mean prediction of the latent variables obtained from the GP models.</p>
 <p>Since we are using GP models to predict the latent variables, we can also obtain the variance in the prediction of the latent variables. We can then use the variance in the prediction of the latent variables to obtain the variance in the prediction of the field output by using the following expression.</p>
 <div class="math notranslate nohighlight">
-\[\mathbb{V}[\textbf{Y}^*] = (U_k \odot U_k) \mathbb{V}[\textbf{z}^*],\]</div>
-<p>where <span class="math notranslate nohighlight">\(\odot\)</span> represents the element-wise multiplication between two matrices. Since the field output data was standardized, the variance must be scaled by the variance of the training data to obtain the correct values for each. Another important point to note is that this variance only accounts for variance coming from the prediction of the GP model and does not account for any additional uncertainty introduced by the POD reconstruction error.</p>
+\[\mathbb{V}[\textbf{Y}'] = (U_k \odot U_k) \mathbb{V}[\textbf{z}']^T,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\odot\)</span> represents the element-wise multiplication between two matrices. Since the field output data was standardized, the variance must be scaled by the variance of the training field output data to obtain the correct values for each.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># generating predictions and variance from GP models</span>
@@ -565,7 +565,7 @@ Shape of testing data: torch.Size([50, 4])
 </div>
 </div>
 </div>
-<p>After generating the predictions, the next block of code plots the field output predictions along with the variance in the prediction and the absolute error between the prediction and the testing data. This is similar to how the field output data contours were plotted in the previous sections. It is important to note that the model variance and absolute error follow a similar trend. The model variance is low in areas of low absolute error and the model variance is high in regions of high absolute error.</p>
+<p>After generating the predictions, the next block of code plots the field output predictions along with the variance in the prediction and the absolute error between the prediction and the testing data. This is similar to how the field output data contours were plotted in the previous sections.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plotting the reconstructions</span>
@@ -582,20 +582,20 @@ Shape of testing data: torch.Size([50, 4])
                          <span class="n">levels</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span> 
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Model Variance&quot;</span><span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
 <span class="n">contour3</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">Sgrid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">Tgrid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ytest</span><span class="p">[</span><span class="mi">15</span><span class="p">]</span> <span class="o">-</span> <span class="n">predictions_pod_reshaped</span><span class="p">[</span><span class="mi">15</span><span class="p">])</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
                          <span class="n">levels</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span> 
 <span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Absolute Error&quot;</span><span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c8c389ad365844fcda09804a5249ad46753797eb186e13e203a9e8e76431ccee.png" src="_images/c8c389ad365844fcda09804a5249ad46753797eb186e13e203a9e8e76431ccee.png" />
+<img alt="_images/c5b3dbec4290efd4d061719e23074328790602f64ae8ac15c33aa5fac2e2cc25.png" src="_images/c5b3dbec4290efd4d061719e23074328790602f64ae8ac15c33aa5fac2e2cc25.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -614,20 +614,20 @@ Shape of testing data: torch.Size([50, 4])
                          <span class="n">levels</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span> 
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Model Variance&quot;</span><span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
 <span class="n">contour3</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">Sgrid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">Tgrid</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ytest</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span> <span class="o">-</span> <span class="n">predictions_pod_reshaped</span><span class="p">[</span><span class="mi">20</span><span class="p">])</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
                          <span class="n">levels</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span> 
 <span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Absolute Error&quot;</span><span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6bf7b7a303954a895ac24d51541ddf3bbcf0e20216f8e70df1b75b94021da6f6.png" src="_images/6bf7b7a303954a895ac24d51541ddf3bbcf0e20216f8e70df1b75b94021da6f6.png" />
+<img alt="_images/3a7da3ac6b877fd7d61ab767293769db9770a44fdb83a2f690e9402a13af5486.png" src="_images/3a7da3ac6b877fd7d61ab767293769db9770a44fdb83a2f690e9402a13af5486.png" />
 </div>
 </div>
 </section>
@@ -748,7 +748,7 @@ Shape of testing data: torch.Size([50, 4])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4aabf4b4cc3a0145a6088a69d97ca153ffad3f0365b432100d1b2040aea5f447.png" src="_images/4aabf4b4cc3a0145a6088a69d97ca153ffad3f0365b432100d1b2040aea5f447.png" />
+<img alt="_images/71554a194b8f9d786b337f9c88e418031ed0a37df3a864c29b78ecc124de0de8.png" src="_images/71554a194b8f9d786b337f9c88e418031ed0a37df3a864c29b78ecc124de0de8.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -771,7 +771,7 @@ Shape of testing data: torch.Size([50, 4])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3cd306a5621597e8d618bb84e0a4b6c7e2e01c3cab800ff587e05f1f6b07ff5d.png" src="_images/3cd306a5621597e8d618bb84e0a4b6c7e2e01c3cab800ff587e05f1f6b07ff5d.png" />
+<img alt="_images/b4752ed782a104a8db916e54e62b7ac52dd9619f38516233f7fdc04613ee11df.png" src="_images/b4752ed782a104a8db916e54e62b7ac52dd9619f38516233f7fdc04613ee11df.png" />
 </div>
 </div>
 </section>
@@ -813,14 +813,14 @@ Shape of testing data: torch.Size([50, 4])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average value of NRMSE of autoencoder + NN model across grid: 0.010424001142382622
-Average value of NRMSE of POD + GP model across grid: 0.008524742908775806
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average value of NRMSE of autoencoder + NN model across grid: 0.010918160900473595
+Average value of NRMSE of POD + GP model across grid: 0.00823984108865261
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x29d71b740&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x2978c6e70&gt;
 </pre></div>
 </div>
-<img alt="_images/5584d8a440d839b4e242e115ccda3a6a821eaa966051b89c8bb42ac6132cb35d.png" src="_images/5584d8a440d839b4e242e115ccda3a6a821eaa966051b89c8bb42ac6132cb35d.png" />
+<img alt="_images/bd60ca14604ff2048a1fcb46717cc4bbd6485dee79ef9e45f6717bef72a36abe.png" src="_images/bd60ca14604ff2048a1fcb46717cc4bbd6485dee79ef9e45f6717bef72a36abe.png" />
 </div>
 </div>
 </section>
