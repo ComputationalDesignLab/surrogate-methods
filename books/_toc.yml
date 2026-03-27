@@ -27,6 +27,7 @@ chapters:
       - file: pod
       - file: autoencoder
       - file: multi_output
+  - file: application_intro
   # - file: seq_sampling/intro
   #   sections:
   #   - file: seq_sampling/exploitation
