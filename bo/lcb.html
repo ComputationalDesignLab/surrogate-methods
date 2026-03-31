@@ -218,6 +218,7 @@
 <li class="toctree-l3"><a class="reference internal" href="exploitation.html">Exploitation</a></li>
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">Lower Confidence Bound</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pi.html">Probability of Improvement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ei.html">Expected Improvement</a></li>
 </ul>
 </details></li>
 </ul>
@@ -541,8 +542,6 @@ document.write(`
         <span class="n">output_transform</span><span class="o">=</span><span class="n">Standardize</span><span class="p">,</span>
         <span class="n">input_transform</span><span class="o">=</span><span class="n">Normalize</span><span class="p">,</span>
     <span class="p">)</span>
-
-    <span class="n">gp</span><span class="o">.</span><span class="n">num_outputs</span> <span class="o">=</span> <span class="mi">1</span>
 
     <span class="n">mll</span> <span class="o">=</span> <span class="n">ExactMarginalLogLikelihood</span><span class="p">(</span><span class="n">gp</span><span class="o">.</span><span class="n">likelihood</span><span class="p">,</span> <span class="n">gp</span><span class="p">)</span> <span class="c1"># marginal log likelihood</span>
 
