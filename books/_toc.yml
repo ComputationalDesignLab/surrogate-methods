@@ -32,3 +32,4 @@ chapters:
       - file: bo/intro
         sections:
           - file: bo/exploitation
+          - file: bo/lcb
