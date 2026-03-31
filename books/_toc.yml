@@ -30,3 +30,5 @@ chapters:
   - file: application_intro
     sections:
       - file: bo/intro
+        sections:
+          - file: bo/exploitation
