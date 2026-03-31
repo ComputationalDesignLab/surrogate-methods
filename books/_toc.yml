@@ -33,3 +33,4 @@ chapters:
         sections:
           - file: bo/exploitation
           - file: bo/lcb
+          - file: bo/pi
