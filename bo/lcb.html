@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -52,7 +52,7 @@
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
@@ -461,7 +461,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pavan/miniconda3/envs/sm/lib/python3.12/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pkoratik/miniconda3/envs/sm/lib/python3.12/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
   from .autonotebook import tqdm as notebook_tqdm
 </pre></div>
 </div>
@@ -489,11 +489,11 @@ document.write(`
         <span class="c1"># convert to torch tensor</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">x_train</span><span class="p">)</span>
 
-        <span class="c1"># get mean prediction</span>
-        <span class="n">y_mean</span><span class="p">,</span> <span class="n">y_var</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="c1"># get mean prediction and std in prediction</span>
+        <span class="n">y_mean</span><span class="p">,</span> <span class="n">y_std</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
         <span class="c1"># store the objective value as numpy array</span>
-        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_mean</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">*</span> <span class="n">y_var</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_mean</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">*</span> <span class="n">y_std</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="c1"># Optimization algorithm</span>
 <span class="n">algorithm</span> <span class="o">=</span> <span class="n">DE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">15</span><span class="o">*</span><span class="n">lb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">F</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -507,9 +507,9 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># variables</span>
-<span class="n">A</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">A</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">num_init</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="n">max_evals</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">max_evals</span> <span class="o">=</span> <span class="mi">24</span>
 <span class="n">num_evals</span> <span class="o">=</span> <span class="mi">0</span>
 
 <span class="c1"># initial training data</span>
@@ -591,72 +591,168 @@ LCB Loop:
 Iteration: 1
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pavan/miniconda3/envs/sm/lib/python3.12/site-packages/gpytorch/distributions/multivariate_normal.py:376: NumericalWarning: Negative variance values detected. This is likely due to numerical instabilities. Rounding negative variances up to 1e-10.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pkoratik/miniconda3/envs/sm/lib/python3.12/site-packages/gpytorch/distributions/multivariate_normal.py:376: NumericalWarning: Negative variance values detected. This is likely due to numerical instabilities. Rounding negative variances up to 1e-10.
   warnings.warn(
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>New point (based on LCB):
-x: [-3.12499823  5.62495876]
-f: 28.468915117893424
+x: [-3.12499838  5.62495876]
+f: 28.468919084357086
 Current best:
 x: [-3.125  5.625]
 f: [28.46841701]
 
 Iteration: 2
 New point (based on LCB):
-x: [-3.1753687  6.773826 ]
-f: 15.690751987485676
+x: [-3.14116757  6.0575758 ]
+f: 23.335712244992262
 Current best:
-x: [-3.1753687  6.773826 ]
-f: [15.69075199]
+x: [-3.14116757  6.0575758 ]
+f: [23.33571224]
 
 Iteration: 3
 New point (based on LCB):
-x: [-3.28811933  8.95917846]
-f: -2.4655274829608427
+x: [-3.16788234  6.78588662]
+f: 15.390751465564394
 Current best:
-x: [-3.28811933  8.95917846]
-f: [-2.46552748]
+x: [-3.16788234  6.78588662]
+f: [15.39075147]
 
 Iteration: 4
 New point (based on LCB):
-x: [-3.37441326 10.45768278]
-f: -10.532399501389037
+x: [-3.23402029  8.62969069]
+f: -0.765636957681977
 Current best:
-x: [-3.37441326 10.45768278]
-f: [-10.5323995]
+x: [-3.23402029  8.62969069]
+f: [-0.76563696]
 
 Iteration: 5
 New point (based on LCB):
-x: [-3.56356411 13.43766998]
-f: -16.561899864887906
+x: [-3.34101727 11.57146708]
+f: -14.705700727058767
 Current best:
-x: [-3.56356411 13.43766998]
-f: [-16.56189986]
+x: [-3.34101727 11.57146708]
+f: [-14.70570073]
 
 Iteration: 6
 New point (based on LCB):
-x: [-3.56334932 13.43454004]
-f: -16.562314232604642
+x: [-3.38887011 12.81080968]
+f: -16.249986769560593
 Current best:
-x: [-3.56334932 13.43454004]
-f: [-16.56231423]
+x: [-3.38887011 12.81080968]
+f: [-16.24998677]
 
 Iteration: 7
 New point (based on LCB):
-x: [-3.56228051 13.41888335]
-f: -16.564188640570137
+x: [-3.39363133 12.93040373]
+f: -16.26517917282152
 Current best:
-x: [-3.56228051 13.41888335]
-f: [-16.56418864]
+x: [-3.39363133 12.93040373]
+f: [-16.26517917]
 
 Iteration: 8
 New point (based on LCB):
-x: [-3.55971155 13.38114783]
-f: -16.567292915440333
+x: [-3.39440686 12.94958305]
+f: -16.26546633783874
 Current best:
-x: [-3.55971155 13.38114783]
-f: [-16.56729292]
+x: [-3.39440686 12.94958305]
+f: [-16.26546634]
+
+Iteration: 9
+New point (based on LCB):
+x: [-3.39440731 12.94537451]
+f: -16.265944432620252
+Current best:
+x: [-3.39440731 12.94537451]
+f: [-16.26594443]
+
+Iteration: 10
+New point (based on LCB):
+x: [-3.39587714 12.7276779 ]
+f: -16.244912144505516
+Current best:
+x: [-3.39440731 12.94537451]
+f: [-16.26594443]
+
+Iteration: 11
+New point (based on LCB):
+x: [-3.40497024 12.9252256 ]
+f: -16.29577712234523
+Current best:
+x: [-3.40497024 12.9252256 ]
+f: [-16.29577712]
+
+Iteration: 12
+New point (based on LCB):
+x: [-3.44082377 13.05861691]
+f: -16.376745370275902
+Current best:
+x: [-3.44082377 13.05861691]
+f: [-16.37674537]
+
+Iteration: 13
+New point (based on LCB):
+x: [-3.61453062 13.39336915]
+f: -16.61855982650752
+Current best:
+x: [-3.61453062 13.39336915]
+f: [-16.61855983]
+
+Iteration: 14
+New point (based on LCB):
+x: [-3.663005   13.49138453]
+f: -16.636018254509057
+Current best:
+x: [-3.663005   13.49138453]
+f: [-16.63601825]
+
+Iteration: 15
+New point (based on LCB):
+x: [-3.6819206  13.55418774]
+f: -16.640542424517204
+Current best:
+x: [-3.6819206  13.55418774]
+f: [-16.64054242]
+
+Iteration: 16
+New point (based on LCB):
+x: [-3.68864584 13.6288167 ]
+f: -16.64401968672174
+Current best:
+x: [-3.68864584 13.6288167 ]
+f: [-16.64401969]
+
+Iteration: 17
+New point (based on LCB):
+x: [-3.68858273 13.62831713]
+f: -16.644019533832306
+Current best:
+x: [-3.68864584 13.6288167 ]
+f: [-16.64401969]
+
+Iteration: 18
+New point (based on LCB):
+x: [-3.68858697 13.62829259]
+f: -16.644019565211416
+Current best:
+x: [-3.68864584 13.6288167 ]
+f: [-16.64401969]
+
+Iteration: 19
+New point (based on LCB):
+x: [-3.68856287 13.62820914]
+f: -16.644019427930253
+Current best:
+x: [-3.68864584 13.6288167 ]
+f: [-16.64401969]
+
+Iteration: 20
+New point (based on LCB):
+x: [-3.68857884 13.62829053]
+f: -16.64401951494754
+Current best:
+x: [-3.68864584 13.6288167 ]
+f: [-16.64401969]
 </pre></div>
 </div>
 </div>
@@ -688,7 +784,7 @@ f: [-16.56729292]
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f086760e5e43f594b039574262272b1169cf901e5015ec172f09e468e08b868f.png" src="../_images/f086760e5e43f594b039574262272b1169cf901e5015ec172f09e468e08b868f.png" />
+<img alt="../_images/5b2554d35f65995c8230608966f25db35e31685c1f2d9e999165e5c65fb9ccd7.png" src="../_images/5b2554d35f65995c8230608966f25db35e31685c1f2d9e999165e5c65fb9ccd7.png" />
 </div>
 </div>
 <p>Below code plots the infill points added during the optimization process:</p>
@@ -730,7 +826,7 @@ f: [-16.56729292]
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9956f245622fb664ff73fdac624bfa49afcc2b587611306c4ff2d6150f9404e2.png" src="../_images/9956f245622fb664ff73fdac624bfa49afcc2b587611306c4ff2d6150f9404e2.png" />
+<img alt="../_images/3faef180559730f5d6ea3f00b5fe66d8e01dcf9a701dc2018d9eb612457c61d2.png" src="../_images/3faef180559730f5d6ea3f00b5fe66d8e01dcf9a701dc2018d9eb612457c61d2.png" />
 </div>
 </div>
 <p>As can be seen in above plots, the convergence is much faster than pure exploitation-based acquisition function. But it is hard to know what value of <span class="math notranslate nohighlight">\(A\)</span> to use. You can change the value of <span class="math notranslate nohighlight">\(A\)</span> and see how it changes the optimization convergence.</p>

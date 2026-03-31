@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -52,7 +52,7 @@
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
@@ -469,7 +469,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pavan/miniconda3/envs/sm/lib/python3.12/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pkoratik/miniconda3/envs/sm/lib/python3.12/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
   from .autonotebook import tqdm as notebook_tqdm
 </pre></div>
 </div>
@@ -498,14 +498,14 @@ document.write(`
         <span class="c1"># convert to torch tensor</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">x_train</span><span class="p">)</span>
 
-        <span class="c1"># get mean prediction</span>
-        <span class="n">y_mean</span><span class="p">,</span> <span class="n">y_var</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="c1"># get mean prediction and std in prediction</span>
+        <span class="n">y_mean</span><span class="p">,</span> <span class="n">y_std</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
         <span class="c1"># numerator of Z</span>
         <span class="n">numerator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fbest</span> <span class="o">-</span> <span class="n">y_mean</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="c1"># denominator of Z</span>
-        <span class="n">denominator</span> <span class="o">=</span> <span class="n">y_var</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+        <span class="n">denominator</span> <span class="o">=</span> <span class="n">y_std</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="c1"># std variable</span>
         <span class="n">z</span> <span class="o">=</span> <span class="n">numerator</span> <span class="o">/</span> <span class="n">denominator</span>
@@ -528,7 +528,7 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># variables</span>
 <span class="n">num_init</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="n">max_evals</span> <span class="o">=</span> <span class="mi">16</span>
+<span class="n">max_evals</span> <span class="o">=</span> <span class="mi">24</span>
 <span class="n">num_evals</span> <span class="o">=</span> <span class="mi">0</span>
 
 <span class="c1"># initial training data</span>
@@ -609,99 +609,167 @@ LCB Loop:
 
 Iteration: 1
 New point (based on EI):
-x: [-0.67709026  3.48786683]
-f: 27.413485435068218
+x: [-1.44474737  2.86820736]
+f: 36.4828102110335
 Current best:
-x: [-0.67709026  3.48786683]
-f: [27.41348544]
+x: [-3.125  5.625]
+f: [28.46841701]
 
 Iteration: 2
 New point (based on EI):
-x: [-5.          4.68422781]
-f: 144.05206792764358
+x: [9.15050074e+00 1.13605816e-15]
+f: 51.58693605710514
 Current best:
-x: [-0.67709026  3.48786683]
-f: [27.41348544]
+x: [-3.125  5.625]
+f: [28.46841701]
 
 Iteration: 3
 New point (based on EI):
-x: [-2.87710984  5.64090805]
-f: 22.436436695945062
+x: [2.52016071 4.07720156]
+f: 16.40087058902683
 Current best:
-x: [-2.87710984  5.64090805]
-f: [22.4364367]
+x: [2.52016071 4.07720156]
+f: [16.40087059]
 
 Iteration: 4
 New point (based on EI):
-x: [-2.43177273  5.18378088]
-f: 20.26543624215192
+x: [7.84180119 3.64498127]
+f: 54.08509173121499
 Current best:
-x: [-2.43177273  5.18378088]
-f: [20.26543624]
+x: [2.52016071 4.07720156]
+f: [16.40087059]
 
 Iteration: 5
 New point (based on EI):
-x: [-2.57116263  7.00031621]
-f: 4.6320343715009
+x: [0.70576   5.2777565]
+f: 20.95048999706556
 Current best:
-x: [-2.57116263  7.00031621]
-f: [4.63203437]
+x: [2.52016071 4.07720156]
+f: [16.40087059]
 
 Iteration: 6
 New point (based on EI):
-x: [-2.62835301  9.92424506]
-f: -10.181128149553423
+x: [-5.          8.77251162]
+f: 58.533427546649136
 Current best:
-x: [-2.62835301  9.92424506]
-f: [-10.18112815]
+x: [2.52016071 4.07720156]
+f: [16.40087059]
 
 Iteration: 7
 New point (based on EI):
-x: [-2.38046133 10.52438105]
-f: -8.854761530649085
+x: [1.62160246 3.95469854]
+f: 17.658735556526207
 Current best:
-x: [-2.62835301  9.92424506]
-f: [-10.18112815]
+x: [2.52016071 4.07720156]
+f: [16.40087059]
 
 Iteration: 8
 New point (based on EI):
-x: [-2.8453204  10.93891339]
-f: -13.006615258936238
+x: [-5. 15.]
+f: -7.49170048422188
 Current best:
-x: [-2.8453204  10.93891339]
-f: [-13.00661526]
+x: [-5. 15.]
+f: [-7.49170048]
 
 Iteration: 9
 New point (based on EI):
-x: [-3.29250916 13.0670528 ]
-f: -15.773682273623825
+x: [-4.10938247 15.        ]
+f: -15.915094867475982
 Current best:
-x: [-3.29250916 13.0670528 ]
-f: [-15.77368227]
+x: [-4.10938247 15.        ]
+f: [-15.91509487]
 
 Iteration: 10
 New point (based on EI):
-x: [-3.44218376 13.18999491]
-f: -16.34975279377223
+x: [-3.63080849 15.        ]
+f: -14.324367878952765
 Current best:
-x: [-3.44218376 13.18999491]
-f: [-16.34975279]
+x: [-4.10938247 15.        ]
+f: [-15.91509487]
 
 Iteration: 11
 New point (based on EI):
-x: [-3.70195978 13.66291653]
-f: -16.643364404429263
+x: [-4.01910093 14.05331837]
+f: -16.047006839888095
 Current best:
-x: [-3.70195978 13.66291653]
-f: [-16.6433644]
+x: [-4.01910093 14.05331837]
+f: [-16.04700684]
 
 Iteration: 12
 New point (based on EI):
-x: [5.91518870e+00 3.89759684e-10]
-f: 49.75794495708327
+x: [-4.03530581 14.51306039]
+f: -16.1922996341998
 Current best:
-x: [-3.70195978 13.66291653]
-f: [-16.6433644]
+x: [-4.03530581 14.51306039]
+f: [-16.19229963]
+
+Iteration: 13
+New point (based on EI):
+x: [-2.96284418 11.48854598]
+f: -14.133017439291134
+Current best:
+x: [-4.03530581 14.51306039]
+f: [-16.19229963]
+
+Iteration: 14
+New point (based on EI):
+x: [ 4.84396335 15.        ]
+f: 222.5733852112459
+Current best:
+x: [-4.03530581 14.51306039]
+f: [-16.19229963]
+
+Iteration: 15
+New point (based on EI):
+x: [10.          5.12283839]
+f: 56.43703946550755
+Current best:
+x: [-4.03530581 14.51306039]
+f: [-16.19229963]
+
+Iteration: 16
+New point (based on EI):
+x: [10. 15.]
+f: 195.87219087939556
+Current best:
+x: [-4.03530581 14.51306039]
+f: [-16.19229963]
+
+Iteration: 17
+New point (based on EI):
+x: [-3.68262418 13.62254088]
+f: -16.64374924519494
+Current best:
+x: [-3.68262418 13.62254088]
+f: [-16.64374925]
+
+Iteration: 18
+New point (based on EI):
+x: [2.76384330e+00 1.83592494e-10]
+f: 21.5919553856424
+Current best:
+x: [-3.68262418 13.62254088]
+f: [-16.64374925]
+
+Iteration: 19
+New point (based on EI):
+x: [1.00000000e+01 1.56571998e-13]
+f: 60.96088903565051
+Current best:
+x: [-3.68262418 13.62254088]
+f: [-16.64374925]
+
+Iteration: 20
+New point (based on EI):
+x: [-3.68409005 13.61927722]
+f: -16.64390454345944
+Current best:
+x: [-3.68409005 13.61927722]
+f: [-16.64390454]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pkoratik/miniconda3/envs/sm/lib/python3.12/site-packages/gpytorch/distributions/multivariate_normal.py:376: NumericalWarning: Negative variance values detected. This is likely due to numerical instabilities. Rounding negative variances up to 1e-10.
+  warnings.warn(
 </pre></div>
 </div>
 </div>
@@ -733,7 +801,7 @@ f: [-16.6433644]
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/a4ef6390ec2d0588d736cb9598d229105da0d505f95f7c3ee1085873a17f716f.png" src="../_images/a4ef6390ec2d0588d736cb9598d229105da0d505f95f7c3ee1085873a17f716f.png" />
+<img alt="../_images/7ad3603bea12bea05cb3eb6a1021f332573a0ce9e95d6244aafe7275578f20bb.png" src="../_images/7ad3603bea12bea05cb3eb6a1021f332573a0ce9e95d6244aafe7275578f20bb.png" />
 </div>
 </div>
 <p>Below code plots the infill points added during the optimization process:</p>
@@ -775,7 +843,7 @@ f: [-16.6433644]
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/964c059b05fa9aa0cde7ae530e9a0072ae3234c548e9bd527d1d73ff465dfd5b.png" src="../_images/964c059b05fa9aa0cde7ae530e9a0072ae3234c548e9bd527d1d73ff465dfd5b.png" />
+<img alt="../_images/5d4fa13fdce132e60ebaa07ebf9bcb753f1c8596cb275b7a85749a54228085f4.png" src="../_images/5d4fa13fdce132e60ebaa07ebf9bcb753f1c8596cb275b7a85749a54228085f4.png" />
 </div>
 </div>
 <p>From the above plots, it can be seen that EI finds the minimum of modified branin function while balancing exploration and exploitation. The EI adds some points in the unexplored regions before converging to global minimum.</p>

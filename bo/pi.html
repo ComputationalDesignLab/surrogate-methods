@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -52,7 +52,7 @@
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
@@ -467,7 +467,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pavan/miniconda3/envs/sm/lib/python3.12/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pkoratik/miniconda3/envs/sm/lib/python3.12/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
   from .autonotebook import tqdm as notebook_tqdm
 </pre></div>
 </div>
@@ -496,10 +496,10 @@ document.write(`
         <span class="c1"># convert to torch tensor</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">x_train</span><span class="p">)</span>
 
-        <span class="c1"># get mean prediction</span>
-        <span class="n">y_mean</span><span class="p">,</span> <span class="n">y_var</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="c1"># get mean prediction and std in prediction</span>
+        <span class="n">y_mean</span><span class="p">,</span> <span class="n">y_std</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-        <span class="n">std_variable</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fbest</span> <span class="o">-</span> <span class="n">y_mean</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="o">/</span> <span class="n">y_var</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+        <span class="n">std_variable</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fbest</span> <span class="o">-</span> <span class="n">y_mean</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="o">/</span> <span class="n">y_std</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="c1"># store the objective value as numpy array</span>
         <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span> <span class="n">normal</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">std_variable</span><span class="p">)</span> <span class="c1"># negating since pymoo minimizes</span>
@@ -597,170 +597,170 @@ f: [28.46841701]
 LCB Loop:
 
 Iteration: 1
-New point (based on PI):
-x: [-1.28222835  3.92637771]
-f: 25.042151867514193
-Current best:
-x: [-1.28222835  3.92637771]
-f: [25.04215187]
-
-Iteration: 2
-New point (based on PI):
-x: [-1.90176274  2.29764221]
-f: 49.15806245998584
-Current best:
-x: [-1.28222835  3.92637771]
-f: [25.04215187]
-
-Iteration: 3
-New point (based on PI):
-x: [0.25633158 4.293026  ]
-f: 22.279586942485313
-Current best:
-x: [0.25633158 4.293026  ]
-f: [22.27958694]
-
-Iteration: 4
-New point (based on PI):
-x: [1.25155459 4.05730406]
-f: 19.294815602192276
-Current best:
-x: [1.25155459 4.05730406]
-f: [19.2948156]
-
-Iteration: 5
-New point (based on PI):
-x: [2.63519033 3.59170684]
-f: 15.568659784675463
-Current best:
-x: [2.63519033 3.59170684]
-f: [15.56865978]
-
-Iteration: 6
-New point (based on PI):
-x: [2.94464332 3.46556585]
-f: 16.371677019184148
-Current best:
-x: [2.63519033 3.59170684]
-f: [15.56865978]
-
-Iteration: 7
-New point (based on PI):
-x: [2.50000089 3.10489524]
-f: 14.883706523918558
-Current best:
-x: [2.50000089 3.10489524]
-f: [14.88370652]
-
-Iteration: 8
-New point (based on PI):
-x: [2.50282925 3.12426336]
-f: 14.894294675861001
-Current best:
-x: [2.50000089 3.10489524]
-f: [14.88370652]
-
-Iteration: 9
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pavan/miniconda3/envs/sm/lib/python3.12/site-packages/gpytorch/distributions/multivariate_normal.py:376: NumericalWarning: Negative variance values detected. This is likely due to numerical instabilities. Rounding negative variances up to 1e-10.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pkoratik/miniconda3/envs/sm/lib/python3.12/site-packages/gpytorch/distributions/multivariate_normal.py:376: NumericalWarning: Negative variance values detected. This is likely due to numerical instabilities. Rounding negative variances up to 1e-10.
   warnings.warn(
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>New point (based on PI):
-x: [2.4924227  3.05267764]
-f: 14.860284661117507
+x: [-3.12497745  5.62452311]
+f: 28.47412292017433
 Current best:
-x: [2.4924227  3.05267764]
-f: [14.86028466]
+x: [-3.125  5.625]
+f: [28.46841701]
+
+Iteration: 2
+New point (based on PI):
+x: [-3.12963687  5.90910931]
+f: 24.910195937805916
+Current best:
+x: [-3.12963687  5.90910931]
+f: [24.91019594]
+
+Iteration: 3
+New point (based on PI):
+x: [-3.05097723  6.83440305]
+f: 12.471393288176264
+Current best:
+x: [-3.05097723  6.83440305]
+f: [12.47139329]
+
+Iteration: 4
+New point (based on PI):
+x: [-2.93965386  7.67424583]
+f: 2.875028620016014
+Current best:
+x: [-2.93965386  7.67424583]
+f: [2.87502862]
+
+Iteration: 5
+New point (based on PI):
+x: [-2.88739217  8.44758494]
+f: -3.330797165242588
+Current best:
+x: [-2.88739217  8.44758494]
+f: [-3.33079717]
+
+Iteration: 6
+New point (based on PI):
+x: [-2.88668755  9.36729606]
+f: -8.419167892248767
+Current best:
+x: [-2.88668755  9.36729606]
+f: [-8.41916789]
+
+Iteration: 7
+New point (based on PI):
+x: [-2.97837564 10.58066911]
+f: -12.66198575148805
+Current best:
+x: [-2.97837564 10.58066911]
+f: [-12.66198575]
+
+Iteration: 8
+New point (based on PI):
+x: [-3.15355274 11.38732793]
+f: -14.529339219819803
+Current best:
+x: [-3.15355274 11.38732793]
+f: [-14.52933922]
+
+Iteration: 9
+New point (based on PI):
+x: [2.33866453e+00 2.66478686e-11]
+f: 23.930637921362656
+Current best:
+x: [-3.15355274 11.38732793]
+f: [-14.52933922]
 
 Iteration: 10
 New point (based on PI):
-x: [2.48394706 2.99381697]
-f: 14.84282324185292
+x: [-3.17919781 11.47134028]
+f: -14.6916897425468
 Current best:
-x: [2.48394706 2.99381697]
-f: [14.84282324]
+x: [-3.17919781 11.47134028]
+f: [-14.69168974]
 
 Iteration: 11
 New point (based on PI):
-x: [-1.80390134  6.23969093]
-f: 8.075167643248076
+x: [ 4.91331582 15.        ]
+f: 224.20539118972067
 Current best:
-x: [-1.80390134  6.23969093]
-f: [8.07516764]
+x: [-3.17919781 11.47134028]
+f: [-14.69168974]
 
 Iteration: 12
 New point (based on PI):
-x: [-1.72050655  6.89526437]
-f: 4.917752846444749
+x: [10.          1.22564785]
+f: 55.10196705849332
 Current best:
-x: [-1.72050655  6.89526437]
-f: [4.91775285]
+x: [-3.17919781 11.47134028]
+f: [-14.69168974]
 
 Iteration: 13
 New point (based on PI):
-x: [-1.6961256   7.55479133]
-f: 2.6183199785326057
+x: [-3.34385653 11.92536259]
+f: -15.418350031465083
 Current best:
-x: [-1.6961256   7.55479133]
-f: [2.61831998]
+x: [-3.34385653 11.92536259]
+f: [-15.41835003]
 
 Iteration: 14
 New point (based on PI):
-x: [-1.71164068  8.36700542]
-f: 0.635010055854595
+x: [0.61641599 3.54013333]
+f: 23.251444948330636
 Current best:
-x: [-1.71164068  8.36700542]
-f: [0.63501006]
+x: [-3.34385653 11.92536259]
+f: [-15.41835003]
 
 Iteration: 15
 New point (based on PI):
-x: [-1.73471657  8.78699237]
-f: -0.10901479871209041
+x: [6.98724591e+00 3.17145216e-11]
+f: 53.662810195235124
 Current best:
-x: [-1.73471657  8.78699237]
-f: [-0.1090148]
+x: [-3.34385653 11.92536259]
+f: [-15.41835003]
 
 Iteration: 16
 New point (based on PI):
-x: [-1.84389083  9.97340586]
-f: -1.4498117195054299
+x: [10. 15.]
+f: 195.87219087937612
 Current best:
-x: [-1.84389083  9.97340586]
-f: [-1.44981172]
+x: [-3.34385653 11.92536259]
+f: [-15.41835003]
 
 Iteration: 17
 New point (based on PI):
-x: [-2.42961729 10.49789604]
-f: -9.400281513057461
+x: [10.          5.99626233]
+f: 60.903019831662554
 Current best:
-x: [-2.42961729 10.49789604]
-f: [-9.40028151]
+x: [-3.34385653 11.92536259]
+f: [-15.41835003]
 
 Iteration: 18
 New point (based on PI):
-x: [-2.68794112 10.87140812]
-f: -11.955029148751528
+x: [7.35090386 3.74960333]
+f: 57.476650372102405
 Current best:
-x: [-2.68794112 10.87140812]
-f: [-11.95502915]
+x: [-3.34385653 11.92536259]
+f: [-15.41835003]
 
 Iteration: 19
 New point (based on PI):
-x: [-2.90189188 11.1694154 ]
-f: -13.548724697653634
+x: [3.39876545 7.08683388]
+f: 42.74599950365614
 Current best:
-x: [-2.90189188 11.1694154 ]
-f: [-13.5487247]
+x: [-3.34385653 11.92536259]
+f: [-15.41835003]
 
 Iteration: 20
 New point (based on PI):
-x: [-3.20726148 11.62147644]
-f: -14.958544132533307
+x: [-3.46507615 12.15049857]
+f: -15.591460792125305
 Current best:
-x: [-3.20726148 11.62147644]
-f: [-14.95854413]
+x: [-3.46507615 12.15049857]
+f: [-15.59146079]
 </pre></div>
 </div>
 </div>
@@ -792,7 +792,7 @@ f: [-14.95854413]
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/aeb5a87cb45ad5ca0415a7ca19ab7a4662e8518a1f783fa22c1f6fe18c699204.png" src="../_images/aeb5a87cb45ad5ca0415a7ca19ab7a4662e8518a1f783fa22c1f6fe18c699204.png" />
+<img alt="../_images/3caabaf4d915b78be18b7f3e225e397c50fa22cb603a51d49ed118864647f9dc.png" src="../_images/3caabaf4d915b78be18b7f3e225e397c50fa22cb603a51d49ed118864647f9dc.png" />
 </div>
 </div>
 <p>Below code plots the infill points added during the optimization process:</p>
@@ -834,10 +834,10 @@ f: [-14.95854413]
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/1864c65985aa6492817c2e60ff98c32cf65f1ed13bb97a672c308c826980530e.png" src="../_images/1864c65985aa6492817c2e60ff98c32cf65f1ed13bb97a672c308c826980530e.png" />
+<img alt="../_images/80a31502cb8194aa240cbfb70280bca71ea3613fcae8d9ec47b7abe1eb73e8ef.png" src="../_images/80a31502cb8194aa240cbfb70280bca71ea3613fcae8d9ec47b7abe1eb73e8ef.png" />
 </div>
 </div>
-<p>Based on the infills, PI seems to be slightly more biased towards adding points closer to the minimum value in the dataset - less exploration and more exploitation - and there is no way to control that through the criteria itself. As a result, PI-based method lingers around one of the local optimum and requires more iterations to reach global optimum. As discussed in the lecture, PI provides only a probability value and doesn’t quantify the amount of improvement. We need a better acquisition function that can quantify the improvement.</p>
+<p>Based on the infills, PI seems to be slightly more biased towards adding points closer to the minimum value in the dataset - less exploration and more exploitation - and there is no way to control that through the criteria itself. As a result, PI-based method lingers around local optimum and requires more iterations to reach global optimum. As discussed in the lecture, PI provides only a probability value and doesn’t quantify the amount of improvement. We need a better acquisition function that can quantify the improvement.</p>
 <blockquote>
 <div><p><strong><em>NOTE</em></strong>: Due to randomness in differential evolution, results may vary slightly between runs. So, it is recommended to run the code multiple times to see average behavior.</p>
 </div></blockquote>
