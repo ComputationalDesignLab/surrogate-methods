@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Exploitation &#8212; Surrogate Methods</title>
+    <title>Lower Confidence Bound &#8212; Surrogate Methods</title>
   
   
   
@@ -59,11 +59,10 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'bo/exploitation';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'bo/lcb';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Lower Confidence Bound" href="lcb.html" />
-    <link rel="prev" title="Bayesian optimization" href="intro.html" />
+    <link rel="prev" title="Exploitation" href="exploitation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -215,8 +214,8 @@
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../application_intro.html">Applications</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">Bayesian optimization</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l3 current active"><a class="current reference internal" href="#">Exploitation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lcb.html">Lower Confidence Bound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exploitation.html">Exploitation</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Lower Confidence Bound</a></li>
 </ul>
 </details></li>
 </ul>
@@ -290,7 +289,7 @@
       
       
       
-      <li><a href="../_sources/bo/exploitation.ipynb" target="_blank"
+      <li><a href="../_sources/bo/lcb.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -374,7 +373,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Exploitation</h1>
+    <h1>Lower Confidence Bound</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -384,7 +383,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploitation-loop">Exploitation loop</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lcb-loop">LCB loop</a></li>
 </ul>
             </nav>
         </div>
@@ -396,14 +395,19 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="exploitation">
-<h1>Exploitation<a class="headerlink" href="#exploitation" title="Link to this heading">#</a></h1>
-<p>This section demonstrates Bayesian optimization (BO) with exploitation as the acquisition function. Specifically, the auxiliary optimization problem can be written as:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="lower-confidence-bound">
+<h1>Lower Confidence Bound<a class="headerlink" href="#lower-confidence-bound" title="Link to this heading">#</a></h1>
+<p>This section demonstrates Bayesian optimization (BO) with lower confidence bound as the acquisition function. This is one of the three strategies presented in this book that combines exploitation and exploration. Specifically, the auxiliary optimization problem is written as:</p>
 <div class="math notranslate nohighlight">
 \[
-    \min_{\mathbf{x} \in \Omega} \hat{f}(\mathbf{x}),
+    \min_{\mathbf{x} \in \Omega} \text{ LCB}(\mathbf{x}),
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(\hat{f}(\mathbf{x})\)</span> is the surrogate model prediction (acquisition function). Based on the above formulation, the next infill point is obtained by minimizing the model prediction. This is a pure exploitation strategy as it only focuses on minimizing the surrogate model prediction and does not consider unexplored regions of the design space. This can lead to faster convergence to a local optimum, but it may also get stuck in local optima and fail to find the global optimum.</p>
+<p>where LCB is the lower confidence bound and is written as</p>
+<div class="math notranslate nohighlight">
+\[
+    \text{LCB}(\mathbf{x}) = \mu(\mathbf{x}) - A \sigma(\mathbf{x}),
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mu(\mathbf{x})\)</span> and <span class="math notranslate nohighlight">\(\sigma(\mathbf{x})\)</span> are the model prediction and uncertainty in prediction (standard deviation) from surrogate model, and <span class="math notranslate nohighlight">\(A\)</span> is a constant that controls the trade-off between exploration and exploitation. Larger the value of <span class="math notranslate nohighlight">\(A\)</span>, the optimizer will explore search space more. Smaller the value of <span class="math notranslate nohighlight">\(A\)</span>, optimizer will exploit the current best solution more. The value of <span class="math notranslate nohighlight">\(A\)</span> is usually set to 2 or 3.</p>
 <p>Below code imports required packages and defines modified branin function:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -460,22 +464,22 @@ document.write(`
 </div>
 </div>
 </div>
-<p>Below code block defines a pymoo class for auxiliary optimization. This class must inherit from pymoo’s <code class="docutils literal notranslate"><span class="pre">Problem</span></code> class and must implement the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> and <code class="docutils literal notranslate"><span class="pre">_evaluate</span></code> method. The init method initializes the problem, stores the surrogate model for future computation, and can perform many other computations. The <code class="docutils literal notranslate"><span class="pre">_evaluate</span></code> method is used to evaluate the acquisition function at given input points. This method is called many during optimization for computing acqusition function value. Note that <code class="docutils literal notranslate"><span class="pre">_evaluate</span></code> method does not return the objective values. Instead, the values are stored in <code class="docutils literal notranslate"><span class="pre">out</span></code> dictionary.</p>
-<p>Below code block also initializes the <code class="docutils literal notranslate"><span class="pre">differential</span> <span class="pre">evolution</span></code> class. Primarily, there are three important arguments. First is the <code class="docutils literal notranslate"><span class="pre">pop_size</span></code> which determines the number of candidates in a generation. It is set to 15 times the number of dimensions. The second argument controls the mutation factor (F) which controls the amount of mutation to be added to each candidate. The last argument is the cross-over rate (CR) that dictates the probability that a candidate will undergo a mutation. The performance of the DE method is dependent on the value of F and CR.</p>
+<p>Below code block defines <code class="docutils literal notranslate"><span class="pre">pymoo</span></code> problem class and initializes differential evolution algorithm:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Exploitation</span><span class="p">(</span><span class="n">Problem</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">LowerConfidenceBound</span><span class="p">(</span><span class="n">Problem</span><span class="p">):</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gp</span><span class="p">,</span> <span class="n">lb</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ub</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gp</span><span class="p">,</span> <span class="n">lb</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ub</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Class for defining auxiliary optimization problem that uses</span>
-<span class="sd">            exploitation as the acquisition function</span>
+<span class="sd">            lower confidence bound as the acquisition function</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># initialize parent class</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_var</span><span class="o">=</span><span class="n">lb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">n_obj</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_constr</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">xl</span><span class="o">=</span><span class="n">lb</span><span class="p">,</span> <span class="n">xu</span><span class="o">=</span><span class="n">ub</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">gp</span> <span class="o">=</span> <span class="n">gp</span> <span class="c1"># store the surrogate model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">=</span> <span class="n">A</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
@@ -483,10 +487,10 @@ document.write(`
         <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">x_train</span><span class="p">)</span>
 
         <span class="c1"># get mean prediction</span>
-        <span class="n">y_mean</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">y_mean</span><span class="p">,</span> <span class="n">y_var</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
         <span class="c1"># store the objective value as numpy array</span>
-        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_mean</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_mean</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">*</span> <span class="n">y_var</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
 
 <span class="c1"># Optimization algorithm</span>
 <span class="n">algorithm</span> <span class="o">=</span> <span class="n">DE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">15</span><span class="o">*</span><span class="n">lb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">F</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -494,12 +498,13 @@ document.write(`
 </div>
 </div>
 </div>
-<section id="exploitation-loop">
-<h2>Exploitation loop<a class="headerlink" href="#exploitation-loop" title="Link to this heading">#</a></h2>
-<p>Below code implements BO loop with exploitation-based acquisition function. Four initial samples are used with a maximum function evaluation budget of 12. This implies that there will be 8 iterations of the loop. The initial samples are generated using latin hypercube sampling. A Gaussian process (GP) model is used to approximate modified Branin function. The mean prediction of GP model is used as the acquisition function, i.e., <span class="math notranslate nohighlight">\(\hat{f}(\mathbf{x}) = \mu(\mathbf{x})\)</span>, where <span class="math notranslate nohighlight">\(\mu\)</span> is mean GP prediction.</p>
+<section id="lcb-loop">
+<h2>LCB loop<a class="headerlink" href="#lcb-loop" title="Link to this heading">#</a></h2>
+<p>Below code implements BO loop with lcb-based acquisition function. Four initial samples are used with a maximum function evaluation budget of 12. This implies that there will be 8 iterations of the loop. The initial samples are generated using latin hypercube sampling. A Gaussian process model is used to approximate the modified Branin function since it provides both point-prediction and uncertainty in prediction.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># variables</span>
+<span class="n">A</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">num_init</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">max_evals</span> <span class="o">=</span> <span class="mi">12</span>
 <span class="n">num_evals</span> <span class="o">=</span> <span class="mi">0</span>
@@ -520,7 +525,7 @@ document.write(`
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xbest</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;f: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ybest</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Exploitation Loop:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">LCB Loop:&quot;</span><span class="p">)</span>
 
 <span class="c1"># loop</span>
 <span class="k">while</span> <span class="n">num_evals</span> <span class="o">&lt;</span> <span class="n">max_evals</span><span class="p">:</span>
@@ -545,12 +550,12 @@ document.write(`
     <span class="n">gp</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">training_iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">mll</span><span class="o">=</span><span class="n">mll</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">)</span>
 
     <span class="c1"># Find the minimum of surrogate model</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">Exploitation</span><span class="p">(</span><span class="n">gp</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">ub</span><span class="p">),</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">LowerConfidenceBound</span><span class="p">(</span><span class="n">gp</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">ub</span><span class="p">,</span> <span class="n">A</span><span class="p">),</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="c1"># Computing true function value at infill point</span>
     <span class="n">y_infill</span> <span class="o">=</span> <span class="n">modified_branin</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New point (curret opt of surroage model):&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New point (based on LCB):&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">X</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;f: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y_infill</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span>
 
@@ -580,71 +585,71 @@ document.write(`
 x: [-3.125  5.625]
 f: [28.46841701]
 
-Exploitation Loop:
+LCB Loop:
 
 Iteration: 1
-New point (curret opt of surroage model):
-x: [-0.69594577  3.51955028]
-f: 27.216643897355404
+New point (based on LCB):
+x: [-3.12499823  5.62495876]
+f: 28.468915117893424
 Current best:
-x: [-0.69594577  3.51955028]
-f: [27.2166439]
+x: [-3.125  5.625]
+f: [28.46841701]
 
 Iteration: 2
-New point (curret opt of surroage model):
-x: [-5.          4.65395225]
-f: 144.81006310149547
+New point (based on LCB):
+x: [-3.1753687  6.773826 ]
+f: 15.690751987485676
 Current best:
-x: [-0.69594577  3.51955028]
-f: [27.2166439]
+x: [-3.1753687  6.773826 ]
+f: [15.69075199]
 
 Iteration: 3
-New point (curret opt of surroage model):
-x: [-2.94204392  5.65738303]
-f: 23.617088105919947
+New point (based on LCB):
+x: [-3.28811933  8.95917846]
+f: -2.4655274829608427
 Current best:
-x: [-2.94204392  5.65738303]
-f: [23.61708811]
+x: [-3.28811933  8.95917846]
+f: [-2.46552748]
 
 Iteration: 4
-New point (curret opt of surroage model):
-x: [-2.43656027  5.25136856]
-f: 19.593984491453593
+New point (based on LCB):
+x: [-3.37441326 10.45768278]
+f: -10.532399501389037
 Current best:
-x: [-2.43656027  5.25136856]
-f: [19.59398449]
+x: [-3.37441326 10.45768278]
+f: [-10.5323995]
 
 Iteration: 5
-New point (curret opt of surroage model):
-x: [-2.52358172  6.22847951]
-f: 10.813989195567094
+New point (based on LCB):
+x: [-3.56356411 13.43766998]
+f: -16.561899864887906
 Current best:
-x: [-2.52358172  6.22847951]
-f: [10.8139892]
+x: [-3.56356411 13.43766998]
+f: [-16.56189986]
 
 Iteration: 6
-New point (curret opt of surroage model):
-x: [-2.21819653  8.41978693]
-f: -3.832868747662321
+New point (based on LCB):
+x: [-3.56334932 13.43454004]
+f: -16.562314232604642
 Current best:
-x: [-2.21819653  8.41978693]
-f: [-3.83286875]
+x: [-3.56334932 13.43454004]
+f: [-16.56231423]
 
 Iteration: 7
-New point (curret opt of surroage model):
-x: [-2.44146557  9.43134118]
-f: -8.051464983710995
+New point (based on LCB):
+x: [-3.56228051 13.41888335]
+f: -16.564188640570137
 Current best:
-x: [-2.44146557  9.43134118]
-f: [-8.05146498]
+x: [-3.56228051 13.41888335]
+f: [-16.56418864]
 
 Iteration: 8
-New point (curret opt of surroage model):
-x: [-2.94012959 11.02608667]
-f: -13.515667975783295
+New point (based on LCB):
+x: [-3.55971155 13.38114783]
+f: -16.567292915440333
 Current best:
-x: [-2.94012959 11.02608667]
-f: [-13.51566798]
+x: [-3.55971155 13.38114783]
+f: [-16.56729292]
 </pre></div>
 </div>
 </div>
@@ -671,12 +676,12 @@ f: [-13.51566798]
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Optimization progess - exploitation&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Optimization progess - LCB&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/0c7fc9fd49cd2321a5720ae0833500136de7e69e999c9c54d6005ad986cde4b7.png" src="../_images/0c7fc9fd49cd2321a5720ae0833500136de7e69e999c9c54d6005ad986cde4b7.png" />
+<img alt="../_images/41dd643530f95bf1b69ac6effcb45ea563c38c4161e8820c13a664ee7c43c7c3.png" src="../_images/41dd643530f95bf1b69ac6effcb45ea563c38c4161e8820c13a664ee7c43c7c3.png" />
 </div>
 </div>
 <p>Below code plots the infill points added during the optimization process:</p>
@@ -704,7 +709,7 @@ f: [-13.51566798]
 <span class="n">ax</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">-</span><span class="mf">3.689</span><span class="p">,</span> <span class="mf">13.630</span><span class="p">,</span> <span class="s1">&#39;g*&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Global minimum&quot;</span><span class="p">)</span>
 
-<span class="c1"># Pointss</span>
+<span class="c1"># Points</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_train</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">num_init</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">x_train</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">num_init</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Initial samples&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_train</span><span class="p">[</span><span class="n">num_init</span><span class="p">:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">x_train</span><span class="p">[</span><span class="n">num_init</span><span class="p">:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;New points&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xbest</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">xbest</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;bo&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Obtained minimum&quot;</span><span class="p">)</span>
@@ -713,15 +718,15 @@ f: [-13.51566798]
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;New points - exploitation&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;New points - LCB&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/873a0d852629b64b3294cdda8ad0861d0b304534652b289a737f84dbd630e573.png" src="../_images/873a0d852629b64b3294cdda8ad0861d0b304534652b289a737f84dbd630e573.png" />
+<img alt="../_images/9956f245622fb664ff73fdac624bfa49afcc2b587611306c4ff2d6150f9404e2.png" src="../_images/9956f245622fb664ff73fdac624bfa49afcc2b587611306c4ff2d6150f9404e2.png" />
 </div>
 </div>
-<p>As can be seen in above plots, in each iteration, points are added where the minimum of the surrogate model is. As a result, optimization has a tendency to linger around local optimum which results in a slow convergence rate. So, it is important to balance exploitation and exploration.</p>
+<p>As can be seen in above plots, the convergence is much faster than pure exploitation-based acquisition function. But it is hard to know what value of <span class="math notranslate nohighlight">\(A\)</span> to use. You can change the value of <span class="math notranslate nohighlight">\(A\)</span> and see how it changes the optimization convergence.</p>
 <blockquote>
 <div><p><strong><em>NOTE</em></strong>: Due to randomness in GP training and differential evolution, results may vary slightly between runs. So, it is recommend to run the code multiple times to see average behavior.</p>
 </div></blockquote>
@@ -759,22 +764,13 @@ f: [-13.51566798]
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="intro.html"
+       href="exploitation.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Bayesian optimization</p>
+        <p class="prev-next-title">Exploitation</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="lcb.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Lower Confidence Bound</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -792,7 +788,7 @@ f: [-13.51566798]
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploitation-loop">Exploitation loop</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lcb-loop">LCB loop</a></li>
 </ul>
   </nav></div>
 
