@@ -62,6 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'bo/intro';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Exploitation" href="exploitation.html" />
     <link rel="prev" title="Applications" href="../application_intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -213,7 +214,10 @@
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../application_intro.html">Applications</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Bayesian optimization</a></li>
+<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">Bayesian optimization</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="exploitation.html">Exploitation</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 </ul>
@@ -388,15 +392,18 @@ document.write(`
 \[
     \max_{\mathbf{x} \in \Omega} f(x),
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is the design variable vector and <span class="math notranslate nohighlight">\(\Omega \sub \mathcal{R}^n\)</span> is the design space.</p>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is the design variable vector and <span class="math notranslate nohighlight">\(\Omega \subset \mathcal{R}^n\)</span> is the design space.</p>
 <p>BO consists of adaptively selecting test points while balancing a trade-off between exploration (regions of high uncertainty) and exploitation (regions of observed good performance). Specifically, BO performs an auxillary optimization to perform this trade-off. The auxillary optimization consists of maximizing an acquisition function which balances this trade-off. Various acquisition functions have been proposed in literature but this section will focus on following functions:</p>
 <ol class="arabic simple">
 <li><p>Exploitation</p></li>
-<li><p>Exploration</p></li>
 <li><p>Lower Confidence Bound</p></li>
 <li><p>Probability of Improvement</p></li>
 <li><p>Expected Improvement</p></li>
 </ol>
+<p>To solve the auxiliary optimization problem, we will be using a global optimization algorithm called <a class="reference external" href="https://en.wikipedia.org/wiki/Differential_evolution">differential evolution</a>. One can also use gradient-based optimization to solve this auxiliary optimization problem. However, many of these acquisition functions are non-convex and may have multiple local minima. Hence, in this section, we are using global optimization method for solving auxiliary optimization problem. We are going to use <a class="reference external" href="https://pymoo.org/">pymoo</a> package which provides a convenient interface for performing global optimization using various methods, including differential evolution.</p>
+<blockquote>
+<div><p><strong><em>NOTE:</em></strong> Before proceeding to next section, install pymoo in the environment you created for this class using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pymoo</span></code>.</p>
+</div></blockquote>
 <p>To demonstrate the working of BO and above acquistion functions, the <strong>Modified Branin function</strong> is used. This function is written as</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -469,6 +476,8 @@ document.write(`
 </div>
 </div>
 <p>As can be seen from above plot, the function has multiple local minima and the goal is to find the global minimum using surrogate model and sequential sampling.</p>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -509,6 +518,15 @@ document.write(`
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Applications</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="exploitation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Exploitation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
