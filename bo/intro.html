@@ -217,6 +217,7 @@
 <li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">Bayesian optimization</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="exploitation.html">Exploitation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lcb.html">Lower Confidence Bound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pi.html">Probability of Improvement</a></li>
 </ul>
 </details></li>
 </ul>
@@ -391,7 +392,7 @@ document.write(`
 <p>This section provides implementation for concepts related to Bayesian optimization (BO). Primarily, BO is aimed at solving an optimization problem that involves expensive-to-evaluate blackbox function <span class="math notranslate nohighlight">\(f: \Omega \rightarrow \mathcal{R}\)</span>. In other words, the function form of <span class="math notranslate nohighlight">\(f\)</span> is not available and one can only evaluate <span class="math notranslate nohighlight">\(f\)</span> at a limited number of input points to determine the optimum value. Mathematically, the optimization problem is written as</p>
 <div class="math notranslate nohighlight">
 \[
-    \max_{\mathbf{x} \in \Omega} f(x),
+    \min_{\mathbf{x} \in \Omega} f(x),
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is the design variable vector and <span class="math notranslate nohighlight">\(\Omega \subset \mathcal{R}^n\)</span> is the design space.</p>
 <p>BO consists of adaptively selecting test points while balancing a trade-off between exploration (regions of high uncertainty) and exploitation (regions of observed good performance). Specifically, BO performs an auxillary optimization to perform this trade-off. The auxillary optimization consists of maximizing an acquisition function which balances this trade-off. Various acquisition functions have been proposed in literature but this section will focus on following functions:</p>
