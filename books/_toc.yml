@@ -10,23 +10,23 @@ chapters:
           - file: introduction/python_basics/torch_basics
           - file: introduction/python_basics/plotting
           - file: introduction/python_basics/resources
-  - file: modeling_intro
+  - file: modeling/index
     sections:
-      - file: doe
-      - file: data_handling
-      - file: basic_sm/intro
+      - file: modeling/doe
+      - file: modeling/data_handling
+      - file: modeling/basic_sm/intro
         sections:
-          - file: basic_sm/poly
-          - file: basic_sm/rbf
-      - file: gp_models/gp_intro
+          - file: modeling/basic_sm/poly
+          - file: modeling/basic_sm/rbf
+      - file: modeling/gp_models/gp_intro
         sections:
-          - file: gp_models/gp_models
-          - file: gp_models/gp_models_with_noise
-      - file: nn_models
-      - file: mf_nn_models
-      - file: pod
-      - file: autoencoder
-      - file: multi_output
+          - file: modeling/gp_models/gp_models
+          - file: modeling/gp_models/gp_models_with_noise
+      - file: modeling/nn_models
+      - file: modeling/mf_nn_models
+      - file: modeling/pod
+      - file: modeling/autoencoder
+      - file: modeling/multi_output
   - file: application_intro
     sections:
       - file: bo/intro
