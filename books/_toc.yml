@@ -35,3 +35,8 @@ chapters:
           - file: bo/lcb
           - file: bo/pi
           - file: bo/ei
+      - file: const_bo/intro
+        sections:
+          - file: const_bo/const_exploit
+          - file: const_bo/const_ei
+          - file: const_bo/prob_feas
