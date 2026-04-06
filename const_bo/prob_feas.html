@@ -700,13 +700,7 @@ f: 63.001884377989015
 g: [-33.28425552]
 
 Iteration: 7
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/gallifrey/miniconda3/envs/ece60146/lib/python3.12/site-packages/gpytorch/distributions/multivariate_normal.py:376: NumericalWarning: Negative variance values detected. This is likely due to numerical instabilities. Rounding negative variances up to 1e-10.
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>New point (based on EIPF):
+New point (based on EIPF):
 x: [10.          3.00518224]
 f: 51.9431456163136
 Current best:
@@ -830,6 +824,60 @@ Current best:
 x: [9.1267817  3.28716051]
 f: 47.5618119115442
 g: [-0.00119635]
+
+Iteration: 21
+New point (based on EIPF):
+x: [ 2.67732437 14.25695544]
+f: 149.1764393694612
+Current best:
+x: [9.1267817  3.28716051]
+f: 47.5618119115442
+g: [-0.00119635]
+
+Iteration: 22
+New point (based on EIPF):
+x: [ 2.67732437 14.25695544]
+f: 149.1764393694612
+Current best:
+x: [9.1267817  3.28716051]
+f: 47.5618119115442
+g: [-0.00119635]
+
+Iteration: 23
+New point (based on EIPF):
+x: [ 2.67732437 14.25695544]
+f: 149.1764393694612
+Current best:
+x: [9.1267817  3.28716051]
+f: 47.5618119115442
+g: [-0.00119635]
+
+Iteration: 24
+New point (based on EIPF):
+x: [ 2.67732437 14.25695544]
+f: 149.1764393694612
+Current best:
+x: [9.1267817  3.28716051]
+f: 47.5618119115442
+g: [-0.00119635]
+
+Iteration: 25
+New point (based on EIPF):
+x: [ 2.67732437 14.25695544]
+f: 149.1764393694612
+Current best:
+x: [9.1267817  3.28716051]
+f: 47.5618119115442
+g: [-0.00119635]
+
+Iteration: 26
+New point (based on EIPF):
+x: [ 2.67732437 14.25695544]
+f: 149.1764393694612
+Current best:
+x: [9.1267817  3.28716051]
+f: 47.5618119115442
+g: [-0.00119635]
 </pre></div>
 </div>
 </div>
@@ -872,7 +920,7 @@ g: [-0.00119635]
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/aeda9577f7ebaab84167e6314033b536a9019d688b736effee386ebcffe64f49.png" src="../_images/aeda9577f7ebaab84167e6314033b536a9019d688b736effee386ebcffe64f49.png" />
+<img alt="../_images/402eff5ec8e02256f3a2a2fcbf086f21a80dc4547f4ed5a8c14d4381c542ebc1.png" src="../_images/402eff5ec8e02256f3a2a2fcbf086f21a80dc4547f4ed5a8c14d4381c542ebc1.png" />
 </div>
 </div>
 <p>Below block of code plots the infill points along with the contours of the true objective and constraint functions.</p>
@@ -919,7 +967,7 @@ g: [-0.00119635]
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/4bda5f743e4625bc31aeace40e3f2802e7fec2e038b24a0def0ba087974becbf.png" src="../_images/4bda5f743e4625bc31aeace40e3f2802e7fec2e038b24a0def0ba087974becbf.png" />
+<img alt="../_images/3561f504f09fe90bdb531fc658fbf1b2437824a092e46b24439e94c583b7a0c2.png" src="../_images/3561f504f09fe90bdb531fc658fbf1b2437824a092e46b24439e94c583b7a0c2.png" />
 </div>
 </div>
 <p>From the above plot, it can be seen that EI and PF finds the minimum of the modified branin function while balancing exploration and exploitation. The acquisition function adds a few points in the unexplored regions of the feasible space of the optimization problem before finding the global feasible minimum of the problem.</p>
