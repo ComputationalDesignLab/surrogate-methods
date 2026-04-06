@@ -1,7 +1,7 @@
 format: jb-book
 root: index
 chapters:
-  - file: introduction
+  - file: introduction/index
     sections:
       - file: introduction/setup
       - file: introduction/python_basics/intro
