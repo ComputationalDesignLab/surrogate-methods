@@ -27,16 +27,16 @@ chapters:
       - file: modeling/pod
       - file: modeling/autoencoder
       - file: modeling/multi_output
-  - file: application_intro
+  - file: applications/index
     sections:
-      - file: bo/intro
+      - file: applications/bo/intro
         sections:
-          - file: bo/exploitation
-          - file: bo/lcb
-          - file: bo/pi
-          - file: bo/ei
-      - file: const_bo/intro
+          - file: applications/bo/exploitation
+          - file: applications/bo/lcb
+          - file: applications/bo/pi
+          - file: applications/bo/ei
+      - file: applications/const_bo/intro
         sections:
-          - file: const_bo/const_exploit
-          - file: const_bo/const_ei
-          - file: const_bo/prob_feas
+          - file: applications/const_bo/const_exploit
+          - file: applications/const_bo/const_ei
+          - file: applications/const_bo/prob_feas
