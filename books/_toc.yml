@@ -40,3 +40,4 @@ chapters:
           - file: applications/const_bo/const_exploit
           - file: applications/const_bo/const_ei
           - file: applications/const_bo/prob_feas
+      - file: applications/up
