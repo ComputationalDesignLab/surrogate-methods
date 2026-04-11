@@ -17,5 +17,5 @@ After going through this jupyter-book, the reader will:
 
 Following people have contributed to this book:
 
-+ Pavankumar Koratikere
-+ Abhijnan Dikshit
++ Pavankumar Koratikere (Spring 2024, Spring 2025, Spring 2026)
++ Abhijnan Dikshit (Spring 2024, Spring 2025, Spring 2026)
