@@ -41,3 +41,7 @@ chapters:
           - file: applications/const_bo/const_ei
           - file: applications/const_bo/prob_feas
       - file: applications/up
+      - file: applications/ouu/intro_ouu
+        sections:
+          - file: applications/ouu/robust_design
+          - file: applications/ouu/rel_based_design
