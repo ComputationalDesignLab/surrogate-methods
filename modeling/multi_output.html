@@ -228,6 +228,11 @@
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="../applications/up.html">Uncertainty propagation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../applications/ouu/intro_ouu.html">Optimization under uncertainty</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../applications/ouu/robust_design.html">Robust Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../applications/ouu/rel_based_design.html">Reliability-based Design</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 </ul>
@@ -415,8 +420,7 @@ document.write(`
 <section id="theory">
 <h2>Theory<a class="headerlink" href="#theory" title="Link to this heading">#</a></h2>
 <p>As described in the previous two sections, dimensionality reduction methods can be used to reduce the dimensionality of high-dimensional field outputs and represent them using only a few latent variables. These sections also showed how to reconstruct the high-dimensional data using the methods. However, reconstruction involved providing the methods with a high-dimensional field output. In predictive modeling, we are interested in predicting the high-dimensional outputs and we do not have access to the high-dimensional field output in reality. We want to create a multioutput model that uses a set of input variables to predict the high-dimensional field outputs. This can be done by combining the dimensionality reduction methods with interpolation and regression models, such as Gaussian process (GP) and neural network (NN) models, to create a multioutput surrogate model. A graphical overview of such a surrogate model is shown below.</p>
-<a class="reference internal image-reference" href="../_images/nirom.png"><img alt="../_images/nirom.png" class="align-center" src="../_images/nirom.png" style="width: 450px;" />
-</a>
+<a class="reference internal image-reference" href="../_images/nirom.png"><img alt="../_images/nirom.png" class="align-center" src="../_images/nirom.png" style="width: 450px;" /></a>
 <p>The models described above are known as non-intrusive reduced order models (NIROMs). They are a common method for creating multioutput models to predict very high-dimensional outputs. NIROMs can be formulated mathematically as follows.</p>
 <p>Each dimensionality reduction method has an encoding process, <span class="math notranslate nohighlight">\(f:\mathbb{R}^n \rightarrow \mathbb{R}^k\)</span>, that projects the high-dimensional data to a low-dimensional space, and a decoding process, <span class="math notranslate nohighlight">\(g:\mathbb{R}^k \rightarrow \mathbb{R}^n\)</span>, that uses the latent variables to reconstruct the high-dimensional prediction. Consider that we have a modeling problem with an input training dataset, <span class="math notranslate nohighlight">\(\textbf{X} \in \mathbb{R}^{m \times d}\)</span>, and a corresponding output training dataset, <span class="math notranslate nohighlight">\(\textbf{Y} \in \mathbb{R}^{m \times n}\)</span>. First, we fit the dimensionality reduction method to the output training dataset, <span class="math notranslate nohighlight">\(Y\)</span>. Next, we can generate the latent variables for <span class="math notranslate nohighlight">\(Y\)</span> using the encoding function,</p>
 <div class="math notranslate nohighlight">

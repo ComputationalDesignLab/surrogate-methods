@@ -228,6 +228,11 @@
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="../applications/up.html">Uncertainty propagation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../applications/ouu/intro_ouu.html">Optimization under uncertainty</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../applications/ouu/robust_design.html">Robust Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../applications/ouu/rel_based_design.html">Reliability-based Design</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 </ul>
@@ -424,8 +429,7 @@ document.write(`
     \mathcal{F} = \mathcal{F}_L + \mathcal{F}_{NL}.
 \]</div>
 <p>The <span class="math notranslate nohighlight">\(\mathcal{F}_L\)</span> and <span class="math notranslate nohighlight">\(\mathcal{F}_{NL}\)</span> denote linear and nonlinear correlation function, respectively. Both these functions are approximated using a neural network model. Additionally, the relation <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(y_L\)</span> is also modeled using a neural network. These networks are arranged as shown in below schematic.</p>
-<a class="reference internal image-reference" href="../_images/mf_net.png"><img alt="../_images/mf_net.png" class="align-center" src="../_images/mf_net.png" style="width: 450px;" />
-</a>
+<a class="reference internal image-reference" href="../_images/mf_net.png"><img alt="../_images/mf_net.png" class="align-center" src="../_images/mf_net.png" style="width: 450px;" /></a>
 <p>As mentioned earlier, there are three sub-networks here:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\mathcal{NN}_L\)</span>: learns mapping between <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(y_L\)</span></p></li>

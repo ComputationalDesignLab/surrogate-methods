@@ -1,0 +1,859 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Reliability-based Design &#8212; Surrogate Methods</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'applications/ouu/rel_based_design';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Robust Design" href="robust_design.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Surrogate Methods</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Surrogate Methods
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../introduction/index.html">Introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/setup.html">Computing environment setup</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../introduction/python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction/python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
+
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="../../introduction/python_basics/torch_basics.html">Basics of PyTorch tensor computations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction/python_basics/plotting.html">Basic plotting in Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction/python_basics/resources.html">Python and Jupyter notebook resources</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../modeling/index.html">Modeling</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../modeling/doe.html">Sampling Plans</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modeling/data_handling.html">Data Handling</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../modeling/basic_sm/intro.html">Basic Surrogate Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../modeling/basic_sm/poly.html">Polynomial Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../modeling/basic_sm/rbf.html">Radial Basis Function Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../modeling/gp_models/gp_intro.html">Gaussian Processes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../modeling/gp_models/gp_models.html">Modeling a Function using GP Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../modeling/gp_models/gp_models_with_noise.html">Modeling a Noisy Function using GP Models</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modeling/nn_models.html">Neural Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modeling/mf_nn_models.html">Multi-Fidelity Neural Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modeling/pod.html">Proper Orthogonal Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modeling/autoencoder.html">Autoencoder Neural Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modeling/multi_output.html">Multioutput Models</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">Applications</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../bo/intro.html">Bayesian optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../bo/exploitation.html">Exploitation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bo/lcb.html">Lower Confidence Bound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bo/pi.html">Probability of Improvement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bo/ei.html">Expected Improvement</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../const_bo/intro.html">Constrained Bayesian Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../const_bo/const_exploit.html">Constrained Exploitation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../const_bo/const_ei.html">Constrained Expected Improvement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../const_bo/prob_feas.html">Constrained Expected Improvement with Probability of Feasibility</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../up.html">Uncertainty propagation</a></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="intro_ouu.html">Optimization under uncertainty</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="robust_design.html">Robust Design</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Reliability-based Design</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/ComputationalDesignLab/surrogate-methods" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/applications/ouu/rel_based_design.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Reliability-based Design</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-of-feasibility-of-a-constraint">Probability of feasibility of a constraint</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="reliability-based-design">
+<h1>Reliability-based Design<a class="headerlink" href="#reliability-based-design" title="Link to this heading">#</a></h1>
+<p>Reliability-based design is concerned with mitigating risk to failure under uncertainty of design variables or parameters. In this case, the designer is concerned with lowering the probability that the constraints are violated under uncertainty of the design variables and parameters. In other words, reliable design considers the effect of uncertainty on the constraints. For a reliable design, the deterministic constraints of the optimization problem are changed to ensure that the probability of feasibility of the constraint exceeds a specified reliability level <span class="math notranslate nohighlight">\(r\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\text{Pr}(g(\textbf{x})\leq0) \geq r\]</div>
+<p>If <span class="math notranslate nohighlight">\(r\)</span> is set to 0.999, then the constraint must be feasible with a probability of 99.9%.</p>
+<p>To illustrate the idea of reliability-based design, consider the following constrained optimization problem. The deterministic optimum solution of this problem is <span class="math notranslate nohighlight">\(f^* = -3.52341\)</span> at <span class="math notranslate nohighlight">\(x_1 = 1.06237\)</span> and <span class="math notranslate nohighlight">\(x_2 = 2.12086\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+    \min \; &amp;f(x_1,x_2) = x_1^2 - \frac{x_1}{2} - x_2 - 2 \nonumber\\
+    \text{subject to} &amp; \nonumber\\
+    g_1(x_1,x_2) &amp;= x_1^2 -4x_1 + x_2 + 1  \leq 0 \nonumber\\
+    g_2(x_1,x_2) &amp;= \frac{x_1^2}{2} + x_2^2 - x_1 - 4 \leq 0 \nonumber\\
+    &amp;-3 \leq x_1 \leq 5, \quad -3 \leq x_2 \leq 4 \nonumber\\
+\end{align}
+\end{split}\]</div>
+<p>The block of code below imports the necessary packages for this section.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">norm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ellipse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.transforms</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">transforms</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.core.problem</span><span class="w"> </span><span class="kn">import</span> <span class="n">ElementwiseProblem</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.algorithms.soo.nonconvex.de</span><span class="w"> </span><span class="kn">import</span> <span class="n">DE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">minimize</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
+<span class="n">Config</span><span class="o">.</span><span class="n">warnings</span><span class="p">[</span><span class="s1">&#39;not_compiled&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The block of code below defines the objective and constraint functions of the problem. It also plots the design space with constraint and objective functions along with the deterministic optimum point. The shaded region in the plot marks the infeasible part of the design space.</p>
+<p>Note that the deterministic optimum point lies at the boundary of both the constraints. Any variation in the constraints can make the point infeasible.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Functions for fast computations</span>
+<span class="n">function_2</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">:</span> <span class="n">x1</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x1</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x2</span> <span class="o">-</span> <span class="mi">2</span>
+<span class="n">constraint_1</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">:</span> <span class="n">x1</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">x1</span> <span class="o">+</span> <span class="n">x2</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">constraint_2</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">:</span> <span class="n">x1</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">x2</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x1</span> <span class="o">-</span> <span class="mi">4</span>
+
+<span class="c1"># Function for optimization</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">function_2</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># Defining x and y values</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Creating a mesh at which values</span>
+<span class="c1"># will be evaluated and plotted</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Evaluating the function values at meshpoints</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">function_2</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+<span class="n">g1</span> <span class="o">=</span> <span class="n">constraint_1</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+<span class="n">g2</span> <span class="o">=</span> <span class="n">constraint_2</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+
+<span class="c1"># Plotting the filled contours</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">CS</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plotting g1</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">g1</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">g1</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">g1</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">antialiased</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;g1&#39;</span><span class="p">,</span> <span class="n">xy</span> <span class="o">=</span><span class="p">(</span><span class="mf">3.1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">))</span>
+
+<span class="c1"># Plotting g2</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">g2</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">antialiased</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;g2&#39;</span><span class="p">,</span> <span class="n">xy</span> <span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">))</span>
+
+<span class="c1"># Optimum point</span>
+<span class="n">det_opt_x1</span> <span class="o">=</span> <span class="mf">1.06237</span>
+<span class="n">det_opt_x2</span> <span class="o">=</span> <span class="mf">2.12086</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">det_opt_x1</span><span class="p">,</span> <span class="n">det_opt_x2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Deterministic optimum&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Asthetics</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1bd8c9273b0&gt;
+</pre></div>
+</div>
+<img alt="../../_images/b34536ac01de0e97cbaa8bb94ba5a6e4ea88a1fa15e34fffecaa527c3e6b7700.png" src="../../_images/b34536ac01de0e97cbaa8bb94ba5a6e4ea88a1fa15e34fffecaa527c3e6b7700.png" />
+</div>
+</div>
+<section id="probability-of-feasibility-of-a-constraint">
+<h2>Probability of feasibility of a constraint<a class="headerlink" href="#probability-of-feasibility-of-a-constraint" title="Link to this heading">#</a></h2>
+<p>The probability of feasibility of a constraint is of central interest when performing reliability-based design. The probability of feasibility of the constraints from the example problem can be calculated using MCS. The distributions of the uncertain variables can be sampled using the methods shown in the uncertainty analysis section and for each sample, the value of the constraint can be calculated. Once all the samples are evaluated, the required probability can be calculated by simply dividing the number of samples that satisfy the constraint by the total number of samples.</p>
+<div class="math notranslate nohighlight">
+\[\text{Pr}(g(\textbf{x}) \leq 0) \approx \frac{\text{number of feasible samples}}{\text{total number of samples}}\]</div>
+<p>For this example of reliability-based design, consider <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span> to be uncertain variables that follow <strong>normal distributions</strong> with <span class="math notranslate nohighlight">\(\sigma_1 = 0.1\)</span> and <span class="math notranslate nohighlight">\(\sigma_2 = 0.2\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[x_1 \sim \mathcal{N}(1.06237, 0.1^2), \quad x_2 \sim \mathcal{N}(2.12086, 0.2^2) \]</div>
+<p>The next block of code uses random sampling and a large number of MCS samples to calculate the true probability of feasibility of the constraints.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Standard deviation for both variables</span>
+<span class="n">x1_sigma</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">x2_sigma</span> <span class="o">=</span> <span class="mf">0.2</span>
+
+<span class="c1"># Number of MCS iterations</span>
+<span class="n">mcs_samples</span> <span class="o">=</span> <span class="mi">500000</span>
+
+<span class="c1"># Generate random samples</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">det_opt_x1</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">x1_sigma</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">mcs_samples</span><span class="p">)</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">det_opt_x2</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">x2_sigma</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">mcs_samples</span><span class="p">)</span>
+
+<span class="c1"># Compute value of constraints at those x values</span>
+<span class="n">g1_value</span> <span class="o">=</span> <span class="n">constraint_1</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+<span class="n">g2_value</span> <span class="o">=</span> <span class="n">constraint_2</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+
+<span class="c1"># Compute probability of feasibility for both constraints</span>
+<span class="c1"># It involves counting how many values satisfy the </span>
+<span class="c1"># constraints and compute the fraction.</span>
+<span class="n">pf_g1</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">g1_value</span><span class="p">[</span><span class="n">g1_value</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">mcs_samples</span>
+<span class="n">pf_g2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">g2_value</span><span class="p">[</span><span class="n">g2_value</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">mcs_samples</span>
+
+<span class="c1"># Printing the results</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estimated probability of feasibility for g1: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">g1_value</span><span class="p">[</span><span class="n">g1_value</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">mcs_samples</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estimated probability of feasibility for g1: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">g2_value</span><span class="p">[</span><span class="n">g2_value</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">mcs_samples</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated probability of feasibility for g1: 0.49292
+Estimated probability of feasibility for g1: 0.49818
+</pre></div>
+</div>
+</div>
+</div>
+<p>The above calculations indicate that the deterministic optimum point has a probability of feasibility of nearly 0.50. This means that given the uncertainty in the design variables, the constraint will be infeasible almost half of the time. Hence, there is a need for reliability-based optimization to prevent the constraint from being violated under uncertainty. The optimization problem statement for reliability-based design will be as follows.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+    \min \; &amp;f(x_1,x_2) = x_1^2 - \frac{x_1}{2} - x_2 - 2 \nonumber\\
+    \text{subject to} &amp; \nonumber\\
+    &amp;P[g_1(x_1, x_2) \leq 0] \geq 0.99 \nonumber\\
+    &amp;P[g_2(x_1, x_2) \leq 0] \geq 0.99 \nonumber\\
+    &amp;-3 \leq x_1 \leq 5, \quad -3 \leq x_2 \leq 4 \nonumber\\
+\end{align}
+\end{split}\]</div>
+<blockquote>
+<div><p><strong>NOTE</strong>: The objective function of the problem is kept deterministic in this case. However, the objective function can also be changed to a robust design objective to perform a combination of robust and reliability-based design.</p>
+</div></blockquote>
+<p>The block of code below defines two functions for computing the reliability for each constraint.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Few parameters</span>
+<span class="n">x1_sigma</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">x2_sigma</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">mcs_samples</span> <span class="o">=</span> <span class="mi">500000</span>
+<span class="n">reliability</span> <span class="o">=</span> <span class="mf">0.99</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">rel_con1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function for computing reliability of g1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1"># Generate random samples</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">scale</span><span class="o">=</span><span class="n">x1_sigma</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">mcs_samples</span><span class="p">)</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">scale</span><span class="o">=</span><span class="n">x2_sigma</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">mcs_samples</span><span class="p">)</span>
+    
+    <span class="c1"># Compute value of constraint at those x values</span>
+    <span class="n">g1_value</span> <span class="o">=</span> <span class="n">constraint_1</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+    
+    <span class="c1"># Computing frequency of feasible x</span>
+    <span class="k">return</span> <span class="n">reliability</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">g1_value</span><span class="p">[</span><span class="n">g1_value</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">mcs_samples</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">rel_con2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function for computing reliability of g2.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1"># Generate random samples</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">scale</span><span class="o">=</span><span class="n">x1_sigma</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">mcs_samples</span><span class="p">)</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">scale</span><span class="o">=</span><span class="n">x2_sigma</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">mcs_samples</span><span class="p">)</span>
+    
+    <span class="c1"># Compute value of constraint at those x values</span>
+    <span class="n">g2_value</span> <span class="o">=</span> <span class="n">constraint_2</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+    
+    <span class="c1"># Computing frequency of feasible x</span>
+    <span class="k">return</span> <span class="n">reliability</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">g2_value</span><span class="p">[</span><span class="n">g2_value</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">mcs_samples</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The block of code below performs reliability-based optimization.</p>
+<p>Here, <em>differential evolution</em> (DE) is used as an optimizer. As explained earlier, gradient-based optimizers don’t work well since gradients can be difficult to compute. Since DE involves lots of function evaluations and at each iteration, MCS is performed several times, the optimization will take longer to run.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining a generic differential evolution problem</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ReliableDesign</span><span class="p">(</span><span class="n">ElementwiseProblem</span><span class="p">):</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_var</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_obj</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_ieq_constr</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">xl</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">]),</span> <span class="n">xu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">]))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">function_2</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">rel_con1</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">rel_con2</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+
+<span class="n">problem</span> <span class="o">=</span> <span class="n">ReliableDesign</span><span class="p">()</span>
+
+<span class="n">algorithm</span> <span class="o">=</span> <span class="n">DE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">dither</span><span class="o">=</span><span class="s2">&quot;vector&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_history</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best solution found: </span><span class="se">\n</span><span class="s2">X = </span><span class="si">%s</span><span class="se">\n</span><span class="s2">F = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">F</span><span class="p">))</span>
+
+<span class="n">rel_opt_x1</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">rel_opt_x2</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best solution found: 
+X = [1.15608742 1.65134853]
+F = [-2.89285412]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcs_samples</span> <span class="o">=</span> <span class="mi">500000</span>
+
+<span class="c1"># Sample the input distributions</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">rel_opt_x1</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">x1_sigma</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">mcs_samples</span><span class="p">)</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">rel_opt_x2</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">x2_sigma</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">mcs_samples</span><span class="p">)</span>
+
+<span class="c1"># Compute value of constraints at those x values</span>
+<span class="n">g1_value</span> <span class="o">=</span> <span class="n">constraint_1</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+<span class="n">g2_value</span> <span class="o">=</span> <span class="n">constraint_2</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+
+<span class="c1"># Compute probability of feasibility</span>
+<span class="n">pf_g1</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">g1_value</span><span class="p">[</span><span class="n">g1_value</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">mcs_samples</span>
+<span class="n">pf_g2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">g2_value</span><span class="p">[</span><span class="n">g2_value</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">mcs_samples</span>
+
+<span class="c1"># Printing the results</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Probability of feasibility for g1: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">g1_value</span><span class="p">[</span><span class="n">g1_value</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">mcs_samples</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Probability of feasibility for g1: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">g2_value</span><span class="p">[</span><span class="n">g2_value</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">mcs_samples</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Probability of feasibility for g1: 0.989554
+Probability of feasibility for g1: 0.990106
+</pre></div>
+</div>
+</div>
+</div>
+<p>The design point obtained using reliability-based design ihas a much higher reliability as compared to the deterministic optimum. However, the value of the objective function at the optimum value is also increased. The block of code below plots the design space with both the deterministic and reliable optimum. The reliability value can be changed to see how the optimum point changes.</p>
+<p>The plot also shows the uncertainty ellipse around the reliable optimum. The uncertainty ellipse essentially shows the spread of 99% of the possible values of the uncertain design variables. The shape of the ellipse shows that the probability of constraint violation is greatly reduced after accounting for the uncertainty in the design variables. This is because there is a smaller portion of the ellipse that falls in the infeasible region of the problem. This ellipse would change to a circle if the standard deviation of both the design variables was the same.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining x and y values</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Creating a mesh at which values</span>
+<span class="c1"># will be evaluated and plotted</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Evaluating the function values at meshpoints</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">function_2</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+<span class="n">g1</span> <span class="o">=</span> <span class="n">constraint_1</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+<span class="n">g2</span> <span class="o">=</span> <span class="n">constraint_2</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+
+<span class="c1"># Calculating quantities for plotting uncertainty ellipse</span>
+<span class="n">n_std</span> <span class="o">=</span> <span class="mf">3.0</span>
+<span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+<span class="n">pearson</span> <span class="o">=</span> <span class="n">cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">cov</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">ell_radius_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">pearson</span><span class="p">)</span>
+<span class="n">ell_radius_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pearson</span><span class="p">)</span>
+<span class="n">ellipse</span> <span class="o">=</span> <span class="n">Ellipse</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">width</span><span class="o">=</span><span class="n">ell_radius_x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">ell_radius_y</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">facecolor</span> <span class="o">=</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">antialiased</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="n">scale_x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">n_std</span>
+<span class="n">mean_x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+<span class="n">scale_x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cov</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">n_std</span>
+<span class="n">mean_x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+
+<span class="n">transf</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Affine2D</span><span class="p">()</span> \
+    <span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">scale_x1</span><span class="p">,</span> <span class="n">scale_x2</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">mean_x1</span><span class="p">,</span> <span class="n">mean_x2</span><span class="p">)</span>
+
+<span class="c1"># Plotting the filled contours</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">CS</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plotting g1</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">g1</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">g1</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">g1</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">antialiased</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;g1&#39;</span><span class="p">,</span> <span class="n">xy</span> <span class="o">=</span><span class="p">(</span><span class="mf">3.1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">))</span>
+
+<span class="c1"># Plotting g2</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">g2</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">antialiased</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;g2&#39;</span><span class="p">,</span> <span class="n">xy</span> <span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">))</span>
+
+<span class="c1"># Optimum point</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">det_opt_x1</span><span class="p">,</span> <span class="n">det_opt_x2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Deterministic optimum&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">rel_opt_x1</span><span class="p">,</span> <span class="n">rel_opt_x2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;99</span><span class="si">% r</span><span class="s2">eliable optimum&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Plotting uncertainty ellipse</span>
+<span class="n">ellipse</span><span class="o">.</span><span class="n">set_transform</span><span class="p">(</span><span class="n">transf</span> <span class="o">+</span> <span class="n">ax</span><span class="o">.</span><span class="n">transData</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">ellipse</span><span class="p">)</span>
+
+<span class="c1"># Asthetics</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1bd8d8873b0&gt;
+</pre></div>
+</div>
+<img alt="../../_images/5569e358451870d274c30d92b7d7bda6ac125b90d061149b44235fedf1a60024.png" src="../../_images/5569e358451870d274c30d92b7d7bda6ac125b90d061149b44235fedf1a60024.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./applications/ouu"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="robust_design.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Robust Design</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-of-feasibility-of-a-constraint">Probability of feasibility of a constraint</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By CODE Lab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

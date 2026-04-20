@@ -228,6 +228,11 @@
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="../applications/up.html">Uncertainty propagation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../applications/ouu/intro_ouu.html">Optimization under uncertainty</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../applications/ouu/robust_design.html">Robust Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../applications/ouu/rel_based_design.html">Reliability-based Design</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 </ul>
@@ -416,8 +421,7 @@ document.write(`
 <h1>Neural Networks<a class="headerlink" href="#neural-networks" title="Link to this heading">#</a></h1>
 <p>This section provides implementation for concepts related to neural network models. Make sure that you have downloaded and installed the latest release of the <code class="docutils literal notranslate"><span class="pre">scimlstudio</span></code> package before running the code in this section.</p>
 <p>A neural network is a machine learning model inspired by the human brain, capable of approximating nonlinear functions through interconnected layers of computational units known as neurons. According to the universal approximation theorem, NN model with a sufficient number of layers and neurons can represent almost any function. There are many different kinds of neural networks but in this section we will be focusing on fully-connected neural networks (shown below), where each neuron in a given layer is connected to every neuron in the preceding layer.</p>
-<a class="reference internal image-reference" href="../_images/net.png"><img alt="../_images/net.png" class="align-center" src="../_images/net.png" style="width: 350px;" />
-</a>
+<a class="reference internal image-reference" href="../_images/net.png"><img alt="../_images/net.png" class="align-center" src="../_images/net.png" style="width: 350px;" /></a>
 <p>Specifically, each neuron computes a weighted combination of its inputs, followed by the application of a nonlinear activation function. Mathematically, hidden layers of the network can be represented by a recursive relation given as</p>
 <div class="math notranslate nohighlight">
 \[
@@ -426,8 +430,7 @@ document.write(`
 \end{equation*}
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathbf{z}_k\)</span> is the output of <span class="math notranslate nohighlight">\(k^{th}\)</span> layer, <span class="math notranslate nohighlight">\(\mathbf{z}_0\)</span> represents the input layer (i.e. design variable <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>) and <span class="math notranslate nohighlight">\(H\)</span> is the total number of hidden layers. The <span class="math notranslate nohighlight">\(\mathbf{W}_k\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}_k\)</span> are weight matrix and bias vector of <span class="math notranslate nohighlight">\(k^{th}\)</span> layer, respectively. The <span class="math notranslate nohighlight">\(g(\cdot)\)</span> is a nonlinear activation function which operates element-wise on given input vector and significantly effects the performance of network. Several activation functions have been introduced such as sigmoid, hyperbolic tan (tanh) and rectified linear unit (ReLU). All these activation functions are shown in below figure.</p>
-<a class="reference internal image-reference" href="../_images/act_funcs.png"><img alt="../_images/act_funcs.png" class="align-center" src="../_images/act_funcs.png" style="width: 350px;" />
-</a>
+<a class="reference internal image-reference" href="../_images/act_funcs.png"><img alt="../_images/act_funcs.png" class="align-center" src="../_images/act_funcs.png" style="width: 350px;" /></a>
 <p>Mathematically, some of these activation functions are written as:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}

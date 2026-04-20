@@ -1,0 +1,801 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Multiobjective optimization using Kriging models &#8212; Surrogate Methods</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'multi_objective/krg_multi_objective';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Surrogate Methods</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Surrogate Methods
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../introduction.html">Introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
+
+
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="../python_basics/torch_basics.html">Basics of PyTorch tensor computations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python_basics/plotting.html">Basic plotting in Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python_basics/resources.html">Python and Jupyter notebook resources</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../modeling_intro.html">Modeling</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../doe.html">Sampling Plans</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_handling.html">Data Handling</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../basic_sm/intro.html">Basic Surrogate Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basic_sm/poly.html">Polynomial Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basic_sm/rbf.html">Radial Basis Function Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../gp_models/gp_intro.html">Gaussian Processes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../gp_models/gp_models.html">Modeling a Function using GP Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gp_models/gp_models_with_noise.html">Modeling a Noisy Function using GP Models</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../nn_models.html">Neural Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mf_nn_models.html">Multi-Fidelity Neural Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pod.html">Proper Orthogonal Decomposition</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/ComputationalDesignLab/surrogate-methods" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/multi_objective/krg_multi_objective.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Multiobjective optimization using Kriging models</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branin-currin-optimization-problem">Branin-Currin optimization problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constrained-multiobjective-optimization-problem">Constrained multiobjective optimization problem</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="multiobjective-optimization-using-kriging-models">
+<h1>Multiobjective optimization using Kriging models<a class="headerlink" href="#multiobjective-optimization-using-kriging-models" title="Link to this heading">#</a></h1>
+<p>In this section, multiobjective optimization using Kriging models will be described. The idea in this section is to replace the true function with an accurate enough Kriging surrogate model and perform multiobjective optimization using the Kriging model. In this case, an accurate enough model is one that correctly describe the Pareto front of the problem in conjunction with an optimizer such as NSDE. The Kriging models used in this section are generated in much the same way as done in previous sections.</p>
+<p>The block of code below imports the required packages for this section.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">smt.sampling_methods</span><span class="w"> </span><span class="kn">import</span> <span class="n">LHS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">smt.surrogate_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">KRG</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.core.problem</span><span class="w"> </span><span class="kn">import</span> <span class="n">Problem</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">minimize</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoode.algorithms</span><span class="w"> </span><span class="kn">import</span> <span class="n">NSDE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoode.survival</span><span class="w"> </span><span class="kn">import</span> <span class="n">RankAndCrowding</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.util.nds.non_dominated_sorting</span><span class="w"> </span><span class="kn">import</span> <span class="n">NonDominatedSorting</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="branin-currin-optimization-problem">
+<h2>Branin-Currin optimization problem<a class="headerlink" href="#branin-currin-optimization-problem" title="Link to this heading">#</a></h2>
+<p>The Branin-Currin optimization problem has been described in the previous section. The block of code below defines the two functions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the objective functions</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">branin</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+
+    <span class="n">dim</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span>
+    <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">x1</span> <span class="o">=</span> <span class="mi">15</span><span class="o">*</span><span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">5</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="mi">15</span><span class="o">*</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">b</span> <span class="o">=</span> <span class="mf">5.1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">8</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mf">51.95</span><span class="p">)</span><span class="o">*</span><span class="p">((</span><span class="n">x2</span> <span class="o">-</span> <span class="n">b</span><span class="o">*</span><span class="n">x1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">c</span><span class="o">*</span><span class="n">x1</span> <span class="o">-</span> <span class="mi">6</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">10</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">-</span> <span class="mf">44.81</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">y</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">currin</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+
+    <span class="n">dim</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span>
+    <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="n">factor</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x2</span><span class="p">))</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="mi">2300</span><span class="o">*</span><span class="n">x1</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">1900</span><span class="o">*</span><span class="n">x1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2092</span><span class="o">*</span><span class="n">x1</span> <span class="o">+</span> <span class="mi">60</span>
+    <span class="n">den</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="n">x1</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">500</span><span class="o">*</span><span class="n">x1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">x1</span> <span class="o">+</span> <span class="mi">20</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">factor</span><span class="o">*</span><span class="n">num</span><span class="o">/</span><span class="n">den</span>
+    
+    <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">y</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The block of code below solves the optimization problem directly using the true functions and NSDE. This will be used as a point of comparison when solving the problem using Kriging models.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the problem class for pymoo - we are evaluating two objective functions in this case</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BraninCurrin</span><span class="p">(</span><span class="n">Problem</span><span class="p">):</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_var</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_obj</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_constr</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">xl</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">]),</span> <span class="n">xu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">branin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">currin</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+
+<span class="n">problem</span> <span class="o">=</span> <span class="n">BraninCurrin</span><span class="p">()</span>
+<span class="n">algorithm</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">res_true</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next block of code defines a new problem class for solving the optimization problem using Kriging models. The problem class accepts two models, one for each function, as input arguments when initializing the class.</p>
+<p>After the definition of the problem class, a loop is utilized to iteratively create Kriging models for varying number of samples. Separte Kriging models are created for each of the objective functions. The optimization problem is solved using each of the Kriging models created and NSDE. Plots are created to compare the Pareto front obtained using the Kriging model and that obtained from the true function at each number of samples used.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining problem for kriging model based optimization</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">KRGBraninCurrin</span><span class="p">(</span><span class="n">Problem</span><span class="p">):</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sm_branin</span><span class="p">,</span> <span class="n">sm_currin</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_var</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_obj</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_constr</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">xl</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">]),</span> <span class="n">xu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sm_branin</span> <span class="o">=</span> <span class="n">sm_branin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sm_currin</span> <span class="o">=</span> <span class="n">sm_currin</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">sm_branin</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">sm_currin</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+
+<span class="c1"># Defining sample sizes</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">140</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">xlimits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1e-6</span><span class="p">,</span><span class="mf">1.0</span><span class="p">],[</span><span class="mf">1e-6</span><span class="p">,</span><span class="mf">1.0</span><span class="p">]])</span>
+
+<span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
+
+    <span class="c1"># Generate training samples using LHS</span>
+    <span class="n">sampling</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">xlimits</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s2">&quot;ese&quot;</span><span class="p">)</span>
+    <span class="n">xtrain</span> <span class="o">=</span> <span class="n">sampling</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">ybranin</span> <span class="o">=</span> <span class="n">branin</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
+    <span class="n">ycurrin</span> <span class="o">=</span> <span class="n">currin</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
+    
+    <span class="c1"># Create kriging model</span>
+    <span class="n">corr</span> <span class="o">=</span> <span class="s1">&#39;squar_exp&#39;</span>
+    <span class="n">sm_branin</span> <span class="o">=</span> <span class="n">KRG</span><span class="p">(</span><span class="n">theta0</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-2</span><span class="p">],</span> <span class="n">corr</span><span class="o">=</span><span class="n">corr</span><span class="p">,</span> <span class="n">theta_bounds</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e2</span><span class="p">],</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">sm_branin</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">ybranin</span><span class="p">)</span>
+    <span class="n">sm_branin</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+    <span class="n">sm_currin</span> <span class="o">=</span> <span class="n">KRG</span><span class="p">(</span><span class="n">theta0</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-2</span><span class="p">],</span> <span class="n">corr</span><span class="o">=</span><span class="n">corr</span><span class="p">,</span> <span class="n">theta_bounds</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e2</span><span class="p">],</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">sm_currin</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">ycurrin</span><span class="p">)</span>
+    <span class="n">sm_currin</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+    <span class="n">problem</span> <span class="o">=</span> <span class="n">KRGBraninCurrin</span><span class="p">(</span><span class="n">sm_branin</span><span class="p">,</span> <span class="n">sm_currin</span><span class="p">)</span>
+    <span class="n">algorithm</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">res_krg</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">F_krg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">branin</span><span class="p">(</span><span class="n">res_krg</span><span class="o">.</span><span class="n">X</span><span class="p">),</span> <span class="n">currin</span><span class="p">(</span><span class="n">res_krg</span><span class="o">.</span><span class="n">X</span><span class="p">)))</span>
+    <span class="c1"># Plotting final Pareto frontier obtained</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res_true</span><span class="o">.</span><span class="n">F</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">res_true</span><span class="o">.</span><span class="n">F</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;True function&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">F_krg</span><span class="p">[::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">F_krg</span><span class="p">[::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Kriging model&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$f_2$&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$f_1$&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Number of samples: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">size</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/f4ecccec1e7a7db2147a7d099af6ba53cda690eb83ff85f95f244c97e04adb39.png" src="../_images/f4ecccec1e7a7db2147a7d099af6ba53cda690eb83ff85f95f244c97e04adb39.png" />
+<img alt="../_images/267034c7d8605fe690077c4394f5c233890e4f12c63567a6c8a9fb335385343a.png" src="../_images/267034c7d8605fe690077c4394f5c233890e4f12c63567a6c8a9fb335385343a.png" />
+<img alt="../_images/9c664cecd3f27a4a752dcd9acaedb1450cbf99cd03070bbb886d42d82ba3de01.png" src="../_images/9c664cecd3f27a4a752dcd9acaedb1450cbf99cd03070bbb886d42d82ba3de01.png" />
+<img alt="../_images/2e51908aa66614f46c3f544cce22795b7bc4f83ff9e143f77a3e868f207108ec.png" src="../_images/2e51908aa66614f46c3f544cce22795b7bc4f83ff9e143f77a3e868f207108ec.png" />
+<img alt="../_images/1a4cb3466dcae45f847da9e4d8aadfc84f089357a264375dc3128937daebbade.png" src="../_images/1a4cb3466dcae45f847da9e4d8aadfc84f089357a264375dc3128937daebbade.png" />
+<img alt="../_images/9ef720ff6978cfcd8a9a0296716293fca04b109bfbd3ad61494e6c15a12d93f7.png" src="../_images/9ef720ff6978cfcd8a9a0296716293fca04b109bfbd3ad61494e6c15a12d93f7.png" />
+</div>
+</div>
+<p>The plots obtained from creating the various Kriging models show that approximately 80-100 samples are required to obtain an accurate enough representation of the Pareto front. Even though the Kriging models can be very accurate with a large number of samples, they can still produce certain solutions that lie outside of the Pareto front found using the true function. In most cases, these solutions are dominated solutions and should be ignored when plotting the Pareto front. This shows that it is indeed difficult to obtain an accurate Pareto front using surrogates when the problem involves complex multimodal functions.</p>
+</section>
+<section id="constrained-multiobjective-optimization-problem">
+<h2>Constrained multiobjective optimization problem<a class="headerlink" href="#constrained-multiobjective-optimization-problem" title="Link to this heading">#</a></h2>
+<p>The constrained multiobjective optimization problem has been described previously. The block of code below defines the objective and constraint functions for the problem. After the definition of the functions, a Problem class is defined and the optimization problem is solved using NSDE and the true function. This solution will be used as a point of comparison for the surrogate-based methods.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the objective functions</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">f1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    
+    <span class="n">dim</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span>
+    <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+    
+    <span class="k">return</span> <span class="n">y</span>
+    
+<span class="k">def</span><span class="w"> </span><span class="nf">f2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+
+    <span class="n">dim</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span>
+    <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+    <span class="k">return</span> <span class="n">y</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">g1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    
+    <span class="n">dim</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span>
+    <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">25</span>
+
+    <span class="k">return</span> <span class="n">g</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">g2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+
+    <span class="n">dim</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span>
+    <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="n">g</span> <span class="o">=</span> <span class="mf">7.7</span> <span class="o">-</span> <span class="p">((</span><span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">8</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">g</span>
+
+<span class="c1"># Defining the problem class for pymoo - we are evaluating two objective and two constraint functions in this case</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConstrainedProblem</span><span class="p">(</span><span class="n">Problem</span><span class="p">):</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_var</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_obj</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_ieq_constr</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">xl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">20.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">20.0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">20.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">f1</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">f2</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
+        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">g1</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">g2</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
+
+<span class="n">problem</span> <span class="o">=</span> <span class="n">ConstrainedProblem</span><span class="p">()</span>
+<span class="n">nsde</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">res_true</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">nsde</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the block of code below, a loop is utilized to iteratively create Kriging models for varying number of samples. The optimization problem is solved using each of the Kriging models created and NSDE. Separate Kriging models are created for each of the objective and constraint functions. This means the four Kriging models in total are created and used as input arguments for the new Problem class. Plots are created to compare the Pareto front obtained using the Kriging model and that obtained from the true function at each number of samples used.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining problem for kriging model based optimization</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">KRGProb</span><span class="p">(</span><span class="n">Problem</span><span class="p">):</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sm_f1</span><span class="p">,</span> <span class="n">sm_f2</span><span class="p">,</span> <span class="n">sm_g1</span><span class="p">,</span> <span class="n">sm_g2</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_var</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_obj</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_ieq_constr</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">xl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">20.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">20.0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">20.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sm_f1</span> <span class="o">=</span> <span class="n">sm_f1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sm_f2</span> <span class="o">=</span> <span class="n">sm_f2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sm_g1</span> <span class="o">=</span> <span class="n">sm_g1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sm_g2</span> <span class="o">=</span> <span class="n">sm_g2</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="n">F1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm_f1</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">F2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm_f2</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        
+        <span class="n">G1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm_g1</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">G2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sm_g2</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        
+        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">F1</span><span class="p">,</span> <span class="n">F2</span><span class="p">))</span>
+        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">G1</span><span class="p">,</span> <span class="n">G2</span><span class="p">))</span>
+
+<span class="c1"># Defining sample sizes</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">]</span>
+<span class="n">xlimits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">20.0</span><span class="p">,</span><span class="mf">20.0</span><span class="p">],[</span><span class="o">-</span><span class="mf">20.0</span><span class="p">,</span><span class="mf">20.0</span><span class="p">]])</span>
+
+<span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
+
+    <span class="c1"># Generate training samples using LHS</span>
+    <span class="n">sampling</span> <span class="o">=</span> <span class="n">LHS</span><span class="p">(</span><span class="n">xlimits</span><span class="o">=</span><span class="n">xlimits</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s2">&quot;ese&quot;</span><span class="p">)</span>
+    <span class="n">xtrain</span> <span class="o">=</span> <span class="n">sampling</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">yf1</span> <span class="o">=</span> <span class="n">f1</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
+    <span class="n">yf2</span> <span class="o">=</span> <span class="n">f2</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
+    <span class="n">yg1</span> <span class="o">=</span> <span class="n">g1</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
+    <span class="n">yg2</span> <span class="o">=</span> <span class="n">g2</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
+    
+    <span class="c1"># Create kriging model</span>
+    <span class="n">corr</span> <span class="o">=</span> <span class="s1">&#39;squar_exp&#39;</span>
+    <span class="n">sm_f1</span> <span class="o">=</span> <span class="n">KRG</span><span class="p">(</span><span class="n">theta0</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-2</span><span class="p">],</span> <span class="n">corr</span><span class="o">=</span><span class="n">corr</span><span class="p">,</span> <span class="n">theta_bounds</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e2</span><span class="p">],</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">sm_f1</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">yf1</span><span class="p">)</span>
+    <span class="n">sm_f1</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+    <span class="n">sm_f2</span> <span class="o">=</span> <span class="n">KRG</span><span class="p">(</span><span class="n">theta0</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-2</span><span class="p">],</span> <span class="n">corr</span><span class="o">=</span><span class="n">corr</span><span class="p">,</span> <span class="n">theta_bounds</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e2</span><span class="p">],</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">sm_f2</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">yf2</span><span class="p">)</span>
+    <span class="n">sm_f2</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+    
+    <span class="n">sm_g1</span> <span class="o">=</span> <span class="n">KRG</span><span class="p">(</span><span class="n">theta0</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-2</span><span class="p">],</span> <span class="n">corr</span><span class="o">=</span><span class="n">corr</span><span class="p">,</span> <span class="n">theta_bounds</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e2</span><span class="p">],</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">sm_g1</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">yg1</span><span class="p">)</span>
+    <span class="n">sm_g1</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+    <span class="n">sm_g2</span> <span class="o">=</span> <span class="n">KRG</span><span class="p">(</span><span class="n">theta0</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-2</span><span class="p">],</span> <span class="n">corr</span><span class="o">=</span><span class="n">corr</span><span class="p">,</span> <span class="n">theta_bounds</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e2</span><span class="p">],</span> <span class="n">print_global</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">sm_g2</span><span class="o">.</span><span class="n">set_training_values</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span> <span class="n">yg2</span><span class="p">)</span>
+    <span class="n">sm_g2</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+    <span class="n">problem</span> <span class="o">=</span> <span class="n">KRGProb</span><span class="p">(</span><span class="n">sm_f1</span><span class="p">,</span> <span class="n">sm_f2</span><span class="p">,</span> <span class="n">sm_g1</span><span class="p">,</span> <span class="n">sm_g2</span><span class="p">)</span>
+    <span class="n">algorithm</span> <span class="o">=</span> <span class="n">NSDE</span><span class="p">(</span><span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">CR</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="n">RankAndCrowding</span><span class="p">(</span><span class="n">crowding_func</span><span class="o">=</span><span class="s2">&quot;pcd&quot;</span><span class="p">),</span> <span class="n">save_history</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">res_krg</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    
+    <span class="n">F_krg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">f1</span><span class="p">(</span><span class="n">res_krg</span><span class="o">.</span><span class="n">X</span><span class="p">),</span> <span class="n">f2</span><span class="p">(</span><span class="n">res_krg</span><span class="o">.</span><span class="n">X</span><span class="p">)))</span>
+    <span class="c1"># Plotting final Pareto frontier obtained</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res_true</span><span class="o">.</span><span class="n">F</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">res_true</span><span class="o">.</span><span class="n">F</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;True function&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">F_krg</span><span class="p">[::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">F_krg</span><span class="p">[::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Kriging model&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$f_2$&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$f_1$&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Number of samples: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">size</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1a865f08c09c3f43b58affc974c645a0c9dc01cfacae54c48ab0f586adf67165.png" src="../_images/1a865f08c09c3f43b58affc974c645a0c9dc01cfacae54c48ab0f586adf67165.png" />
+<img alt="../_images/a067e4057cc07534aed5bde9656859d8891203689ad6202cec60d266f1eebc90.png" src="../_images/a067e4057cc07534aed5bde9656859d8891203689ad6202cec60d266f1eebc90.png" />
+<img alt="../_images/1dc574bf510ee9e5c12c55c595443b5e67af4f2ee3bca9dbf9f0ce61773b65f3.png" src="../_images/1dc574bf510ee9e5c12c55c595443b5e67af4f2ee3bca9dbf9f0ce61773b65f3.png" />
+<img alt="../_images/b2893783295799c94f3141ffc02282bb5e68e03db419dcb2c08e91c1aa920d3b.png" src="../_images/b2893783295799c94f3141ffc02282bb5e68e03db419dcb2c08e91c1aa920d3b.png" />
+<img alt="../_images/a3f2db830a3e40a6aba77659d219fb5111d3fe09f4a040535978a252a8259da1.png" src="../_images/a3f2db830a3e40a6aba77659d219fb5111d3fe09f4a040535978a252a8259da1.png" />
+<img alt="../_images/bc6ca9e593e8702f91a226fe3c858ce947bb61ae10a27f984040b9f8f58d1650.png" src="../_images/bc6ca9e593e8702f91a226fe3c858ce947bb61ae10a27f984040b9f8f58d1650.png" />
+<img alt="../_images/3d04c04c977d1cbc8fb01fed2e29eec971ce55593c4c803deb283a597d1d5abd.png" src="../_images/3d04c04c977d1cbc8fb01fed2e29eec971ce55593c4c803deb283a597d1d5abd.png" />
+</div>
+</div>
+<p>Owing to the simple nature of the functions used in this problem, only a few samples are required for the Kriging models to accurately obtain the Pareto front of the problem in conjunction with the NSDE algorithm. In such cases, surrogates prove to be useful tools for performing multiobjective optimization and require drastically lower evaluations of the true function to find the Pareto front.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./multi_objective"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branin-currin-optimization-problem">Branin-Currin optimization problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constrained-multiobjective-optimization-problem">Constrained multiobjective optimization problem</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By CODE Lab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
